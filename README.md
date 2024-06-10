@@ -5,7 +5,7 @@ Trello board：https://trello.com/b/GsXjMRNF/ai-ar-chatbot-team
 [Project demo](https://www.youtube.com/watch?v=1VYL8F-sFTE)
 <img src="/image/Glife_Xmind.png" alt="Image Description">
 
-<img src="/image/stack.png" alt="Image Description">
+<img src="/image/stack.png" alt="Image Description"  style="max-width: 50%; height: auto;">
 
 ## Week 2 
 ### Goal:
@@ -21,6 +21,6 @@ Trello board：https://trello.com/b/GsXjMRNF/ai-ar-chatbot-team
 **Activity**
 1. Ada搭建一个Springboot框架上传到Github，到时候直接拉取即可
 2. 推荐下载Navicat作为数据库管理（我觉得我们要用多个数据库主要是这个可以一次性管理链接多个数据库x[下载与安装地址](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA4MjU4MTg2Ng==&action=getalbum&album_id=3421653652102742021&scene=21#wechat_redirect)
-<img src="/image/image.png" alt="Image Description">
+<img src="/image/image.png" alt="Image Description"  style="max-width: 50%; height: auto;">
 3. 设计并导入MySQL本地数据库作为用户登录信息数据库
 4. 用SpringSecurity组件完成用户注册+登录功能
