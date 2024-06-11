@@ -165,8 +165,11 @@
                             .then(function (response) {
                                 console.log('Registration successful:', response.data);
                                 if (response.data.code === 1) {
-                                    self.showLoginForm = true;
+                                    self.switchToLoginForm();
+                                    self.loginForm.username = self.registerForm.username;
+                                    self.loginForm.password = '';
                                     self.$refs.registerForm.resetFields();
+                                    self.registerForm.email = '';
                                     self.$message.success('Registration successful. Please login.');
                                 } else {
                                     self.$message.error(response.data.msg || 'Registration failed. Please try again.');

@@ -30,14 +30,21 @@ public class UserController {
     @PostMapping("/register")
     public R<String> register(HttpServletRequest request, @RequestBody User user){
         String name = user.getUsername();
-        //check name
+        //check unique Name and Email
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
         User existingUser = userService.getOne(lambdaQueryWrapper);
         if(existingUser != null){
             return R.error("Username already exists");
         }
+        LambdaQueryWrapper<User> lambdaQueryWrapper2 = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper2.eq(User::getEmail, user.getEmail());
+        User existingUser2 = userService.getOne(lambdaQueryWrapper2);
+        if(existingUser2 != null){
+            return R.error("Email already exists");
+        }
 
+        //Register
         String inputPassword = user.getPassword();
         String encryptedPassword = passwordEncoder.encodePassword(inputPassword);
         String email = user.getEmail();
@@ -50,6 +57,8 @@ public class UserController {
         userService.save(newUser);
 
 
+
+
         return R.success("register success");
     }
 
@@ -57,7 +66,7 @@ public class UserController {
      * Login
      */
     @PostMapping("/login")
-    public R<User> login(HttpServletRequest request, @RequestBody User user){
+    public R<User> login(HttpServletRequest request, @RequestBody User user) {
         String inputPassword = user.getPassword();
         String encryptedPassword = passwordEncoder.encodePassword(inputPassword);
 
@@ -67,11 +76,13 @@ public class UserController {
         User foundUser = userService.getOne(lambdaQueryWrapper);
 
         //TODO admin for test only :
-        if(foundUser.getUsername().equals("admin") && inputPassword.equals("bris12345")){
+        if (foundUser != null && foundUser.getUsername().equals("admin") && inputPassword.equals("bris12345")) {
             HttpSession session = request.getSession();
             session.setAttribute("user", foundUser);
             return R.success(foundUser);
-        } else if(foundUser == null || !passwordEncoder.matchPassword(inputPassword, foundUser.getPassword())){
+        }
+
+        if (foundUser == null || !passwordEncoder.matchPassword(inputPassword, foundUser.getPassword())) {
             return R.error("Login failed");
         }
 
@@ -79,6 +90,7 @@ public class UserController {
         session.setAttribute("user", foundUser);
 
         foundUser.setLastLogin(LocalDateTime.now());
+        userService.updateById(foundUser);
 
         return R.success(foundUser);
     }
