@@ -12,6 +12,16 @@
       integrationID: "c1910365-9aaf-44ba-af54-8f692d2bb369", // The ID of this integration.
       region: "eu-gb", // The region your integration is hosted in.
       serviceInstanceID: "fff9f01a-6010-4df4-80d9-2fd6cc75a4a4", // The ID of your service instance.
+      pageLinkConfig: {
+      linkIDs: {
+        'u35': {
+          text: 'I would like to update my account'
+        },
+        'r23': {
+          text: 'I need to reset my password'
+        }
+      }
+    },
       onLoad: async (instance) => { await instance.render(); }
     };
     setTimeout(function(){
