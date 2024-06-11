@@ -41,3 +41,13 @@ spring.datasource.password=${DB_PASSWORD}
    1. 为了信息安全我给放到系统环境变量里面了
    2. 创建两个系统环境变量，填入之前在设置的root和密码
    3. 运行main，如果控制台看到![alt text](image/successStartUP.png)则配置成功
+
+起步配置2：
+1. 更改了主界面，直接打开```localhost：8040```即可
+2. 如上，添加```assistant.apikey=${Assistant_API}```,具体API之后再IBM cloud添加所有人
+3. 没添加前可以先不要pull
+4. 权限共享之后，进入dashboard，搜索watsonx 出来的这个就是
+![alt text](image/watsonsearch.png)
+资源结果第一个就是，点击进入
+![alt text](image/apifinder.png)
+复制API秘钥，和之前一样加入系统变量
