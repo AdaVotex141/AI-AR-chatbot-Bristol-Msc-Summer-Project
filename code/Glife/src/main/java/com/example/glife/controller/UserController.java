@@ -56,9 +56,6 @@ public class UserController {
         newUser.setCreateTime(LocalDateTime.now());
         userService.save(newUser);
 
-
-
-
         return R.success("register success");
     }
 

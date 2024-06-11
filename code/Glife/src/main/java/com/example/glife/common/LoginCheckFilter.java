@@ -57,7 +57,7 @@ public class LoginCheckFilter implements Filter {
 
         response.getWriter().write((JSON.toJSONString(R.error("NOTLOGIN"))));
         String contextPath = request.getContextPath();
-        response.sendRedirect(contextPath + "/login.html");
+        response.sendRedirect(contextPath + "/index.html");
         log.info("request not pass:{}", request.getRequestURI());
         return;
     }
@@ -67,18 +67,9 @@ public class LoginCheckFilter implements Filter {
         // Not needed for this filter
     }
 
-//    private boolean isExcludedUrl(String url) {
-//        // Define URLs that do not require login check
-//        return url.startsWith("/login.html") ||
-//                url.startsWith("/api/login") ||
-//                url.startsWith("/api/register") ||
-//                url.startsWith("/api/logout") ||
-//                url.startsWith("/error");
-//    }
-
     private boolean check(String requestURI){
         String[] urls = new String[]{
-            "/login.html",
+            "/index.html",
                 "/api/login"
         };
         for(String url: urls){
