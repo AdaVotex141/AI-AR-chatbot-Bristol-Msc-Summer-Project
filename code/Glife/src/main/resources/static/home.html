@@ -7,5 +7,18 @@
 </head>
 <body>
 <h1 style="text-align: center;">Glife</h1>
+<script>
+    window.watsonAssistantChatOptions = {
+      integrationID: "c1910365-9aaf-44ba-af54-8f692d2bb369", // The ID of this integration.
+      region: "eu-gb", // The region your integration is hosted in.
+      serviceInstanceID: "fff9f01a-6010-4df4-80d9-2fd6cc75a4a4", // The ID of your service instance.
+      onLoad: async (instance) => { await instance.render(); }
+    };
+    setTimeout(function(){
+      const t=document.createElement('script');
+      t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+      document.head.appendChild(t);
+    });
+</script>
 </body>
 </html>
