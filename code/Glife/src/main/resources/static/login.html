@@ -195,7 +195,7 @@
                                 if (response.data.code === 1) {
                                     localStorage.setItem('userInfo', JSON.stringify(response.data.data));
                                     self.$message.success('Login successful.');
-                                    window.location.href = '/api/home';
+                                    window.location.href = '/home.html';
                                 } else {
                                     self.$message.error(response.data.msg || 'Login failed. Please check your username and password.');
                                 }
