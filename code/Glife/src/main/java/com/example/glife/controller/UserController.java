@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.glife.common.PasswordEncoder;
 import com.example.glife.common.R;
 import com.example.glife.entity.User;
+import com.example.glife.service.AssistantService;
 import com.example.glife.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AssistantService assistantService;
 
     /**
      * Register new User
@@ -88,6 +92,9 @@ public class UserController {
 
         foundUser.setLastLogin(LocalDateTime.now());
         userService.updateById(foundUser);
+
+        //create a new assistant after log in
+        assistantService.initializeAssistant();
 
         return R.success(foundUser);
     }
