@@ -1,6 +1,7 @@
 package com.example.glife.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.glife.common.PasswordEncoder;
 import com.example.glife.common.R;
 import com.example.glife.entity.User;
 import com.example.glife.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @RestController
 @Slf4j
@@ -19,14 +21,36 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     /**
      * Register new User
      */
     @PostMapping("/register")
-    public R<User> register(HttpServletRequest request, @RequestBody User user){
+    public R<String> register(HttpServletRequest request, @RequestBody User user){
+        String name = user.getUsername();
+        //check name
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
+        User existingUser = userService.getOne(lambdaQueryWrapper);
+        if(existingUser != null){
+            return R.error("Username already exists");
+        }
+
+        String inputPassword = user.getPassword();
+        String encryptedPassword = passwordEncoder.encodePassword(inputPassword);
+        String email = user.getEmail();
         // Implement user registration logic
-        // userService.register(user);
-        return null;
+        User newUser = new User();
+        newUser.setUsername(name);
+        newUser.setEmail(email);
+        newUser.setPassword(encryptedPassword);
+        newUser.setCreateTime(LocalDateTime.now());
+        userService.save(newUser);
+
+
+        return R.success("register success");
     }
 
     /**
@@ -34,23 +58,27 @@ public class UserController {
      */
     @PostMapping("/login")
     public R<User> login(HttpServletRequest request, @RequestBody User user){
-        String password = user.getPassword();
+        String inputPassword = user.getPassword();
+        String encryptedPassword = passwordEncoder.encodePassword(inputPassword);
 
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
 
         User foundUser = userService.getOne(lambdaQueryWrapper);
 
-        if(foundUser == null || !foundUser.getPassword().equals(password)){
+        //TODO admin for test only :
+        if(foundUser.getUsername().equals("admin") && inputPassword.equals("bris12345")){
+            HttpSession session = request.getSession();
+            session.setAttribute("user", foundUser);
+            return R.success(foundUser);
+        } else if(foundUser == null || !passwordEncoder.matchPassword(inputPassword, foundUser.getPassword())){
             return R.error("Login failed");
         }
 
-        // Set user session
         HttpSession session = request.getSession();
         session.setAttribute("user", foundUser);
 
-        // Update user in database if necessary
-        userService.updateById(foundUser);
+        foundUser.setLastLogin(LocalDateTime.now());
 
         return R.success(foundUser);
     }

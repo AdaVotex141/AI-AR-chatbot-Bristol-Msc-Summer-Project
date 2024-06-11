@@ -158,7 +158,7 @@
                 this.$refs.registerForm.validate(function(valid) {
                     if (valid) {
                         axios.post('/api/register', {
-                            name: self.registerForm.username,
+                            username: self.registerForm.username,
                             password: self.registerForm.password,
                             email: self.registerForm.email
                         })
