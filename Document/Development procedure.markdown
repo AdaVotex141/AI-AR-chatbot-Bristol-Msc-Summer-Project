@@ -1,9 +1,11 @@
-# page1: login
-ethical->e-mail
-1. Create account: id, email, name(only), password
-2. account Name: check invalid name including not appropriate words/name been created
-3. Policy: ethics, evaluation
-4. Filter for login 
-# page2: main page
+# Function 1： 登录和创建账户
+## back-end
+1. 创建用户的登陆系统和创建用户系统
+2. 系统设计：
+SQL储存用户的登录信息： 
+id， name，password（加密）， email，createTime， Last_Login
+* createTime和Last_Login的公共字段自动填充
+* MybatisPlus通过雪花算法生成全局唯一的id标识
+后续创建Redis，```<key = id, value = 对应用户资源的地址>```
 
-# page3: AR related
+3. 用户层只允许看到自己的邮箱和name，所以需要进一步做封装，直接用ModelMapperConfig

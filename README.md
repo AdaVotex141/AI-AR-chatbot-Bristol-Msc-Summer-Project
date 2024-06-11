@@ -24,3 +24,20 @@ Trello board：https://trello.com/b/GsXjMRNF/ai-ar-chatbot-team
 <img src="/image/image.png" alt="Image Description"  style="max-width: 50%; height: auto;">
 3. 设计并导入MySQL本地数据库作为用户登录信息数据库
 4. 用SpringSecurity组件完成用户注册+登录功能
+
+**起步配置**
+1. 下载MySQL，里面可能让你设置一个root和密码
+2. 下载Navicat， 连接上服务器
+<img src="/image/2024-06-10-23-50-21.png" alt="Image Description"  style="max-width: 50%; height: auto;">
+3. 导入库和表格： 我在文件里面放了一个.sql文件，运行
+---
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/glife?serverTimezone=Europe/London&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+```
+1. 这是我写的配置，所以MySQL的端口应该是3306（默认应该就是这个，但是记得检查一下）
+2. 设置DB_USERNAME和DB_PASSWORD:
+   1. 为了信息安全我给放到系统环境变量里面了
+   2. 创建两个系统环境变量，填入之前在设置的root和密码
+   3. 运行main，如果控制台看到![alt text](image/successStartUP.png)则配置成功
