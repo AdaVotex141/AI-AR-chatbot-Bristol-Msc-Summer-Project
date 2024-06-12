@@ -29,7 +29,9 @@
         }
       }
     },
-      onLoad: async (instance) => { await instance.render(); }
+      onLoad: async (instance) => {
+        await instance.render();
+      }
     };
     setTimeout(function(){
       const t=document.createElement('script');
