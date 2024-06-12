@@ -9,3 +9,6 @@ id， name，password（加密）， email，createTime， Last_Login
 后续创建Redis，```<key = id, value = 对应用户资源的地址>```
 
 3. 用户层只允许看到自己的邮箱和name，所以需要进一步做封装，直接用ModelMapperConfig
+
+
+1. ```home.html?wa_lid=r23```修改密码等

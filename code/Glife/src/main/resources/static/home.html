@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GLife-home</title>
-    <!-- 引入样式文件 -->
+    <title>GLife</title>
+    <link rel="icon" type="image/x-icon" href="/image/tree .ico">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <div id="app">
     <div class="header">
         <h1>Glife</h1>
-        <button @click="logout">Logout</button>
+        <button @click="logout">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
     </div>
     <Chat :username="username" />
 </div>

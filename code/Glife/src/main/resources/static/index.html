@@ -6,9 +6,13 @@
     <title>GLife</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/image/tree%20.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <style>
         body {
+            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,6 +21,7 @@
             font-family: 'Nunito', sans-serif;
         }
         .container {
+            background-color: white;
             max-width: 400px;
             margin: 50px auto;
             padding: 20px;
@@ -44,6 +49,7 @@
             font-size: 12px;
             color: #666;
             margin-top: 5px;
+            text-align: center;
         }
         .form-group .link {
             cursor: pointer;
@@ -58,6 +64,14 @@
         button.center {
             display: flex;
             justify-content: center;
+            background-color: #438944;
+            color: white;
+            width: 70%;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -65,7 +79,7 @@
 <body>
 <div id="app" class="container">
     <div v-if="showLoginForm">
-        <h2 style="font-family: 'Montserrat Alternates', sans-serif;">Login</h2>
+        <h2 style="font-family: 'Nunito', sans-serif; color: #438944;">LOGIN</h2>
         <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm" label-width="80px">
             <el-form-item label="Username" prop="username">
                 <el-input v-model="loginForm.username"></el-input>
@@ -85,7 +99,7 @@
     </div>
 
     <div v-else>
-        <h2 style="font-family: 'Montserrat Alternates', sans-serif;">Register</h2>
+        <h2 style="font-family: 'Nunito', sans-serif; color: #438944;">REGISTER</h2>
         <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm" label-width="80px">
             <el-form-item label="Username" prop="username">
                 <el-input v-model="registerForm.username"></el-input>
@@ -102,7 +116,7 @@
                 </div>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="register">Register</el-button>
+                <el-button type="primary" class="center" @click="register">Register</el-button>
             </el-form-item>
         </el-form>
     </div>

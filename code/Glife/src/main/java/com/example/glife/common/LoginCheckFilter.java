@@ -70,7 +70,8 @@ public class LoginCheckFilter implements Filter {
     private boolean check(String requestURI){
         String[] urls = new String[]{
             "/index.html",
-                "/api/login"
+                "/api/login",
+                "/api/register"
         };
         for(String url: urls){
             if(PATH_MATCHER.match(url,requestURI)){
