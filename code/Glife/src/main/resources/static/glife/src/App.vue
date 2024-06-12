@@ -5,16 +5,19 @@
 <template>
   <div id="app">
     <ChatWindow />
+    <DayRoutine />
   </div>
 </template>
 
 <script>
 import ChatWindow from './components/ChatWindow.vue';
+import DayRoutine from './components/DayRoutine.vue';
 
 export default {
   name: 'App',
   components: {
-    ChatWindow
+    ChatWindow,
+    DayRoutine
   }
 };
 </script>
