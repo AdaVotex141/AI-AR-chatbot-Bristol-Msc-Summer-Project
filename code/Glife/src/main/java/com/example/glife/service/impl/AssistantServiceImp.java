@@ -23,7 +23,7 @@ public class AssistantServiceImp implements AssistantService {
     private String assistantId;
 
     @Autowired
-    private AssistantConfig assistantConfig;
+    private AssistantConfig assistantConfig = new AssistantConfig();
 
 
     public void initializeAssistant() {
@@ -83,24 +83,22 @@ public class AssistantServiceImp implements AssistantService {
         Assistant assistant = new Assistant("2023-06-15", authenticator);
         assistant.setServiceUrl("https://api.eu-gb.assistant.watson.cloud.ibm.com");
 
-        CreateSessionOptions createSessionOptions = new CreateSessionOptions.Builder("d5404082-d252-4ecc-9df0-ece0170f0970").build();
+
+        CreateSessionOptions createSessionOptions = new CreateSessionOptions
+                .Builder("f450d030-5b09-4c55-94b3-59f66c4088cb")
+                .build();
         SessionResponse sessionResponse = assistant.createSession(createSessionOptions).execute().getResult();
         String sessionId = sessionResponse.getSessionId();
         System.out.print(sessionId);
+        System.out.print(sessionResponse);
 
 
-//        service.createSession();
-////        String sessionId = service.getSessionId();
-//        MessageInput input = new MessageInput.Builder()
-//                .messageType("text")
-//                .text("Hello")
-//                .build();
-//
-//        MessageOptions options = new MessageOptions.Builder("d5404082-d252-4ecc-9df0-ece0170f0970",sessionId)
-//                .input(input)
-//                .build();
-//
-//        StatefulMessageResponse response = assistant.message(options).execute().getResult();
-//        System.out.println(response);
+        //delete session
+        if (sessionId != null) {
+            assistant.deleteSession(new DeleteSessionOptions.Builder("f450d030-5b09-4c55-94b3-59f66c4088cb", sessionId).build()).execute();
+            sessionId = null;
+            log.info("Session closed successfully.");
+        }
+
     }
 }
