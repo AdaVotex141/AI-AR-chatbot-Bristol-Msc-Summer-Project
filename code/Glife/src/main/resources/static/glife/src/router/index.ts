@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 //import components
 import DayRoutine from '@/components/DayRoutine.vue'
 import ChatWindow from '@/components/ChatWindow.vue'
+import ArTree from '@/components/ArTree.vue'
 
 //create router
 const router = createRouter({
@@ -15,6 +16,10 @@ const router = createRouter({
         {
             path:'/dayroutine',
             component:DayRoutine
+        },
+        {
+            path:'/ArTree',
+            component:ArTree
         }
     ]
 })
