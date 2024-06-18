@@ -4,6 +4,13 @@
 
 <template>
   <div id="app">
+    <h2>Glife</h2>
+    <div class="navigate">
+      
+    </div>
+    <div class="main-content">
+      组件区
+    </div>
     <ChatWindow />
     <DayRoutine />
   </div>
