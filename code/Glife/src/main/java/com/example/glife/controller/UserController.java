@@ -93,8 +93,9 @@ public class UserController {
         foundUser.setLastLogin(LocalDateTime.now());
         userService.updateById(foundUser);
 
-        //create a new assistant after log in
+        //create a new assistant after log in, and store it in session
         assistantService.initializeAssistant();
+        session.setAttribute("assistantService", assistantService);
 
         return R.success(foundUser);
     }
