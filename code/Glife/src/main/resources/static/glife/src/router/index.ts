@@ -1,8 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 //import components
-import DayRoutine from '../components/DayRoutine.vue'
-import ChatWindow from '../components/ChatWindow.vue'
+import DayRoutine from '@/components/DayRoutine.vue'
+import ChatWindow from '@/components/ChatWindow.vue'
 
 //create router
 const router = createRouter({
