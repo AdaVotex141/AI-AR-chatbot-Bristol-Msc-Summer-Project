@@ -1,32 +1,24 @@
-<script setup lang="ts">
 
-</script>
 
 <template>
   <div id="app">
     <h2>Glife</h2>
     <div class="navigate">
-      
+      <RouterLink to="/">Chat</RouterLink>
+      <RouterLink to="/dayroutine">DayRoutine</RouterLink>
     </div>
     <div class="main-content">
-      组件区
+      <RouterView></RouterView>
     </div>
     <ChatWindow />
     <DayRoutine />
   </div>
 </template>
 
-<script>
-import ChatWindow from './components/ChatWindow.vue';
-import DayRoutine from './components/DayRoutine.vue';
+<script setup lang="ts" name="App">
+import { RouterView, RouterLink } from 'vue-router';
 
-export default {
-  name: 'App',
-  components: {
-    ChatWindow,
-    DayRoutine
-  }
-};
+
 </script>
 
 <style>
