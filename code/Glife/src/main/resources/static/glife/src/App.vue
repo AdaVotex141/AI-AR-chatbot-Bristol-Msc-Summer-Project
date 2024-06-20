@@ -1,20 +1,11 @@
 <template>
   <div id="app">
-    <h2 class="title">Glife</h2>
-    <div class="navigate">
-      <RouterLink to="/">Chat</RouterLink>
-      <RouterLink to="/dayroutine">DayRoutine</RouterLink>
-      <RouterLink to="/ArTree">ArTree</RouterLink>
-    </div>
-    <div class="main-content">
-      <RouterView></RouterView>
-    </div>
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script setup lang="ts" name="App">
-  import { RouterView, RouterLink } from 'vue-router';
-
+  import { RouterView } from 'vue-router';
 </script>
 
 <style>
