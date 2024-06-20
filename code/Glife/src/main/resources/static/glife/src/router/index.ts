@@ -11,7 +11,7 @@ const router = createRouter({
     history:createWebHistory(),
     routes:[
         {
-            path:'/',
+            path:'/chatwindow',
             component:ChatWindow
         },
         {
@@ -19,12 +19,16 @@ const router = createRouter({
             component:DayRoutine
         },
         {
-            path:'/arTree',
+            path:'/artree',
             component:ArTree
         },
         {
             path:'/login',
             component:Login
+        },
+        {
+            path:'/',
+            redirect:'/login'
         }
     ]
 })
