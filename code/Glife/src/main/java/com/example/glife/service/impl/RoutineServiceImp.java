@@ -20,8 +20,6 @@ import java.util.ArrayList;
 @Service
 public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> implements RoutineService {
 
-    @Autowired
-    private RoutineService routineService;
 
     /**
      *
