@@ -46,7 +46,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   .todo-app {
     max-width: 500px;
     margin: 0 auto;
