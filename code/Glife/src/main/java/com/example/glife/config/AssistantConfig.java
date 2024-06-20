@@ -20,6 +20,7 @@ public class AssistantConfig {
         System.out.println("Service URL: " + config.getServiceUrl());
         System.out.println("Assistant ID: " + config.getAssistantId());
         System.out.println("Environment ID: " + config.getEnvironmentID());
+        System.out.println("ActionSkill ID: " + config.getActionSkillID());
 
     }
 
@@ -28,6 +29,7 @@ public class AssistantConfig {
     private String serviceUrl;
     private String assistantId;
     private String environmentID;
+    private String actionSkillID;
 
     public String getApikey() {
         return apikey;
@@ -67,6 +69,14 @@ public class AssistantConfig {
 
     public String getEnvironmentID(){
         return environmentID;
+    }
+
+    public void setActionSkillID(String actionSkillID){
+        this.actionSkillID = actionSkillID;
+    }
+
+    public String getActionSkillID(){
+        return this.actionSkillID;
     }
 
 

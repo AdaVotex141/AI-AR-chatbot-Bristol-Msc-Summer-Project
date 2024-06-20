@@ -105,9 +105,13 @@ public class UserController {
      */
     @PostMapping("/logout")
     public R<String> logout(HttpServletRequest request){
+        //session in assistant might close after some time so I didn't close it here
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.removeAttribute("user");
+            if(session.getAttribute("assistantService") != null){
+                session.removeAttribute("assistantService");
+            }
         }
         return R.success("Successfully logout");
     }

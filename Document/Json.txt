@@ -1,0 +1,86 @@
+response{
+  "output": {
+    "generic": [
+      {
+        "response_type": "text",
+        "text": "Sure! Here are some advice I can think of, which one do you want to know more about:"
+      },
+      {
+        "response_type": "option",
+        "title": "Options of greener lifestyles",
+        "options": [
+          {
+            "label": "Enegery saving",
+            "value": {
+              "input": {}
+            }
+          },
+          {
+            "label": "Water management",
+            "value": {
+              "input": {
+                "text": ""
+              }
+            }
+          },
+          {
+            "label": "Green Transportation",
+            "value": {
+              "input": {
+                "text": ""
+              }
+            }
+          },
+          {
+            "label": "Green Products",
+            "value": {
+              "input": {
+                "text": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "intent": "suggestions",
+        "confidence": 0.9596618413925171,
+        "skill": "main skill"
+      }
+    ],
+    "entities": [
+      {
+        "entity": "suggestion",
+        "location": [
+          21,
+          27
+        ],
+        "value": "suggestion",
+        "confidence": 1.0,
+        "skill": "main skill"
+      },
+      {
+        "entity": "suggestion",
+        "location": [
+          21,
+          27
+        ],
+        "value": "advice",
+        "confidence": 1.0,
+        "skill": "main skill"
+      },
+      {
+        "entity": "eco-friendly",
+        "location": [
+          31,
+          38
+        ],
+        "value": "greener",
+        "confidence": 0.9912202954292297,
+        "skill": "main skill"
+      }
+    ]
+  },
+  "user_id": "04a24f97-d1db-4a68-9d66-5d8ed411319e"
+}
