@@ -19,7 +19,7 @@
         </el-form-item>
         <el-form-item class="tip-message">
             Already have an account? 
-            <el-link type="primary" :underline="false" @click="switchToLoginForm" target="_blank">
+            <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
                 Click here to login
             </el-link>
         </el-form-item>
@@ -32,6 +32,7 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
+import axios from 'axios'
 
 const formLabelAlign = reactive({
     name: '',
@@ -62,13 +63,23 @@ const rules = reactive({
 })
 
 const emits = defineEmits(['toggle-page'])
+async function register(){
+    try{
+        const response = await axios.post('http://localhost:9800/register',{
+            username: formLabelAlign.name,
+            password: formLabelAlign.password,
+            email: formLabelAlign.email
+        })
 
-function switchToLoginForm(){
-    emits('toggle-page')  
-}
-
-function register(){
-    
+        
+        console.log('Response:', response.data);
+        
+        formLabelAlign.name = '';
+        formLabelAlign.password = '';
+        formLabelAlign.email = '';
+    } catch (error){
+        console.error('Error sending data:', error)
+    }
 }
 
 </script>

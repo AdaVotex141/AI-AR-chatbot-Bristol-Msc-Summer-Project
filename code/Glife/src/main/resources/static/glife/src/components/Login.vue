@@ -16,7 +16,7 @@
         </el-form-item>
         <el-form-item class="tip-message">
             Don't have an account? 
-            <el-link type="primary" :underline="false" @click="switchToRegisterForm" target="_blank">
+            <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
                 Click here to register
             </el-link>
         </el-form-item>
@@ -53,10 +53,6 @@ const rules = reactive({
 })
 
 const emits = defineEmits(['toggle-page'])
-
-function switchToRegisterForm(){
-    emits('toggle-page')    
-}
 
 function login(){
 
