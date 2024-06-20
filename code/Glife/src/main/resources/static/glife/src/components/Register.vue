@@ -65,7 +65,7 @@ const rules = reactive({
 const emits = defineEmits(['toggle-page'])
 async function register(){
     try{
-        const response = await axios.post('/api/register',{
+        const response = await axios.post('http://localhost:9800/api/register',{
             username: formLabelAlign.name,
             password: formLabelAlign.password,
             email: formLabelAlign.email
