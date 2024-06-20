@@ -1,2 +1,5 @@
-package com.example.glife.service;public interface APIService {
+package com.example.glife.service;
+
+public interface APIService {
+
 }

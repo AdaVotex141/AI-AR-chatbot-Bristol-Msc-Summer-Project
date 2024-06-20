@@ -125,7 +125,7 @@ MessageOptions options = new MessageOptions.Builder("{environment_id}", "{sessio
         //test input
         MessageInput input = new MessageInput.Builder()
                 .messageType("text")
-                .text("can you give me some advice on greener life?")
+                .text("suggestion?")
                 .build();
 
         MessageOptions options = new MessageOptions.Builder("f450d030-5b09-4c55-94b3-59f66c4088cb", sessionId)
