@@ -17,7 +17,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .message-list {
   flex: 1;
   overflow-y: auto;

@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .message-input {
   display: flex;
   padding: 10px;
