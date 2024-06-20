@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chat-container {
   display: flex;
   flex-direction: column;

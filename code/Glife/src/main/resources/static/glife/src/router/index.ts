@@ -1,16 +1,17 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 //import components
-import DayRoutine from '@/components/DayRoutine.vue'
+import DayRoutine from '@/pages/DayRoutine.vue'
 import ChatWindow from '@/components/ChatWindow.vue'
-import ArTree from '@/components/ArTree.vue'
+import ArTree from '@/pages/ArTree.vue'
+import LoginRegister from '@/pages/LoginRegister.vue'
 
 //create router
 const router = createRouter({
     history:createWebHistory(),
     routes:[
         {
-            path:'/',
+            path:'/chatwindow',
             component:ChatWindow
         },
         {
@@ -18,8 +19,16 @@ const router = createRouter({
             component:DayRoutine
         },
         {
-            path:'/ArTree',
+            path:'/artree',
             component:ArTree
+        },
+        {
+            path:'/login',
+            component:LoginRegister
+        },
+        {
+            path:'/',
+            redirect:'/login'
         }
     ]
 })
