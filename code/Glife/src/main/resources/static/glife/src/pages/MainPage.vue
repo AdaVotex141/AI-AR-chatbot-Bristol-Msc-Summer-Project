@@ -13,10 +13,7 @@
   </template>
   
   <script setup lang="ts" name="App">
-    import { RouterView, RouterLink } from 'vue-router';
-    import { onMounted } from 'vue';
-    import Login from './pages/Login.vue';
+    import { RouterView } from 'vue-router';
     
-    const router = useRouter()
   
   </script>
