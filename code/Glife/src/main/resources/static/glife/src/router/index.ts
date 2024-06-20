@@ -4,7 +4,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import DayRoutine from '@/pages/DayRoutine.vue'
 import ChatWindow from '@/components/ChatWindow.vue'
 import ArTree from '@/pages/ArTree.vue'
-import Login from '@/pages/Login.vue'
+import LoginRegister from '@/pages/LoginRegister.vue'
 
 //create router
 const router = createRouter({
@@ -24,7 +24,7 @@ const router = createRouter({
         },
         {
             path:'/login',
-            component:Login
+            component:LoginRegister
         },
         {
             path:'/',
