@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -19,7 +20,7 @@ public class RoutineController {
     @Autowired
     private RoutineService routineService;
 
-    public R<String> init(HttpServletRequest request){
+    public R<List<Routine>> init(HttpServletRequest request){
         return routineService.init(request);
     }
 
@@ -36,6 +37,11 @@ public class RoutineController {
     @PostMapping("/tick")
     public R<Routine> tick(HttpServletRequest request, @RequestBody Routine routine){
         return routineService.tick(request,routine);
+    }
+
+    @PostMapping("/delete")
+    public R<String> delete(HttpServletRequest request, Routine routine){
+        return routineService.delete(request,routine);
     }
 
 

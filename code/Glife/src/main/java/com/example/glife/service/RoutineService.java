@@ -6,6 +6,7 @@ import com.example.glife.entity.Routine;
 import com.example.glife.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface RoutineService extends IService<Routine> {
 
@@ -15,5 +16,7 @@ public interface RoutineService extends IService<Routine> {
 
     public R<Routine> tick(HttpServletRequest request, Routine routine);
 
-    public R<String> init(HttpServletRequest request);
+    public R<List<Routine>> init(HttpServletRequest request);
+
+    public R<String> delete(HttpServletRequest request, Routine routine);
 }

@@ -5,6 +5,7 @@ import com.example.glife.common.PasswordEncoder;
 import com.example.glife.common.R;
 import com.example.glife.entity.User;
 import com.example.glife.service.AssistantService;
+import com.example.glife.service.RoutineService;
 import com.example.glife.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AssistantService assistantService;
 
     /**
      * Register new User

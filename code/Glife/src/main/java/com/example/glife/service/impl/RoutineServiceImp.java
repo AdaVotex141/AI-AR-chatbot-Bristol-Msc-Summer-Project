@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> implements RoutineService {
@@ -59,7 +60,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      * @return
      */
     public R<Routine> update(HttpServletRequest request, Routine routine){
-        Long id = routine.getId();
         //find current line of routine
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Routine::getId, routine.getId());
@@ -81,16 +81,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      * @return
      */
     public R<Routine> tick(HttpServletRequest request, Routine routine){
- /*       //get current login user
-        HttpSession session = request.getSession(false);
-        User user = null;
-        if(session != null && session.getAttribute("user") != null){
-            user = (User) session.getAttribute("user");
-        }else{
-            return R.error("user hasn't login");
-        }*/
-
-        //find current line of routine
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Routine::getId, routine.getId());
         Routine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
@@ -111,8 +101,9 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      *
      * @return
      */
-    public R<String> init(HttpServletRequest request){
-        ArrayList<Routine> routineRepo = new ArrayList<>();
+    //TODO init what should I give back
+    public R<List<Routine>> init(HttpServletRequest request){
+        List<Routine> routineRepo = new ArrayList<>();
         //get current login user
         HttpSession session = request.getSession(false);
         User user = null;
@@ -126,27 +117,27 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         //find
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Routine::getUserid, userid);
+        lambdaQueryWrapper.orderByAsc(Routine::getCreateTime);
+
+        List<Routine> routines = baseMapper.selectList(lambdaQueryWrapper);
+        if (routines != null) {
+            routineRepo.addAll(routines);
+        }
 
 
-        //TODO find repo and quick sort
-
-
-        return null;
+        return R.success(routineRepo);
     }
 
     public R<String> delete(HttpServletRequest request, Routine routine){
-        Long id = routine.getId();
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Routine::getId, routine.getId());
         Routine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
         if(selectRoutine == null){
             return R.error("fail to find this routine");
         }
-        //TODO delete
-       // BaseMapper.delete(selectRoutine);
 
-
-        return null;
+        baseMapper.delete(lambdaQueryWrapper);
+        return R.success("delete success");
     }
 
 }
