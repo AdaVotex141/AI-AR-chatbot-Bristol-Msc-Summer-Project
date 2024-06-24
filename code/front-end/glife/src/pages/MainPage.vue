@@ -2,9 +2,9 @@
     <div id="app">
       <h2 class="title">Glife</h2>
       <div class="navigate">
-        <RouterLink to="/chatwindow">Chat</RouterLink>
-        <RouterLink to="/dayroutine">DayRoutine</RouterLink>
-        <RouterLink to="/artree">ArTree</RouterLink>
+        <RouterLink :to="{name:'chatwindow'}">Chat</RouterLink>
+        <RouterLink :to="{name:'dayroutine'}">DayRoutine</RouterLink>
+        <RouterLink :to="{name:'artree'}">ArTree</RouterLink>
       </div>
       <div class="main-content">
         <RouterView></RouterView>
