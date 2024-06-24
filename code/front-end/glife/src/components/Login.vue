@@ -61,12 +61,12 @@ async function login(){
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
-        
-        
+        // Check if the login request pass
+
 
     } catch (error){
         console.error('Error sending data:', error)
-        alert('Login failure')
+        alert('Error sending data')
     }
 }
 
