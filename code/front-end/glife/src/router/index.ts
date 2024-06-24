@@ -35,7 +35,8 @@ const router = createRouter({
                     path:'dayroutine',
                     component:DayRoutine
                 }
-            ]
+            ],
+            redirect:'/mainpage/chatwindow'
         },
         {
             path:'/',
