@@ -70,7 +70,7 @@ async function register(){
             password: formLabelAlign.password,
             email: formLabelAlign.email
         })
-        
+        // Check if the register is successful
         console.log('Response:', response.data);
         
         formLabelAlign.username = '';
