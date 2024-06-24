@@ -24,12 +24,15 @@
             <el-button type="primary" class="center" @click="login">Login</el-button>
         </el-form-item>
     </el-form>
+
+    <el-button @click="toChat">To the chat</el-button>
     
 </template>
 
 <script lang="ts" setup>
 import axios from 'axios';
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router';
 
 const formLabelAlign = reactive({
     username: '',
@@ -52,7 +55,7 @@ const rules = reactive({
     }
     ]
 })
-
+const router = useRouter()
 const emits = defineEmits(['toggle-page'])
 
 async function login(){
@@ -61,13 +64,19 @@ async function login(){
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
-        // Check if the login request pass
-
+        // Check if the login request pass the authentication
+        router.push('/chatwindow')
 
     } catch (error){
         console.error('Error sending data:', error)
         alert('Error sending data')
     }
+}
+
+function toChat(){
+    router.push({
+        name:'mainpage'
+    })
 }
 
 </script>

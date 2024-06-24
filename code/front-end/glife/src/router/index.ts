@@ -5,6 +5,7 @@ import DayRoutine from '@/pages/DayRoutine.vue'
 import ChatWindow from '@/components/ChatWindow.vue'
 import ArTree from '@/pages/ArTree.vue'
 import LoginRegister from '@/pages/LoginRegister.vue'
+import MainPage from '@/pages/MainPage.vue'
 
 //create router
 const router = createRouter({
@@ -25,6 +26,11 @@ const router = createRouter({
         {
             path:'/login',
             component:LoginRegister
+        },
+        {
+            name:'mainpage',
+            path:'/mainpage',
+            component:MainPage
         },
         {
             path:'/',
