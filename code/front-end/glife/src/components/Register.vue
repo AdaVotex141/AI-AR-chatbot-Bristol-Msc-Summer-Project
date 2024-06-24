@@ -66,14 +66,14 @@ const emits = defineEmits(['toggle-page'])
 async function register(){
     try{
         const response = await axios.post('/api/register',{
-            username: formLabelAlign.name,
+            username: formLabelAlign.username,
             password: formLabelAlign.password,
             email: formLabelAlign.email
         })
         
         console.log('Response:', response.data);
         
-        formLabelAlign.name = '';
+        formLabelAlign.username = '';
         formLabelAlign.password = '';
         formLabelAlign.email = '';
     } catch (error){

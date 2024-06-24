@@ -9,7 +9,7 @@
       style="max-width: 600px"
     >
         <el-form-item label="Username" prop="username">
-            <el-input v-model="formLabelAlign.name" />
+            <el-input v-model="formLabelAlign.username" />
         </el-form-item>
         <el-form-item label="Password" prop="password">
             <el-input v-model="formLabelAlign.password" type="password"/>
@@ -28,10 +28,11 @@
 </template>
 
 <script lang="ts" setup>
+import axios from 'axios';
 import { reactive } from 'vue'
 
 const formLabelAlign = reactive({
-    name: '',
+    username: '',
     password: '',
 })
 
@@ -54,8 +55,19 @@ const rules = reactive({
 
 const emits = defineEmits(['toggle-page'])
 
-function login(){
+async function login(){
+    try{
+        const response = await axios.post('/api/login',{
+            username: formLabelAlign.username,
+            password: formLabelAlign.password
+        })
+        
+        
 
+    } catch (error){
+        console.error('Error sending data:', error)
+        alert('Login failure')
+    }
 }
 
 </script>
