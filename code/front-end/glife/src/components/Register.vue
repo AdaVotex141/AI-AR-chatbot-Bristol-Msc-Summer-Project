@@ -9,7 +9,7 @@
       style="max-width: 600px"
     >
         <el-form-item label="Username" prop="username">
-            <el-input v-model="formLabelAlign.name" />
+            <el-input v-model="formLabelAlign.username" />
         </el-form-item>
         <el-form-item label="Password" prop="password">
             <el-input v-model="formLabelAlign.password" type="password" />
@@ -35,7 +35,7 @@ import { reactive } from 'vue'
 import axios from 'axios'
 
 const formLabelAlign = reactive({
-    name: '',
+    username: '',
     password: '',
     email: ''
 })
@@ -70,7 +70,6 @@ async function register(){
             password: formLabelAlign.password,
             email: formLabelAlign.email
         })
-
         
         console.log('Response:', response.data);
         
@@ -79,6 +78,7 @@ async function register(){
         formLabelAlign.email = '';
     } catch (error){
         console.error('Error sending data:', error)
+        alert('Error sending data')
     }
 }
 
