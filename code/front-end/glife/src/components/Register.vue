@@ -5,6 +5,7 @@
     </div>
     <div style="margin: 10px" />
     <el-form
+      ref="ruleFormRef"
       label-position="top"
       label-width="auto"
       :model="formLabelAlign"
@@ -27,16 +28,18 @@
             </el-link>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" class="center" @click="register">Register</el-button>
+            <el-button type="primary" class="center" @click="register(ruleFormRef)">Register</el-button>
         </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import axios from 'axios'
-import { ElMessage } from 'element-plus';
+import { ElMessage, type FormInstance } from 'element-plus';
+
+const ruleFormRef = ref<FormInstance>()
 
 const formLabelAlign = reactive({
     username: '',
@@ -67,35 +70,44 @@ const rules = reactive({
 })
 
 const emits = defineEmits(['toggle-page'])
-async function register(){
-    try{
-        const response = await axios.post('/api/register',{
-            username: formLabelAlign.username,
-            password: formLabelAlign.password,
-            email: formLabelAlign.email
-        })
-        // Check if the register is successful
-        if(String(response.data.code) === '1'){
+async function register(ruleFormRef: FormInstance | undefined){
+    if (!ruleFormRef) return
+    await ruleFormRef.validate(async (valid) => {
+        if(!valid){
             ElMessage({
-                message: 'Congrats, registration successful',
-                type: 'success'
+                    message: "Invalid information",
+                    type: 'warning'
             })
-            formLabelAlign.username = '';
-            formLabelAlign.password = '';
-            formLabelAlign.email = '';
-            emits('toggle-page')
         } else {
-            ElMessage({
-                message: response.data.msg,
-                type: 'error'
-            })
+            try{
+                const response = await axios.post('/api/register',{
+                    username: formLabelAlign.username,
+                    password: formLabelAlign.password,
+                    email: formLabelAlign.email
+                })
+                // Check if the register is successful
+                if(String(response.data.code) === '1'){
+                    ElMessage({
+                        message: 'Congrats, registration successful',
+                        type: 'success'
+                    })
+                    formLabelAlign.username = '';
+                    formLabelAlign.password = '';
+                    formLabelAlign.email = '';
+                    emits('toggle-page')
+                } else {
+                    ElMessage({
+                        message: response.data.msg,
+                        type: 'error'
+                    })
+                }
+            } catch (error){
+                console.error('Error sending data:', error)
+                alert('Error sending data')
+            }
         }
         
-        
-    } catch (error){
-        console.error('Error sending data:', error)
-        alert('Error sending data')
-    }
+    })
 }
 
 </script>
