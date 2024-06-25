@@ -64,8 +64,12 @@ async function login(){
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
-        // Check if the login request pass the authentication
+        /*
+        Check if the login request pass the authentication
+        If passed, push to the mainpage; If not, give an alert
+        */
         router.push('/chatwindow')
+
 
     } catch (error){
         console.error('Error sending data:', error)
