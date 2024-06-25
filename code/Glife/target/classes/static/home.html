@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLife</title>
+    <link rel="icon" type="image/x-icon" href="/image/tree .ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<h1 style="text-align: center;">Glife</h1>
+<script>
+    window.watsonAssistantChatOptions = {
+      integrationID: "c1910365-9aaf-44ba-af54-8f692d2bb369", // The ID of this integration.
+      region: "eu-gb", // The region your integration is hosted in.
+      serviceInstanceID: "fff9f01a-6010-4df4-80d9-2fd6cc75a4a4", // The ID of your service instance.
+      pageLinkConfig: {
+      linkIDs: {
+        'u35': {
+          text: 'I would like to update my account'
+        },
+        'r23': {
+          text: 'I need to reset my password'
+        }
+      }
+    },
+      onLoad: async (instance) => {
+        await instance.render();
+      }
+    };
+    setTimeout(function(){
+      const t=document.createElement('script');
+      t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+      document.head.appendChild(t);
+    });
+</script>
+
+<div id="app">
+    <div class="header">
+        <h1>Glife</h1>
+        <button @click="logout">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
+    <Chat :username="username" />
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
