@@ -90,8 +90,11 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         }
 */
 
-        if (foundUser == null || !passwordEncoder.matchPassword(inputPassword, foundUser.getPassword())) {
-            return R.error("Login failed");
+        if (foundUser == null) {
+            return R.error("username not existed");
+        }
+        if(!passwordEncoder.matchPassword(inputPassword, foundUser.getPassword())){
+            return R.error("password wrong");
         }
 
         HttpSession session = request.getSession();
