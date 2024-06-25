@@ -1,17 +1,19 @@
 <template>
-    <h2 class="title">LOGIN</h2>
-    <div style="margin: 20px" />
+  <div class="container">
+    <div class="title-container">
+      <h2 class="title">LOG IN</h2>
+    </div>
+    <div style="margin: 10px" />
     <el-form
       label-position="top"
       label-width="auto"
       :model="formLabelAlign"
       :rules="rules"
-      style="max-width: 600px"
     >
-        <el-form-item label="Username" prop="username">
+        <el-form-item label="USERNAME" prop="username">
             <el-input v-model="formLabelAlign.username" />
         </el-form-item>
-        <el-form-item label="Password" prop="password">
+        <el-form-item label="PASSWORD" prop="password">
             <el-input v-model="formLabelAlign.password" type="password"/>
         </el-form-item>
         <el-form-item class="tip-message">
@@ -24,7 +26,7 @@
             <el-button type="primary" class="center" @click="login">Login</el-button>
         </el-form-item>
     </el-form>
-
+  </div>
     <el-button @click="toChat">To the chat</el-button>
     
 </template>
@@ -82,5 +84,77 @@ function toChat(){
         name:'mainpage'
     })
 }
-
 </script>
+
+<style>
+body{
+  background-color: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+h2{
+  font-weight: bold;
+  font-family: "Cooper Black";
+}
+
+.title-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  max-width: 1024px;
+  display: grid;
+  place-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 64px;
+  color: darkolivegreen;
+}
+
+.container{
+  max-width:1024px;
+  align-items: center;
+  height: 100vh;
+  max-height: 500px;
+  padding: 20px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.el-form-item {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.el-input {
+  width: 100%;
+}
+
+.tip-message {
+  text-align: center;
+}
+
+.tip-message .el-link {
+  font-weight: bold;
+}
+
+.el-button.center {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  background: darkseagreen;
+}
+
+.el-button.center:hover {
+  background-color:darkolivegreen;
+  color: #fff;
+}
+</style>
