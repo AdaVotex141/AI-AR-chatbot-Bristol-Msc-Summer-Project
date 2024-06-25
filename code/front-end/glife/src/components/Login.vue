@@ -1,32 +1,33 @@
 <template>
-  <div class="title-container">
-    <h2 class="title">LOG IN</h2>
+  <div class="container">
+    <div class="title-container">
+      <h2 class="title">LOG IN</h2>
+    </div>
+      <div style="margin: 10px" />
+      <el-form
+        :rules="rules"
+        :model="formLabelAlign"
+        label-position="top"
+        label-width="auto"
+      >
+          <el-form-item label="USERNAME" prop="username">
+              <el-input v-model="formLabelAlign.username" />
+          </el-form-item>
+          <el-form-item label="PASSWORD" prop="password">
+              <el-input v-model="formLabelAlign.password" type="password"/>
+          </el-form-item>
+          <el-form-item class="tip-message">
+              Don't have an account?
+              <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
+                  Click here to register
+              </el-link>
+          </el-form-item>
+          <el-form-item>
+              <el-button type="primary" class="center" @click="login">Login</el-button>
+          </el-form-item>
+      </el-form>
   </div>
-    <div style="margin: 10px" />
-    <el-form
-      :rules="rules"
-      :model="formLabelAlign"
-      label-position="top"
-      label-width="auto"
-    >
-        <el-form-item label="USERNAME" prop="username">
-            <el-input v-model="formLabelAlign.username" />
-        </el-form-item>
-        <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password"/>
-        </el-form-item>
-        <el-form-item class="tip-message">
-            Don't have an account? 
-            <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
-                Click here to register
-            </el-link>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" class="center" @click="login">Login</el-button>
-        </el-form-item>
-    </el-form>
-
-    <el-button @click="toChat">To the chat</el-button>
+  <el-button @click="toChat">To the chat</el-button>
     
 </template>
 
@@ -83,6 +84,14 @@ function toChat(){
 </script>
 
 <style>
+body{
+  background-color: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
 h2{
   font-weight: bold;
   font-family: "Cooper Black";
@@ -96,24 +105,21 @@ h2{
   max-width: 1024px;
   display: grid;
   place-items: center;
-  background-color:darkseagreen;
-  border: 1px solid #ddd;
-  border-radius: 18px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .title {
   text-align: center;
-  font-size: 32px;
-  color: black;
+  font-size: 64px;
+  color: darkolivegreen;
 }
 
-
-.el-form {
-  max-width: 400px;
-  margin: 0 auto;
+.container{
+  max-width:1024px;
+  align-items: center;
+  height: 100vh;
+  max-height: 500px;
   padding: 20px;
-  background: rgba(175, 157, 137, 0.29);
+  background: white;
   border: 1px solid #ddd;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -141,11 +147,12 @@ h2{
   margin: 0 auto;
   width: 100%;
   text-align: center;
+  background: green;
 }
 
 .el-button.center:hover {
-  background-color: #409eff;
-  border-color: #409eff;
+  background-color:darkseagreen;
+  border-color: darkolivegreen;
   color: #fff;
 }
 </style>

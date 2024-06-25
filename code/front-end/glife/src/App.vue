@@ -14,6 +14,9 @@
     margin: 0;
     display: flex;
     flex-direction: column;
+    background-color: #e8e8e8;
+    justify-content: center;
+    align-items: center;
   }
 
   #app {
