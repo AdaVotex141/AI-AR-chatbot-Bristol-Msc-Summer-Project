@@ -70,6 +70,7 @@ async function login(){
         Check if the login request pass the authentication
         If passed, push to the mainpage; If not, give an alert
         */
+        
         router.push('/chatwindow')
 
 

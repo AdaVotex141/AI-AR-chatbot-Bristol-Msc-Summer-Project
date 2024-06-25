@@ -36,6 +36,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import axios from 'axios'
+import { ElMessage } from 'element-plus';
 
 const formLabelAlign = reactive({
     username: '',
@@ -74,11 +75,23 @@ async function register(){
             email: formLabelAlign.email
         })
         // Check if the register is successful
-        console.log('Response:', response.data);
+        if(String(response.data.code) === '1'){
+            ElMessage({
+                message: 'Congrats, registration successful',
+                type: 'success'
+            })
+            formLabelAlign.username = '';
+            formLabelAlign.password = '';
+            formLabelAlign.email = '';
+            emits('toggle-page')
+        } else {
+            ElMessage({
+                message: response.data.msg,
+                type: 'error'
+            })
+        }
         
-        formLabelAlign.username = '';
-        formLabelAlign.password = '';
-        formLabelAlign.email = '';
+        
     } catch (error){
         console.error('Error sending data:', error)
         alert('Error sending data')
