@@ -28,7 +28,6 @@
         </el-form-item>
     </el-form>
   </div>
-    <el-button @click="toChat">To the chat</el-button>
     
 </template>
 
@@ -67,9 +66,10 @@ const emits = defineEmits(['toggle-page'])
 async function login(ruleFormRef: FormInstance | undefined){
   if (!ruleFormRef) return
   await ruleFormRef.validate(async (valid) => {
+    // If form is invalid, giving a tips to the user
     if(!valid){
       ElMessage({
-        message: "Invalid information",
+        message: "Please input valid information",
         type: 'warning'
       })
     } else {
@@ -82,10 +82,21 @@ async function login(ruleFormRef: FormInstance | undefined){
         Check if the login request pass the authentication
         If passed, push to the mainpage; If not, give an alert
         */
-
-        router.push('/chatwindow')
-
-
+        if(String(response.data.code) === '1'){
+          ElMessage({
+            message: 'Congrats, registration successful',
+            type: 'success'
+          })
+          router.push({
+            name:'mainpage'
+          })
+        } else {
+          ElMessage({
+            message: response.data.msg,
+            type: 'error'
+          })
+          formLabelAlign.password = ''
+        }
       } catch (error){
           console.error('Error sending data:', error)
           alert('Error sending data')
@@ -95,11 +106,6 @@ async function login(ruleFormRef: FormInstance | undefined){
     
 }
 
-function toChat(){
-    router.push({
-        name:'mainpage'
-    })
-}
 </script>
 
 <style>
