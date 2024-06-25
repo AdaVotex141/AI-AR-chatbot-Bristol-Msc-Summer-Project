@@ -84,7 +84,7 @@ async function login(ruleFormRef: FormInstance | undefined){
         */
         if(String(response.data.code) === '1'){
           ElMessage({
-            message: 'Congrats, registration successful',
+            message: 'Login successfully',
             type: 'success'
           })
           router.push({
