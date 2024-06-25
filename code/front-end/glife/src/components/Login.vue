@@ -85,7 +85,7 @@ function toChat(){
 <style>
 h2{
   font-weight: bold;
-  font-family: "Tempus Sans ITC";
+  font-family: "Cooper Black";
 }
 
 .title-container {
@@ -113,7 +113,7 @@ h2{
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  background: lightgoldenrodyellow;
+  background: rgba(175, 157, 137, 0.29);
   border: 1px solid #ddd;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
