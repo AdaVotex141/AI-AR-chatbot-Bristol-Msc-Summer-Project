@@ -17,3 +17,15 @@
     
   
   </script>
+
+<style scoped>
+.navigate{
+  font-family: "Cooper Black";
+}
+.main-content{
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+</style>
