@@ -150,11 +150,11 @@ h2{
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  background: darkseagreen;
+  background-color:darkolivegreen;
 }
 
 .el-button.center:hover {
-  background-color:darkolivegreen;
+  background-color:darkseagreen;
   color: #fff;
 }
 </style>
