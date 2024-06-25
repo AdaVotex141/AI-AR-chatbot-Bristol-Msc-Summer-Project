@@ -20,7 +20,8 @@ import java.util.List;
 
 @Service
 public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> implements RoutineService {
-
+    @Autowired
+    AssistantService assistantService;
 
     /**
      *
@@ -48,7 +49,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         newRoutine.setTick(0);
         newRoutine.setCreateTime(LocalDateTime.now());
         baseMapper.insert(newRoutine);
-
 
         return R.success("create routine success");
     }
