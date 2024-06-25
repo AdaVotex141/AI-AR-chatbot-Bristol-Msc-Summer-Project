@@ -9,16 +9,6 @@
 </script>
 
 <style>
-  .title{
-      background-color:#438944;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
-
   html, body, #app {
     height: 100%;
     margin: 0;

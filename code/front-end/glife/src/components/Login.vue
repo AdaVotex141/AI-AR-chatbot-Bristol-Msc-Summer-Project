@@ -1,17 +1,18 @@
 <template>
-    <h2 class="title">LOGIN</h2>
-    <div style="margin: 20px" />
+  <div class="title-container">
+    <h2 class="title">LOG IN</h2>
+  </div>
+    <div style="margin: 10px" />
     <el-form
+      :rules="rules"
+      :model="formLabelAlign"
       label-position="top"
       label-width="auto"
-      :model="formLabelAlign"
-      :rules="rules"
-      style="max-width: 600px"
     >
-        <el-form-item label="Username" prop="username">
+        <el-form-item label="USERNAME" prop="username">
             <el-input v-model="formLabelAlign.username" />
         </el-form-item>
-        <el-form-item label="Password" prop="password">
+        <el-form-item label="PASSWORD" prop="password">
             <el-input v-model="formLabelAlign.password" type="password"/>
         </el-form-item>
         <el-form-item class="tip-message">
@@ -80,3 +81,71 @@ function toChat(){
 }
 
 </script>
+
+<style>
+h2{
+  font-weight: bold;
+  font-family: "Tempus Sans ITC";
+}
+
+.title-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  max-width: 1024px;
+  display: grid;
+  place-items: center;
+  background-color:darkseagreen;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 32px;
+  color: black;
+}
+
+
+.el-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: lightgoldenrodyellow;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.el-form-item {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.el-input {
+  width: 100%;
+}
+
+.tip-message {
+  text-align: center;
+}
+
+.tip-message .el-link {
+  font-weight: bold;
+}
+
+.el-button.center {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.el-button.center:hover {
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+}
+</style>
