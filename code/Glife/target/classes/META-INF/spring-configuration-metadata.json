@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "assistant",
+      "type": "com.example.glife.config.AssistantConfig",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "assistant.action-skill-i-d",
+      "type": "java.lang.String",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    },
+    {
+      "name": "assistant.apikey",
+      "type": "java.lang.String",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    },
+    {
+      "name": "assistant.assistant-id",
+      "type": "java.lang.String",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    },
+    {
+      "name": "assistant.environment-i-d",
+      "type": "java.lang.String",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    },
+    {
+      "name": "assistant.service-url",
+      "type": "java.lang.String",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    },
+    {
+      "name": "assistant.version",
+      "type": "java.lang.String",
+      "sourceType": "com.example.glife.config.AssistantConfig"
+    }
+  ],
+  "hints": []
+}
