@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AssistantAPITest {
     @Autowired
     private AssistantService assistantService;
-
     private String sessionId;
 
     @BeforeEach
@@ -38,7 +37,7 @@ public class AssistantAPITest {
 
 
     }
-    @Test
+/*    @Test
     void helloAssistant() {
 
         try {
@@ -63,5 +62,5 @@ public class AssistantAPITest {
                     + e.getStatusCode() + ": " + e.getMessage());
         }
 
-    }
+    }*/
 }

@@ -12,3 +12,7 @@ id， name，password（加密）， email，createTime， Last_Login
 
 
 1. ```home.html?wa_lid=r23```修改密码等
+
+# 项目优化
+1. 登录加邮箱验证，Redis作为验证
+2. 
