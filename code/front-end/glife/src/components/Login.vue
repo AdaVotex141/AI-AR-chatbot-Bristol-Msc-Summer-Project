@@ -3,31 +3,31 @@
     <div class="title-container">
       <h2 class="title">LOG IN</h2>
     </div>
-      <div style="margin: 10px" />
-      <el-form
-        :rules="rules"
-        :model="formLabelAlign"
-        label-position="top"
-        label-width="auto"
-      >
-          <el-form-item label="USERNAME" prop="username">
-              <el-input v-model="formLabelAlign.username" />
-          </el-form-item>
-          <el-form-item label="PASSWORD" prop="password">
-              <el-input v-model="formLabelAlign.password" type="password"/>
-          </el-form-item>
-          <el-form-item class="tip-message">
-              Don't have an account?
-              <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
-                  Click here to register
-              </el-link>
-          </el-form-item>
-          <el-form-item>
-              <el-button type="primary" class="center" @click="login">Login</el-button>
-          </el-form-item>
-      </el-form>
+    <div style="margin: 10px" />
+    <el-form
+      label-position="top"
+      label-width="auto"
+      :model="formLabelAlign"
+      :rules="rules"
+    >
+        <el-form-item label="USERNAME" prop="username">
+            <el-input v-model="formLabelAlign.username" />
+        </el-form-item>
+        <el-form-item label="PASSWORD" prop="password">
+            <el-input v-model="formLabelAlign.password" type="password"/>
+        </el-form-item>
+        <el-form-item class="tip-message">
+            Don't have an account? 
+            <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
+                Click here to register
+            </el-link>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" class="center" @click="login">Login</el-button>
+        </el-form-item>
+    </el-form>
   </div>
-  <el-button @click="toChat">To the chat</el-button>
+    <el-button @click="toChat">To the chat</el-button>
     
 </template>
 
@@ -66,8 +66,12 @@ async function login(){
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
-        // Check if the login request pass the authentication
+        /*
+        Check if the login request pass the authentication
+        If passed, push to the mainpage; If not, give an alert
+        */
         router.push('/chatwindow')
+
 
     } catch (error){
         console.error('Error sending data:', error)
@@ -80,7 +84,6 @@ function toChat(){
         name:'mainpage'
     })
 }
-
 </script>
 
 <style>
@@ -147,12 +150,11 @@ h2{
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  background: green;
+  background: darkseagreen;
 }
 
 .el-button.center:hover {
-  background-color:darkseagreen;
-  border-color: darkolivegreen;
+  background-color:darkolivegreen;
   color: #fff;
 }
 </style>

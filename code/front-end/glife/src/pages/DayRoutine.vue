@@ -13,37 +13,25 @@
     </div>
   </template>
   
-  <script>
+  <script setup>
   import { ref } from 'vue';
+    const newTodo = ref('');
+    const todos = ref([
+      { text: 'Learn Vue 3', completed: false },
+      { text: 'Build a to-do list', completed: false }
+    ]);
+
+    const addTodo = () => {
+      if (newTodo.value.trim() !== '') {
+        todos.value.push({ text: newTodo.value.trim(), completed: false });
+        newTodo.value = '';
+      }
+    };
+
+    const removeTodo = (index) => {
+      todos.value.splice(index, 1);
+    };
   
-  export default {
-    name: 'DayRoutine',
-    setup() {
-      const newTodo = ref('');
-      const todos = ref([
-        { text: 'Learn Vue 3', completed: false },
-        { text: 'Build a to-do list', completed: false }
-      ]);
-  
-      const addTodo = () => {
-        if (newTodo.value.trim() !== '') {
-          todos.value.push({ text: newTodo.value.trim(), completed: false });
-          newTodo.value = '';
-        }
-      };
-  
-      const removeTodo = (index) => {
-        todos.value.splice(index, 1);
-      };
-  
-      return {
-        newTodo,
-        todos,
-        addTodo,
-        removeTodo
-      };
-    }
-  };
   </script>
   
   <style scoped>
