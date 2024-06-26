@@ -28,7 +28,9 @@
 .title{
   position: fixed;
   top:0;
-  left: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   text-align: center;
   font-size: 4rem;
   color: darkolivegreen;
@@ -37,10 +39,14 @@
 .navigate{
   font-family: 'Cooper Black',sans-serif;
   position: fixed;
-  top:12%;
-  left: auto;
+  top:10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  margin-bottom: 1.2rem;
 }
 .main-content{
+
   background: white;
   border: 1px solid #ddd;
   border-radius: 1rem;
