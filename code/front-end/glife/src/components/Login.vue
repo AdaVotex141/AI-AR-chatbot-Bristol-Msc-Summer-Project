@@ -5,6 +5,7 @@
     </div>
     <div style="margin: 10px" />
     <el-form
+      ref="ruleFormRef"
       label-position="top"
       label-width="auto"
       :model="formLabelAlign"
@@ -23,18 +24,20 @@
             </el-link>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" class="center" @click="login">Login</el-button>
+            <el-button type="primary" class="center" @click="login(ruleFormRef)">Login</el-button>
         </el-form-item>
     </el-form>
   </div>
-    <el-button @click="toChat">To the chat</el-button>
     
 </template>
 
 <script lang="ts" setup>
 import axios from 'axios';
-import { reactive } from 'vue'
+import { ElMessage, type FormInstance } from 'element-plus';
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
+
+const ruleFormRef = ref<FormInstance>()
 
 const formLabelAlign = reactive({
     username: '',
@@ -60,8 +63,17 @@ const rules = reactive({
 const router = useRouter()
 const emits = defineEmits(['toggle-page'])
 
-async function login(){
-    try{
+async function login(ruleFormRef: FormInstance | undefined){
+  if (!ruleFormRef) return
+  await ruleFormRef.validate(async (valid) => {
+    // If form is invalid, giving a tips to the user
+    if(!valid){
+      ElMessage({
+        message: "Please input valid information",
+        type: 'warning'
+      })
+    } else {
+      try{
         const response = await axios.post('/api/login',{
             username: formLabelAlign.username,
             password: formLabelAlign.password
@@ -70,20 +82,30 @@ async function login(){
         Check if the login request pass the authentication
         If passed, push to the mainpage; If not, give an alert
         */
-        router.push('/chatwindow')
-
-
-    } catch (error){
-        console.error('Error sending data:', error)
-        alert('Error sending data')
+        if(String(response.data.code) === '1'){
+          ElMessage({
+            message: 'Login successfully',
+            type: 'success'
+          })
+          router.push({
+            name:'mainpage'
+          })
+        } else {
+          ElMessage({
+            message: response.data.msg,
+            type: 'error'
+          })
+          formLabelAlign.password = ''
+        }
+      } catch (error){
+          console.error('Error sending data:', error)
+          alert('Error sending data')
+      }
     }
+  })
+    
 }
 
-function toChat(){
-    router.push({
-        name:'mainpage'
-    })
-}
 </script>
 
 <style>
