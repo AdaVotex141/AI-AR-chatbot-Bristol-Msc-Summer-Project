@@ -39,8 +39,10 @@
   position: fixed;
   top:10%;
   left: 44%;
+  margin-bottom: 1.2rem;
 }
 .main-content{
+
   background: white;
   border: 1px solid #ddd;
   border-radius: 1rem;
