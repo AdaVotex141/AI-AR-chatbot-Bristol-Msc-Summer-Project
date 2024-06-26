@@ -28,7 +28,7 @@
 .title{
   position: fixed;
   top:0;
-  left: auto;
+  left: 45%;
   text-align: center;
   font-size: 4rem;
   color: darkolivegreen;
@@ -37,8 +37,8 @@
 .navigate{
   font-family: 'Cooper Black',sans-serif;
   position: fixed;
-  top:12%;
-  left: auto;
+  top:10%;
+  left: 44%;
 }
 .main-content{
   background: white;
