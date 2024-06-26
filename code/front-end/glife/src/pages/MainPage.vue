@@ -14,18 +14,18 @@
   
   <script setup lang="ts" name="App">
     import { RouterView } from 'vue-router';
-    
+
   
   </script>
 
 <style scoped>
 .navigate{
-  font-family: 'Cooper Black',sans-serif;;
+  font-family: 'Cooper Black',sans-serif;
 }
 .main-content{
   background: white;
   border: 1px solid #ddd;
-  border-radius: 16px;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 </style>

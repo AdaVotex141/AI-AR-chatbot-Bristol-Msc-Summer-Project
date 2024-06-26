@@ -28,7 +28,8 @@
         </el-form-item>
     </el-form>
   </div>
-    
+  <el-button @click="toChat">To the chat</el-button>
+
 </template>
 
 <script lang="ts" setup>
@@ -105,6 +106,11 @@ async function login(ruleFormRef: FormInstance | undefined){
   })
     
 }
+function toChat(){
+  router.push({
+    name:'mainpage'
+  })
+}
 
 </script>
 
@@ -146,12 +152,12 @@ h2{
   padding: 20px;
   background: white;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .el-form-item {
-  margin-bottom: 20px;
+  margin-bottom: 1.6rem;
   text-align: center;
 }
 
