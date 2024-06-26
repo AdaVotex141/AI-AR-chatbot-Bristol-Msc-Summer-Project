@@ -1,19 +1,29 @@
 <template>
-    <div class="dayroutine-app">
-      <h1>DayRoutine</h1>
-      <input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new task" />
-      <button @click="addTodo">Add</button>
-      <ul>
-        <li v-for="(todo, index) in todos" :key="index" :class="{ completed: todo.completed }">
-          <input type="checkbox" v-model="todo.completed" />
-          <span>{{ todo.text }}</span>
-          <button @click="removeTodo(index)">Remove</button>
-        </li>
-      </ul>
-    </div>
+    <el-container class="dayroutine-app">
+      <el-header>DayRoutine</el-header>
+      <el-main>
+        <div class="user-input">
+          <el-input 
+          v-model="newTodo" 
+          @keyup.enter="addTodo" 
+          placeholder="Add a new routine!" 
+          clearable/>
+          <el-button type="primary" @click="addTodo">Add</el-button>
+        </div>
+        <el-divider content-position="left">Your routines:</el-divider>
+        <ul>
+          <li v-for="(todo, index) in todos" :key="index" :class="{ completed: todo.completed }">
+            <input type="checkbox" v-model="todo.completed" />
+            <span>{{ todo.text }}</span>
+            <el-button @click="removeTodo(index)">Remove</el-button>
+          </li>
+        </ul>
+      </el-main>
+    </el-container>
   </template>
   
   <script setup>
+  import axios from 'axios';
   import { ref } from 'vue';
     const newTodo = ref('');
     const todos = ref([
@@ -21,10 +31,29 @@
       { text: 'Build a to-do list', completed: false }
     ]);
 
-    const addTodo = () => {
+    async function addTodo(){
       if (newTodo.value.trim() !== '') {
         todos.value.push({ text: newTodo.value.trim(), completed: false });
         newTodo.value = '';
+        try{
+          const response = await axios.post('/routine/add', {
+            content: newTodo    
+          })
+          if(String(response.data.code) === '1'){
+            ElMessage({
+              message: 'Add routine successfully',
+              type: 'success'
+            })
+          } else {
+            ElMessage({
+              message: 'Bad things happened',
+              type: 'error'
+            })
+          }
+        } catch (error){
+          console.error('Error add to do:', error)
+          alert('Error happened when adding dayroutine')
+        }
       }
     };
 
@@ -35,6 +64,11 @@
   </script>
   
   <style scoped>
+  .user-input {
+    display: flex;
+    align-items: center;
+  }
+
   .todo-app {
     max-width: 500px;
     margin: 0 auto;

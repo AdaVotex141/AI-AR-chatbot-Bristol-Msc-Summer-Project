@@ -1,14 +1,16 @@
 <template>
-    <div id="app">
-      <h2 class="title">Glife</h2>
-      <div class="navigate">
-        <RouterLink :to="{name:'chatwindow'}">Chat</RouterLink>
-        <RouterLink :to="{name:'dayroutine'}">DayRoutine</RouterLink>
-        <RouterLink :to="{name:'artree'}">ArTree</RouterLink>
-      </div>
-      <div class="main-content">
-        <RouterView></RouterView>
-      </div>
+    <div class="common-layout">
+      <el-container>
+        <el-header class="title">Glife</el-header>
+        <el-main class="navigate">
+          <RouterLink :to="{name:'chatwindow'}">Chat</RouterLink>
+          <RouterLink :to="{name:'dayroutine'}">DayRoutine</RouterLink>
+          <RouterLink :to="{name:'artree'}">ArTree</RouterLink>
+        </el-main>
+        <el-main class="main-content">
+          <RouterView></RouterView>
+        </el-main>
+      </el-container>
     </div>
   </template>
   

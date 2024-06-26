@@ -15,7 +15,7 @@
             <el-input v-model="formLabelAlign.username" />
         </el-form-item>
         <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password"/>
+            <el-input v-model="formLabelAlign.password" type="password" show-password/>
         </el-form-item>
         <el-form-item class="tip-message">
             Don't have an account? 
