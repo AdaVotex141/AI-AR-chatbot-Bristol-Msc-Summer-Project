@@ -1,6 +1,6 @@
 <template>
     <div class="dayroutine-app">
-      <h1>DayRoutine</h1>
+      <h2>DayRoutine</h2>
       <input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new task" />
       <button @click="addTodo">Add</button>
       <ul>
