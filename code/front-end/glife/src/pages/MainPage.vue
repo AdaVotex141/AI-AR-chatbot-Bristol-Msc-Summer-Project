@@ -19,8 +19,16 @@
   </script>
 
 <style scoped>
+.title{
+  position: fixed;
+  top:0;
+  left: auto;
+}
 .navigate{
   font-family: 'Cooper Black',sans-serif;
+  position: fixed;
+  top:12%;
+  left: auto;
 }
 .main-content{
   background: white;

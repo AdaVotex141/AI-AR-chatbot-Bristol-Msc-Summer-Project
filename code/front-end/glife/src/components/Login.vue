@@ -123,10 +123,6 @@ body{
   height: 100vh;
   margin: 0;
 }
-h2{
-  font-weight: bold;
-  font-family: 'Cooper Black',sans-serif;
-}
 
 .title-container {
   margin-top: 20px;
