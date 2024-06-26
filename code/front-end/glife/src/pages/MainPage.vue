@@ -20,7 +20,7 @@
 
 <style scoped>
 .navigate{
-  font-family: "Cooper Black";
+  font-family: 'Cooper Black',sans-serif;;
 }
 .main-content{
   background: white;

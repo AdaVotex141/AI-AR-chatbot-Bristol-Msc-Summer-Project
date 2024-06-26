@@ -119,7 +119,7 @@ body{
 }
 h2{
   font-weight: bold;
-  font-family: "Cooper Black";
+  font-family: 'Cooper Black',sans-serif;
 }
 
 .title-container {
@@ -134,7 +134,7 @@ h2{
 
 .title {
   text-align: center;
-  font-size: 64px;
+  font-size: 4rem;
   color: darkolivegreen;
 }
 
