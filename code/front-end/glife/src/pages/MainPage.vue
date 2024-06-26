@@ -16,18 +16,34 @@
   
   <script setup lang="ts" name="App">
     import { RouterView } from 'vue-router';
-    
+
   
   </script>
 
 <style scoped>
+.title, .navigate{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+}
+.title{
+  position: fixed;
+  top:0;
+  left: auto;
+  text-align: center;
+  font-size: 4rem;
+  color: darkolivegreen;
+
+}
 .navigate{
   font-family: 'Cooper Black',sans-serif;
+  position: fixed;
+  top:12%;
+  left: auto;
 }
 .main-content{
   background: white;
   border: 1px solid #ddd;
-  border-radius: 16px;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 </style>
