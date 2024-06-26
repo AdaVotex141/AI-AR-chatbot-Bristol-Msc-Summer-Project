@@ -28,7 +28,9 @@
 .title{
   position: fixed;
   top:0;
-  left: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   text-align: center;
   font-size: 4rem;
   color: darkolivegreen;
@@ -38,7 +40,9 @@
   font-family: 'Cooper Black',sans-serif;
   position: fixed;
   top:10%;
-  left: 44%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   margin-bottom: 1.2rem;
 }
 .main-content{
