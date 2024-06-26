@@ -22,7 +22,7 @@
 
 <style scoped>
 .navigate{
-  font-family: 'Cooper Black',sans-serif;;
+  font-family: 'Cooper Black',sans-serif;
 }
 .main-content{
   background: white;
