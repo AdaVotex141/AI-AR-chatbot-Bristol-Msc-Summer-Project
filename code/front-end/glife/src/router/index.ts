@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 //import components
 import DayRoutine from '@/pages/DayRoutine.vue'
-import ChatWindow from '@/components/ChatWindow.vue'
+import ChatWindow from '@/pages/ChatWindow.vue'
 import ArTree from '@/pages/ArTree.vue'
 import LoginRegister from '@/pages/LoginRegister.vue'
 import MainPage from '@/pages/MainPage.vue'
