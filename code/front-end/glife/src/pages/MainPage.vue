@@ -19,10 +19,18 @@
   </script>
 
 <style scoped>
+.title, .navigate{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+}
 .title{
   position: fixed;
   top:0;
   left: auto;
+  text-align: center;
+  font-size: 4rem;
+  color: darkolivegreen;
+
 }
 .navigate{
   font-family: 'Cooper Black',sans-serif;

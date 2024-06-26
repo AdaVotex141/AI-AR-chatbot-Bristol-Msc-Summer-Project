@@ -19,11 +19,6 @@ html, body, #app {
   align-items: center;
 }
 
-h2{
-  font-weight: bold;
-  font-family: 'Cooper Black',sans-serif;
-}
-
 #app {
   flex: 1;
   display: flex;

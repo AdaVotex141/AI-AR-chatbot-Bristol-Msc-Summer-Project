@@ -106,6 +106,7 @@ async function login(ruleFormRef: FormInstance | undefined){
   })
     
 }
+// for the main page UI test
 function toChat(){
   router.push({
     name:'mainpage'
@@ -114,7 +115,11 @@ function toChat(){
 
 </script>
 
-<style>
+<style scoped>
+h2{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+}
 body{
   background-color: #e8e8e8;
   display: flex;
@@ -150,15 +155,6 @@ body{
   border: 1px solid #ddd;
   border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.el-form-item {
-  margin-bottom: 1.6rem;
-  text-align: center;
-}
-
-.el-input {
-  width: 100%;
 }
 
 .tip-message {
