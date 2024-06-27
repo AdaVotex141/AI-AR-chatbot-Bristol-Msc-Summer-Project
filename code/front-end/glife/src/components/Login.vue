@@ -5,6 +5,7 @@
     </div>
     <div style="margin: 10px" />
     <el-form
+      ref="ruleFormRef"
       label-position="top"
       label-width="auto"
       :model="formLabelAlign"
@@ -14,7 +15,7 @@
             <el-input v-model="formLabelAlign.username" />
         </el-form-item>
         <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password"/>
+            <el-input v-model="formLabelAlign.password" type="password" show-password/>
         </el-form-item>
         <el-form-item class="tip-message">
             Don't have an account? 
@@ -23,18 +24,21 @@
             </el-link>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" class="center" @click="login">Login</el-button>
+            <el-button type="primary" class="center" @click="login(ruleFormRef)">Login</el-button>
         </el-form-item>
     </el-form>
   </div>
-    <el-button @click="toChat">To the chat</el-button>
-    
+  <el-button @click="toChat">To the chat</el-button>
+
 </template>
 
 <script lang="ts" setup>
 import axios from 'axios';
-import { reactive } from 'vue'
+import { ElMessage, type FormInstance } from 'element-plus';
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
+
+const ruleFormRef = ref<FormInstance>()
 
 const formLabelAlign = reactive({
     username: '',
@@ -60,8 +64,17 @@ const rules = reactive({
 const router = useRouter()
 const emits = defineEmits(['toggle-page'])
 
-async function login(){
-    try{
+async function login(ruleFormRef: FormInstance | undefined){
+  if (!ruleFormRef) return
+  await ruleFormRef.validate(async (valid) => {
+    // If form is invalid, giving a tips to the user
+    if(!valid){
+      ElMessage({
+        message: "Please input valid information",
+        type: 'warning'
+      })
+    } else {
+      try{
         const response = await axios.post('/api/login',{
             username: formLabelAlign.username,
             password: formLabelAlign.password
@@ -70,24 +83,43 @@ async function login(){
         Check if the login request pass the authentication
         If passed, push to the mainpage; If not, give an alert
         */
-        
-        router.push('/chatwindow')
-
-
-    } catch (error){
-        console.error('Error sending data:', error)
-        alert('Error sending data')
+        if(String(response.data.code) === '1'){
+          ElMessage({
+            message: 'Login successfully',
+            type: 'success'
+          })
+          router.push({
+            name:'mainpage'
+          })
+        } else {
+          ElMessage({
+            message: response.data.msg,
+            type: 'error'
+          })
+          formLabelAlign.password = ''
+        }
+      } catch (error){
+          console.error('Error sending data:', error)
+          alert('Error sending data')
+      }
     }
+  })
+    
+}
+// for the main page UI test
+function toChat(){
+  router.push({
+    name:'mainpage'
+  })
 }
 
-function toChat(){
-    router.push({
-        name:'mainpage'
-    })
-}
 </script>
 
-<style>
+<style scoped>
+h2{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+}
 body{
   background-color: #e8e8e8;
   display: flex;
@@ -95,10 +127,6 @@ body{
   align-items: center;
   height: 100vh;
   margin: 0;
-}
-h2{
-  font-weight: bold;
-  font-family: "Cooper Black";
 }
 
 .title-container {
@@ -113,7 +141,7 @@ h2{
 
 .title {
   text-align: center;
-  font-size: 64px;
+  font-size: 4rem;
   color: darkolivegreen;
 }
 
@@ -125,17 +153,8 @@ h2{
   padding: 20px;
   background: white;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.el-form-item {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.el-input {
-  width: 100%;
 }
 
 .tip-message {
@@ -151,11 +170,11 @@ h2{
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  background: darkseagreen;
+  background-color:darkolivegreen;
 }
 
 .el-button.center:hover {
-  background-color:darkolivegreen;
+  background-color:darkseagreen;
   color: #fff;
 }
 </style>
