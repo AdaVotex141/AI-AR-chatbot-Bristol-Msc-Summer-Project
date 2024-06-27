@@ -71,7 +71,9 @@ public class LoginCheckFilter implements Filter {
         String[] urls = new String[]{
             "/index.html",
                 "/login",
-                "/register"
+                "/register",
+                "/routine/**",
+                "/assistant/**"
         };
         for(String url: urls){
             if(PATH_MATCHER.match(url,requestURI)){
