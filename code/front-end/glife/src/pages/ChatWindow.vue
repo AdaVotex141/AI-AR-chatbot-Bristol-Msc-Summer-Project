@@ -9,17 +9,11 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
-import MessageList from './MessageList.vue';
-import MessageInput from './MessageInput.vue';
+import MessageList from '@/components/MessageList.vue';
+import MessageInput from '@/components/MessageInput.vue';
 
-export default {
-  components: {
-    MessageList,
-    MessageInput
-  },
-  setup() {
     const messages = ref([]);
 
     const handleSendMessage = (message) => {
@@ -30,12 +24,6 @@ export default {
       }, 1000);
     };
 
-    return {
-      messages,
-      handleSendMessage
-    };
-  }
-};
 </script>
 
 <style scoped>

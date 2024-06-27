@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("routine")
+@RequestMapping("/routine")
 public class RoutineController {
     @Autowired
     private RoutineService routineService;
