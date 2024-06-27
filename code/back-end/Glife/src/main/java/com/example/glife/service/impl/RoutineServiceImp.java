@@ -53,6 +53,11 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         return R.success("create routine success");
     }
 
+    public R<Routine> addFromAssistant(HttpServletRequest request){
+
+        return null;
+    }
+
     /**
      *
      * @param request
@@ -139,5 +144,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         baseMapper.delete(lambdaQueryWrapper);
         return R.success("delete success");
     }
+
 
 }
