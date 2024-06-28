@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `routine`;
 CREATE TABLE `routine`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `userid` bigint NOT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `create_time` timestamp NOT NULL,

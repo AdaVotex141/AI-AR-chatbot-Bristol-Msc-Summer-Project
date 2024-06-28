@@ -14,7 +14,7 @@ export default function () {
             todos.value.push({ text: newTodo.value.trim(), completed: false });
             newTodo.value = '';
             try {
-                const response = await axios.post('/routine/add', {
+                const response = await axios.post('/api/routine/add', {
                     content: newTodo
                 })
                 if (String(response.data.code) === '1') {
