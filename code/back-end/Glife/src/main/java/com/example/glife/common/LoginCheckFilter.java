@@ -73,7 +73,7 @@ public class LoginCheckFilter implements Filter {
                 "/login",
                 "/register",
                 "/routine/**",
-                "/assistant/**"
+                "/assistant/**",
         };
         for(String url: urls){
             if(PATH_MATCHER.match(url,requestURI)){
