@@ -106,7 +106,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         //create a new assistant after log in, and store it in session
         assistantService.initializeAssistant();
         session.setAttribute("assistantService", assistantService);
-        routineService.init(request);
+        //routineService.init(request);
         return R.success(foundUser);
     }
 
