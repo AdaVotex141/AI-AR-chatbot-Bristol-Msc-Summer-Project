@@ -71,3 +71,25 @@ As we have implemented the front-end and back-end separation and using the Nginx
 
 ## Week 4
 1. Xinyue: Being the lead presenter in the meeting with IBM stakeholder and supervisor
+2. Ada: Implement back-end logic of assistant, collaborate with front-end element
+3. Xinyu: Implement front-end logic of day routine, login
+4. Yuxin: working on front-end UI, implemented Title fixed on above
+5. Xinyue & Jie: Perfecting the logic of AI chatbot
+
+Future work:
+1. While Xinyu working on the core front-end Day routine part, the team decided to move to AR.js part
+2. Xinyue, Jie and Yuxin will move to AR.js front-end implementation
+3. Ada will learn about Redis and WebSocket
+
+---
+
+**ARTree logic**:
+1. Plant Tree
+   1. Loaded model in front of the user
+   2. when user selected "Plant tree", the current location information will be sent to backend and stored in **Redis**
+
+2. Look Tree:
+   1. while user moving around with the page of AR, his location will be updated using **websocket**
+   2. Constantly look into **Redis** database to check the distance between every location stored in the database and the user's current location.
+   3.  if detecting the distance is less than 5 metres, the model should be loaded
+

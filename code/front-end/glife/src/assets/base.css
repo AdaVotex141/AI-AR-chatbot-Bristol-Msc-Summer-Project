@@ -78,9 +78,17 @@ body {
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
+    'Cooper Black',
     sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Cooper Black';
+  src: url("../fonts/COOPBL.TTF") format('truetype');
+  font-weight: bold;
+  font-style: auto;
 }

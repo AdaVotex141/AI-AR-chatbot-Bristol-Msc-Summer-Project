@@ -16,7 +16,7 @@
             <el-input v-model="formLabelAlign.username" />
         </el-form-item>
         <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password" />
+            <el-input v-model="formLabelAlign.password" type="password" show-password/>
         </el-form-item>
         <el-form-item label="EMAIL" prop="email">
             <el-input v-model="formLabelAlign.email" />
@@ -111,3 +111,57 @@ async function register(ruleFormRef: FormInstance | undefined){
 }
 
 </script>
+
+<style scoped>
+h2{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+}
+.title-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  max-width: 1024px;
+  display: grid;
+  place-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 4rem;
+  color: darkolivegreen;
+}
+.container{
+  max-width:1024px;
+  align-items: center;
+  height: 100vh;
+  max-height: 500px;
+  padding: 20px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tip-message {
+  text-align: center;
+}
+
+.tip-message .el-link {
+  font-weight: bold;
+}
+
+.el-button.center {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  background-color:darkolivegreen;
+}
+
+.el-button.center:hover {
+  background-color:darkseagreen;
+  color: #fff;
+}
+</style>

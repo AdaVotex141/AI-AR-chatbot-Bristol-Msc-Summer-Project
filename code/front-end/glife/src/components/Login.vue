@@ -15,7 +15,7 @@
             <el-input v-model="formLabelAlign.username" />
         </el-form-item>
         <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password"/>
+            <el-input v-model="formLabelAlign.password" type="password" show-password/>
         </el-form-item>
         <el-form-item class="tip-message">
             Don't have an account? 
@@ -28,7 +28,8 @@
         </el-form-item>
     </el-form>
   </div>
-    
+  <el-button @click="toChat">To the chat</el-button>
+
 </template>
 
 <script lang="ts" setup>
@@ -105,10 +106,20 @@ async function login(ruleFormRef: FormInstance | undefined){
   })
     
 }
+// for the main page UI test
+function toChat(){
+  router.push({
+    name:'mainpage'
+  })
+}
 
 </script>
 
-<style>
+<style scoped>
+h2{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+}
 body{
   background-color: #e8e8e8;
   display: flex;
@@ -116,10 +127,6 @@ body{
   align-items: center;
   height: 100vh;
   margin: 0;
-}
-h2{
-  font-weight: bold;
-  font-family: "Cooper Black";
 }
 
 .title-container {
@@ -134,7 +141,7 @@ h2{
 
 .title {
   text-align: center;
-  font-size: 64px;
+  font-size: 4rem;
   color: darkolivegreen;
 }
 
@@ -146,17 +153,8 @@ h2{
   padding: 20px;
   background: white;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.el-form-item {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.el-input {
-  width: 100%;
 }
 
 .tip-message {
@@ -172,11 +170,11 @@ h2{
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  background: darkseagreen;
+  background-color:darkolivegreen;
 }
 
 .el-button.center:hover {
-  background-color:darkolivegreen;
+  background-color:darkseagreen;
   color: #fff;
 }
 </style>

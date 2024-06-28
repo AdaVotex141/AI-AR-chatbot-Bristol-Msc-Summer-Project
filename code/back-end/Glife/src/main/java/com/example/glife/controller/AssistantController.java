@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("api/assistant")
+@RequestMapping("/assistant")
 public class AssistantController {
     @Autowired
     private AssistantService assistantService;
