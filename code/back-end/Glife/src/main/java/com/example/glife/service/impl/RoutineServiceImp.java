@@ -20,15 +20,17 @@ import java.util.List;
 
 @Service
 public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> implements RoutineService {
-
+    @Autowired
+    AssistantService assistantService;
 
     /**
      *
      * @param request
-     * @param routine
+     * @param content
      * @return
      */
-    public R<String> add(HttpServletRequest request, Routine routine){
+    //TODO routine
+    public R<String> add(HttpServletRequest request, String content){
         //get current login user
         HttpSession session = request.getSession(false);
         User user = null;
@@ -39,7 +41,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         }
 
         Long userid = user.getId();
-        String content = routine.getContent();
 
         //set new Routine
         Routine newRoutine = new Routine();
@@ -49,8 +50,12 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         newRoutine.setCreateTime(LocalDateTime.now());
         baseMapper.insert(newRoutine);
 
-
         return R.success("create routine success");
+    }
+
+    public R<Routine> addFromAssistant(HttpServletRequest request){
+
+        return null;
     }
 
     /**
@@ -59,6 +64,7 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      * @param routine
      * @return
      */
+
     public R<Routine> update(HttpServletRequest request, Routine routine){
         //find current line of routine
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -77,12 +83,13 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
     /**
      *
      * @param request
-     * @param routine
+     * @param id
      * @return
      */
-    public R<Routine> tick(HttpServletRequest request, Routine routine){
+    //TODO: id
+    public R<Routine> tick(HttpServletRequest request, Long id){
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Routine::getId, routine.getId());
+        lambdaQueryWrapper.eq(Routine::getId, id);
         Routine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
         if(selectRoutine == null){
             return R.error("fail to find this routine");
@@ -101,7 +108,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      *
      * @return
      */
-    //TODO init what should I give back
     public R<List<Routine>> init(HttpServletRequest request){
         List<Routine> routineRepo = new ArrayList<>();
         //get current login user
@@ -128,9 +134,10 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         return R.success(routineRepo);
     }
 
-    public R<String> delete(HttpServletRequest request, Routine routine){
+    //delete id
+    public R<String> delete(HttpServletRequest request, Long id){
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Routine::getId, routine.getId());
+        lambdaQueryWrapper.eq(Routine::getId, id);
         Routine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
         if(selectRoutine == null){
             return R.error("fail to find this routine");
@@ -139,5 +146,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         baseMapper.delete(lambdaQueryWrapper);
         return R.success("delete success");
     }
+
 
 }
