@@ -41,11 +41,12 @@ export default function () {
             const maxId = todos.value.length > 0 ? Math.max(...todos.value.map(todo => todo.id)) : 0
             // Show the result when adding a new todo
             todos.value.push({ id: maxId + 1, text: newTodo.value.trim(), completed: false });
+            const content = newTodo.value
             newTodo.value = '';
             // Send api request to backend
             try {
                 const response = await axios.post('/api/routine/add', {
-                    content: newTodo
+                    content: content
                 })
                 if (String(response.data.code) === '1') {
                     ElMessage({
