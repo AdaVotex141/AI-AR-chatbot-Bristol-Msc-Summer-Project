@@ -93,3 +93,21 @@ Future work:
    2. Constantly look into **Redis** database to check the distance between every location stored in the database and the user's current location.
    3.  if detecting the distance is less than 5 metres, the model should be loaded
 
+## Week 5
+
+**My badge & My tree part**
+* photos : put photos and models under Vue folder
+* backend: use codes passing to frontend
+* Database of Trees and badges for init and any update
+
+**Redis Improvement parts**
+* Redis：implement verification code caching
+* Redis: implement data IO ```Spring Cache```
+* Redis in AR tree part:
+  * Redis for storing geo information
+   ```GEOADD user_locations <longitude> <latitude> <user_id>```
+   ```GEORADIUS user_locations <longitude> <latitude> 5 m```
+  * Optimizing Queries
+    * cache mechanism: if user's location is within 10 meters, the cache won't change for now, any queries will store in the Redis for 10 minutes
+    * Optimizing data structure: `GeoHash` in Redis & `ConcurrentHashMap` for caching 
+
