@@ -16,12 +16,13 @@ export default function () {
             const response = await axios.get('/api/routine/init')
             if(String(response.data.code) === '1'){
                 //Get the data from response
-                const data: {id: number; text: string; tick: number}[] = response.data.data
+                console.log("1ok")
+                const data: {id: number; content: string; tick: number}[] = response.data.data
                 //Map the data to todos and Sort them with id ascendingly
-                console.log(data[0].text)
+                console.log(data)
                 todos.value = data.map(item => ({
                     id: item.id,
-                    text: item.text,
+                    text: item.content,
                     completed: Boolean(item.tick)
                 }))
                 .sort((a, b) => a.id - b.id)
