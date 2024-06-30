@@ -37,7 +37,9 @@ export default function () {
 
     async function addTodo() {
         if (newTodo.value.trim() !== '') {
-            todos.value.push({ id: 111, text: newTodo.value.trim(), completed: false });
+            // Get maxId in current todos and set maxId+1 as todos
+            const maxId = todos.value.length > 0 ? Math.max(...todos.value.map(todo => todo.id)) : 0
+            todos.value.push({ id: maxId + 1, text: newTodo.value.trim(), completed: false });
             newTodo.value = '';
             try {
                 const response = await axios.post('/api/routine/add', {
