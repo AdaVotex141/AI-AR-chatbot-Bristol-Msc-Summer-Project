@@ -1,5 +1,7 @@
 package com.example.glife.controller;
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.example.glife.common.R;
 import com.example.glife.entity.Routine;
 import com.example.glife.service.RoutineService;
@@ -24,7 +26,9 @@ public class RoutineController {
 
     @PostMapping("/add")
     public R<String> add(HttpServletRequest request, @RequestBody String content){
-        return routineService.add(request,content);
+        JSONObject jsonObject = JSONUtil.parseObj(content);
+        String extractedValue = jsonObject.getStr("content");
+        return routineService.add(request,extractedValue);
     }
 
     @PostMapping("/update")
@@ -34,12 +38,16 @@ public class RoutineController {
 
     @PostMapping("/tick")
     public R<Routine> tick(HttpServletRequest request, @RequestBody Long id){
-        return routineService.tick(request,id);
+        JSONObject jsonObject = JSONUtil.parseObj(id);
+        Long extractedValue = jsonObject.getLong("id");
+        return routineService.tick(request,extractedValue);
     }
 
     @PostMapping("/delete")
     public R<String> delete(HttpServletRequest request, @RequestBody Long id){
-        return routineService.delete(request,id);
+        JSONObject jsonObject = JSONUtil.parseObj(id);
+        Long extractedValue = jsonObject.getLong("id");
+        return routineService.delete(request,extractedValue);
     }
 
 }
