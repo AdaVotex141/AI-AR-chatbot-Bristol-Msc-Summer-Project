@@ -39,8 +39,10 @@ export default function () {
         if (newTodo.value.trim() !== '') {
             // Get maxId in current todos and set maxId+1 as todos
             const maxId = todos.value.length > 0 ? Math.max(...todos.value.map(todo => todo.id)) : 0
+            // Show the result when adding a new todo
             todos.value.push({ id: maxId + 1, text: newTodo.value.trim(), completed: false });
             newTodo.value = '';
+            // Send api request to backend
             try {
                 const response = await axios.post('/api/routine/add', {
                     content: newTodo
@@ -64,7 +66,10 @@ export default function () {
     };
 
     function removeTodo(index:number){
+        // Show the effect when remove a todo
         todos.value.splice(index, 1);
+        // Sending api request to the backend
+
     };
 
     return {newTodo, todos, addTodo, removeTodo, initTodo}
