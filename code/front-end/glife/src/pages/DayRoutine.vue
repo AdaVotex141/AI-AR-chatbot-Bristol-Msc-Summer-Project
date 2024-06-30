@@ -20,8 +20,11 @@
 
 <script setup>
   import useDayroutine from '@/hooks/useDayroutine';
+  import { onMounted } from 'vue';
 
-  const {newTodo, todos, addTodo, removeTodo} = useDayroutine()
+  const {newTodo, todos, addTodo, removeTodo, initTodo} = useDayroutine()
+  onMounted(initTodo)
+
 </script>
 
 <style scoped>
