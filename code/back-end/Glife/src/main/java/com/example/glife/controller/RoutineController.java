@@ -45,9 +45,7 @@ public class RoutineController {
 
     @PostMapping("/delete")
     public R<String> delete(HttpServletRequest request, @RequestBody Long id){
-        JSONObject jsonObject = JSONUtil.parseObj(id);
-        Long extractedValue = jsonObject.getLong("id");
-        return routineService.delete(request,extractedValue);
+        return routineService.delete(request,id);
     }
 
 }
