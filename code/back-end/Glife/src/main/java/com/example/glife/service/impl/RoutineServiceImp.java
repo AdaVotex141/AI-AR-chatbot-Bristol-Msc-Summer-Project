@@ -11,6 +11,7 @@ import com.example.glife.service.AssistantService;
 import com.example.glife.service.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,7 +65,7 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      * @param routine
      * @return
      */
-
+    @Transactional
     public R<Routine> update(HttpServletRequest request, Routine routine){
         //find current line of routine
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -75,9 +76,13 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         }
 
         String updateContent = routine.getContent();
-        selectRoutine.setContent(updateContent);
+        boolean updateResult = updateById(selectRoutine);
 
-        return R.success(selectRoutine);
+        if (updateResult) {
+            return R.success(selectRoutine);
+        } else {
+            return R.error("Failed to update routine");
+        }
     }
 
     /**
