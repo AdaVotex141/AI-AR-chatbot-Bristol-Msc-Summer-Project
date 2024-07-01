@@ -20,10 +20,10 @@ public class AssistantController {
     @Autowired
     private AssistantService assistantService;
 
-    @GetMapping ("/input")
+    @PostMapping ("/input")
     public R<Response> assistantInput(HttpServletRequest request,@RequestBody String inputMessage){
         JSONObject jsonObject = JSONUtil.parseObj(inputMessage);
-        String extractedValue = jsonObject.getStr("inputmessage");
+        String extractedValue = jsonObject.getStr("inputMessage");
         return R.success(assistantService.sendMessage(extractedValue));
     }
 

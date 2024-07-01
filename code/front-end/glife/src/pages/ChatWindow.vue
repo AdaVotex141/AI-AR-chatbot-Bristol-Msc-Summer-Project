@@ -21,10 +21,12 @@ async function handleSendMessage(message){
   // Show the message on the window
   messages.value.push({ text: message, sender: 'user' });
 
+  console.log(message, 'sbsbs')
   // Send api request to the backend
   try{
-    const response = axios.get('/api/assistant/input', {
-      inputmessage: message.value
+    
+    const response = await axios.post('/api/assistant/input', {
+      inputMessage: message
     })
     console.log(response.data)
 
