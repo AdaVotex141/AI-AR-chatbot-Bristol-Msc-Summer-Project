@@ -13,16 +13,27 @@
 import { ref } from 'vue';
 import MessageList from '@/components/MessageList.vue';
 import MessageInput from '@/components/MessageInput.vue';
+import axios from 'axios';
 
-    const messages = ref([]);
+const messages = ref([]);
 
-    const handleSendMessage = (message) => {
-      messages.value.push({ text: message, sender: 'user' });
+async function handleSendMessage(message){
+  // Show the message on the window
+  messages.value.push({ text: message, sender: 'user' });
 
-      setTimeout(() => {
-        messages.value.push({ text: 'This is a bot response', sender: 'bot' });
-      }, 1000);
-    };
+  // Send api request to the backend
+  try{
+    const response = axios.get('/api/assistant/input', {
+      inputmessage: message.value
+    })
+    console.log(response.data)
+
+  } catch (error){
+    console.error(error)
+  }
+  
+  messages.value.push({ text: 'This is a bot response', sender: 'bot' });
+};
 
 </script>
 
