@@ -1,4 +1,5 @@
 <template>
+  <div class="routine-container">
   <el-container class="dayroutine-app">
     <el-header>DayRoutine</el-header>
     <el-main>
@@ -22,6 +23,7 @@
       </ul>
     </el-main>
   </el-container>
+  </div>
 </template>
 
 <script setup>
@@ -70,6 +72,10 @@
 </script>
 
 <style scoped>
+.routine-container{
+  width: 300px;
+  height: 400px;
+}
 .user-input {
   display: flex;
   align-items: center;

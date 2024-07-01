@@ -7,7 +7,9 @@ import com.example.glife.entity.Response;
 import com.example.glife.service.AssistantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,11 +20,11 @@ public class AssistantController {
     @Autowired
     private AssistantService assistantService;
 
-    @GetMapping("/input")
+    @GetMapping ("/input")
     public R<Response> assistantInput(HttpServletRequest request,@RequestBody String inputMessage){
         JSONObject jsonObject = JSONUtil.parseObj(inputMessage);
         String extractedValue = jsonObject.getStr("inputmessage");
-        return R.success(assistantService.sendMessage(inputMessage));
+        return R.success(assistantService.sendMessage(extractedValue));
     }
 
 }
