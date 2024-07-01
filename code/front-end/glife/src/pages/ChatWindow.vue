@@ -30,7 +30,8 @@ import MessageInput from '@/components/MessageInput.vue';
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 60vh;
+  width: 300px;
+  height: 400px;
 }
 
 .messages {
