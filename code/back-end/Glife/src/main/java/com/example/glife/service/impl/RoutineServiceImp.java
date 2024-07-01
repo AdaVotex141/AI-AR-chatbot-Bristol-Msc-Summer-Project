@@ -11,6 +11,7 @@ import com.example.glife.service.AssistantService;
 import com.example.glife.service.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -67,17 +68,11 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
 
     public R<Routine> update(HttpServletRequest request, Routine routine){
         //find current line of routine
-        LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Routine::getId, routine.getId());
-        Routine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
-        if(selectRoutine == null){
-            return R.error("fail to find this routine");
+        boolean updateSuccess = updateById(routine);
+        if (!updateSuccess) {
+            return R.error("fail to update this routine");
         }
-
-        String updateContent = routine.getContent();
-        selectRoutine.setContent(updateContent);
-
-        return R.success(selectRoutine);
+        return R.success(routine);
     }
 
     /**
@@ -86,7 +81,7 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      * @param id
      * @return
      */
-    //TODO: id
+    @Transactional
     public R<Routine> tick(HttpServletRequest request, Long id){
         LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Routine::getId, id);
@@ -100,6 +95,7 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         }else if(selectRoutine.getTick() == 1){
             selectRoutine.setTick(0);
         }
+        baseMapper.updateById(selectRoutine);
 
         return R.success(selectRoutine);
     }
