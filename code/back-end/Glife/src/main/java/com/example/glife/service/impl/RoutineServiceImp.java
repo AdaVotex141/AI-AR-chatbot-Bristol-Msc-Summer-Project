@@ -146,6 +146,4 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         baseMapper.delete(lambdaQueryWrapper);
         return R.success("delete success");
     }
-
-
 }

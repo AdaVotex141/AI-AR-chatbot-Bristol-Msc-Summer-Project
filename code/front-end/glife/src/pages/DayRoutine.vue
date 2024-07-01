@@ -8,10 +8,10 @@
       </div>
       <el-divider content-position="left">Your routines:</el-divider>
       <ul>
-        <li v-for="(todo, index) in todos" :key="index" :class="{ completed: todo.completed }">
-          <input type="checkbox" v-model="todo.completed" />
+        <li v-for="(todo) in todos" :key="todo.id" :class="{ completed: todo.completed }">
+          <input type="checkbox" v-model="todo.completed" @click="changeCompletedStatus(todo.id)"/>
           <span>{{ todo.text }}</span>
-          <el-button @click="removeTodo(index)">Remove</el-button>
+          <el-button @click="removeTodo(todo.id)">Remove</el-button>
         </li>
       </ul>
     </el-main>
@@ -22,8 +22,8 @@
   import useDayroutine from '@/hooks/useDayroutine';
   import { onMounted } from 'vue';
 
-  const {newTodo, todos, addTodo, removeTodo, initTodo} = useDayroutine()
-  onMounted(initTodo)
+  const {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus} = useDayroutine()
+  onMounted(getTodos)
 
 </script>
 

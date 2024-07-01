@@ -38,16 +38,12 @@ public class RoutineController {
 
     @PostMapping("/tick")
     public R<Routine> tick(HttpServletRequest request, @RequestBody Long id){
-        JSONObject jsonObject = JSONUtil.parseObj(id);
-        Long extractedValue = jsonObject.getLong("id");
-        return routineService.tick(request,extractedValue);
+        return routineService.tick(request,id);
     }
 
     @PostMapping("/delete")
     public R<String> delete(HttpServletRequest request, @RequestBody Long id){
-        JSONObject jsonObject = JSONUtil.parseObj(id);
-        Long extractedValue = jsonObject.getLong("id");
-        return routineService.delete(request,extractedValue);
+        return routineService.delete(request,id);
     }
 
 }
