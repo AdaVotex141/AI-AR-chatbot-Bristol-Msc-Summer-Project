@@ -10,7 +10,13 @@
       <ul>
         <li v-for="(todo) in todos" :key="todo.id" :class="{ completed: todo.completed }">
           <input type="checkbox" v-model="todo.completed" @click="changeCompletedStatus(todo.id)"/>
-          <span>{{ todo.text }}</span>
+          <el-input
+            v-if="isEditing && currentTodoId === todo.id"
+            v-model="editText"
+            @blur="saveTodo(todo.id)"
+            @keyup.enter="saveTodo(todo.id)"
+            autofocus />
+          <span v-else @click="startEditing(todo.id, todo.text)">{{ todo.text }}</span>
           <el-button @click="removeTodo(todo.id)">Remove</el-button>
         </li>
       </ul>
@@ -20,10 +26,31 @@
 
 <script setup>
   import useDayroutine from '@/hooks/useDayroutine';
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   const {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus} = useDayroutine()
   onMounted(getTodos)
+
+  // TODO: Content used for todolist, use component to replace it in the future
+  const isEditing = ref(false)
+  const currentTodoId = ref(null)
+  const editText = ref('')
+  const editInput = ref(null)
+
+  function startEditing(id, text){
+    isEditing.value = true
+    currentTodoId.value = id
+    editText.value = text
+  }
+
+  function saveTodo(id){
+    const todo = todos.value.find(todo => todo.id === id)
+    if(todo){
+      todo.text = editText.value
+    }
+    isEditing.value = false
+    currentTodoId.value = null
+  }
 
 </script>
 
