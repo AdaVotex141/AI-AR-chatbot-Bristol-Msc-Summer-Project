@@ -49,6 +49,7 @@ public class AssistantServiceImp implements AssistantService {
         CreateSessionOptions options = new CreateSessionOptions.Builder(assistantConfig.getEnvironmentID()).build();
         SessionResponse response = assistant.createSession(options).execute().getResult();
         sessionId = response.getSessionId();
+
         log.info("----------Session ID: {}-----------", sessionId);
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @Slf4j
@@ -24,6 +25,9 @@ public class AssistantController {
     public R<Response> assistantInput(HttpServletRequest request,@RequestBody String inputMessage){
         JSONObject jsonObject = JSONUtil.parseObj(inputMessage);
         String extractedValue = jsonObject.getStr("inputMessage");
+        if(assistantService.getSessionId() == null){
+            return R.error("the sessionId is null");
+        }
         return R.success(assistantService.sendMessage(extractedValue));
     }
 
