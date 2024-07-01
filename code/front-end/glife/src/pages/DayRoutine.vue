@@ -9,7 +9,7 @@
       <el-divider content-position="left">Your routines:</el-divider>
       <ul>
         <li v-for="(todo) in todos" :key="todo.id" :class="{ completed: todo.completed }">
-          <input type="checkbox" v-model="todo.completed" />
+          <input type="checkbox" v-model="todo.completed" @click="changeCompletedStatus(todo.id)"/>
           <span>{{ todo.text }}</span>
           <el-button @click="removeTodo(todo.id)">Remove</el-button>
         </li>
@@ -22,7 +22,7 @@
   import useDayroutine from '@/hooks/useDayroutine';
   import { onMounted } from 'vue';
 
-  const {newTodo, todos, addTodo, removeTodo, getTodos} = useDayroutine()
+  const {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus} = useDayroutine()
   onMounted(getTodos)
 
 </script>

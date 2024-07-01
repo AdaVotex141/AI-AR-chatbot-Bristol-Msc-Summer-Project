@@ -65,10 +65,7 @@ export default function () {
     };
 
     async function removeTodo(idOfRecord:number){
-        // // Show the effect when remove a todo
-        // todos.value.splice(id, 1);
         // Sending api request to the backend
-        console.log('Id to be deleted: ', idOfRecord)
         try{
             const response = await axios.post('/api/routine/delete', idOfRecord, {
                 headers: {
@@ -85,7 +82,24 @@ export default function () {
         getTodos()
     };
 
-    return {newTodo, todos, addTodo, removeTodo, getTodos}
+    async function changeCompletedStatus(id:number){
+        console.log('chufa')
+        // Sending api request to the backend
+        try{
+            const response = await axios.post('/api/routine/tick', id, {
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(String(response.data.code) !== '1'){
+                console.error('Backend send code 0')
+            }
+        } catch (error){
+            console.error(error)
+        }
+    }
+
+    return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }
 
 
