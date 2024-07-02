@@ -1,5 +1,5 @@
 <template>
-  <div class="message-list">
+  <div class="message-list" ref="messageList">
     <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
       {{ message.text }}
     </div>
@@ -12,6 +12,30 @@ export default {
     messages: {
       type: Array,
       required: true
+    }
+  },
+  mounted() {
+    this.scrollToBottom();
+  },
+  updated() {
+    this.scrollToBottom();
+  },
+  methods: {
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const messageList = this.$refs.messageList;
+        if (messageList) {
+          const shouldScroll = messageList.scrollTop + messageList.clientHeight !== messageList.scrollHeight;
+          if (shouldScroll) {
+            messageList.scrollTop = messageList.scrollHeight;
+          }
+        }
+      });
+    }
+  },
+  watch: {
+    messages() {
+      this.scrollToBottom();
     }
   }
 };
@@ -27,7 +51,7 @@ export default {
   background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  scroll-behavior: smooth;
 }
 
 .message {
@@ -41,13 +65,11 @@ export default {
   background-color: #dcf8c6;
   width:65%;
   align-self: flex-end;
-  /*overflow-y: auto;*/
 }
 
 .message.bot {
   background-color: #f1f0f0;
   width:65%;
   align-self: flex-start;
-  /*overflow-y: auto;*/
 }
 </style>
