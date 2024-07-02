@@ -22,6 +22,7 @@ export default {
   max-height: 60vh;
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 1.5rem;
   background-color: #f5f5f5;
   display: flex;
@@ -33,19 +34,20 @@ export default {
   margin: 10px 0;
   padding: 10px;
   border-radius: 4px;
+  word-wrap: break-word;
 }
 
 .message.user {
   background-color: #dcf8c6;
   width:65%;
   align-self: flex-end;
-  overflow-y: auto;
+  /*overflow-y: auto;*/
 }
 
 .message.bot {
   background-color: #f1f0f0;
   width:65%;
   align-self: flex-start;
-  overflow-y: auto;
+  /*overflow-y: auto;*/
 }
 </style>
