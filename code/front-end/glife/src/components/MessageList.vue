@@ -19,8 +19,7 @@ export default {
 
 <style scoped>
 .message-list {
-  position: sticky;
-  bottom: 0;
+  max-height: 60vh;
   flex: 1;
   overflow-y: auto;
   padding: 20px;
