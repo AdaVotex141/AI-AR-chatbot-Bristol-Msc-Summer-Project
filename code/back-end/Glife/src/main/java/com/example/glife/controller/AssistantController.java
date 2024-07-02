@@ -7,10 +7,9 @@ import com.example.glife.entity.Response;
 import com.example.glife.service.AssistantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +24,7 @@ public class AssistantController {
     @PostMapping ("/input")
     public R<Response> assistantInput(HttpServletRequest request,@RequestBody String inputMessage){
         JSONObject jsonObject = JSONUtil.parseObj(inputMessage);
-        String extractedValue = jsonObject.getStr("inputmessage");
+        String extractedValue = jsonObject.getStr("inputMessage");
         if(assistantService.getSessionId() == null){
             return R.error("the sessionId is null");
         }
