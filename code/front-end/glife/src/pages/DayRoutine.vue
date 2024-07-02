@@ -1,7 +1,7 @@
 <template>
   <div class="routine-container">
   <el-container class="dayroutine-app">
-    <el-header>DayRoutine</el-header>
+    <el-header>Day Routine</el-header>
     <el-main>
       <div class="user-input">
         <el-input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new routine!" clearable />
@@ -72,6 +72,22 @@
 </script>
 
 <style scoped>
+.el-header{
+  background-color: #9cb470;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: whitesmoke;
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
 .routine-container{
   width: 80vw;
   height: 50vh;
