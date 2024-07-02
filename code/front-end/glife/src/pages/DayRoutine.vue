@@ -112,6 +112,14 @@ input[type="text"] {
 button {
   padding: 10px;
   margin: 5px;
+  background-color: #9cb470;
+  border-color: transparent;
+}
+
+button:hover {
+  background-color:darkseagreen;
+  color: #fff;
+  border-color: transparent;
 }
 
 ul {
@@ -134,4 +142,5 @@ li.completed span {
 li.completed input[type="checkbox"] {
   checked: true;
 }
+
 </style>

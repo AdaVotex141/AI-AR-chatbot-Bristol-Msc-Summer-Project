@@ -169,6 +169,7 @@ body{
   width: 100%;
   text-align: center;
   background-color:darkolivegreen;
+  border-color: transparent;
 }
 
 .el-button.center:hover {
