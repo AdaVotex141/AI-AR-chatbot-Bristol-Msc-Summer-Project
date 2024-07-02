@@ -39,11 +39,13 @@ export default {
   background-color: #dcf8c6;
   width:65%;
   align-self: flex-end;
+  overflow-y: auto;
 }
 
 .message.bot {
   background-color: #f1f0f0;
   width:65%;
   align-self: flex-start;
+  overflow-y: auto;
 }
 </style>
