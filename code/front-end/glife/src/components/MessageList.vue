@@ -22,7 +22,7 @@ export default {
   max-height: 60vh;
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 1.5rem;
   background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
