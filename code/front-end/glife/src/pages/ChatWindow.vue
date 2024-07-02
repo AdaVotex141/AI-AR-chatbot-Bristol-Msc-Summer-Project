@@ -66,12 +66,11 @@ function handleResponseData(data){
 }
 
 .messages {
-  min-height: 60vh;
+  min-height: 65vh;
   display: flex;
   flex: 1;
-  overflow-y: auto;
   padding: 20px;
-  background-color: #f5f5f5;
+
 }
 
 .input {

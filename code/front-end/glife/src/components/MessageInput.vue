@@ -32,7 +32,6 @@ export default {
 .message-input {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ddd;
   background-color: #fff;
 }
 
