@@ -132,7 +132,7 @@ public class AssistantServiceImp implements AssistantService {
                 .build();
         SessionResponse sessionResponse = assistant.createSession(createSessionOptions).execute().getResult();
         String sessionId = sessionResponse.getSessionId();
-        //System.out.print("sessionID:"+sessionId+"\n");
+        System.out.print("sessionID:"+sessionId+"\n");
 
         //test input
         MessageInput input = new MessageInput.Builder()
@@ -147,11 +147,11 @@ public class AssistantServiceImp implements AssistantService {
         System.out.print("response"+response);
 
         //close session
-        if (sessionId != null) {
+     /*   if (sessionId != null) {
             assistant.deleteSession(new DeleteSessionOptions.Builder("f450d030-5b09-4c55-94b3-59f66c4088cb", sessionId).build()).execute();
             sessionId = null;
             //log.info("Session closed successfully.");
-        }
+        }*/
 
 
     }

@@ -30,7 +30,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      * @param content
      * @return
      */
-    //TODO routine
     public R<String> add(HttpServletRequest request, String content){
         //get current login user
         HttpSession session = request.getSession(false);
