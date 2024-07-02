@@ -43,8 +43,12 @@ function handleResponseData(data){
     data.responseSectionList.forEach((item) => {
       if(item.responseType === 'text'){
         messages.value.push({text: item.text, sender: 'bot'})
-      } else {
-        let result = item.responseType + '---' + item.text
+      } else if (item.responseType === 'option'){
+        let result = ''
+        item.labels.forEach((label) => {
+          result += label
+          result += ' | '
+        })
         messages.value.push({text: result, sender: 'bot'})
       }
     })
