@@ -24,6 +24,9 @@ export default {
   overflow-y: auto;
   padding: 20px;
   background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .message {
@@ -33,16 +36,14 @@ export default {
 }
 
 .message.user {
-  left: 0;
   background-color: #dcf8c6;
-  width:100%;
+  width:70%;
   align-self: flex-end;
 }
 
 .message.bot {
-  right: 0;
-  align-self: flex-start;
   background-color: #f1f0f0;
-  width:100%;
+  width:70%;
+  align-self: flex-start;
 }
 </style>
