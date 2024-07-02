@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Scope("prototype")
 @Slf4j
 public class AssistantServiceImp implements AssistantService {
 
