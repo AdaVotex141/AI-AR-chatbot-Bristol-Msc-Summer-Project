@@ -53,11 +53,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         return R.success("create routine success");
     }
 
-    public R<Routine> addFromAssistant(HttpServletRequest request){
-
-        return null;
-    }
-
     /**
      *
      * @param request
