@@ -73,8 +73,8 @@
 
 <style scoped>
 .routine-container{
-  width: 300px;
-  height: 400px;
+  width: 80vw;
+  height: 50vh;
 }
 .user-input {
   display: flex;

@@ -146,11 +146,9 @@ body{
 }
 
 .container{
-  max-width:1024px;
   align-items: center;
-  height: 100vh;
-  max-height: 500px;
-  padding: 20px;
+  max-height: 60vh;
+  padding: 1.5rem;
   background: white;
   border: 1px solid #ddd;
   border-radius: 1rem;

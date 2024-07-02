@@ -19,6 +19,8 @@ export default {
 
 <style scoped>
 .message-list {
+  position: sticky;
+  bottom: 0;
   flex: 1;
   overflow-y: auto;
   padding: 20px;
@@ -32,12 +34,16 @@ export default {
 }
 
 .message.user {
-  align-self: flex-end;
+  left: 0;
   background-color: #dcf8c6;
+  width:100%;
+  align-self: flex-end;
 }
 
 .message.bot {
+  right: 0;
   align-self: flex-start;
   background-color: #f1f0f0;
+  width:100%;
 }
 </style>

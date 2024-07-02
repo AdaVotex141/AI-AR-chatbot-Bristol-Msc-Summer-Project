@@ -26,28 +26,25 @@
   font-family: 'Cooper Black',sans-serif;
 }
 .title{
-  position: fixed;
+  position: sticky;
   top:0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 101;
   text-align: center;
-  font-size: 4rem;
+  height:4rem;
+  font-size: 3rem;
   color: darkolivegreen;
+  background-color: #edeeef;
 
 }
 .navigate{
-  font-family: 'Cooper Black',sans-serif;
-  position: fixed;
-  top:10%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  margin-bottom: 1.2rem;
+  position: sticky;
+  top:7%;
+  z-index: 100;
+  text-align: center;
+  background-color:  #edeeef;
 }
 .main-content{
-
-  background: white;
+  height: 79vh;
   border: 1px solid #ddd;
   border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);

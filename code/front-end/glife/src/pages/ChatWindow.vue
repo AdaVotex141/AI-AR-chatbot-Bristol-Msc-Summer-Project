@@ -57,13 +57,13 @@ function handleResponseData(data){
 
 <style scoped>
 .chat-container {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  height: 400px;
+  width: 80vw;
+  height: 50vh;
 }
 
 .messages {
+  min-height: 60vh;
+  display: flex;
   flex: 1;
   overflow-y: auto;
   padding: 20px;
@@ -74,5 +74,10 @@ function handleResponseData(data){
   padding: 10px;
   background-color: #fff;
   border-top: 1px solid #ddd;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  bottom: 0;
+
 }
 </style>
