@@ -31,6 +31,7 @@ public class AssistantServiceImp implements AssistantService {
 
     private Assistant assistant;
     private String sessionId;
+    @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
 
@@ -140,18 +141,11 @@ public class AssistantServiceImp implements AssistantService {
         section.setText(generic.text());
         Long userId = getUserID(request);
         //if there are selection, put it in redis
-        //TODO test this function
-        if(generic.text().contains("Do you want me to") && userId != 0){
+        if(generic.text().contains("Do you want to") && userId != 0){
             String option = textParser(generic.text());
             String key =  RedisConstants.User_SELECTION+userId;
             stringRedisTemplate.opsForValue().set(key,option,RedisConstants.OPTION_TTL, TimeUnit.MINUTES);
         }
-
-        //Put current into redis
-        //stringRedisTemplate.opsForValue().set(key,option);
-//        if(selections != null){
-//            this.selections.push(option);
-//        }
         return section;
     }
 

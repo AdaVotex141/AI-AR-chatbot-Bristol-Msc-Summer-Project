@@ -5,4 +5,9 @@ public class RedisConstants {
     public static final Long OPTION_TTL = 5L;
 
 
+    public static final String SYS_ROUTINE = "system-routine:user";
+
+    public static final String CUSTOM_ROUTINE = "customize-routine:user";
+
+
 }
