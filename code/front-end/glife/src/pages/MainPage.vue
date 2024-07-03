@@ -3,9 +3,9 @@
       <el-container>
         <el-header class="title">Glife</el-header>
         <el-main class="navigate">
-          <RouterLink :to="{name:'chatwindow'}">Chat</RouterLink>
-          <RouterLink :to="{name:'dayroutine'}">DayRoutine</RouterLink>
-          <RouterLink :to="{name:'artree'}">ArTree</RouterLink>
+          <RouterLink :to="{name:'chatwindow'}" class="navigateElement">Chat</RouterLink>
+          <RouterLink :to="{name:'dayroutine'}" class="navigateElement">DayRoutine</RouterLink>
+          <RouterLink :to="{name:'artree'}" class="navigateElement">ArTree</RouterLink>
         </el-main>
         <el-main class="main-content">
           <RouterView></RouterView>
@@ -21,6 +21,10 @@
   </script>
 
 <style scoped>
+.navigateElement{
+  margin-right: 20px;
+}
+
 .title, .navigate{
   font-weight: bold;
   font-family: 'Cooper Black',sans-serif;

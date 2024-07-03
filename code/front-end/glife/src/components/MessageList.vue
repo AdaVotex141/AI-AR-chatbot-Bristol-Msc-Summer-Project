@@ -63,13 +63,13 @@ export default {
 
 .message.user {
   background-color: #dcf8c6;
-  width:65%;
+  max-width:50%;
   align-self: flex-end;
 }
 
 .message.bot {
   background-color: #f1f0f0;
-  width:65%;
+  max-width:50%;
   align-self: flex-start;
 }
 </style>
