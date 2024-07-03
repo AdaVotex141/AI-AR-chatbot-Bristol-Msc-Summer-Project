@@ -1,15 +1,19 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <div class="ar-container">
       <el-container>
-        <el-aside width="15vw">Look the Badge here</el-aside>
+        <el-aside width="15vw"><div class = "aside-title">Your Badges</div>
+        <div class = "button-list">
+          <el-button type="primary" round class="new-button">Profile</el-button>
+          <el-button type="primary" round class="new-button">Badge</el-button>
+          <el-button type="primary" round class="new-button">Share</el-button>
+        </div>
+        </el-aside>
         <el-container>
           <el-main><div class="background-image-container"></div></el-main>
           <el-footer><el-button @click="toPlant"><h2>Plant</h2></el-button></el-footer>
         </el-container>
       </el-container>
     </div>
-
-
 
 </template>
 
@@ -51,12 +55,14 @@ h2{
   width: 50%;
   text-align: center;
   background-color:darkolivegreen;
+  border-color: transparent;
   flex-direction: column;
   align-items: center;
 }
 .el-button:hover {
   background-color:darkseagreen;
   color: #fff;
+  border-color: transparent;
 }
 
 .el-footer{
@@ -68,4 +74,27 @@ h2{
   display: flex;
   justify-content: center;
 }
+.button-list{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+.new-button{
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  justify-content: center;
+
+}
+.aside-title{
+  font-family: 'Cooper Black',sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 </style>
