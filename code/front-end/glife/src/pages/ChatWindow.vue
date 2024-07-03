@@ -10,12 +10,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import MessageList from '@/components/MessageList.vue';
 import MessageInput from '@/components/MessageInput.vue';
 import axios from 'axios';
 
 const messages = ref([]);
+
+onMounted(() => {
+  messages.value.push({text: 'Hello, I\'m a chatbot. How can I help you? '})
+})
 
 async function handleSendMessage(message){
   // Show the message on the window
