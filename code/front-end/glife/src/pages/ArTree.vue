@@ -79,18 +79,34 @@ const shareClick = () => {
 </script>
 
 <style scoped>
-.ar-container{
+@media(max-width: 600px) {
+  .ar-container {
     margin-top: 2.5rem;
     width: 100vw;
     height: 90vh;
+  }
 }
+
+@media(min-width: 601px) {
+  .ar-container{
+    margin-top: 2.5rem;
+    width: 60vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .background-image-container{
-  background-image: url('@/assets/PlantTree.jpg');
+  /*background-image: url('@/assets/PlantTree.jpg');*/
+  background-color: #738352;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 500px;
-  height: 650px;
+  width: 100vw;
+  height: 100vh;
+  max-width: 500px;
+  max-height: 650px;
   font-size: 2rem;
   border-radius: 1rem;
 }
@@ -148,5 +164,4 @@ h2{
   justify-content: center;
   flex-direction: column;
 }
-
 </style>

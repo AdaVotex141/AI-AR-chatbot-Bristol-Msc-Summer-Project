@@ -64,28 +64,40 @@ function handleResponseData(data){
 </script>
 
 <style scoped>
-.chat-container {
-  margin-top: 2.5rem;
-  width: 100vw;
-  height: 90vh;
+@media(max-width: 600px) {
+  .chat-container {
+    margin-top: 2.5rem;
+    width: 100vw;
+    height: 90vh;
+  }
 }
 
-.messages {
-  min-height: 65vh;
-  display: flex;
-  flex: 1;
-  padding: 20px;
-
+@media(min-width: 601px) {
+  .chat-container {
+    margin-top: 2.5rem;
+    width: 60vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
-.input {
-  padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
-  border-radius: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: sticky;
-  bottom: 0;
+  .messages {
+    min-height: 65vh;
+    display: flex;
+    flex: 1;
+    padding: 20px;
 
-}
+  }
+
+  .input {
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    bottom: 0;
+
+  }
 </style>
