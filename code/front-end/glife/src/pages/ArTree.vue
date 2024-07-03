@@ -22,10 +22,15 @@
 import { ref, computed } from 'vue';
 import { ElMessage } from 'element-plus'
 
-const plant_con = ref(true);
+const plant_con = ref(false);
+const clickCount = ref(0);
 const isDisabled = computed(() => !plant_con.value);
 // Add the function to let the plant button has condition
 const handleClick = () => {
+  clickCount.value += 1;
+  if (clickCount.value > 3) {
+    plant_con.value = true;
+  }
   if(isDisabled.value){
     // Condition not met
     ElMessage({
@@ -39,6 +44,8 @@ const handleClick = () => {
     });
     setTimeout(() => {
       window.location.href = 'https://jiebristol.github.io/89';
+      clickCount.value = 0;
+      plant_con.value = false;
     },1500);
   }
 }
