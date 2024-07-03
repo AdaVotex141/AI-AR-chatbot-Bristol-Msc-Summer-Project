@@ -52,7 +52,7 @@ function handleOptionClick(option){
 
 <style scoped>
 .message-list {
-  max-height: 60vh;
+  height: 75vh;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;

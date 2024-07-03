@@ -75,6 +75,11 @@
 </script>
 
 <style scoped>
+.routine-container{
+  margin-top: 2.5rem;
+  width: 100vw;
+  height: 90vh;
+}
 .el-header{
   background-color: #9cb470;
   padding: 1.5rem;
@@ -94,10 +99,7 @@
   top: 0;
   z-index: 100;
 }
-.routine-container{
-  width: 80vw;
-  height: 50vh;
-}
+
 .el-main{
   overflow-y: hidden;
 }

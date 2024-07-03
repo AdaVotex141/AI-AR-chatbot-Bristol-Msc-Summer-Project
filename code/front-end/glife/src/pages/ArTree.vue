@@ -80,8 +80,9 @@ const shareClick = () => {
 
 <style scoped>
 .ar-container{
-  width: 80vw;
-  height: 50vh;
+    margin-top: 2.5rem;
+    width: 100vw;
+    height: 90vh;
 }
 .background-image-container{
   background-image: url('@/assets/PlantTree.jpg');
@@ -89,7 +90,7 @@ const shareClick = () => {
   background-position: center;
   background-repeat: no-repeat;
   width: 500px;
-  height: 500px;
+  height: 650px;
   font-size: 2rem;
   border-radius: 1rem;
 }

@@ -69,8 +69,9 @@ function handleOptionClick(option){
 
 <style scoped>
 .chat-container {
-  width: 80vw;
-  height: 50vh;
+  margin-top: 2.5rem;
+  width: 100vw;
+  height: 90vh;
 }
 
 .messages {
