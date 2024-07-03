@@ -18,7 +18,7 @@ import axios from 'axios';
 const messages = ref([]);
 
 onMounted(() => {
-  messages.value.push({text: 'Hello, I\'m a chatbot. How can I help you? '})
+  messages.value.push({text: 'Hello, I\'m a chatbot. How can I help you? ', sender: 'bot'})
 })
 
 async function handleSendMessage(message){
