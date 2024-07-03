@@ -20,6 +20,7 @@
         </el-form-item>
         <el-form-item label="EMAIL" prop="email">
             <el-input v-model="formLabelAlign.email" />
+            <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
         </el-form-item>
         <el-form-item class="tip-message">
             Already have an account? 
@@ -110,6 +111,10 @@ async function register(ruleFormRef: FormInstance | undefined){
     })
 }
 
+async function getVerificationCode(){
+
+}
+
 </script>
 
 <style scoped>
@@ -158,10 +163,12 @@ h2{
   width: 100%;
   text-align: center;
   background-color:darkolivegreen;
+  border-color: transparent;
 }
 
 .el-button.center:hover {
   background-color:darkseagreen;
   color: #fff;
+  border-color: transparent;
 }
 </style>
