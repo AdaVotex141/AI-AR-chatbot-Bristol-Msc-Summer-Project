@@ -11,7 +11,7 @@
         </el-aside>
         <el-container>
           <el-main><div class="background-image-container"></div></el-main>
-          <el-footer><el-button @click="toPlant"><h2>Plant</h2></el-button></el-footer>
+          <el-footer><el-button @click="goToARTree('https://jiebristol.github.io/89')"><h2>Plant</h2></el-button></el-footer>
         </el-container>
       </el-container>
     </div>
@@ -21,11 +21,9 @@
 <script lang='ts' setup>
 import Tree from "@/assets/PlantTree.jpg";
 import router from "@/router";
-function toPlant(){
-  router.push({
-    name:'mainpage'
-  })
-}
+const goToARTree = (url: string) => {
+  window.open(url, '_blank');
+};
 </script>
 
 <style scoped>
