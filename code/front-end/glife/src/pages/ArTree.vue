@@ -2,6 +2,7 @@
     <div class="ar-container">
       <el-container>
         <el-aside width="15vw"><div class = "aside-title">Your Badges</div>
+          <div style="height: 5rem"></div>
         <div class = "button-list">
           <el-button type="primary" round class="new-button">Profile</el-button>
           <el-button type="primary" round class="new-button">Badge</el-button>
@@ -81,7 +82,7 @@ h2{
   flex-direction: column;
 }
 .new-button{
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 0.5rem;
   width: 100%;
   justify-content: center;

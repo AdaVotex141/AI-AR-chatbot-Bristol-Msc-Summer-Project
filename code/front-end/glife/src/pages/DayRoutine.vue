@@ -1,7 +1,7 @@
 <template>
   <div class="routine-container">
   <el-container class="dayroutine-app">
-    <el-header>Day Routine</el-header>
+    <el-header>{{ getCurrentDate() }} Routine: </el-header>
     <el-main>
       <div class="user-input">
         <el-input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new routine!" clearable />
@@ -61,13 +61,17 @@
         content: editText.value
       })
       if(String(response.data.code) !== '1'){
-        console.error('Error happend during update data in backend')
+        console.error('Error happened during update data in backend')
       }
     } catch (error){
       console.error(error)
     }
 
   }
+  // Get the date information
+  function getCurrentDate() {
+      return new Date().toLocaleDateString('en-GB');
+    }
 
 </script>
 
@@ -87,14 +91,23 @@
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .routine-container{
   width: 80vw;
   height: 50vh;
 }
+.el-main{
+  overflow-y: hidden;
+}
 .user-input {
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 99;
 }
 
 .todo-app {
