@@ -1,7 +1,7 @@
 <template>
   <div class="routine-container">
   <el-container class="dayroutine-app">
-    <el-header>DayRoutine</el-header>
+    <el-header>{{ getCurrentDate() }} Routine: </el-header>
     <el-main>
       <div class="user-input">
         <el-input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new routine!" clearable />
@@ -61,24 +61,53 @@
         content: editText.value
       })
       if(String(response.data.code) !== '1'){
-        console.error('Error happend during update data in backend')
+        console.error('Error happened during update data in backend')
       }
     } catch (error){
       console.error(error)
     }
 
   }
+  // Get the date information
+  function getCurrentDate() {
+      return new Date().toLocaleDateString('en-GB');
+    }
 
 </script>
 
 <style scoped>
+.el-header{
+  background-color: #9cb470;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: whitesmoke;
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 .routine-container{
   width: 80vw;
   height: 50vh;
 }
+.el-main{
+  overflow-y: hidden;
+}
 .user-input {
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 99;
 }
 
 .todo-app {
@@ -96,6 +125,14 @@ input[type="text"] {
 button {
   padding: 10px;
   margin: 5px;
+  background-color: #9cb470;
+  border-color: transparent;
+}
+
+button:hover {
+  background-color:darkseagreen;
+  color: #fff;
+  border-color: transparent;
 }
 
 ul {
@@ -118,4 +155,5 @@ li.completed span {
 li.completed input[type="checkbox"] {
   checked: true;
 }
+
 </style>
