@@ -11,7 +11,7 @@
         </el-aside>
         <el-container>
           <el-main><div class="background-image-container"></div></el-main>
-          <el-footer><el-button @click="toPlant"><h2>Plant</h2></el-button></el-footer>
+          <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
       </el-container>
     </div>
@@ -19,12 +19,35 @@
 </template>
 
 <script lang='ts' setup>
-import Tree from "@/assets/PlantTree.jpg";
-import router from "@/router";
-function toPlant(){
-  router.push({
-    name:'mainpage'
-  })
+import { ref, computed } from 'vue';
+import { ElMessage } from 'element-plus'
+
+const plant_con = ref(false);
+const clickCount = ref(0);
+const isDisabled = computed(() => !plant_con.value);
+// Add the function to let the plant button has condition
+const handleClick = () => {
+  clickCount.value += 1;
+  if (clickCount.value > 3) {
+    plant_con.value = true;
+  }
+  if(isDisabled.value){
+    // Condition not met
+    ElMessage({
+      message: 'You have to finish the day routine to get the chance',
+      type: "warning",
+    });
+  }else{
+    ElMessage({
+      message: 'Congratulations! Now you can plant your tree!',
+      type: 'success',
+    });
+    setTimeout(() => {
+      window.location.href = 'https://jiebristol.github.io/89';
+      clickCount.value = 0;
+      plant_con.value = false;
+    },1500);
+  }
 }
 </script>
 
