@@ -11,7 +11,7 @@
         </el-aside>
         <el-container>
           <el-main><div class="background-image-container"></div></el-main>
-          <el-footer><el-button @click="goToARTree('https://jiebristol.github.io/89')"><h2>Plant</h2></el-button></el-footer>
+          <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
       </el-container>
     </div>
@@ -19,11 +19,29 @@
 </template>
 
 <script lang='ts' setup>
-import Tree from "@/assets/PlantTree.jpg";
-import router from "@/router";
-const goToARTree = (url: string) => {
-  window.open(url, '_blank');
-};
+import { ref, computed } from 'vue';
+import { ElMessage } from 'element-plus'
+
+const plant_con = ref(true);
+const isDisabled = computed(() => !plant_con.value);
+// Add the function to let the plant button has condition
+const handleClick = () => {
+  if(isDisabled.value){
+    // Condition not met
+    ElMessage({
+      message: 'You have to finish the day routine to get the chance',
+      type: "warning",
+    });
+  }else{
+    ElMessage({
+      message: 'Congratulations! Now you can plant your tree!',
+      type: 'success',
+    });
+    setTimeout(() => {
+      window.location.href = 'https://jiebristol.github.io/89';
+    },1500);
+  }
+}
 </script>
 
 <style scoped>
