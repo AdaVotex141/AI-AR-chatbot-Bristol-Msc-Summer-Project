@@ -2,11 +2,18 @@
     <div class="ar-container">
       <el-container>
         <el-aside width="15vw"><div class = "aside-title">Your Badges</div>
-          <div style="height: 5rem"></div>
+          <div style="height: 7rem;
+            background-color: #caeea4;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            text-align: center;
+            align-items: center;" >Status: You don't have any badges yet...
+          </div>
         <div class = "button-list">
-          <el-button type="primary" round class="new-button">Profile</el-button>
-          <el-button type="primary" round class="new-button">Badge</el-button>
-          <el-button type="primary" round class="new-button">Share</el-button>
+          <el-button type="primary" round class="new-button" @click = "profileClick">Profile</el-button>
+          <el-button type="primary" round class="new-button" @click = "badgesClick">Badge</el-button>
+          <el-button type="primary" round class="new-button" @click = "shareClick">Share</el-button>
         </div>
         </el-aside>
         <el-container>
@@ -48,6 +55,26 @@ const handleClick = () => {
       plant_con.value = false;
     },1500);
   }
+}
+const profileClick = () => {
+  ElMessage({
+    message: 'You can look the personal profile by clicking this button',
+    type: "info",
+  })
+}
+
+const badgesClick = () => {
+  ElMessage({
+    message: 'You can look all the badges you can get by clicking this button',
+    type: "info",
+  })
+}
+
+const shareClick = () => {
+  ElMessage({
+    message: 'You can share the badges you get by click this button',
+    type: "info",
+  })
 }
 </script>
 
