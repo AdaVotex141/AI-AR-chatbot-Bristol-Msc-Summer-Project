@@ -2,16 +2,23 @@
     <div class="ar-container">
       <el-container>
         <el-aside width="15vw"><div class = "aside-title">Your Badges</div>
-          <div style="height: 5rem"></div>
+          <div style="height: 7rem;
+            background-color: #caeea4;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            text-align: center;
+            align-items: center;" >Status: You don't have any badges yet...
+          </div>
         <div class = "button-list">
-          <el-button type="primary" round class="new-button">Profile</el-button>
-          <el-button type="primary" round class="new-button">Badge</el-button>
-          <el-button type="primary" round class="new-button">Share</el-button>
+          <el-button type="primary" round class="new-button" @click = "profileClick">Profile</el-button>
+          <el-button type="primary" round class="new-button" @click = "badgesClick">Badge</el-button>
+          <el-button type="primary" round class="new-button" @click = "shareClick">Share</el-button>
         </div>
         </el-aside>
         <el-container>
           <el-main><div class="background-image-container"></div></el-main>
-          <el-footer><el-button @click="toPlant"><h2>Plant</h2></el-button></el-footer>
+          <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
       </el-container>
     </div>
@@ -19,11 +26,54 @@
 </template>
 
 <script lang='ts' setup>
-import Tree from "@/assets/PlantTree.jpg";
-import router from "@/router";
-function toPlant(){
-  router.push({
-    name:'mainpage'
+import { ref, computed } from 'vue';
+import { ElMessage } from 'element-plus'
+
+const plant_con = ref(false);
+const clickCount = ref(0);
+const isDisabled = computed(() => !plant_con.value);
+// Add the function to let the plant button has condition
+const handleClick = () => {
+  clickCount.value += 1;
+  if (clickCount.value > 3) {
+    plant_con.value = true;
+  }
+  if(isDisabled.value){
+    // Condition not met
+    ElMessage({
+      message: 'You have to finish the day routine to get the chance',
+      type: "warning",
+    });
+  }else{
+    ElMessage({
+      message: 'Congratulations! Now you can plant your tree!',
+      type: 'success',
+    });
+    setTimeout(() => {
+      window.location.href = 'https://jiebristol.github.io/89';
+      clickCount.value = 0;
+      plant_con.value = false;
+    },1500);
+  }
+}
+const profileClick = () => {
+  ElMessage({
+    message: 'You can look the personal profile by clicking this button',
+    type: "info",
+  })
+}
+
+const badgesClick = () => {
+  ElMessage({
+    message: 'You can look all the badges you can get by clicking this button',
+    type: "info",
+  })
+}
+
+const shareClick = () => {
+  ElMessage({
+    message: 'You can share the badges you get by click this button',
+    type: "info",
   })
 }
 </script>
