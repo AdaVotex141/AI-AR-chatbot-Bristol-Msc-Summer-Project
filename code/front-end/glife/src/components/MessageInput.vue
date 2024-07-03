@@ -1,31 +1,27 @@
 <template>
   <div class="message-input">
-    <input v-model="message" @keydown.enter="sendMessage" placeholder="Type a message" />
+    <input
+      v-model="message"
+      @keydown.enter="sendMessage"
+      placeholder="Type a message"
+    />
     <button @click="sendMessage">Send</button>
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 
-export default {
-  emits: ['sendMessage'],
-  setup(_, { emit }) {
-    const message = ref('');
+const message = ref('');
 
-    const sendMessage = () => {
-      if (message.value.trim()) {
-        emit('sendMessage', message.value);
-        message.value = '';
-      }
-    };
-
-    return {
-      message,
-      sendMessage
-    };
+const sendMessage = () => {
+  if (message.value.trim()) {
+    emit('sendMessage', message.value);
+    message.value = '';  
   }
 };
+
+const emit = defineEmits(['sendMessage']);
 </script>
 
 <style scoped>
