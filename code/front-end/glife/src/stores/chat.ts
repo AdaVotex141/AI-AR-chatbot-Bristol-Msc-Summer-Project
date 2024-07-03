@@ -1,20 +1,26 @@
 import {defineStore} from 'pinia'
-import { computed, reactive } from 'vue'
+import { reactive, ref } from 'vue'
+
+interface chatMessage{
+    text?:string
+    type:'text' | 'options'
+    sender:'user' | 'bot'
+    options?:string[]
+}
 
 export const useChatStore = defineStore('chat',()=>{
 
     const messages = reactive<chatMessage[]>([])
 
-    interface chatMessage{
-        text:string
-        type:'text' | 'options'
-        sender:'user' | 'bot'
-        options:string[]
-    }
+    let isInitialWindow = ref(true)
 
     function addMessage(message:chatMessage){
         messages.push(message)
     }
 
-    return { messages, addMessage }
+    function setIsInitialWindowToFalse(){
+        isInitialWindow.value = false
+    }
+
+    return { messages, addMessage, isInitialWindow, setIsInitialWindowToFalse}
 })

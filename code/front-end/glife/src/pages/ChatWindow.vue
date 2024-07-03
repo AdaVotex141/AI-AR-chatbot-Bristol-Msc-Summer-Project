@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
 import MessageList from '@/components/MessageList.vue';
 import MessageInput from '@/components/MessageInput.vue';
 import axios from 'axios';
@@ -19,11 +18,11 @@ import { useChatStore } from '@/stores/chat';
 const chatStore = useChatStore()
 const messages = chatStore.messages;
 
-onMounted(() => {
-  chatStore.addMessage({text: 'Hello, I\'m a chatbot. How can I help you? ', sender: 'bot', type: 'text'})
-})
-
 async function handleSendMessage(message){
+  // TODO: where should I put this function in?
+  chatStore.setIsInitialWindowToFalse()
+  
+  console.log(chatStore.isInitialWindow)
   // Show the message on the window
   chatStore.addMessage({ text: message, sender: 'user', type: 'text'});
 
