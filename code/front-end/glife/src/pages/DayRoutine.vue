@@ -38,7 +38,6 @@
   const isEditing = ref(false)
   const currentTodoId = ref(null)
   const editText = ref('')
-  const editInput = ref(null)
 
   function startEditing(id, text){
     isEditing.value = true
