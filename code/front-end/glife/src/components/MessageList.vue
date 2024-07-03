@@ -1,44 +1,53 @@
 <template>
   <div class="message-list" ref="messageList">
     <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
-      {{ message.text }}
+      <div v-if="message.type === 'text'"> {{ message.text }} </div>
+      <div v-if="message.type === 'options'">
+        <div class="options">
+          <el-button v-for="option in message.options" @click="handleOptionClick(option)" type="success" plain >
+            {{ option }}
+          </el-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    messages: {
-      type: Array,
-      required: true
-    }
-  },
-  mounted() {
-    this.scrollToBottom();
-  },
-  updated() {
-    this.scrollToBottom();
-  },
-  methods: {
-    scrollToBottom() {
-      this.$nextTick(() => {
-        const messageList = this.$refs.messageList;
-        if (messageList) {
-          const shouldScroll = messageList.scrollTop + messageList.clientHeight !== messageList.scrollHeight;
-          if (shouldScroll) {
-            messageList.scrollTop = messageList.scrollHeight;
-          }
-        }
-      });
-    }
-  },
-  watch: {
-    messages() {
-      this.scrollToBottom();
-    }
+<script setup>
+import { ref, onMounted, onUpdated, watch, nextTick } from 'vue';
+
+// Define the props
+const props = defineProps({
+  messages: {
+    type: Array,
+    required: true
   }
+});
+
+const messageList = ref(null);
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    if (messageList.value) {
+      const shouldScroll = messageList.value.scrollTop + messageList.value.clientHeight !== messageList.value.scrollHeight;
+      if (shouldScroll) {
+        messageList.value.scrollTop = messageList.value.scrollHeight;
+      }
+    }
+  });
 };
+
+onMounted(scrollToBottom);
+onUpdated(scrollToBottom);
+
+watch(() => props.messages, scrollToBottom);
+
+const emits = defineEmits(['optionClicked'])
+
+function handleOptionClick(option){
+  emits('optionClicked', option)
+}
+
 </script>
 
 <style scoped>
@@ -63,13 +72,13 @@ export default {
 
 .message.user {
   background-color: #dcf8c6;
-  max-width:50%;
+  max-width:45%;
   align-self: flex-end;
 }
 
 .message.bot {
   background-color: #f1f0f0;
-  max-width: 50%;
+  max-width: 45%;
   align-self: flex-start;
 }
 </style>
