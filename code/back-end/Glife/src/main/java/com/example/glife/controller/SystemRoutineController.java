@@ -42,11 +42,11 @@ public class SystemRoutineController {
         return routineService.addFromAssistant(request);
     }
 
+
     @PostMapping("/add-task")
     public R<String> addFromRandomTask(HttpServletRequest request, String content){
-        JSONObject jsonObject = JSONUtil.parseObj(content);
-        String extractedValue = jsonObject.getStr("content");
-        return routineService.addFromRandomTask(request, content);
+        //TODO
+        return null;
     }
 
 
