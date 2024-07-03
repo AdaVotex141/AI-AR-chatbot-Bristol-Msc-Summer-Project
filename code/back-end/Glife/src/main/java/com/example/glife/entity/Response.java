@@ -9,5 +9,4 @@ import java.util.List;
 public class Response {
     String error;
     List<ResponseSection> ResponseSectionList = new ArrayList<>();
-    //hahahahha
 }

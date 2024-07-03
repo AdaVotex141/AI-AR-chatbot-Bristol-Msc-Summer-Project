@@ -1,0 +1,5 @@
+Response{
+	String error;
+	List<ResponseSection> ResponseSectionList = new ArrayList<>();	
+}
+然后每一个ResponseSection会有

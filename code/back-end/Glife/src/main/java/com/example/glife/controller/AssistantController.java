@@ -28,7 +28,7 @@ public class AssistantController {
         if(assistantService.getSessionId() == null){
             return R.error("the sessionId is null");
         }
-        return R.success(assistantService.sendMessage(extractedValue));
+        return R.success(assistantService.sendMessage(extractedValue,request));
     }
 
 }
