@@ -16,11 +16,11 @@
             <div class="title">Glife</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="1">Chat</el-menu-item>
-          <el-menu-item index="2">Routine</el-menu-item>
+          <el-menu-item index="1"><RouterLink :to="{name:'chatwindow'}" class="navigateRouter">Chat</RouterLink></el-menu-item>
+          <el-menu-item index="2"><RouterLink :to="{name:'dayroutine'}" class="navigateRouter">Routine</RouterLink></el-menu-item>
           <el-sub-menu index="3">
             <template #title>ARTree</template>
-            <el-menu-item index="3-1">Plant VR Tree</el-menu-item>
+            <el-menu-item index="3-1"><RouterLink :to="{name:'artree'}" class="navigateRouter">Plant VR Tree</RouterLink></el-menu-item>
             <el-menu-item index="3-2">My Badge</el-menu-item>
             <el-menu-item index="3-3">Share VR Tree</el-menu-item>
           </el-sub-menu>
@@ -30,13 +30,7 @@
             <el-menu-item index="4-2">Log out</el-menu-item>
           </el-sub-menu>
         </el-menu>
-
         </el-header>
-        <el-main class="navigate">
-          <RouterLink :to="{name:'chatwindow'}" class="navigateElement">Chat</RouterLink>
-          <RouterLink :to="{name:'dayroutine'}" class="navigateElement">DayRoutine</RouterLink>
-          <RouterLink :to="{name:'artree'}" class="navigateElement">ArTree</RouterLink>
-        </el-main>
         <el-main class="main-content">
           <RouterView></RouterView>
         </el-main>
@@ -58,32 +52,30 @@
   </script>
 
 <style scoped>
-.navigateElement{
-  margin-right: 20px;
-}
-
-.title, .navigate{
-  font-weight: bold;
-  font-family: 'Cooper Black',sans-serif;
+.common-layout{
+  height: 100vh;
+  width: 100vw;
 }
 .title{
-  position: sticky;
-  top:0;
-  z-index: 101;
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
   text-align: center;
   height:4rem;
   font-size: 3rem;
   color: whitesmoke;
 }
-.navigate{
-  position: sticky;
-  top:7%;
-  z-index: 100;
-  text-align: center;
-  background-color:  #edeeef;
+.el-header{
+  padding: 0px 0px 0px 0px;
+  width: 100%;
+  position: fixed;
+  top:0;
+  z-index: 101;
 }
+
 .main-content{
-  height: 79vh;
+  display: flex;
+  max-height: 100vh;
+  max-width: 100vw;
   border: 1px solid #ddd;
   border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -92,10 +84,25 @@
 .flex-grow {
   flex-grow: 1;
 }
-
+.el-menu-demo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .el-menu-demo .el-menu-item,
 .el-menu-demo .el-sub-menu {
   font-family: 'Cooper Black',sans-serif;
 }
+.navigateRouter{
+  color: inherit; /* 保持文本颜色 */
+  text-decoration: none; /* 移除默认下划线 */
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  line-height: inherit;
+}
 
+.navigateRouter:hover {
+  color: transparent;; /* 保持悬停时的颜色透明 */
+}
 </style>
