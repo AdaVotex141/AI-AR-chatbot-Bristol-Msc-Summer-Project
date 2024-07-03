@@ -10,20 +10,21 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
 import MessageList from '@/components/MessageList.vue';
 import MessageInput from '@/components/MessageInput.vue';
 import axios from 'axios';
+import { useChatStore } from '@/stores/chat';
 
-const messages = ref([]);
-
-onMounted(() => {
-  messages.value.push({text: 'Hello, I\'m a chatbot. How can I help you? ', sender: 'bot', type: 'text'})
-})
+const chatStore = useChatStore()
+const messages = chatStore.messages;
 
 async function handleSendMessage(message){
+  // TODO: where should I put this function in?
+  chatStore.setIsInitialWindowToFalse()
+  
+  console.log(chatStore.isInitialWindow)
   // Show the message on the window
-  messages.value.push({ text: message, sender: 'user', type: 'text'});
+  chatStore.addMessage({ text: message, sender: 'user', type: 'text'});
 
   // Send api request to the backend
   try{
@@ -35,10 +36,10 @@ async function handleSendMessage(message){
     if(String(data.code) === '1'){
       handleResponseData(data.data)  
     } else {
-      messages.value.push({text: 'Server did not give response, please try again.', sender: 'bot', type: 'text'})
+      chatStore.addMessage({text: 'Server did not give response, please try again.', sender: 'bot', type: 'text'})
     }
   } catch (error){
-    messages.value.push({text: 'Bad things happened, please try again.', sender: 'bot', type: 'text'})
+    chatStore.addMessage({text: 'Bad things happened, please try again.', sender: 'bot', type: 'text'})
   }
 };
 
@@ -46,18 +47,13 @@ function handleResponseData(data){
   if(data && Array.isArray(data.responseSectionList)){
     data.responseSectionList.forEach((item) => {
       if(item.responseType === 'text'){
-        messages.value.push({text: item.text, sender: 'bot', type: 'text'})
+        chatStore.addMessage({text: item.text, sender: 'bot', type: 'text'})
       } else if (item.responseType === 'option'){
-        // let result = ''
-        // item.labels.forEach((label) => {
-        //   result += label
-        //   result += ' | '
-        // })
-        messages.value.push({options: item.labels, sender: 'bot', type: "options"})
+        chatStore.addMessage({options: item.labels, sender: 'bot', type: "options"})
       }
     })
   } else {
-    messages.value.push({text: 'wtf idk', sender: 'bot', type: 'text'})
+    chatStore.addMessage({text: 'wtf idk', sender: 'bot', type: 'text'})
   }
 }
 
