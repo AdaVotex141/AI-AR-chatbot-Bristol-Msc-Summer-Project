@@ -1,7 +1,7 @@
 <template>
   <div class="chat-container">
     <div class="messages">
-      <MessageList :messages="messages" />
+      <MessageList :messages="messages" @optionClicked="handleOptionClick" />
     </div>
     <div class="input">
       <MessageInput @sendMessage="handleSendMessage" />
@@ -18,12 +18,12 @@ import axios from 'axios';
 const messages = ref([]);
 
 onMounted(() => {
-  messages.value.push({text: 'Hello, I\'m a chatbot. How can I help you? ', sender: 'bot'})
+  messages.value.push({text: 'Hello, I\'m a chatbot. How can I help you? ', sender: 'bot', type: 'text'})
 })
 
 async function handleSendMessage(message){
   // Show the message on the window
-  messages.value.push({ text: message, sender: 'user' });
+  messages.value.push({ text: message, sender: 'user', type: 'text'});
 
   // Send api request to the backend
   try{
@@ -35,10 +35,10 @@ async function handleSendMessage(message){
     if(String(data.code) === '1'){
       handleResponseData(data.data)  
     } else {
-      messages.value.push({text: 'Server did not give response, please try again.', sender: 'bot'})
+      messages.value.push({text: 'Server did not give response, please try again.', sender: 'bot', type: 'text'})
     }
   } catch (error){
-    messages.value.push({text: 'Bad things happened, please try again.', sender: 'bot'})
+    messages.value.push({text: 'Bad things happened, please try again.', sender: 'bot', type: 'text'})
   }
 };
 
@@ -46,19 +46,23 @@ function handleResponseData(data){
   if(data && Array.isArray(data.responseSectionList)){
     data.responseSectionList.forEach((item) => {
       if(item.responseType === 'text'){
-        messages.value.push({text: item.text, sender: 'bot'})
+        messages.value.push({text: item.text, sender: 'bot', type: 'text'})
       } else if (item.responseType === 'option'){
-        let result = ''
-        item.labels.forEach((label) => {
-          result += label
-          result += ' | '
-        })
-        messages.value.push({text: result, sender: 'bot'})
+        // let result = ''
+        // item.labels.forEach((label) => {
+        //   result += label
+        //   result += ' | '
+        // })
+        messages.value.push({options: item.labels, sender: 'bot', type: "options"})
       }
     })
   } else {
-    messages.value.push({text: 'wtf idk', sender: 'bot'})
+    messages.value.push({text: 'wtf idk', sender: 'bot', type: 'text'})
   }
+}
+
+function handleOptionClick(option){
+  handleSendMessage(option)
 }
 
 </script>
