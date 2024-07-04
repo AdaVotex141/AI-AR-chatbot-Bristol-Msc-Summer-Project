@@ -12,15 +12,15 @@
             text-color="white"
             active-text-color="black"
         >
-          <el-menu-item index="0">
-            <div class="title">Glife</div>
+          <el-menu-item index="/welcome">
+            <div class="title" @click="navigateTo('startpage')">Glife</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="1" @click="navigateTo('chatwindow')">Chat</el-menu-item>
-          <el-menu-item index="2" @click="navigateTo('dayroutine')">Routine</el-menu-item>
+          <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Chat</el-menu-item>
+          <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Routine</el-menu-item>
           <el-sub-menu index="3">
             <template #title>ARTree</template>
-            <el-menu-item index="3-1" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
+            <el-menu-item index="/mainpage/artree" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
             <el-menu-item index="3-2">My Badge</el-menu-item>
             <el-menu-item index="3-3">Share VR Tree</el-menu-item>
           </el-sub-menu>
@@ -40,12 +40,18 @@
   </template>
   
   <script setup lang="ts" name="App">
-    import { RouterView } from 'vue-router';
-    import { ref } from 'vue'
+  import {RouterView, useRoute} from 'vue-router';
+    import {ref, watch} from 'vue'
     import axios from 'axios';
     import router from '@/router';
 
-    const activeIndex = ref('1')
+    // Watch the current router
+    const route = useRoute();
+    const activeIndex = ref(route.path);
+    watch(route, (newRoute) => {
+      activeIndex.value = newRoute.path;
+    });
+
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
@@ -69,7 +75,7 @@
       }
     }
 
-  
+
   </script>
 
 <style scoped>
@@ -86,7 +92,7 @@
   color: whitesmoke;
 }
 .el-header{
-  padding: 0px 0px 0px 0px;
+  padding: 0;
   width: 100%;
   position: fixed;
   top:0;
