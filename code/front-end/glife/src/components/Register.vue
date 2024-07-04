@@ -39,6 +39,7 @@
 import { reactive, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage, type FormInstance } from 'element-plus';
+import router from "@/router";
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -105,7 +106,10 @@ async function register(ruleFormRef: FormInstance | undefined){
             } catch (error){
                 console.error('Error sending data:', error)
                 alert('Error sending data')
-            }
+                router.push({
+                  name:'notfound'
+                })
+              }
         }
         
     })
