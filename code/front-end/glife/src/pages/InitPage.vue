@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ArrowLongDownIcon, ChatBubbleBottomCenterTextIcon , QuestionMarkCircleIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
+import { ArrowLongDownIcon, ChatBubbleBottomCenterTextIcon , ArrowLongRightIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
 import router from "@/router";
 
 const features = [
@@ -43,18 +43,18 @@ const features = [
     router: 'dayroutine',
   },
   {
-    name: 'Plant tree',
+    name: 'Plant AR tree',
     description:
-        'You can plant some AR tree in here',
+        'You can plant some AR tree,look all badges you got, and share your AR tree in here.',
     icon: ArrowLongDownIcon,
     router: 'artree',
   },
   {
-    name: 'FAQ',
+    name: 'Log out',
     description:
-        'Still has some questions? Look at our FAQ to get help.',
-    icon: QuestionMarkCircleIcon,
-    router: 'notfound',
+        'See you again soon! We are looking forward to your next login!',
+    icon: ArrowLongRightIcon,
+    router: 'logout',
   },
 ]
   function handleFeatureClick(feature) {

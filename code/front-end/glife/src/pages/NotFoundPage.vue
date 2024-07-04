@@ -10,7 +10,7 @@
           text-black shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2
           focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           @click="navigateTo('logout')">
-            Go back home</button>
+            Go back login</button>
 <!--          TODO: Add some function for contact support-->
           <button class="text-sm font-semibold text-gray-900" @click="navigateTo('notfound')">
             Contact support<span aria-hidden="true">&rarr;</span>
