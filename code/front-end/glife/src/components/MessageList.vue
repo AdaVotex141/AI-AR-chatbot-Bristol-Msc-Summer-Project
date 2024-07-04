@@ -2,14 +2,7 @@
   <div class="message-list" ref="messageList">
     <InitialChatWindow v-show="chatStore.isInitialWindow" @buttonClicked="handleOptionClick"/>
     <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
-      <MessageBubble v-if="message.type === 'text'" :message="message" /> 
-      <div v-if="message.type === 'options'">
-        <div class="options">
-          <el-button v-for="option in message.options" @click="handleOptionClick(option)" type="success" plain >
-            {{ option }}
-          </el-button>
-        </div>
-      </div>
+      <MessageBubble :message="message" /> 
     </div>
   </div>
 </template>

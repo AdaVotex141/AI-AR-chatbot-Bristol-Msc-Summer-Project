@@ -8,7 +8,14 @@
         </div>
         <div :class="`flex flex-col leading-1.5 p-4 border-gray-200 dark:bg-gray-700 
         ${message.sender === 'user' ? 'bg-lime-200 rounded-b-xl rounded-tl-xl' : 'bg-gray-200 rounded-b-xl rounded-tr-xl'}`">
-          <p class="text-sm font-normal text-gray-900 dark:text-white">{{ message.text }}</p>
+          <p v-if="message.type === 'text'"class="text-sm font-normal text-gray-900 dark:text-white">{{ message.text }}</p>
+            <div v-else="message.type === 'options'">
+                <div class="options">
+                    <el-button v-for="option in message.options"  type="success" plain >
+                    {{ option }}
+                    </el-button>
+                </div>
+            </div>
         </div>
       </div>
     </div>
