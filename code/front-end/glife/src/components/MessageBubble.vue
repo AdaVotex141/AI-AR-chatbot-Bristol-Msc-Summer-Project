@@ -11,7 +11,7 @@
           <p v-if="message.type === 'text'"class="text-sm font-normal text-gray-900 dark:text-white">{{ message.text }}</p>
             <div v-else="message.type === 'options'">
                 <div class="options">
-                    <el-button v-for="option in message.options"  type="success" plain >
+                    <el-button v-for="option in message.options" @click="chatStore.handleSendMessage(option)" type="success" plain >
                     {{ option }}
                     </el-button>
                 </div>
@@ -23,8 +23,10 @@
 
 <script setup lang='ts'>
 import {onMounted, ref} from 'vue'
-let name = ref()
+import { useChatStore } from '@/stores/chat';
 
+let name = ref()
+const chatStore = useChatStore()
 const props = defineProps(['message'])  
 
 onMounted(()=>{
@@ -34,8 +36,6 @@ onMounted(()=>{
         name.value = 'Bot'
     }
 })
-
-
 </script>
 
 <style scoped>

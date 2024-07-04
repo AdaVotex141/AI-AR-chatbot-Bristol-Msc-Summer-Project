@@ -1,7 +1,7 @@
 <template>
   <div class="message-list" ref="messageList">
-    <InitialChatWindow v-show="chatStore.isInitialWindow" @buttonClicked="handleOptionClick"/>
-    <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
+    <InitialChatWindow v-show="chatStore.isInitialWindow" />
+    <div v-for="(message, index) in chatStore.messages" :key="index" :class="['message', message.sender]">
       <MessageBubble :message="message" /> 
     </div>
   </div>
@@ -14,14 +14,6 @@ import { useChatStore } from '@/stores/chat';
 import MessageBubble from '@/components/MessageBubble.vue';
 
 const chatStore = useChatStore()
-
-// Define the props
-const props = defineProps({
-  messages: {
-    type: Array,
-    required: true
-  }
-});
 
 const messageList = ref(null);
 
@@ -39,13 +31,7 @@ const scrollToBottom = () => {
 onMounted(scrollToBottom);
 onUpdated(scrollToBottom);
 
-watch(() => props.messages, scrollToBottom);
-
-const emits = defineEmits(['optionClicked'])
-
-function handleOptionClick(option){
-  emits('optionClicked', option)
-}
+watch(() => chatStore.messages, scrollToBottom);
 
 </script>
 
