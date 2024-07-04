@@ -8,9 +8,9 @@
       </div>
       <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
         <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-          <div v-for="feature in features" :key="feature.name" class="relative pl-16 rounded-lg hover:bg-gray-300">
+          <div @click="handleFeatureClick(feature)" v-for="feature in features" :key="feature.name" class="relative pl-16 rounded-lg hover:bg-gray-300" >
             <dt class="text-base font-semibold leading-7 text-gray-900">
-              <div class="absolute left-0 top-5 flex h-12 w-12 items-center justify-center rounded-lg bg-green-400">
+              <div class="absolute left-2 top-5 flex h-12 w-12 items-center justify-center rounded-lg bg-green-400">
                 <component :is="feature.icon" class="h-8 w-8 text-white" aria-hidden="true" />
               </div>
               {{ feature.name }}
@@ -25,6 +25,7 @@
 
 <script setup>
 import { ArrowLongDownIcon, ChatBubbleBottomCenterTextIcon , QuestionMarkCircleIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
+import router from "@/router";
 
 const features = [
   {
@@ -32,26 +33,36 @@ const features = [
     description:
         'You can chat with a IBM robot which can suggest you some advices.',
     icon: ChatBubbleBottomCenterTextIcon ,
+    router: 'chatwindow',
   },
   {
     name: 'Day Routine',
     description:
         'You can get some random day routines here or add some by yourself.',
     icon: ClipboardDocumentListIcon,
+    router: 'dayroutine',
   },
   {
     name: 'Plant tree',
     description:
         'You can plant some AR tree in here',
     icon: ArrowLongDownIcon,
+    router: 'artree',
   },
   {
     name: 'FAQ',
     description:
         'Still has some questions? Look at our FAQ to get help.',
     icon: QuestionMarkCircleIcon,
+    router: 'notfound',
   },
 ]
+  function handleFeatureClick(feature) {
+    router.push({
+      name: feature.router
+    });
+  }
+
 </script>
 
 <style>
