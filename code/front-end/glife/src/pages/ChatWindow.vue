@@ -22,7 +22,6 @@ async function handleSendMessage(message){
   // TODO: where should I put this function in?
   chatStore.setIsInitialWindowToFalse()
   
-  console.log(chatStore.isInitialWindow)
   // Show the message on the window
   chatStore.addMessage({ text: message, sender: 'user', type: 'text'});
 
@@ -32,7 +31,6 @@ async function handleSendMessage(message){
       inputMessage: message
     })
     const data = response.data
-    console.log(data.data)
     if(String(data.code) === '1'){
       handleResponseData(data.data)  
     } else {
@@ -44,17 +42,13 @@ async function handleSendMessage(message){
 };
 
 function handleResponseData(data){
-  if(data && Array.isArray(data.responseSectionList)){
-    data.responseSectionList.forEach((item) => {
-      if(item.responseType === 'text'){
-        chatStore.addMessage({text: item.text, sender: 'bot', type: 'text'})
-      } else if (item.responseType === 'option'){
-        chatStore.addMessage({options: item.labels, sender: 'bot', type: "options"})
-      }
-    })
-  } else {
-    chatStore.addMessage({text: 'wtf idk', sender: 'bot', type: 'text'})
-  }
+  data.responseSectionList.forEach((item) => {
+    if(item.responseType === 'text'){
+      chatStore.addMessage({text: item.text, sender: 'bot', type: 'text'})
+    } else if (item.responseType === 'option'){
+      chatStore.addMessage({options: item.labels, sender: 'bot', type: "options"})
+    }
+  })
 }
 
 function handleOptionClick(option){

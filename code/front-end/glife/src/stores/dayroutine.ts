@@ -2,16 +2,18 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
 import router from "@/router";
-import NotFoundPage from "@/pages/NotFoundPage.vue";
+import {defineStore} from 'pinia'
 
-export default function () {
-    interface Todo{
-        id: number;
-        text: string;
-        completed: boolean;
-    }
+interface Todo{
+    id: number;
+    text: string;
+    completed: boolean;
+}
+
+export const useDayroutineStore = defineStore('dayroutine',()=> {
     const newTodo = ref('');
     const todos = ref<Todo[]>([]);
+    
 
     async function getTodos(){
         try{
@@ -84,7 +86,7 @@ export default function () {
             console.error(error)
             router.push({name:'notfound'});
         }
-        // Get the latest todos
+        // Set the latest todos
         getTodos()
     };
 
@@ -107,7 +109,8 @@ export default function () {
         }
     }
 
+    
+
     return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
-}
-
-
+}) 
+    

@@ -2,7 +2,7 @@
   <div class="message-list" ref="messageList">
     <InitialChatWindow v-show="chatStore.isInitialWindow" @buttonClicked="handleOptionClick"/>
     <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
-      <div v-if="message.type === 'text'"> {{ message.text }} </div>
+      <MessageBubble v-if="message.type === 'text'" :message="message" /> 
       <div v-if="message.type === 'options'">
         <div class="options">
           <el-button v-for="option in message.options" @click="handleOptionClick(option)" type="success" plain >
@@ -18,6 +18,7 @@
 import InitialChatWindow from './InitialChatWindow.vue';
 import { ref, onMounted, onUpdated, watch, nextTick } from 'vue';
 import { useChatStore } from '@/stores/chat';
+import MessageBubble from '@/components/MessageBubble.vue';
 
 const chatStore = useChatStore()
 
@@ -76,14 +77,12 @@ function handleOptionClick(option){
 }
 
 .message.user {
-  background-color: #dcf8c6;
-  max-width:45%;
+  max-width:60%;
   align-self: flex-end;
 }
 
 .message.bot {
-  background-color: #f1f0f0;
-  max-width: 45%;
+  max-width: 60%;
   align-self: flex-start;
 }
 </style>
