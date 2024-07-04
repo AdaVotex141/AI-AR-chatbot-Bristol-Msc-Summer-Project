@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
+import router from "@/router";
+import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 export default function () {
     interface Todo{
@@ -26,6 +28,7 @@ export default function () {
                 .sort((a, b) => a.id - b.id)
             } else {
                 alert('Backend give a code 0?') // TODO: need to be deleted after ensuring the fault
+                router.push({name:'notfound'});
             }
         } catch (error) {
             console.error("Error happened during initializing the dayroutine")
