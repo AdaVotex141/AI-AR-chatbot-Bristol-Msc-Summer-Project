@@ -26,8 +26,8 @@
           </el-sub-menu>
           <el-sub-menu index="10">
             <template #title>Profile</template>
-            <el-menu-item index="4-1" @click="navigateTo('notfound')">Setting</el-menu-item>
-            <el-menu-item index="4-2"><RouterLink :to="{name:'logout'}" class="navigateRouter">Log out</RouterLink></el-menu-item>
+            <el-menu-item index="4-1"><RouterLink :to="{name:'notfound'}" class="navigateRouter">setting</RouterLink></el-menu-item>
+            <el-menu-item index="4-2" @click='logout'>Log out</el-menu-item>
           </el-sub-menu>
         </el-menu>
         </el-header>
@@ -42,7 +42,8 @@
   <script setup lang="ts" name="App">
     import { RouterView } from 'vue-router';
     import { ref } from 'vue'
-    import router from "@/router";
+    import axios from 'axios';
+    import router from '@/router';
 
     const activeIndex = ref('1')
     const handleSelect = (key: string, keyPath: string[]) => {
@@ -52,6 +53,20 @@
       router.push({
         name: routeName
       });
+    }
+
+    async function logout(){
+      try{
+        const response = await axios.post('/api/logout')
+        if(String(response.data.code) !== '1'){
+          alert('Logout fail, please try again')
+        } else {
+          alert('logout successful')
+          router.replace({name:'logout'})
+        }
+      } catch (error) {
+        router.push({name:'notfound'})
+      }
     }
 
   
@@ -100,4 +115,16 @@
   font-family: 'Cooper Black',sans-serif;
 }
 
+.navigateRouter{
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  line-height: inherit;
+}
+
+.navigateRouter:hover {
+  color: transparent;
+}
 </style>

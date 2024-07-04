@@ -25,7 +25,7 @@ export default function () {
                     text: item.content,
                     completed: Boolean(item.tick)
                 }))
-                .sort((a, b) => a.id - b.id)
+                .sort((a, b) => b.id - a.id)
             } else {
                 alert('Backend give a code 0?') // TODO: need to be deleted after ensuring the fault
                 router.push({name:'notfound'});
