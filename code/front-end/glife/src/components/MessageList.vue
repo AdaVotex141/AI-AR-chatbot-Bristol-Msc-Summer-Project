@@ -1,15 +1,13 @@
 <template>
   <div class="message-list" ref="messageList">
-    <InitialChatWindow v-if="chatStore.isInitialWindow" @buttonClicked="handleOptionClick"/>
-    <div v-else>
-      <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
-        <div v-if="message.type === 'text'"> {{ message.text }} </div>
-        <div v-if="message.type === 'options'">
-          <div class="options">
-            <el-button v-for="option in message.options" @click="handleOptionClick(option)" type="success" plain >
-              {{ option }}
-            </el-button>
-          </div>
+    <InitialChatWindow v-show="chatStore.isInitialWindow" @buttonClicked="handleOptionClick"/>
+    <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
+      <div v-if="message.type === 'text'"> {{ message.text }} </div>
+      <div v-if="message.type === 'options'">
+        <div class="options">
+          <el-button v-for="option in message.options" @click="handleOptionClick(option)" type="success" plain >
+            {{ option }}
+          </el-button>
         </div>
       </div>
     </div>
