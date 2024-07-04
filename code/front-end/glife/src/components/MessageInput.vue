@@ -11,17 +11,18 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useChatStore } from '@/stores/chat';
+const chatStore = useChatStore()
 
 const message = ref('');
 
 const sendMessage = () => {
   if (message.value.trim()) {
-    emit('sendMessage', message.value);
+    chatStore.handleSendMessage(message.value)
     message.value = '';  
   }
 };
 
-const emit = defineEmits(['sendMessage']);
 </script>
 
 <style scoped>

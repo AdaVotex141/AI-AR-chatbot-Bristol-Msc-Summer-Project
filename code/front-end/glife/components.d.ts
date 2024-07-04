@@ -27,6 +27,7 @@ declare module 'vue' {
     FormItem: typeof import('./src/components/FormItem.vue')['default']
     InitialChatWindow: typeof import('./src/components/InitialChatWindow.vue')['default']
     Loading: typeof import('./src/components/Loading.vue')['default']
+    LoadingEffect: typeof import('./src/components/LoadingEffect.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     MessageBubble: typeof import('./src/components/MessageBubble.vue')['default']
     MessageInput: typeof import('./src/components/MessageInput.vue')['default']
