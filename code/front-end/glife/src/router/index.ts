@@ -7,6 +7,7 @@ import ArTree from '@/pages/ArTree.vue'
 import LoginRegister from '@/pages/LoginRegister.vue'
 import MainPage from '@/pages/MainPage.vue'
 import NotFoundPage from "@/pages/NotFoundPage.vue";
+import InitPage from "@/pages/InitPage.vue";
 
 //create router
 const router = createRouter({
@@ -53,6 +54,11 @@ const router = createRouter({
             path:'/login',
             component:LoginRegister
         },
+        {
+            name:'startpage',
+            path:'/welcome',
+            component: InitPage
+        }
     ]
 })
 
