@@ -4,95 +4,37 @@
     <el-header>{{ getCurrentDate() }} Routine: </el-header>
     <el-main>
       <div class="user-input">
-        <el-input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new routine!" clearable />
-        <el-button type="primary" @click="addTodo">Add</el-button>
+        <el-input v-model="dayroutineStore.newTodo" @keyup.enter="dayroutineStore.addTodo" placeholder="Add a new routine!" clearable />
+        <el-button type="primary" @click="dayroutineStore.addTodo">Add</el-button>
       </div>
       <el-divider content-position="left">Your routines:</el-divider>
-      <ul>
-        <li v-for="(todo) in todos" :key="todo.id" :class="{ completed: todo.completed }">
-          <input type="checkbox" v-model="todo.completed" @click="changeCompletedStatus(todo.id)"/>
-          <el-input
-            v-if="isEditing && currentTodoId === todo.id"
-            v-model="editText"
-            @blur="saveTodo(todo.id)"
-            @keyup.enter="saveTodo(todo.id)"
-            autofocus />
-          <span v-else @click="startEditing(todo.id, todo.text)">{{ todo.text }}</span>
-          <el-button @click="removeTodo(todo.id)">Remove</el-button>
-        </li>
-      </ul>
+      <RoutineList />
     </el-main>
   </el-container>
   </div>
 </template>
 
-<script setup>
-  import useDayroutine from '@/hooks/useDayroutine';
+<script setup lang='ts'>
   import { onMounted, ref } from 'vue';
-  import axios from 'axios';
+  import RoutineList from '@/components/RoutineList.vue';
+  import { useDayroutineStore } from '@/stores/dayroutine';
 
-  const {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus} = useDayroutine()
-  onMounted(getTodos)
+  const dayroutineStore = useDayroutineStore()
+  onMounted(() => dayroutineStore.getTodos)
 
-  // TODO: Content used for todolist, use component to replace it in the future
-  const isEditing = ref(false)
-  const currentTodoId = ref(null)
-  const editText = ref('')
-
-  function startEditing(id, text){
-    isEditing.value = true
-    currentTodoId.value = id
-    editText.value = text
-  }
-
-  async function saveTodo(id){
-    // Edit content in the frontend
-    const todo = todos.value.find(todo => todo.id === id)
-    if(todo){
-      todo.text = editText.value
-    }
-    isEditing.value = false
-    currentTodoId.value = null
-    // Sending request to the backend
-    try{
-      const response = await axios.post('/api/routine/update', {
-        id: id,
-        content: editText.value
-      })
-      if(String(response.data.code) !== '1'){
-        console.error('Error happened during update data in backend')
-      }
-    } catch (error){
-      console.error(error)
-    }
-
-  }
   // Get the date information
   function getCurrentDate() {
       return new Date().toLocaleDateString('en-GB');
-    }
+  }
 
 </script>
 
 <style scoped>
-@media(max-width: 600px) {
-  .routine-container {
-    margin-top: 2.5rem;
-    width: 100vw;
-    height: 90vh;
-  }
+.routine-container{
+  margin-top: 2.5rem;
+  width: 100vw;
+  height: 90vh;
 }
-
-@media(min-width: 601px) {
-  .routine-container {
-    margin-top: 2.5rem;
-    width: 60vw;
-    height: 90vh;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 .el-header{
   background-color: #9cb470;
   padding: 1.5rem;
@@ -109,7 +51,7 @@
   align-items: center;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   position: sticky;
-  top: 5%;
+  top: 0;
   z-index: 100;
 }
 
@@ -147,27 +89,6 @@ button:hover {
   background-color:darkseagreen;
   color: #fff;
   border-color: transparent;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-li.completed span {
-  text-decoration: line-through;
-}
-
-li.completed input[type="checkbox"] {
-  checked: true;
 }
 
 </style>
