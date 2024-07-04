@@ -16,17 +16,17 @@
             <div class="title">Glife</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="1"><RouterLink :to="{name:'chatwindow'}" class="navigateRouter">Chat</RouterLink></el-menu-item>
-          <el-menu-item index="2"><RouterLink :to="{name:'dayroutine'}" class="navigateRouter">Routine</RouterLink></el-menu-item>
+          <el-menu-item index="1" @click="navigateTo('chatwindow')">Chat</el-menu-item>
+          <el-menu-item index="2" @click="navigateTo('dayroutine')">Routine</el-menu-item>
           <el-sub-menu index="3">
             <template #title>ARTree</template>
-            <el-menu-item index="3-1"><RouterLink :to="{name:'artree'}" class="navigateRouter">Plant VR Tree</RouterLink></el-menu-item>
+            <el-menu-item index="3-1" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
             <el-menu-item index="3-2">My Badge</el-menu-item>
             <el-menu-item index="3-3">Share VR Tree</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="10">
             <template #title>Profile</template>
-            <el-menu-item index="4-1"><RouterLink :to="{name:'notfound'}" class="navigateRouter">setting</RouterLink></el-menu-item>
+            <el-menu-item index="4-1" @click="navigateTo('notfound')">Setting</el-menu-item>
             <el-menu-item index="4-2"><RouterLink :to="{name:'logout'}" class="navigateRouter">Log out</RouterLink></el-menu-item>
           </el-sub-menu>
         </el-menu>
@@ -42,10 +42,16 @@
   <script setup lang="ts" name="App">
     import { RouterView } from 'vue-router';
     import { ref } from 'vue'
+    import router from "@/router";
 
     const activeIndex = ref('1')
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
+    }
+    function navigateTo(routeName: string) {
+      router.push({
+        name: routeName
+      });
     }
 
   
