@@ -99,16 +99,5 @@
 .el-menu-demo .el-sub-menu {
   font-family: 'Cooper Black',sans-serif;
 }
-.navigateRouter{
-  color: inherit; /* 保持文本颜色 */
-  text-decoration: none; /* 移除默认下划线 */
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  line-height: inherit;
-}
 
-.navigateRouter:hover {
-  color: transparent;; /* 保持悬停时的颜色透明 */
-}
 </style>

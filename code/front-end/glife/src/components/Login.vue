@@ -29,6 +29,7 @@
     </el-form>
   </div>
   <el-button @click="toChat">To the chat</el-button>
+  <button @click="toStart">To the start page</button>
 
 </template>
 
@@ -89,7 +90,7 @@ async function login(ruleFormRef: FormInstance | undefined){
             type: 'success'
           })
           router.push({
-            name:'mainpage'
+            name:'startpage'
           })
         } else {
           ElMessage({
@@ -110,6 +111,11 @@ async function login(ruleFormRef: FormInstance | undefined){
 function toChat(){
   router.push({
     name:'mainpage'
+  })
+}
+function toStart(){
+  router.push({
+    name:'startpage'
   })
 }
 

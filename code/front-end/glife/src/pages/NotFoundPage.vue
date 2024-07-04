@@ -1,6 +1,6 @@
 
 <template>
-    <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
       <div class="text-center">
         <p class="text-base font-semibold ">404</p>
         <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Page not found</h1>
@@ -11,7 +11,8 @@
           focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           @click="navigateTo('logout')">
             Go back home</button>
-          <button class="text-sm font-semibold text-gray-900">
+<!--          TODO: Add some function for contact support-->
+          <button class="text-sm font-semibold text-gray-900" @click="navigateTo('notfound')">
             Contact support<span aria-hidden="true">&rarr;</span>
           </button>
         </div>
