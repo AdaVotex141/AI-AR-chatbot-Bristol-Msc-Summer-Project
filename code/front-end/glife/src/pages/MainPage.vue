@@ -21,13 +21,13 @@
           <el-sub-menu index="3">
             <template #title>ARTree</template>
             <el-menu-item index="/mainpage/artree" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
-            <el-menu-item index="3-2">My Badge</el-menu-item>
-            <el-menu-item index="3-3">Share VR Tree</el-menu-item>
+            <el-menu-item index="/mainpage/badge">My Badge</el-menu-item>
+            <el-menu-item index="/mainpage/share">Share VR Tree</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="10">
             <template #title>Profile</template>
-            <el-menu-item index="4-1" @click="navigateTo('notfound')">Setting</el-menu-item>
-            <el-menu-item index="4-2" @click='logout'>Log out</el-menu-item>
+            <el-menu-item index="/mainpage/setting" @click="navigateTo('setting')">Setting</el-menu-item>
+            <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
           </el-sub-menu>
         </el-menu>
         </el-header>

@@ -51,7 +51,7 @@
   align-items: center;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   position: sticky;
-  top: 0;
+  top: 5%;
   z-index: 100;
 }
 
