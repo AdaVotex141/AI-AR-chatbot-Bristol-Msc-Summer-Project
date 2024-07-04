@@ -51,14 +51,16 @@ export const useChatStore = defineStore('chat',()=>{
     };
 
     function handleResponseData(data:{responseSectionList:item[]}){
-        data.responseSectionList.forEach((item) => {
-          if(item.responseType === 'text'){
-            addMessage({text: item.text, sender: 'bot', type: 'text'})
-          } else if (item.responseType === 'option'){
-            addMessage({options: item.labels, sender: 'bot', type: "options"})
+      data.responseSectionList.forEach((item, index) => {
+        setTimeout(() => {
+          if (item.responseType === 'text') {
+            addMessage({ text: item.text, sender: 'bot', type: 'text' });
+          } else if (item.responseType === 'option') {
+            addMessage({ options: item.labels, sender: 'bot', type: 'options' });
           }
-        })
-      }
+        }, index * 1000);
+      })
+    }
       
 
     return { messages, addMessage, isInitialWindow, setIsInitialWindowToFalse, handleSendMessage}
