@@ -18,6 +18,9 @@
         <el-form-item label="PASSWORD" prop="password">
             <el-input v-model="formLabelAlign.password" type="password" show-password/>
         </el-form-item>
+        <el-form-item label="Confirm Password" prop="confirmPassword">
+            <el-input v-model="formLabelAlign.confirmPassword" type="password" show-password/>
+        </el-form-item>
         <el-form-item label="EMAIL" prop="email">
             <el-input v-model="formLabelAlign.email" />
             <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
@@ -43,9 +46,20 @@ import router from "@/router";
 
 const ruleFormRef = ref<FormInstance>()
 
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('Please input the password again'))
+  } else if (value !== formLabelAlign.password) {
+    callback(new Error("Two inputs don't match!"))
+  } else {
+    callback()
+  }
+}
+
 const formLabelAlign = reactive({
     username: '',
     password: '',
+    confirmPassword:'',
     email: ''
 })
 
@@ -63,6 +77,13 @@ const rules = reactive({
         message: 'Please enter your password',
         trigger: 'blur'
     }
+    ],
+    confirmPassword:[
+      {
+        required: true,
+        validator: validatePass,
+        trigger: 'blur'
+      }
     ],
     email:[{
         required: true,
