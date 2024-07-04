@@ -75,6 +75,24 @@
 </script>
 
 <style scoped>
+@media(max-width: 600px) {
+  .routine-container {
+    margin-top: 2.5rem;
+    width: 100vw;
+    height: 90vh;
+  }
+}
+
+@media(min-width: 601px) {
+  .routine-container {
+    margin-top: 2.5rem;
+    width: 60vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .el-header{
   background-color: #9cb470;
   padding: 1.5rem;
@@ -91,13 +109,10 @@
   align-items: center;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   position: sticky;
-  top: 0;
+  top: 5%;
   z-index: 100;
 }
-.routine-container{
-  width: 80vw;
-  height: 50vh;
-}
+
 .el-main{
   overflow-y: hidden;
 }

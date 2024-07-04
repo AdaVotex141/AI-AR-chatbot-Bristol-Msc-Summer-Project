@@ -1,5 +1,6 @@
 <template>
   <div class="message-list" ref="messageList">
+    <InitialChatWindow v-show="chatStore.isInitialWindow" @buttonClicked="handleOptionClick"/>
     <div v-for="(message, index) in messages" :key="index" :class="['message', message.sender]">
       <div v-if="message.type === 'text'"> {{ message.text }} </div>
       <div v-if="message.type === 'options'">
@@ -14,7 +15,11 @@
 </template>
 
 <script setup>
+import InitialChatWindow from './InitialChatWindow.vue';
 import { ref, onMounted, onUpdated, watch, nextTick } from 'vue';
+import { useChatStore } from '@/stores/chat';
+
+const chatStore = useChatStore()
 
 // Define the props
 const props = defineProps({
@@ -52,7 +57,7 @@ function handleOptionClick(option){
 
 <style scoped>
 .message-list {
-  max-height: 60vh;
+  height: 75vh;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
