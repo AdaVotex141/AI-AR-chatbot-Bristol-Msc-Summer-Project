@@ -11,7 +11,7 @@ interface chatMessage{
 export const useChatStore = defineStore('chat',()=>{
 
     const messages = reactive<chatMessage[]>([])
-
+    let isLoading = ref(true)
     let isInitialWindow = ref(true)
 
     function addMessage(message:chatMessage){
@@ -22,5 +22,9 @@ export const useChatStore = defineStore('chat',()=>{
         isInitialWindow.value = false
     }
 
-    return { messages, addMessage, isInitialWindow, setIsInitialWindowToFalse}
+    function setIsLoading(flag:boolean){
+        isLoading.value = flag
+    }
+
+    return { messages, addMessage, isInitialWindow, setIsInitialWindowToFalse, isLoading, setIsLoading}
 })

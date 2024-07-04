@@ -13,6 +13,7 @@ interface Todo{
 export const useDayroutineStore = defineStore('dayroutine',()=> {
     const newTodo = ref('');
     const todos = ref<Todo[]>([]);
+    
 
     async function getTodos(){
         try{
@@ -82,7 +83,7 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         } catch (error){
             console.error(error)
         }
-        // Get the latest todos
+        // Set the latest todos
         getTodos()
     };
 
@@ -102,6 +103,8 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
             console.error(error)
         }
     }
+
+    
 
     return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
