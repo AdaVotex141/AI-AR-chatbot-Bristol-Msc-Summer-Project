@@ -12,6 +12,7 @@ import com.example.glife.entity.User;
 import com.example.glife.mapper.RoutineMapper;
 import com.example.glife.service.AssistantService;
 import com.example.glife.service.RoutineService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> implements RoutineService {
     @Autowired
     AssistantService assistantService;
@@ -59,9 +61,7 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         newRoutine.setCreateTime(LocalDateTime.now());
         baseMapper.insert(newRoutine);
 
-        String useridString = getUserID(request).toString();
-        String key = RedisConstants.CUSTOM_ROUTINE + useridString;
-        stringRedisTemplate.delete(key);
+        deleteInRedis(request);
 
         return R.success("create routine success");
     }
@@ -82,9 +82,7 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
             return R.error("fail to update this routine");
         }
 
-        String userid = getUserID(request).toString();
-        String key = RedisConstants.CUSTOM_ROUTINE + userid;
-        stringRedisTemplate.delete(key);
+        deleteInRedis(request);
 
         return R.success(routine);
     }
@@ -113,9 +111,9 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         baseMapper.updateById(selectRoutine);
 
         //delete in Redis
-        String userid = getUserID(request).toString();
-        String key = RedisConstants.CUSTOM_ROUTINE + userid;
-        stringRedisTemplate.delete(key);
+
+        deleteInRedis(request);
+
 
         return R.success(selectRoutine);
     }
@@ -159,8 +157,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
             lambdaQueryWrapper.eq(Routine::getUserid, userid);
             lambdaQueryWrapper.orderByAsc(Routine::getCreateTime);
 
-
-
             List<Routine> routines = baseMapper.selectList(lambdaQueryWrapper);
             if (routines != null) {
                 routineRepo.addAll(routines);
@@ -187,14 +183,12 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
 
         baseMapper.delete(lambdaQueryWrapper);
 
-        String userid = getUserID(request).toString();
-        String key = RedisConstants.CUSTOM_ROUTINE + userid;
-        stringRedisTemplate.delete(key);
+        deleteInRedis(request);
 
         return R.success("delete success");
     }
 
-    public Long getUserID(HttpServletRequest request){
+    private Long getUserID(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         User user = null;
         Long userid = Long.valueOf(0);
@@ -203,5 +197,15 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         }
         userid = user.getId();
         return userid;
+    }
+
+    private void deleteInRedis(HttpServletRequest request){
+        String userid = getUserID(request).toString();
+        String key = RedisConstants.CUSTOM_ROUTINE + userid;
+        Boolean hasKey = stringRedisTemplate.hasKey(key);
+        if(hasKey != null && hasKey){
+            stringRedisTemplate.delete(key);
+            log.info("success delete:{}", key);
+        }
     }
 }
