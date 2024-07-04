@@ -16,11 +16,11 @@
             <div class="title">Glife</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="1"><RouterLink :to="{name:'chatwindow'}" class="navigateRouter">Chat</RouterLink></el-menu-item>
-          <el-menu-item index="2"><RouterLink :to="{name:'dayroutine'}" class="navigateRouter">Routine</RouterLink></el-menu-item>
+          <el-menu-item index="1" @click="navigateTo('chatwindow')">Chat</el-menu-item>
+          <el-menu-item index="2" @click="navigateTo('dayroutine')">Routine</el-menu-item>
           <el-sub-menu index="3">
             <template #title>ARTree</template>
-            <el-menu-item index="3-1"><RouterLink :to="{name:'artree'}" class="navigateRouter">Plant VR Tree</RouterLink></el-menu-item>
+            <el-menu-item index="3-1" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
             <el-menu-item index="3-2">My Badge</el-menu-item>
             <el-menu-item index="3-3">Share VR Tree</el-menu-item>
           </el-sub-menu>
@@ -48,6 +48,11 @@
     const activeIndex = ref('1')
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
+    }
+    function navigateTo(routeName: string) {
+      router.push({
+        name: routeName
+      });
     }
 
     async function logout(){
@@ -109,6 +114,7 @@
 .el-menu-demo .el-sub-menu {
   font-family: 'Cooper Black',sans-serif;
 }
+
 .navigateRouter{
   color: inherit;
   text-decoration: none;

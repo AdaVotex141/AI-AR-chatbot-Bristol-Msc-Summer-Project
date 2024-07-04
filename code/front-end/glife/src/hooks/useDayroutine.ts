@@ -33,6 +33,7 @@ export default function () {
         } catch (error) {
             console.error("Error happened during initializing the dayroutine")
             alert("Error happened during initializing the dayroutine")
+            router.push({name:'notfound'});
         }
     }
 
@@ -60,8 +61,8 @@ export default function () {
             } catch (error) {
                 console.error('Error add to do:', error)
                 alert('Error happened when adding dayroutine')
+                router.push({name:'notfound'});
             }
-
             // Get latest data from backend
             getTodos()
         }
@@ -77,9 +78,11 @@ export default function () {
             })
             if(String(response.data.code) !== '1'){
                 console.error('Delete api request fail')
+                router.push({name:'notfound'});
             }
         } catch (error){
             console.error(error)
+            router.push({name:'notfound'});
         }
         // Get the latest todos
         getTodos()
@@ -96,9 +99,11 @@ export default function () {
             })
             if(String(response.data.code) !== '1'){
                 console.error('Backend send code 0')
+                router.push({name:'notfound'});
             }
         } catch (error){
             console.error(error)
+            router.push({name:'notfound'});
         }
     }
 

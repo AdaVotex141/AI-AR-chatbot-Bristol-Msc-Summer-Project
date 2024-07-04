@@ -28,7 +28,6 @@
         </el-form-item>
     </el-form>
   </div>
-  <el-button @click="toChat">To the chat</el-button>
 
 </template>
 
@@ -89,7 +88,7 @@ async function login(ruleFormRef: FormInstance | undefined){
             type: 'success'
           })
           router.push({
-            name:'mainpage'
+            name:'startpage'
           })
         } else {
           ElMessage({
@@ -101,18 +100,14 @@ async function login(ruleFormRef: FormInstance | undefined){
       } catch (error){
           console.error('Error sending data:', error)
           alert('Error sending data')
+          router.push({
+            name:'notfound'
+          })
       }
     }
   })
     
 }
-// for the main page UI test
-function toChat(){
-  router.push({
-    name:'mainpage'
-  })
-}
-
 </script>
 
 <style scoped>
