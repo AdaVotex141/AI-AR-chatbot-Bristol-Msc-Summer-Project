@@ -35,23 +35,23 @@ const router = createRouter({
                     name:'dayroutine',
                     path:'dayroutine',
                     component:DayRoutine
-                },
-                {
-                    name: 'notfound',
-                    path:'notfound',
-                    component: NotFoundPage
-                },
-                {
-                    name:'login',
-                    path:'/login',
-                    component:LoginRegister
-                },
+                }
             ],
             redirect:'/mainpage/chatwindow'
         },
         {
             path:'/',
             redirect:'/login'
+        },
+        {
+            name: 'notfound',
+            path:'/notfound',
+            component: NotFoundPage
+        },
+        {
+            name:'logout',
+            path:'/login',
+            component:LoginRegister
         },
     ]
 })

@@ -3,8 +3,6 @@
 </script>
 
 <template>
-<!--  <html class="h-full">-->
-<!--  <body class="h-full">-->
     <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div class="text-center">
         <p class="text-base font-semibold text-indigo-600">404</p>
@@ -21,10 +19,13 @@
 
 <style scoped>
 .text-center{
-  margin-top: 2.5rem;
-  width: 60vw;
-  height: 90vh;
+  width: 90vw;
+  height: 60vh;
   margin-left: auto;
   margin-right: auto;
+}
+h1{
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
 }
 </style>
