@@ -14,7 +14,8 @@ const saveSettings = () => {
 
 <template>
   <div class="settings">
-    <p><b>Your username is: amy(can not be change)</b></p>
+    <p style="margin-top: 2rem"><b>Your username is: *Add read username function in here ? *(can not be change)</b></p>
+    <div style="height:5rem;"></div>
     <form @submit.prevent="saveSettings">
       <div class="form-group">
         <label for="username">Change your nickname:</label>

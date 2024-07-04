@@ -69,13 +69,27 @@ function handleOptionClick(option){
   word-wrap: break-word;
 }
 
-.message.user {
-  max-width:60%;
-  align-self: flex-end;
+@media(min-width: 600px) {
+  .message.user {
+    max-width: 60%;
+    align-self: flex-end;
+  }
+  .message.bot {
+    max-width: 60%;
+    align-self: flex-start;
+  }
+
+}
+@media(max-width: 600px) {
+  .message.user {
+    max-width: 100%;
+    align-self: flex-end;
+  }
+  .message.bot {
+    max-width: 100%;
+    align-self: flex-start;
+  }
 }
 
-.message.bot {
-  max-width: 60%;
-  align-self: flex-start;
-}
+
 </style>

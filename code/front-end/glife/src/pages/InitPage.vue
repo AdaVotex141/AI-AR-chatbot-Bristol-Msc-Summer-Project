@@ -4,7 +4,7 @@
       <div class="mx-auto max-w-4xl lg:text-center">
         <h2 class="mt-2 text-4xl font-bold tracking-tight sm:text-4xl lg:text-7xl">Glife</h2>
         <h2 class="mt-6 text-lg leading-8 lg:text-3xl">Help you build a greener, greater life!</h2>
-        <p class="mt-6 text-lg leading-8 text-gray-600">Glife is one website which is aim to helping people live more sustainably and environmentally friendly.</p>
+        <p class="mt-6 text-lg leading-8 text-gray-600 font-bold">Glife is a website aimed at helping people live more sustainably and in an environmentally friendly way.</p>
       </div>
       <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
         <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">

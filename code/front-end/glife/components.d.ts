@@ -7,11 +7,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    BotMessage: typeof import('./src/components/BotMessage.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
+    ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
@@ -26,7 +26,6 @@ declare module 'vue' {
     ElText: typeof import('element-plus/es')['ElText']
     FormItem: typeof import('./src/components/FormItem.vue')['default']
     InitialChatWindow: typeof import('./src/components/InitialChatWindow.vue')['default']
-    Loading: typeof import('./src/components/Loading.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     MessageBubble: typeof import('./src/components/MessageBubble.vue')['default']
     MessageInput: typeof import('./src/components/MessageInput.vue')['default']
