@@ -26,7 +26,7 @@
           </el-sub-menu>
           <el-sub-menu index="10">
             <template #title>Profile</template>
-            <el-menu-item index="4-1"><RouterLink :to="{name:'notfound'}" class="navigateRouter">setting</RouterLink></el-menu-item>
+            <el-menu-item index="4-1" @click="navigateTo('notfound')">Setting</el-menu-item>
             <el-menu-item index="4-2" @click='logout'>Log out</el-menu-item>
           </el-sub-menu>
         </el-menu>
