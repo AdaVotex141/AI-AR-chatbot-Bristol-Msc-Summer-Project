@@ -6,6 +6,7 @@ import ChatWindow from '@/pages/ChatWindow.vue'
 import ArTree from '@/pages/ArTree.vue'
 import LoginRegister from '@/pages/LoginRegister.vue'
 import MainPage from '@/pages/MainPage.vue'
+import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 //create router
 const router = createRouter({
@@ -34,14 +35,24 @@ const router = createRouter({
                     name:'dayroutine',
                     path:'dayroutine',
                     component:DayRoutine
-                }
+                },
+                {
+                    name: 'notfound',
+                    path:'notfound',
+                    component: NotFoundPage
+                },
+                {
+                    name:'login',
+                    path:'/login',
+                    component:LoginRegister
+                },
             ],
             redirect:'/mainpage/chatwindow'
         },
         {
             path:'/',
             redirect:'/login'
-        }
+        },
     ]
 })
 
