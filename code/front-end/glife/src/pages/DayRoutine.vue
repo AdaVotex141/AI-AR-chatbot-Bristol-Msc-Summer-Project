@@ -32,9 +32,14 @@
 <style scoped>
 @media(max-width: 600px) {
   .routine-container {
-    margin-top: 2.5rem;
+    margin: 0 auto;
     width: 100vw;
     height: 90vh;
+  }
+  .el-header{
+    position: sticky;
+    top: 5%;
+    z-index: 100;
   }
 }
 
