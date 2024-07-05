@@ -1,38 +1,41 @@
 <template>
-  <div class="container">
-    <div class="title-container">
-      <h2 class="title">REGISTER</h2>
-    </div>
+  <el-container>
+    <el-header class="title">REGISTER</el-header>
     <div style="margin: 10px" />
-    <el-form
-      ref="ruleFormRef"
-      label-position="top"
-      label-width="auto"
-      :model="formLabelAlign"
-      :rules="rules"
-      style="max-width: 600px"
-    >
-        <el-form-item label="USERNAME" prop="username">
-            <el-input v-model="formLabelAlign.username" />
-        </el-form-item>
-        <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password" show-password/>
-        </el-form-item>
-        <el-form-item label="EMAIL" prop="email">
-            <el-input v-model="formLabelAlign.email" />
-            <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
-        </el-form-item>
-        <el-form-item class="tip-message">
-            Already have an account? 
-            <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
-                Click here to login
-            </el-link>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" class="center" @click="register(ruleFormRef)">Register</el-button>
-        </el-form-item>
-    </el-form>
-  </div>
+    <el-main>
+      <el-form
+        ref="ruleFormRef"
+        label-position="top"
+        label-width="auto"
+        :model="formLabelAlign"
+        :rules="rules"
+        style="max-width: 600px"
+      >
+          <el-form-item label="USERNAME" prop="username">
+              <el-input v-model="formLabelAlign.username" />
+          </el-form-item>
+          <el-form-item label="PASSWORD" prop="password">
+              <el-input v-model="formLabelAlign.password" type="password" show-password/>
+          </el-form-item>
+          <el-form-item label="Confirm Password" prop="confirmPassword">
+              <el-input v-model="formLabelAlign.confirmPassword" type="password" show-password/>
+          </el-form-item>
+          <el-form-item label="EMAIL" prop="email">
+              <el-input v-model="formLabelAlign.email" />
+              <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
+          </el-form-item>
+          <el-form-item class="tip-message">
+              Already have an account? 
+              <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
+                  Click here to login
+              </el-link>
+          </el-form-item>
+          <el-form-item>
+              <el-button type="primary" class="center" @click="register(ruleFormRef)">Register</el-button>
+          </el-form-item>
+      </el-form>
+    </el-main>
+  </el-container>
 </template>
 
 <script lang="ts" setup>
@@ -43,9 +46,20 @@ import router from "@/router";
 
 const ruleFormRef = ref<FormInstance>()
 
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('Please input the password again'))
+  } else if (value !== formLabelAlign.password) {
+    callback(new Error("Two inputs don't match!"))
+  } else {
+    callback()
+  }
+}
+
 const formLabelAlign = reactive({
     username: '',
     password: '',
+    confirmPassword:'',
     email: ''
 })
 
@@ -63,6 +77,13 @@ const rules = reactive({
         message: 'Please enter your password',
         trigger: 'blur'
     }
+    ],
+    confirmPassword:[
+      {
+        required: true,
+        validator: validatePass,
+        trigger: 'blur'
+      }
     ],
     email:[{
         required: true,
@@ -122,30 +143,19 @@ async function getVerificationCode(){
 </script>
 
 <style scoped>
-h2{
-  font-weight: bold;
-  font-family: 'Cooper Black',sans-serif;
-}
-.title-container {
-  margin-top: 20px;
-  width: 100%;
-  height: 100px;
-  text-align: center;
-  max-width: 1024px;
-  display: grid;
-  place-items: center;
-}
 
 .title {
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
   text-align: center;
   font-size: 4rem;
   color: darkolivegreen;
 }
-.container{
+.el-container{
   max-width:1024px;
   align-items: center;
   height: 100vh;
-  max-height: 500px;
+  max-height: 90vh;
   padding: 20px;
   background: white;
   border: 1px solid #ddd;
