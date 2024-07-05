@@ -81,15 +81,6 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 
         User foundUser = getOne(lambdaQueryWrapper);
 
-/*
-        //TODO admin for test only :
-        if (foundUser != null && foundUser.getUsername().equals("admin") && inputPassword.equals("bris12345")) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", foundUser);
-            return R.success(foundUser);
-        }
-*/
-
         if (foundUser == null) {
             return R.error("username not existed");
         }

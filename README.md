@@ -94,6 +94,14 @@ Future work:
    3.  if detecting the distance is less than 5 metres, the model should be loaded
 
 ## Week 5
+This week we attend the project meeting for the whole graduates and gain a lot of suggestions on user's experience.
+1. Xinyue: Design and draw the badge system. Working on database of Badage and user_badge
+2. Xinyu: Write the front end logic of assistant and day routine, use cookies to store session. 
+3. Ada: Implemented the Redis usage of Caching. Assistant selected option can now added to day routine through backend.
+4. Yuxin: Refactor the layout of the whole page. Added Welcome page and Error page for better user's experience. Refactor the Navigate bar after the meeting.
+5. Jie: Implemented AR.js, working on the improvement of "planting tree".
+
+
 
 **My badge & My tree part**
 * photos : put photos and models under Vue folder
