@@ -3,11 +3,13 @@ import {createRouter, createWebHistory} from 'vue-router'
 //import components
 import DayRoutine from '@/pages/DayRoutine.vue'
 import ChatWindow from '@/pages/ChatWindow.vue'
-import ArTree from '@/pages/ArTree.vue'
+import ArTree from '@/pages/ArTree/ArTree.vue'
 import LoginRegister from '@/pages/LoginRegister.vue'
 import MainPage from '@/pages/MainPage.vue'
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import InitPage from "@/pages/InitPage.vue";
+import Setting from "@/pages/Setting.vue";
+import BadgeSystem from "@/pages/ArTree/BadgeSystem.vue";
 
 //create router
 const router = createRouter({
@@ -36,6 +38,16 @@ const router = createRouter({
                     name:'dayroutine',
                     path:'dayroutine',
                     component:DayRoutine
+                },
+                {
+                    name:'setting',
+                    path:'setting',
+                    component:Setting
+                },
+                {
+                    name:'mybadge',
+                    path:'mybadge',
+                    component: BadgeSystem
                 }
             ],
             redirect:'/mainpage/chatwindow'
