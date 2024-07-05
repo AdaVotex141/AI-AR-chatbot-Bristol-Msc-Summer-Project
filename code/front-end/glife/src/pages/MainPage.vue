@@ -104,6 +104,11 @@
   height: 100vh;
   width: 100vw;
 }
+.main-content{
+  display: flex;
+  max-height: 100vh;
+  max-width: 100vw;
+}
 .title{
   font-weight: bold;
   font-family: 'Cooper Black',sans-serif;
@@ -119,6 +124,9 @@
   top:0;
   z-index: 101;
 }
+
+
+
 .flex-grow {
   flex-grow: 1;
 }
@@ -131,13 +139,8 @@
   .mobile-menu-button {
     display: inline-block;
   }
-  .main-content{
-    display: flex;
-    max-height: 100vh;
-    max-width: 100vw;
-  }
 }
-@media (min-width:601px) {
+/*@media (min-width:601px) {
   .main-content{
     display: flex;
     max-height: 100vh;
@@ -146,7 +149,7 @@
     border-radius: 1rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
-}
+}*/
 
 .el-menu-desktop .el-menu-item,
 .el-menu-desktop .el-sub-menu {
