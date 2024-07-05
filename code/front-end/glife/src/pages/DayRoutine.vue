@@ -30,10 +30,22 @@
 </script>
 
 <style scoped>
-.routine-container{
-  margin-top: 2.5rem;
-  width: 100vw;
-  height: 90vh;
+@media(max-width: 600px) {
+  .routine-container {
+    margin-top: 2.5rem;
+    width: 100vw;
+    height: 90vh;
+  }
+}
+
+@media(min-width: 601px) {
+  .routine-container  {
+    margin-top: 2.5rem;
+    width: 60vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 .el-header{
   background-color: #9cb470;
