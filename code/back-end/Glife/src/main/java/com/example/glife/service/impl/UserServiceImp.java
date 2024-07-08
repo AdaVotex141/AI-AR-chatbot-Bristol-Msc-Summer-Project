@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static com.example.glife.common.RedisConstants.LOGIN_CODE_KEY;
 import static com.example.glife.common.RedisConstants.LOGIN_CODE_TTL;
@@ -116,6 +118,14 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         HttpSession session = request.getSession();
         session.setAttribute("user", foundUser);
 
+        //check if last_Login and now is different date
+        LocalDateTime lastLogin = foundUser.getLastLogin();
+        if(lastLogin == null || isConsecutiveDays(lastLogin)){
+            foundUser.setLoginDays(foundUser.getLoginDays()+1);
+        }else{
+            foundUser.setLoginDays(1);
+        }
+
         foundUser.setLastLogin(LocalDateTime.now());
         updateById(foundUser);
 
@@ -160,4 +170,31 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         }
         return R.success("");
     }
+
+    private boolean isConsecutiveDays(LocalDateTime lastLogin){
+        LocalDate now = LocalDate.now();
+        LocalDate lastLoginDate = lastLogin.toLocalDate();
+
+        return now.minusDays(1).isEqual(lastLoginDate);
+    }
+
+/*    public R<String> updateLoginDays(HttpServletRequest request){
+        //get user
+        HttpSession session = request.getSession(false);
+        User user = null;
+        if (session != null) {
+            user = (User)session.getAttribute("user");
+        }else{
+            return R.error("can't find user");
+        }
+        //check last_login time
+        if (user != null){
+
+        }
+
+
+
+
+            return R.success("update login days when tick success");
+    }*/
 }
