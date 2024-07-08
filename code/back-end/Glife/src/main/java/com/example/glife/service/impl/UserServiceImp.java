@@ -1,23 +1,35 @@
 package com.example.glife.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.PasswordEncoder;
 import com.example.glife.common.R;
+import com.example.glife.common.RedisConstants;
 import com.example.glife.entity.User;
 import com.example.glife.mapper.UserMapper;
 import com.example.glife.service.AssistantService;
 import com.example.glife.service.RoutineService;
 import com.example.glife.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
+
+import static com.example.glife.common.RedisConstants.LOGIN_CODE_KEY;
+import static com.example.glife.common.RedisConstants.LOGIN_CODE_TTL;
 
 @Service
+@Slf4j
 public class UserServiceImp extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -28,13 +40,19 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
     @Autowired
     private RoutineService routineService;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private EmailServiceImp emailServiceImp;
+
     /**
      *
      * @param request
      * @param user
      * @return
      */
-    public R<String> register(HttpServletRequest request, User user) {
+    public R<String> register(HttpServletRequest request, User user, String code) {
         // Check unique Name and Email
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
@@ -54,6 +72,12 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         String inputPassword = user.getPassword();
         String encryptedPassword = passwordEncoder.encodePassword(inputPassword);
         String email = user.getEmail();
+
+        //verify code
+        String redisCode = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY+email);
+        if(redisCode == null || !redisCode.equals(code)){
+            return R.error("verify code error");
+        }
 
         // Implement user registration logic
         User newUser = new User();
@@ -88,6 +112,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
             return R.error("password wrong");
         }
 
+
         HttpSession session = request.getSession();
         session.setAttribute("user", foundUser);
 
@@ -115,5 +140,24 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
             }
         }
         return R.success("Successfully logout");
+    }
+
+    public R<String> sendCode(HttpServletRequest request, String email) throws MessagingException {
+        //check email
+        EmailValidator validator = EmailValidator.getInstance();
+        if(!validator.isValid(email)){
+            return R.error("Email form not correct!");
+        }
+        String code = RandomUtil.randomNumbers(6);
+        log.info("the verify code is:{}", code);
+
+        stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + email, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);
+        try {
+            emailServiceImp.sendVerificationEmail(email, code);
+        } catch (MessagingException e) {
+            log.error("Failed to send verification email to {}: {}", email, e.getMessage());
+            return R.error("Failed to send verification email");
+        }
+        return R.success("");
     }
 }
