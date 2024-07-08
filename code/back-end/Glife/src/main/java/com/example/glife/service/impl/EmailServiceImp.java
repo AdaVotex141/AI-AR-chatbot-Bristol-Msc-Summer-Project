@@ -18,7 +18,7 @@ public class EmailServiceImp {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(to);
-        helper.setSubject("Email Verification");
+        helper.setSubject("Glife Email Verification");
         helper.setText("Your verification code is: " + verificationCode);
 
         mailSender.send(message);

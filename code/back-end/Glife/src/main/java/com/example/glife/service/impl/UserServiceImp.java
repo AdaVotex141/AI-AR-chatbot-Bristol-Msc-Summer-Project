@@ -178,23 +178,5 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         return now.minusDays(1).isEqual(lastLoginDate);
     }
 
-/*    public R<String> updateLoginDays(HttpServletRequest request){
-        //get user
-        HttpSession session = request.getSession(false);
-        User user = null;
-        if (session != null) {
-            user = (User)session.getAttribute("user");
-        }else{
-            return R.error("can't find user");
-        }
-        //check last_login time
-        if (user != null){
 
-        }
-
-
-
-
-            return R.success("update login days when tick success");
-    }*/
 }

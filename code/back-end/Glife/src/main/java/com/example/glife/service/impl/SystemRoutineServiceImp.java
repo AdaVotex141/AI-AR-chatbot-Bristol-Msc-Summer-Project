@@ -16,6 +16,7 @@ import com.example.glife.mapper.UserMapper;
 import com.example.glife.service.AssistantService;
 import com.example.glife.service.SystemRoutineService;
 import com.example.glife.service.UserService;
+import com.example.glife.service.UserTreeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -39,6 +40,8 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     AssistantService assistantService;
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    UserTreeService userTreeService;
 
     /**
      *
@@ -128,8 +131,10 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
 
         if(selectRoutine.getTick() == 0){
             selectRoutine.setTick(1);
+            userTreeService.update(request);
         }else if(selectRoutine.getTick() == 1){
             selectRoutine.setTick(0);
+            userTreeService.reUpdate(request);
         }
         baseMapper.updateById(selectRoutine);
         deleteInRedis(request);
