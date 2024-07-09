@@ -3,27 +3,27 @@
       <el-container>
         <el-container>
           <el-main><div class="background-image-container">Growing tree</div></el-main>
-          <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
+          <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
       </el-container>
     </div>
-
 </template>
 
 <script lang='ts' setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { ElMessage } from 'element-plus'
 import {useUserPointsStore} from "@/stores/usercredit";
 
-const plant_con = ref(false);
-const clickCount = ref(0);
-const isDisabled = computed(() => !plant_con.value);
-// Add the function to let the plant button has condition
+const userPointsStore = useUserPointsStore();
+const { canPlantTree, fetchUserPoints } = userPointsStore;
+
+onMounted(async () => {
+  await fetchUserPoints();
+})
+
+const isDisabled = computed(() => !canPlantTree);
+// If can plant tree, then enable the button
 const handleClick = () => {
-  clickCount.value += 1;
-  if (clickCount.value > 3) {
-    plant_con.value = true;
-  }
   if(isDisabled.value){
     // Condition not met
     ElMessage({
@@ -37,8 +37,6 @@ const handleClick = () => {
     });
     setTimeout(() => {
       window.location.href = 'https://jiebristol.github.io/89';
-      clickCount.value = 0;
-      plant_con.value = false;
     },1500);
   }
 }
