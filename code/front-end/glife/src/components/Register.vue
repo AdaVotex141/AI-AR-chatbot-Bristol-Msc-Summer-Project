@@ -141,6 +141,9 @@ async function getVerificationCode(){
     const response = await axios.post('/api/sendCode', {
       email:formLabelAlign.email
     })
+
+    console.log(response.data)
+
     if(String(response.data.code) === '1'){
       ElMessage({
         message: 'Verification Code has been sent, please check your email.',
@@ -154,7 +157,7 @@ async function getVerificationCode(){
     }
   } catch (error) {
     ElMessage({
-        message: 'Something bad happened, please try again',
+        message: 'Something bad happened during sending api request, please try again',
         type: 'error'
     })
   }
