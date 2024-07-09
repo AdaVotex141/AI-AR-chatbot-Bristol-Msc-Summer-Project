@@ -115,8 +115,8 @@ async function register(ruleFormRef: FormInstance | undefined){
     await ruleFormRef.validate(async (valid) => {
         if(!valid){
             ElMessage({
-                    message: "Invalid information",
-                    type: 'warning'
+              message: "Invalid information",
+              type: 'warning'
             })
         } else {
             try{
