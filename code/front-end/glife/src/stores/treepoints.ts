@@ -74,7 +74,22 @@ const updateTreeImage = (
         case 3:
             treeImageSrc.value = '@/assets/treeImages/3.png';
             break;
-        default:
+        case 4:
+            treeImageSrc.value = '@/assets/treeImages/4.png';
+            break;
+        case 5:
+            treeImageSrc.value = '@/assets/treeImages/5.png';
+            break;
+        case 6:
+            treeImageSrc.value = '@/assets/treeImages/6.png';
+            break;
+        case 7:
+            treeImageSrc.value = '@/assets/treeImages/7.png';
+            break;
+        case 8:
             treeImageSrc.value = '@/assets/treeImages/8.png';
+            break;
+        default:
+            treeImageSrc.value = '@/assets/PlantTree.png';
     }
 };
