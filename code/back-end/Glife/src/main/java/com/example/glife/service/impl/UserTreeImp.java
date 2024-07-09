@@ -76,7 +76,7 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
             if (userTree != null) {
                 treeCode = userTree.getTick_sum();
                 if(treeCode == 1){
-                    treeCode = 7;
+                    treeCode = 8;
                     userTree.setTick_sum(treeCode);
                 }else{
                     treeCode = treeCode-1;

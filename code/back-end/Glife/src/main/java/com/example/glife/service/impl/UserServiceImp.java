@@ -154,10 +154,10 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 
     public R<String> sendCode(HttpServletRequest request, String email) throws MessagingException {
         //check email
-        EmailValidator validator = EmailValidator.getInstance();
-        if(!validator.isValid(email)){
-            return R.error("Email form not correct!");
-        }
+//        EmailValidator validator = EmailValidator.getInstance();
+//        if(!validator.isValid(email)){
+//            return R.error("Email form not correct!");
+//        }
         String code = RandomUtil.randomNumbers(6);
         log.info("the verify code is:{}", code);
 
