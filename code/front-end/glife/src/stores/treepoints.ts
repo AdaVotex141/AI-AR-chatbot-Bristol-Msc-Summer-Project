@@ -5,41 +5,18 @@ import { ElMessage } from 'element-plus';
 import router from "@/router";
 
 
-export interface UserPointsResponse{
-    userPoints: number; // For user badge
+export interface TreePoints{
     treePoints: number; // 1-8 can change the state
     plantTree: boolean; // For enable the plant tree button
 }
 
-export const fetchUserPoints = async () => {
-    const userPoints = ref<number | null>(null);
-    try {
-        const response = await axios.get<{ code: string; data: UserPointsResponse }>('/api/ARtree/init');
-        if (String(response.data.code) === '1') {
-            const data = response.data.data;
-            userPoints.value = data.userPoints;
-        } else {
-            ElMessage({
-                message: 'Failed to fetch user points',
-                type: 'error',
-            });
-        }
-    } catch (error) {
-        console.error('Error fetching user points:', error);
-        ElMessage({
-            message: 'Error fetching user points',
-            type: 'error',
-        });
-    }
-    return userPoints;
-};
 
 export const fetchTreePoints = async () => {
     const treeImageSrc = ref<string>('');
     const treeImageAlt = ref<string>('Tree Image');
     const treePoints = ref<number | null>(null);
     try {
-        const response = await axios.get<{ code: string; data: UserPointsResponse }>('/api/ARtree/init');
+        const response = await axios.get<{ code: string; data: TreePoints}>('/api/ARtree/init');
         if (String(response.data.code) === '1') {
             const data = response.data.data;
             treePoints.value = data.treePoints;
@@ -63,7 +40,7 @@ export const fetchTreePoints = async () => {
 export const fetchCanPlantTree = async () => {
     const canPlantTree = ref<boolean | null>(null);
     try {
-        const response = await axios.get<{ code: string; data: UserPointsResponse }>('/api/ARtree/init');
+        const response = await axios.get<{ code: string; data: TreePoints }>('/api/ARtree/init');
         if (String(response.data.code) === '1') {
             const data = response.data.data;
             canPlantTree.value = data.plantTree;

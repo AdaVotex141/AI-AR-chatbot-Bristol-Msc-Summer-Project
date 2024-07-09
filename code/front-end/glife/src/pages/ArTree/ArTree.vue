@@ -12,19 +12,15 @@
 <script lang='ts' setup>
 import { ref, computed, onMounted } from 'vue';
 import { ElMessage } from 'element-plus'
-import { fetchUserPoints, fetchTreePoints, fetchCanPlantTree } from "@/stores/usercredit";
+import { fetchTreePoints, fetchCanPlantTree } from "@/stores/treepoints";
 
 // define the response data
 const treeImageSrc = ref<string>('');
-const userPoints = ref<number | null>(null);
 const treePoints = ref<number | null>(null);
 const canPlantTree = ref<boolean | null>(null);
 
 // fetch the data
 onMounted(async () => {
-  const userPointsData = await fetchUserPoints();
-  userPoints.value = userPointsData.value;
-
   const treeData = await fetchTreePoints();
   treeImageSrc.value = treeData.treeImageSrc.value;
   treePoints.value = treeData.treePoints.value;
