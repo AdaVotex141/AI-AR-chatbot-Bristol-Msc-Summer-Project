@@ -123,7 +123,14 @@ async function register(ruleFormRef: FormInstance | undefined){
                 const response = await axios.post('/api/register',{
                     username: formLabelAlign.username,
                     password: formLabelAlign.password,
-                    email: formLabelAlign.email
+                    email: formLabelAlign.email,
+                },{
+                  params: {
+                    code: formLabelAlign.verificationCode
+                  },
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
                 })
                 // Check if the register is successful
                 if(String(response.data.code) === '1'){
@@ -147,7 +154,7 @@ async function register(ruleFormRef: FormInstance | undefined){
                 router.push({
                   name:'notfound'
                 })
-              }
+            }
         }
         
     })
