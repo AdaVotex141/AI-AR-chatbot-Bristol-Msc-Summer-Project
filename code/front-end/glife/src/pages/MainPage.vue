@@ -51,6 +51,9 @@
   const drawer = ref(false);
   const isDesktop = ref(window.innerWidth > 600);
   import MobileMenu from '../components/MobileMenu.vue';
+  import { useUserInfoStore } from '@/stores/userInfo';
+
+  const userInfoStore = useUserInfoStore()
 
   // Watch the screen width to change the style
   const checkScreenSize = () => {
@@ -88,8 +91,12 @@
         if(String(response.data.code) !== '1'){
           alert('Logout fail, please try again')
         } else {
+          // Message given to the user
           alert('logout successful')
+          // Use router to go to the login page
           router.replace({name:'logout'})
+          // Change the userInfo
+          userInfoStore.logout()
         }
       } catch (error) {
         router.push({name:'notfound'})
