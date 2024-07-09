@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useUserInfoStore = defineStore('userInfo',()=>{
-    let isAuthenticated = false
-    let user = null
+    let isAuthenticated = ref(false)
+    let user = ref('')
 
     function login(userName:string){
-        isAuthenticated = true
-        user = userName
+        isAuthenticated.value = true
+        user.value = userName
     }
 
     function logout(){
-        isAuthenticated = false
-        user = null
+        isAuthenticated.value = false
+        user.value = ''
     }
 
     return {isAuthenticated, user, login, logout}
