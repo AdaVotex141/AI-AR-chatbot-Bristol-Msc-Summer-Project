@@ -76,7 +76,8 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         String email = user.getEmail();
 
         //verify code
-        String redisCode = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY+email);
+        String redisCode = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY + "\"" + email + "\"");
+        log.info(redisCode);
         if(redisCode == null || !redisCode.equals(code)){
             return R.error("verify code error");
         }
@@ -159,6 +160,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 //            return R.error("Email form not correct!");
 //        }
         String code = RandomUtil.randomNumbers(6);
+        //String email = emailInput.replace("\"", "");
         log.info("the verify code is:{}", code);
 
         stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + email, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);
