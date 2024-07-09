@@ -24,6 +24,9 @@
               <el-input v-model="formLabelAlign.email" />
               <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
           </el-form-item>
+          <el-form-item label="VERIFICATION-CODE" prop="verificationCode">
+            <el-input v-model="formLabelAlign.verificationCode" />
+          </el-form-item>
           <el-form-item class="tip-message">
               Already have an account? 
               <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
@@ -60,7 +63,8 @@ const formLabelAlign = reactive({
     username: '',
     password: '',
     confirmPassword:'',
-    email: ''
+    email: '',
+    verificationCode:''
 })
 
 const rules = reactive({
@@ -85,11 +89,24 @@ const rules = reactive({
         trigger: 'blur'
       }
     ],
+    verificationCode:[
+      {
+        required: true,
+        message: 'Please enter the verification code',
+        trigger: 'blur'
+      }
+    ],
     email:[{
         required: true,
         message: 'Please enter your email',
         trigger: 'blur'
-    }]
+      },
+      {
+        type: 'email',
+        message: 'Please input correct email address',
+        trigger: ['blur', 'change']
+      }
+    ]
 })
 
 const emits = defineEmits(['toggle-page'])
@@ -138,6 +155,9 @@ async function register(ruleFormRef: FormInstance | undefined){
 
 async function getVerificationCode(){
   try{
+    // Validate the email field
+    await ruleFormRef.value?.validateField('email')
+
     const response = await axios.post('/api/sendCode', {
       email:formLabelAlign.email
     })
@@ -157,7 +177,7 @@ async function getVerificationCode(){
     }
   } catch (error) {
     ElMessage({
-        message: 'Something bad happened during sending api request, please try again',
+        message: 'Your email information is wrong, please check it',
         type: 'error'
     })
   }
