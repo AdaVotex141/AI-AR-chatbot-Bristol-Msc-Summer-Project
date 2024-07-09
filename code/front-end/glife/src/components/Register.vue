@@ -24,6 +24,9 @@
               <el-input v-model="formLabelAlign.email" />
               <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
           </el-form-item>
+          <el-form-item label="VERIFICATION-CODE" prop="verificationCode">
+            <el-input v-model="formLabelAlign.verificationCode" />
+          </el-form-item>
           <el-form-item class="tip-message">
               Already have an account? 
               <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
@@ -60,7 +63,8 @@ const formLabelAlign = reactive({
     username: '',
     password: '',
     confirmPassword:'',
-    email: ''
+    email: '',
+    verificationCode:''
 })
 
 const rules = reactive({
@@ -85,11 +89,24 @@ const rules = reactive({
         trigger: 'blur'
       }
     ],
+    verificationCode:[
+      {
+        required: true,
+        message: 'Please enter the verification code',
+        trigger: 'blur'
+      }
+    ],
     email:[{
         required: true,
         message: 'Please enter your email',
         trigger: 'blur'
-    }]
+      },
+      {
+        type: 'email',
+        message: 'Please input correct email address',
+        trigger: 'blur'
+      }
+    ]
 })
 
 const emits = defineEmits(['toggle-page'])
@@ -106,7 +123,14 @@ async function register(ruleFormRef: FormInstance | undefined){
                 const response = await axios.post('/api/register',{
                     username: formLabelAlign.username,
                     password: formLabelAlign.password,
-                    email: formLabelAlign.email
+                    email: formLabelAlign.email,
+                },{
+                  params: {
+                    code: formLabelAlign.verificationCode
+                  },
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
                 })
                 // Check if the register is successful
                 if(String(response.data.code) === '1'){
@@ -130,7 +154,7 @@ async function register(ruleFormRef: FormInstance | undefined){
                 router.push({
                   name:'notfound'
                 })
-              }
+            }
         }
         
     })
@@ -138,8 +162,13 @@ async function register(ruleFormRef: FormInstance | undefined){
 
 async function getVerificationCode(){
   try{
-    const response = await axios.post('/api/sendCode', {
-      email:formLabelAlign.email
+    // Validate the email field
+    await ruleFormRef.value?.validateField('email')
+
+    const response = await axios.post('/api/sendCode', formLabelAlign.email,{
+      headers:{
+        'Content-Type': 'application/json'
+      }
     })
 
     console.log(response.data)
@@ -157,7 +186,7 @@ async function getVerificationCode(){
     }
   } catch (error) {
     ElMessage({
-        message: 'Something bad happened during sending api request, please try again',
+        message: 'Your email information is wrong, please check it',
         type: 'error'
     })
   }
