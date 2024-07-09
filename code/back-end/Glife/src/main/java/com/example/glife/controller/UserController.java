@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping("/login")
     public R<User> login(HttpServletRequest request, @RequestBody User user) {
         log.info("---------User login---------");
-        return userService.login(request,user);x§
+        return userService.login(request,user);
     }
 
     /**

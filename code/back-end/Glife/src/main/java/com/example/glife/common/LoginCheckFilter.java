@@ -72,6 +72,7 @@ public class LoginCheckFilter implements Filter {
             "/index.html",
                 "/login",
                 "/register",
+                "/sendCode",
                 "/routine/**",
                 "/assistant/**",
                 "/systemRoutine/**"
