@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -27,9 +28,9 @@ public class UserController {
      * Register new User
      */
     @PostMapping("/register")
-    public R<String> register(HttpServletRequest request, @RequestBody User user){
+    public R<String> register(HttpServletRequest request, @RequestBody User user, @RequestParam String code){
         log.info("---------User register-------------");
-        return userService.register(request,user);
+        return userService.register(request,user,code);
     }
 
     /**
@@ -47,5 +48,11 @@ public class UserController {
     @PostMapping("/logout")
     public R<String> logout(HttpServletRequest request){
         return userService.logout(request);
+    }
+
+
+    @PostMapping("/sendCode")
+    public R<String> sendCode(HttpServletRequest request, String email) throws MessagingException {
+        return userService.sendCode(request,email);
     }
 }
