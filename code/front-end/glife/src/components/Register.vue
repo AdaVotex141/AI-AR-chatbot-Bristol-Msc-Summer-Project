@@ -137,7 +137,27 @@ async function register(ruleFormRef: FormInstance | undefined){
 }
 
 async function getVerificationCode(){
-
+  try{
+    const response = await axios.post('/api/sendCode', {
+      email:formLabelAlign.email
+    })
+    if(String(response.data.code) === '1'){
+      ElMessage({
+        message: 'Verification Code has been sent, please check your email.',
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: 'Something bad happened, please try again',
+        type: 'error'
+      })
+    }
+  } catch (error) {
+    ElMessage({
+        message: 'Something bad happened, please try again',
+        type: 'error'
+    })
+  }
 }
 
 </script>
