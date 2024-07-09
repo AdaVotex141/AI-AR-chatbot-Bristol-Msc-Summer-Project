@@ -104,7 +104,7 @@ const rules = reactive({
       {
         type: 'email',
         message: 'Please input correct email address',
-        trigger: ['blur', 'change']
+        trigger: 'blur'
       }
     ]
 })
@@ -158,8 +158,10 @@ async function getVerificationCode(){
     // Validate the email field
     await ruleFormRef.value?.validateField('email')
 
-    const response = await axios.post('/api/sendCode', {
-      email:formLabelAlign.email
+    const response = await axios.post('/api/sendCode', formLabelAlign.email,{
+      headers:{
+        'Content-Type': 'application/json'
+      }
     })
 
     console.log(response.data)

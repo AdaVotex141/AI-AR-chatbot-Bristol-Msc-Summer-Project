@@ -52,7 +52,7 @@ public class UserController {
 
 
     @PostMapping("/sendCode")
-    public R<String> sendCode(HttpServletRequest request, String email) throws MessagingException {
+    public R<String> sendCode(HttpServletRequest request, @RequestBody String email) throws MessagingException {
         return userService.sendCode(request,email);
     }
 }
