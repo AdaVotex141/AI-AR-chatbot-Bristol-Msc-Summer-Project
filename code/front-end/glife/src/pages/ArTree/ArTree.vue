@@ -13,6 +13,7 @@
 <script lang='ts' setup>
 import { ref, computed } from 'vue';
 import { ElMessage } from 'element-plus'
+import {useUserPointsStore} from "@/stores/usercredit";
 
 const plant_con = ref(false);
 const clickCount = ref(0);
