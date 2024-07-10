@@ -75,7 +75,7 @@ public class LoginCheckFilter implements Filter {
                 "/sendCode",
                 "/routine/**",
                 "/assistant/**",
-                "/systemRoutine/**"
+                "/system_routine/**"
         };
         for(String url: urls){
             if(PATH_MATCHER.match(url,requestURI)){
