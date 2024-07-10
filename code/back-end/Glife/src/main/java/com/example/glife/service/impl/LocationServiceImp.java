@@ -12,6 +12,7 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import java.util.*;
 import static com.example.glife.common.RedisConstants.LOCATION_KEY;
 import static com.example.glife.common.RedisConstants.RADIUS;
 
+@Service
 public class LocationServiceImp {
 
     @Autowired
