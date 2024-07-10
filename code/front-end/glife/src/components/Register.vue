@@ -121,13 +121,14 @@ let timer: number | undefined
 const buttontext = computed(()=>{
   return countdown.value > 0 ? `wait ${countdown.value}s` : 'Get Verification Code' 
 })
+const Cookies:any = VueCookies
 
 onMounted(()=>{
   updateCountdown()
 })
 
 function updateCountdown() {
-  const savedData = VueCookies.get('countdownForCode');
+  const savedData = Cookies.get('countdownForCode');
   if (savedData) {
     console.log('yongle')
     const expireTime = parseInt(savedData);
@@ -137,7 +138,7 @@ function updateCountdown() {
       countdown.value = Math.floor((expireTime - now) / 1000);
       startCountdown(); 
     } else {
-      VueCookies.remove('countdownForCode'); 
+      Cookies.remove('countdownForCode'); 
       countdown.value = 0; 
     }
   } else {
@@ -152,7 +153,7 @@ function startCountdown(){
   // Get a expired time to set cookie
   const expireTime = Date.now() + countdown.value * 1000
 
-  VueCookies.set('countdownForCode', expireTime.toString(), "1MIN")
+  Cookies.set('countdownForCode', expireTime.toString(), "1MIN")
 
   // Decrease the value of countdown and update the cookie
   timer = setInterval(()=>{
@@ -162,10 +163,10 @@ function startCountdown(){
     countdown.value = remainingTime
 
     if(remainingTime > 0){
-      VueCookies.set('countdownForCode', expireTime.toString(), '1MIN')
+      Cookies.set('countdownForCode', expireTime.toString(), '1MIN')
     } else {
       clearInterval(timer)
-      VueCookies.remove('countdownForCode')
+      Cookies.remove('countdownForCode')
     }
   }, 1000)
 }
