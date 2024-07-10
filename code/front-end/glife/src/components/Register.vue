@@ -22,7 +22,12 @@
           </el-form-item>
           <el-form-item label="EMAIL" prop="email">
               <el-input v-model="formLabelAlign.email" />
-              <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
+              <el-button type="primary" class="center" 
+              @click="getVerificationCode"
+              :disabled="countdown > 0"
+              >
+              {{buttontext}}
+              </el-button>
           </el-form-item>
           <el-form-item label="VERIFICATION-CODE" prop="verificationCode">
             <el-input v-model="formLabelAlign.verificationCode" />
@@ -42,10 +47,11 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage, type FormInstance } from 'element-plus';
 import router from "@/router";
+import VueCookies from 'vue-cookies';
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -110,6 +116,61 @@ const rules = reactive({
 })
 
 const emits = defineEmits(['toggle-page'])
+const countdown = ref(0)
+let timer: number | undefined
+const buttontext = computed(()=>{
+  return countdown.value > 0 ? `wait ${countdown.value}s` : 'Get Verification Code' 
+})
+const Cookies:any = VueCookies
+
+onMounted(()=>{
+  updateCountdown()
+})
+
+function updateCountdown() {
+  const savedData = Cookies.get('countdownForCode');
+  if (savedData) {
+    console.log('yongle')
+    const expireTime = parseInt(savedData);
+    const now = Date.now();
+    
+    if (now < expireTime) {
+      countdown.value = Math.floor((expireTime - now) / 1000);
+      startCountdown(); 
+    } else {
+      Cookies.remove('countdownForCode'); 
+      countdown.value = 0; 
+    }
+  } else {
+    countdown.value = 0
+  }
+}
+
+
+function startCountdown(){
+  if(timer) clearInterval(timer)
+
+  // Get a expired time to set cookie
+  const expireTime = Date.now() + countdown.value * 1000
+
+  Cookies.set('countdownForCode', expireTime.toString(), "1MIN")
+
+  // Decrease the value of countdown and update the cookie
+  timer = setInterval(()=>{
+    // Adjust countdown.value according to the remaining time
+    const now = Date.now()
+    const remainingTime = Math.max(Math.floor((expireTime - now) / 1000), 0)
+    countdown.value = remainingTime
+
+    if(remainingTime > 0){
+      Cookies.set('countdownForCode', expireTime.toString(), '1MIN')
+    } else {
+      clearInterval(timer)
+      Cookies.remove('countdownForCode')
+    }
+  }, 1000)
+}
+
 async function register(ruleFormRef: FormInstance | undefined){
     if (!ruleFormRef) return
     await ruleFormRef.validate(async (valid) => {
@@ -171,13 +232,14 @@ async function getVerificationCode(){
       }
     })
 
-    console.log(response.data)
-
     if(String(response.data.code) === '1'){
       ElMessage({
         message: 'Verification Code has been sent, please check your email.',
         type: 'success'
       })
+      // Start the countdown
+      countdown.value = 60
+      startCountdown()
     } else {
       ElMessage({
         message: 'Something bad happened, please try again',

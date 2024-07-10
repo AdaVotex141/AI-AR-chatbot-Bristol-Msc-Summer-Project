@@ -33,6 +33,11 @@ export const useChatStore = defineStore('chat',()=>{
         
         // Show the message on the window
         addMessage({ text: message, sender: 'user', type: 'text'});
+
+        // 'Yes' message
+        if(message === 'Yes'){
+          handleYesMessage()
+        }
       
         // Send api request to the backend
         try{
@@ -61,7 +66,15 @@ export const useChatStore = defineStore('chat',()=>{
         }, index * 1000);
       })
     }
-      
+    
+    async function handleYesMessage(){
+      try{
+        const response = axios.post('/api/system_routine/add-assistant')
+        console.log('yes message')
+      } catch (error){
+        
+      }
+    }
 
     return { messages, addMessage, isInitialWindow, setIsInitialWindowToFalse, handleSendMessage}
 })
