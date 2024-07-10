@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera with Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    #camera {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<video id="camera" autoplay></video>
+<canvas id="overlay"></canvas>
+
+<script>
+  // 访问摄像头视频流
+  const video = document.getElementById('camera');
+  const canvas = document.getElementById('overlay');
+  const context = canvas.getContext('2d');
+
+  // 设置canvas大小与视频一致
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  // 请求摄像头权限并流入视频元素
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+    })
+    .catch(err => {
+      console.error('Error accessing camera: ', err);
+    });
+
+  // 绘制红色小球
+  function drawBall() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 假设你要在屏幕中心绘制小球
+    const ballX = canvas.width / 2;
+    const ballY = canvas.height / 2;
+    const ballRadius = 20;
+
+    context.beginPath();
+    context.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, false);
+    context.fillStyle = 'red';
+    context.fill();
+    context.closePath();
+  }
+
+  // 定期重绘
+  function animate() {
+    drawBall();
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+</body>
+</html>

@@ -9,19 +9,24 @@
 </script>
 
 <style>
-html, body, #app {
-  height: 100%;
-  margin: 0;
+html, body {
   display: flex;
+  margin: 0;
+  padding: 0;
   flex-direction: column;
   background-color: #e8e8e8;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
 }
 
 #app {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 </style>

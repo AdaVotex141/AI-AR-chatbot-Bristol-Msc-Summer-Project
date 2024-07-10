@@ -1,33 +1,98 @@
 <template>
+  <div class="routine-container">
   <el-container class="dayroutine-app">
-    <el-header>DayRoutine</el-header>
+    <el-header>{{ getCurrentDate() }} Routine: </el-header>
     <el-main>
       <div class="user-input">
-        <el-input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new routine!" clearable />
-        <el-button type="primary" @click="addTodo">Add</el-button>
+        <el-input v-model="dayroutineStore.newTodo" @keyup.enter="dayroutineStore.addTodo" placeholder="Add a new routine!" clearable />
+        <el-button type="primary" @click="dayroutineStore.addTodo">Add</el-button>
       </div>
       <el-divider content-position="left">Your routines:</el-divider>
-      <ul>
-        <li v-for="(todo, index) in todos" :key="index" :class="{ completed: todo.completed }">
-          <input type="checkbox" v-model="todo.completed" />
-          <span>{{ todo.text }}</span>
-          <el-button @click="removeTodo(index)">Remove</el-button>
-        </li>
-      </ul>
+      <RoutineList />
     </el-main>
   </el-container>
+  </div>
 </template>
 
-<script setup>
-  import useDayroutine from '@/hooks/useDayroutine';
+<script setup lang='ts'>
+  import { onMounted, ref } from 'vue';
+  import RoutineList from '@/components/RoutineList.vue';
+  import { useDayroutineStore } from '@/stores/dayroutine';
 
-  const {newTodo, todos, addTodo, removeTodo} = useDayroutine()
+  const dayroutineStore = useDayroutineStore()
+  onMounted(() => dayroutineStore.getTodos)
+
+  // Get the date information
+  function getCurrentDate() {
+      return new Date().toLocaleDateString('en-GB');
+  }
+
 </script>
 
 <style scoped>
+@media(max-width: 600px) {
+  .routine-container {
+    margin: 0 auto;
+    width: 100vw;
+    height: 90vh;
+  }
+  .el-header{
+    background-color: #9cb470;
+    padding: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: whitesmoke;
+    font-weight: bold;
+    font-family: 'Cooper Black',sans-serif;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    z-index: 100;
+  }
+}
+
+@media(min-width: 601px) {
+  .routine-container  {
+    margin-top: 2.5rem;
+    width: 60vw;
+    height: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .el-header{
+    background-color: #9cb470;
+    padding: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: whitesmoke;
+    font-weight: bold;
+    font-family: 'Cooper Black',sans-serif;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: sticky;
+    top: 5%;
+    z-index: 100;
+  }
+}
+
+.el-main{
+  overflow-y: hidden;
+}
 .user-input {
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 99;
 }
 
 .todo-app {
@@ -45,26 +110,14 @@ input[type="text"] {
 button {
   padding: 10px;
   margin: 5px;
+  background-color: #9cb470;
+  border-color: transparent;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+button:hover {
+  background-color:darkseagreen;
+  color: #fff;
+  border-color: transparent;
 }
 
-li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-li.completed span {
-  text-decoration: line-through;
-}
-
-li.completed input[type="checkbox"] {
-  checked: true;
-}
 </style>

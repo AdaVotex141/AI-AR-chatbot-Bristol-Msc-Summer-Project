@@ -1,38 +1,34 @@
 <template>
   <div class="message-input">
-    <input v-model="message" @keydown.enter="sendMessage" placeholder="Type a message" />
+    <input
+      v-model="message"
+      @keydown.enter="sendMessage"
+      placeholder="Type a message"
+    />
     <button @click="sendMessage">Send</button>
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
+import { useChatStore } from '@/stores/chat';
+const chatStore = useChatStore()
 
-export default {
-  emits: ['sendMessage'],
-  setup(_, { emit }) {
-    const message = ref('');
+const message = ref('');
 
-    const sendMessage = () => {
-      if (message.value.trim()) {
-        emit('sendMessage', message.value);
-        message.value = '';
-      }
-    };
-
-    return {
-      message,
-      sendMessage
-    };
+const sendMessage = () => {
+  if (message.value.trim()) {
+    chatStore.handleSendMessage(message.value)
+    message.value = '';  
   }
 };
+
 </script>
 
 <style scoped>
 .message-input {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ddd;
   background-color: #fff;
 }
 

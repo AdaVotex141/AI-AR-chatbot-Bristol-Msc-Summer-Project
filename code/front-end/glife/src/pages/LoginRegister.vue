@@ -17,4 +17,12 @@ function togglePage(){
 </script>
 
 <style scoped>
+body{
+  background-color: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
 </style>

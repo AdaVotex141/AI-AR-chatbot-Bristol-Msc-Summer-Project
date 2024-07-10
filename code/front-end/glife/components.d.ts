@@ -7,22 +7,31 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    ChatWindow: typeof import('./src/components/ChatWindow.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
+    ElFooter: typeof import('element-plus/es')['ElFooter']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElMain: typeof import('element-plus/es')['ElMain']
+    ElSpace: typeof import('element-plus/es')['ElSpace']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElText: typeof import('element-plus/es')['ElText']
     FormItem: typeof import('./src/components/FormItem.vue')['default']
+    InitialChatWindow: typeof import('./src/components/InitialChatWindow.vue')['default']
+    LoadingEffect: typeof import('./src/components/LoadingEffect.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
+    MessageBubble: typeof import('./src/components/MessageBubble.vue')['default']
+    MessageContent: typeof import('./src/components/MessageContent.vue')['default']
     MessageInput: typeof import('./src/components/MessageInput.vue')['default']
     MessageList: typeof import('./src/components/MessageList.vue')['default']
+    MobileMenu: typeof import('./src/components/MobileMenu.vue')['default']
     Register: typeof import('./src/components/Register.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    RoutineList: typeof import('./src/components/RoutineList.vue')['default']
   }
 }

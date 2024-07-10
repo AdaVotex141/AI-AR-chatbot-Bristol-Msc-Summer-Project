@@ -1,50 +1,70 @@
 <template>
-  <div class="container">
-    <div class="title-container">
-      <h2 class="title">REGISTER</h2>
-    </div>
+  <el-container>
+    <el-header class="title">REGISTER</el-header>
     <div style="margin: 10px" />
-    <el-form
-      ref="ruleFormRef"
-      label-position="top"
-      label-width="auto"
-      :model="formLabelAlign"
-      :rules="rules"
-      style="max-width: 600px"
-    >
-        <el-form-item label="USERNAME" prop="username">
-            <el-input v-model="formLabelAlign.username" />
-        </el-form-item>
-        <el-form-item label="PASSWORD" prop="password">
-            <el-input v-model="formLabelAlign.password" type="password" show-password/>
-        </el-form-item>
-        <el-form-item label="EMAIL" prop="email">
-            <el-input v-model="formLabelAlign.email" />
-        </el-form-item>
-        <el-form-item class="tip-message">
-            Already have an account? 
-            <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
-                Click here to login
-            </el-link>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" class="center" @click="register(ruleFormRef)">Register</el-button>
-        </el-form-item>
-    </el-form>
-  </div>
+    <el-main>
+      <el-form
+        ref="ruleFormRef"
+        label-position="top"
+        label-width="auto"
+        :model="formLabelAlign"
+        :rules="rules"
+        style="max-width: 600px"
+      >
+          <el-form-item label="USERNAME" prop="username">
+              <el-input v-model="formLabelAlign.username" />
+          </el-form-item>
+          <el-form-item label="PASSWORD" prop="password">
+              <el-input v-model="formLabelAlign.password" type="password" show-password/>
+          </el-form-item>
+          <el-form-item label="Confirm Password" prop="confirmPassword">
+              <el-input v-model="formLabelAlign.confirmPassword" type="password" show-password/>
+          </el-form-item>
+          <el-form-item label="EMAIL" prop="email">
+              <el-input v-model="formLabelAlign.email" />
+              <el-button type="primary" class="center" @click="getVerificationCode">Get Verification Code</el-button>
+          </el-form-item>
+          <el-form-item label="VERIFICATION-CODE" prop="verificationCode">
+            <el-input v-model="formLabelAlign.verificationCode" />
+          </el-form-item>
+          <el-form-item class="tip-message">
+              Already have an account? 
+              <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
+                  Click here to login
+              </el-link>
+          </el-form-item>
+          <el-form-item>
+              <el-button type="primary" class="center" @click="register(ruleFormRef)">Register</el-button>
+          </el-form-item>
+      </el-form>
+    </el-main>
+  </el-container>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage, type FormInstance } from 'element-plus';
+import router from "@/router";
 
 const ruleFormRef = ref<FormInstance>()
+
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (value === '') {
+    callback(new Error('Please input the password again'))
+  } else if (value !== formLabelAlign.password) {
+    callback(new Error("Two inputs don't match!"))
+  } else {
+    callback()
+  }
+}
 
 const formLabelAlign = reactive({
     username: '',
     password: '',
-    email: ''
+    confirmPassword:'',
+    email: '',
+    verificationCode:''
 })
 
 const rules = reactive({
@@ -62,11 +82,31 @@ const rules = reactive({
         trigger: 'blur'
     }
     ],
+    confirmPassword:[
+      {
+        required: true,
+        validator: validatePass,
+        trigger: 'blur'
+      }
+    ],
+    verificationCode:[
+      {
+        required: true,
+        message: 'Please enter the verification code',
+        trigger: 'blur'
+      }
+    ],
     email:[{
         required: true,
         message: 'Please enter your email',
         trigger: 'blur'
-    }]
+      },
+      {
+        type: 'email',
+        message: 'Please input correct email address',
+        trigger: 'blur'
+      }
+    ]
 })
 
 const emits = defineEmits(['toggle-page'])
@@ -75,15 +115,22 @@ async function register(ruleFormRef: FormInstance | undefined){
     await ruleFormRef.validate(async (valid) => {
         if(!valid){
             ElMessage({
-                    message: "Invalid information",
-                    type: 'warning'
+              message: "Invalid information",
+              type: 'warning'
             })
         } else {
             try{
                 const response = await axios.post('/api/register',{
                     username: formLabelAlign.username,
                     password: formLabelAlign.password,
-                    email: formLabelAlign.email
+                    email: formLabelAlign.email,
+                },{
+                  params: {
+                    code: formLabelAlign.verificationCode
+                  },
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
                 })
                 // Check if the register is successful
                 if(String(response.data.code) === '1'){
@@ -104,39 +151,63 @@ async function register(ruleFormRef: FormInstance | undefined){
             } catch (error){
                 console.error('Error sending data:', error)
                 alert('Error sending data')
+                router.push({
+                  name:'notfound'
+                })
             }
         }
         
     })
 }
 
+async function getVerificationCode(){
+  try{
+    // Validate the email field
+    await ruleFormRef.value?.validateField('email')
+
+    const response = await axios.post('/api/sendCode', formLabelAlign.email,{
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+
+    console.log(response.data)
+
+    if(String(response.data.code) === '1'){
+      ElMessage({
+        message: 'Verification Code has been sent, please check your email.',
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: 'Something bad happened, please try again',
+        type: 'error'
+      })
+    }
+  } catch (error) {
+    ElMessage({
+        message: 'Your email information is wrong, please check it',
+        type: 'error'
+    })
+  }
+}
+
 </script>
 
 <style scoped>
-h2{
-  font-weight: bold;
-  font-family: 'Cooper Black',sans-serif;
-}
-.title-container {
-  margin-top: 20px;
-  width: 100%;
-  height: 100px;
-  text-align: center;
-  max-width: 1024px;
-  display: grid;
-  place-items: center;
-}
 
 .title {
+  font-weight: bold;
+  font-family: 'Cooper Black',sans-serif;
   text-align: center;
   font-size: 4rem;
   color: darkolivegreen;
 }
-.container{
+.el-container{
   max-width:1024px;
   align-items: center;
   height: 100vh;
-  max-height: 500px;
+  max-height: 90vh;
   padding: 20px;
   background: white;
   border: 1px solid #ddd;
@@ -158,10 +229,12 @@ h2{
   width: 100%;
   text-align: center;
   background-color:darkolivegreen;
+  border-color: transparent;
 }
 
 .el-button.center:hover {
   background-color:darkseagreen;
   color: #fff;
+  border-color: transparent;
 }
 </style>
