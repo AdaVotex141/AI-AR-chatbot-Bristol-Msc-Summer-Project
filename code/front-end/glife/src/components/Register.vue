@@ -123,23 +123,46 @@ const buttontext = computed(()=>{
 })
 
 onMounted(()=>{
-  const saveCountdown = VueCookies.get('countdownForCode')
-  if(saveCountdown) {
-    countdown.value = parseInt(saveCountdown)
-    if(countdown.value > 0){
-      startCountdown()
-    }
-  }
+  updateCountdown()
 })
+
+function updateCountdown() {
+  const savedData = VueCookies.get('countdownForCode');
+  if (savedData) {
+    console.log('yongle')
+    const expireTime = parseInt(savedData);
+    const now = Date.now();
+    
+    if (now < expireTime) {
+      countdown.value = Math.floor((expireTime - now) / 1000);
+      startCountdown(); 
+    } else {
+      VueCookies.remove('countdownForCode'); 
+      countdown.value = 0; 
+    }
+  } else {
+    countdown.value = 0
+  }
+}
+
 
 function startCountdown(){
   if(timer) clearInterval(timer)
+
+  // Get a expired time to set cookie
+  const expireTime = Date.now() + countdown.value * 1000
+
+  VueCookies.set('countdownForCode', expireTime.toString(), "1MIN")
+
   // Decrease the value of countdown and update the cookie
-  console.log(buttontext)
   timer = setInterval(()=>{
-    if(countdown.value > 0){
-      countdown.value--
-      VueCookies.set('countdownForCode', countdown.value.toString(),(1 / 1440) * countdown.value)
+    // Adjust countdown.value according to the remaining time
+    const now = Date.now()
+    const remainingTime = Math.max(Math.floor((expireTime - now) / 1000), 0)
+    countdown.value = remainingTime
+
+    if(remainingTime > 0){
+      VueCookies.set('countdownForCode', expireTime.toString(), '1MIN')
     } else {
       clearInterval(timer)
       VueCookies.remove('countdownForCode')
