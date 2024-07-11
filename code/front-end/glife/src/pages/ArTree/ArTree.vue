@@ -13,7 +13,7 @@
 <script lang='ts' setup>
 import { ref, computed, onMounted } from 'vue';
 import { ElMessage } from 'element-plus'
-import { fetchTreePoints, fetchCanPlantTree } from "@/stores/treepoints";
+import { fetchTreePoints, fetchCanPlantTree, updateTreeImage } from "@/stores/treepoints";
 
 // define the response data
 const treeImageSrc = ref<string>('');
@@ -24,7 +24,7 @@ const canPlantTree = ref<boolean | null>(null);
 onMounted(async () => {
   const treeData = await fetchTreePoints();
   treeImageSrc.value = treeData.treeImageSrc.value;
-  treePoints.value = treeData.treePoints.value;
+  treePoints = treeData.treePoints.value;
 
   const canPlantTreeData = await fetchCanPlantTree();
   canPlantTree.value = canPlantTreeData.value;
@@ -85,6 +85,7 @@ const handleClick = () => {
 @media (max-width: 600px) {
   .background-image-container{
     display: flex;
+    background-image: 'url($(treeImageSrc.value))';
     background-color: white;
     background-size: cover;
     background-position: center;
@@ -134,38 +135,4 @@ h2{
   flex-direction: column;
 }
 
-
-  /* Dynamically change background image URL based on treePoints */
-  .background-image-container {
-    background-image: url('@/assets/treeImages/1.png');
-  }
-
-  /* Set background image URL for different treePoints values */
-  .background-image-container[treePoints="2"] {
-    background-image: url('@/assets/treeImages/2.png');
-  }
-
-  .background-image-container[treePoints="3"] {
-    background-image: url('@/assets/treeImages/3.png');
-  }
-
-  .background-image-container[treePoints="4"] {
-    background-image: url('@/assets/treeImages/4.png');
-  }
-
-  .background-image-container[treePoints="5"] {
-    background-image: url('@/assets/treeImages/5.png');
-  }
-
-  .background-image-container[treePoints="6"] {
-    background-image: url('@/assets/treeImages/6.png');
-  }
-
-  .background-image-container[treePoints="7"] {
-    background-image: url('@/assets/treeImages/7.png');
-  }
-
-  .background-image-container[data-tree-points="8"] {
-    background-image: url('@/assets/treeImages/8.png');
-  }
 </style>

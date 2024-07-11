@@ -66,30 +66,30 @@ const updateTreeImage = (
 ) => {
     switch (treePoints) {
         case 1:
-            treeImageSrc.value = '/assets/treeImages/1.png';
+            treeImageSrc.value = 'src/assets/treeImages/1.png';
             break;
         case 2:
-            treeImageSrc.value = '/assets/treeImages/2.png';
+            treeImageSrc.value = 'src/assets/treeImages/2.png';
             break;
         case 3:
-            treeImageSrc.value = '/assets/treeImages/3.png';
+            treeImageSrc.value = 'src/assets/treeImages/3.png';
             break;
         case 4:
-            treeImageSrc.value = '/assets/treeImages/4.png';
+            treeImageSrc.value = 'src/assets/treeImages/4.png';
             break;
         case 5:
-            treeImageSrc.value = '/assets/treeImages/5.png';
+            treeImageSrc.value = 'src/assets/treeImages/5.png';
             break;
         case 6:
-            treeImageSrc.value = '/assets/treeImages/6.png';
+            treeImageSrc.value = 'src/assets/treeImages/6.png';
             break;
         case 7:
-            treeImageSrc.value = '/assets/treeImages/7.png';
+            treeImageSrc.value = 'src/assets/treeImages/7.png';
             break;
         case 8:
-            treeImageSrc.value = '/assets/treeImages/8.png';
+            treeImageSrc.value = 'src/assets/treeImages/8.png';
             break;
         default:
-            treeImageSrc.value = '/assets/PlantTree.png';
+            treeImageSrc.value = 'src/assets/PlantTree.png';
     }
 };
