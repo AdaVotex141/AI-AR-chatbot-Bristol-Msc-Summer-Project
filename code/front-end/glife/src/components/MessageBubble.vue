@@ -29,7 +29,7 @@ let name = ref()
 const chatStore = useChatStore()
 const props = defineProps(['message'])
 let isLoading = ref(false)  
-let optionClicked = ref(false)
+
 onMounted(()=>{
     // Set the name
     name.value = props.message.sender === 'user' ? 'You' : 'Bot'
@@ -42,13 +42,6 @@ onMounted(()=>{
         }, 1000)
     }
 })
-
-function handleOptionClick(option:string){
-  // Set button to clicked
-  optionClicked.value = true
-  // Handle option clicked and send message to the chatbot
-  chatStore.handleSendMessage(option)
-}
 
 
 </script>

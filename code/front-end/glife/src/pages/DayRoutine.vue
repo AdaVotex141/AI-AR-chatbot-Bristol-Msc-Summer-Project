@@ -8,19 +8,23 @@
         <el-button type="primary" @click="dayroutineStore.addTodo">Add</el-button>
       </div>
       <el-divider content-position="left">Your routines:</el-divider>
-      <RoutineList />
+      <!-- RoutineList -->
+      <div class="systemroutine">
+        <RoutineList :store="systemroutineStore" />
+      </div>
+      <RoutineList :store="dayroutineStore" />
     </el-main>
   </el-container>
   </div>
 </template>
 
 <script setup lang='ts'>
-  import { onMounted, ref } from 'vue';
   import RoutineList from '@/components/RoutineList.vue';
   import { useDayroutineStore } from '@/stores/dayroutine';
+  import { useSystemroutineStore } from '@/stores/systemroutine';
 
   const dayroutineStore = useDayroutineStore()
-  onMounted(() => dayroutineStore.getTodos)
+  const systemroutineStore = useSystemroutineStore()
 
   // Get the date information
   function getCurrentDate() {
@@ -118,6 +122,10 @@ button:hover {
   background-color:darkseagreen;
   color: #fff;
   border-color: transparent;
+}
+
+.systemroutine {
+  background-color: gold;
 }
 
 </style>
