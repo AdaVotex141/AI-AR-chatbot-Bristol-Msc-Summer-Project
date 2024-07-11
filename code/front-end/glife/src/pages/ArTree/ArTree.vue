@@ -2,6 +2,7 @@
     <div class="ar-container">
       <el-container>
         <el-container>
+        
           <el-main><div class="background-image-container"><img :src="treeImageSrc" /></div></el-main>
           <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
@@ -12,7 +13,7 @@
 <script lang='ts' setup>
 import { ref, computed, onMounted } from 'vue';
 import { ElMessage } from 'element-plus'
-import { fetchTreePoints, fetchCanPlantTree } from "@/stores/treepoints";
+import { fetchTreePoints, fetchCanPlantTree, updateTreeImage } from "@/stores/treepoints";
 
 // define the response data
 const treeImageSrc = ref<string>('');
@@ -23,7 +24,7 @@ const canPlantTree = ref<boolean | null>(null);
 onMounted(async () => {
   const treeData = await fetchTreePoints();
   treeImageSrc.value = treeData.treeImageSrc.value;
-  treePoints.value = treeData.treePoints.value;
+  treePoints = treeData.treePoints.value;
 
   const canPlantTreeData = await fetchCanPlantTree();
   canPlantTree.value = canPlantTreeData.value;
@@ -84,6 +85,7 @@ const handleClick = () => {
 @media (max-width: 600px) {
   .background-image-container{
     display: flex;
+    background-image: 'url($(treeImageSrc.value))';
     background-color: white;
     background-size: cover;
     background-position: center;
@@ -132,4 +134,5 @@ h2{
   justify-content: center;
   flex-direction: column;
 }
+
 </style>
