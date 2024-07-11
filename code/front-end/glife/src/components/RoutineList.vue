@@ -19,7 +19,7 @@ import {onMounted} from 'vue'
 import {ref} from 'vue'
 import axios from 'axios';
 
-const props = defineProps(['store'])
+const props = defineProps(['store', 'isSystemroutine'])
 
 onMounted(()=> props.store.getTodos())
 
@@ -28,6 +28,9 @@ const currentTodoId = ref()
 const editText = ref('')
 
 function startEditing(id:number, text:string){
+  if(props.isSystemroutine){
+    return
+  }
   isEditing.value = true
   currentTodoId.value = id
   editText.value = text
