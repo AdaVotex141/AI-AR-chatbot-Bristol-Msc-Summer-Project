@@ -15,5 +15,10 @@ public class RedisConstants {
 
     public static final Long LOGIN_CODE_TTL = 10L;
 
+    public static final String LOCATION_KEY = "location";
+
+
+    public static final int RADIUS = 10;
+
 
 }

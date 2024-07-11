@@ -12,14 +12,7 @@
             <LoadingEffect v-if="message.sender === 'bot' && isLoading" />
             <div v-else>
                 <!-- Message content -->
-                <p v-if="message.type === 'text'"class="text-sm font-normal text-gray-900 dark:text-white">{{ message.text }}</p>
-                <div v-else="message.type === 'options'">
-                    <div class="options">
-                        <el-button v-for="option in message.options" @click="chatStore.handleSendMessage(option)" type="success" plain >
-                        {{ option }}
-                        </el-button>
-                    </div>
-                </div>
+                <MessageContent :message="message" />
             </div>
         </div>
       </div>
@@ -30,12 +23,13 @@
 import {onMounted, ref} from 'vue'
 import { useChatStore } from '@/stores/chat';
 import LoadingEffect from '@/components/LoadingEffect.vue';
+import MessageContent from '@/components/MessageContent.vue';
 
 let name = ref()
 const chatStore = useChatStore()
 const props = defineProps(['message'])
 let isLoading = ref(false)  
-
+let optionClicked = ref(false)
 onMounted(()=>{
     // Set the name
     name.value = props.message.sender === 'user' ? 'You' : 'Bot'
@@ -48,6 +42,13 @@ onMounted(()=>{
         }, 1000)
     }
 })
+
+function handleOptionClick(option:string){
+  // Set button to clicked
+  optionClicked.value = true
+  // Handle option clicked and send message to the chatbot
+  chatStore.handleSendMessage(option)
+}
 
 
 </script>

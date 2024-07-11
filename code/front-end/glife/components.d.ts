@@ -25,6 +25,7 @@ declare module 'vue' {
     LoadingEffect: typeof import('./src/components/LoadingEffect.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     MessageBubble: typeof import('./src/components/MessageBubble.vue')['default']
+    MessageContent: typeof import('./src/components/MessageContent.vue')['default']
     MessageInput: typeof import('./src/components/MessageInput.vue')['default']
     MessageList: typeof import('./src/components/MessageList.vue')['default']
     MobileMenu: typeof import('./src/components/MobileMenu.vue')['default']

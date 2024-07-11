@@ -31,10 +31,13 @@
 </template>
 
 <script lang="ts" setup>
+import { useUserInfoStore } from '@/stores/userInfo';
 import axios from 'axios';
 import { ElMessage, type FormInstance } from 'element-plus';
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
+
+const userInfoStore = useUserInfoStore()
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -89,6 +92,8 @@ async function login(ruleFormRef: FormInstance | undefined){
           router.push({
             name:'startpage'
           })
+          // Change the user info
+          userInfoStore.login(formLabelAlign.username)
         } else {
           ElMessage({
             message: response.data.msg,
