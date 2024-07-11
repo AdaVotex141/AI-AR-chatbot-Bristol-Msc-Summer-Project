@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.glife.service.impl.LocationServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,6 +17,8 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -97,7 +100,19 @@ public class WsHandler extends AbstractWebSocketHandler {
             double latitude = jsonObject.getDouble("latitude");
 
             locationServiceImp.getNearByPosition(request, longitude, latitude);
+            List<Point> points = locationServiceImp.getNearByPosition(request, longitude, latitude).getData();
+            for (Point point : points) {
+                double x = point.getX();
+                double y = point.getY();
+                try {
+                    session.sendMessage(new TextMessage(x+","+y));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
         }
+
     }
 
     private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject){
