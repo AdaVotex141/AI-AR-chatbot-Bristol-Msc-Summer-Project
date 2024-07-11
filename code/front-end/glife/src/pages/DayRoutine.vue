@@ -10,9 +10,9 @@
       <el-divider content-position="left">Your routines:</el-divider>
       <!-- RoutineList -->
       <div class="systemroutine">
-        <RoutineList :store="systemroutineStore" />
+        <RoutineList :store="systemroutineStore" :isSystemroutine="true"/>
       </div>
-      <RoutineList :store="dayroutineStore" />
+      <RoutineList :store="dayroutineStore" :isSystemroutine="false"/>
     </el-main>
   </el-container>
   </div>
