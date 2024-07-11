@@ -10,14 +10,14 @@ interface Todo{
     completed: boolean;
 }
 
-export const useDayroutineStore = defineStore('dayroutine',()=> {
+export const useSystemroutineStore = defineStore('systemroutine',()=> {
     const newTodo = ref('');
     const todos = ref<Todo[]>([]);
     
 
-    async function getTodos(routineType:string){
+    async function getTodos(){
         try{
-            const response = await axios.get(`/api/${routineType}/init`)
+            const response = await axios.get('/api/system_routine/init')
             if(String(response.data.code) === '1'){
                 //Get the data from response
                 const data: {id: number; content: string; tick: number}[] = response.data.data
@@ -39,14 +39,14 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         }
     }
 
-    async function addTodo(routineType:string) {
+    async function addTodo() {
         if (newTodo.value.trim() !== '') {
             // Get newTodo's value and set it to empty string on the frontend
             const content = newTodo.value
             newTodo.value = '';
             // Send api request and user input to backend
             try {
-                const response = await axios.post(`/api/${routineType}/add`, {
+                const response = await axios.post('/api/system_routine/add', {
                     content: content
                 })
                 if (String(response.data.code) === '1') {
@@ -70,10 +70,10 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         }
     };
 
-    async function removeTodo(idOfRecord:number, routineType:string){
+    async function removeTodo(idOfRecord:number){
         // Sending api request to the backend
         try{
-            const response = await axios.post(`/api/${routineType}/delete`, idOfRecord, {
+            const response = await axios.post('/api/system_routine/delete', idOfRecord, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -90,10 +90,10 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         getTodos()
     };
 
-    async function changeCompletedStatus(id:number, routineType:string){
+    async function changeCompletedStatus(id:number){
         // Sending api request to the backend
         try{
-            const response = await axios.post(`/api/${routineType}/tick`, id, {
+            const response = await axios.post('/api/system_routine/tick', id, {
                 headers:{
                     'Content-Type': 'application/json'
                 }
