@@ -14,13 +14,13 @@ export interface TreePoints{
 export const fetchTreePoints = async () => {
     const treeImageSrc = ref<string>('');
     const treeImageAlt = ref<string>('Tree Image');
-    const treePoints = ref<number | null>(null);
+    const treePoints = ref<number | 1>(1);
     try {
-        const response = await axios.get<{ code: string; data: TreePoints}>('/api/ARtree/init');
+        const response = await axios.get<{ code: string; data: number}>('/api/ARTree/init');
         if (String(response.data.code) === '1') {
             const data = response.data.data;
-            treePoints.value = data.treePoints;
-            updateTreeImage(data.treePoints, treeImageSrc);
+            treePoints.value = data; // 直接赋值给 treePoints.value
+            updateTreeImage(data, treeImageSrc);
         } else {
             ElMessage({
                 message: 'Failed to fetch tree points',
@@ -40,7 +40,7 @@ export const fetchTreePoints = async () => {
 export const fetchCanPlantTree = async () => {
     const canPlantTree = ref<boolean | null>(null);
     try {
-        const response = await axios.get<{ code: string; data: TreePoints }>('/api/ARtree/init');
+        const response = await axios.get<{ code: string; data: TreePoints }>('/api/ARTree/init');
         if (String(response.data.code) === '1') {
             const data = response.data.data;
             canPlantTree.value = data.plantTree;
@@ -66,30 +66,30 @@ const updateTreeImage = (
 ) => {
     switch (treePoints) {
         case 1:
-            treeImageSrc.value = '@/assets/treeImages/1.png';
+            treeImageSrc.value = '/assets/treeImages/1.png';
             break;
         case 2:
-            treeImageSrc.value = '@/assets/treeImages/2.png';
+            treeImageSrc.value = '/assets/treeImages/2.png';
             break;
         case 3:
-            treeImageSrc.value = '@/assets/treeImages/3.png';
+            treeImageSrc.value = '/assets/treeImages/3.png';
             break;
         case 4:
-            treeImageSrc.value = '@/assets/treeImages/4.png';
+            treeImageSrc.value = '/assets/treeImages/4.png';
             break;
         case 5:
-            treeImageSrc.value = '@/assets/treeImages/5.png';
+            treeImageSrc.value = '/assets/treeImages/5.png';
             break;
         case 6:
-            treeImageSrc.value = '@/assets/treeImages/6.png';
+            treeImageSrc.value = '/assets/treeImages/6.png';
             break;
         case 7:
-            treeImageSrc.value = '@/assets/treeImages/7.png';
+            treeImageSrc.value = '/assets/treeImages/7.png';
             break;
         case 8:
-            treeImageSrc.value = '@/assets/treeImages/8.png';
+            treeImageSrc.value = '/assets/treeImages/8.png';
             break;
         default:
-            treeImageSrc.value = '@/assets/PlantTree.png';
+            treeImageSrc.value = '/assets/PlantTree.png';
     }
 };

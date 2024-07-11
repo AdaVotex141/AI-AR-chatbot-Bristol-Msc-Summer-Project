@@ -2,6 +2,7 @@
     <div class="ar-container">
       <el-container>
         <el-container>
+        
           <el-main><div class="background-image-container"><img :src="treeImageSrc" /></div></el-main>
           <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
@@ -132,4 +133,39 @@ h2{
   justify-content: center;
   flex-direction: column;
 }
+
+
+  /* Dynamically change background image URL based on treePoints */
+  .background-image-container {
+    background-image: url('@/assets/treeImages/1.png');
+  }
+
+  /* Set background image URL for different treePoints values */
+  .background-image-container[treePoints="2"] {
+    background-image: url('@/assets/treeImages/2.png');
+  }
+
+  .background-image-container[treePoints="3"] {
+    background-image: url('@/assets/treeImages/3.png');
+  }
+
+  .background-image-container[treePoints="4"] {
+    background-image: url('@/assets/treeImages/4.png');
+  }
+
+  .background-image-container[treePoints="5"] {
+    background-image: url('@/assets/treeImages/5.png');
+  }
+
+  .background-image-container[treePoints="6"] {
+    background-image: url('@/assets/treeImages/6.png');
+  }
+
+  .background-image-container[treePoints="7"] {
+    background-image: url('@/assets/treeImages/7.png');
+  }
+
+  .background-image-container[data-tree-points="8"] {
+    background-image: url('@/assets/treeImages/8.png');
+  }
 </style>
