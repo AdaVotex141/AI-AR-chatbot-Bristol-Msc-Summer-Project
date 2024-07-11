@@ -1,11 +1,8 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="ar-container">
-      <el-container>
         <el-container>
-        
           <el-main><div class="background-image-container"><img :src="treeImageSrc" /></div></el-main>
-          <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer>
-        </el-container>
+          <el-footer><el-button  @click="handleClick"><h2>Plant</h2></el-button></el-footer>
       </el-container>
     </div>
 </template>
@@ -24,7 +21,7 @@ const canPlantTree = ref<boolean | null>(null);
 onMounted(async () => {
   const treeData = await fetchTreePoints();
   treeImageSrc.value = treeData.treeImageSrc.value;
-  treePoints = treeData.treePoints.value;
+  treePoints.value = treeData.treePoints.value;
 
   const canPlantTreeData = await fetchCanPlantTree();
   canPlantTree.value = canPlantTreeData.value;
@@ -86,6 +83,7 @@ const handleClick = () => {
   .background-image-container{
     display: flex;
     background-image: 'url($(treeImageSrc.value))';
+    background-size: 100% 100%;
     background-color: white;
     background-size: cover;
     background-position: center;
