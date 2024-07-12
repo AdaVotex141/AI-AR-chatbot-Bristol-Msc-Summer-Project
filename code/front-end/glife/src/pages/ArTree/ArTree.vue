@@ -10,9 +10,9 @@
 
 <script lang='ts' setup>
 import { ref, computed, onMounted } from 'vue';
-import { ElMessage } from 'element-plus'
-import { fetchTreePoints, fetchCanPlantTree, updateTreeImage } from "@/stores/treepoints";
+import { fetchTreePoints, fetchCanPlantTree } from "@/stores/treepoints";
 import router from '@/router';
+import { RouterView } from 'vue-router';
 
 // define the response data
 const treeImageSrc = ref<string>('');
@@ -24,9 +24,10 @@ onMounted(async () => {
   const treeData = await fetchTreePoints();
   treeImageSrc.value = treeData.treeImageSrc.value;
   treePoints.value = treeData.treePoints.value;
-
+  console.log(treePoints.value,' and ', treeImageSrc.value)
   const canPlantTreeData = await fetchCanPlantTree();
   canPlantTree.value = canPlantTreeData.value;
+
 });
 
 // Is the plant tree button disabled

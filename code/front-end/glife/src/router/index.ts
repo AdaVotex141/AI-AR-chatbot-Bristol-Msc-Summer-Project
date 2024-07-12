@@ -36,13 +36,6 @@ const router = createRouter({
                     name:'artree',
                     path:'artree',
                     component:ArTree,
-                    children:[
-                        {
-                            name:'artree-camera',
-                            path:'artree-camera',
-                            component:ARTreeCamera
-                        }
-                    ]
                 },
                 {
                     name:'dayroutine',
@@ -58,11 +51,15 @@ const router = createRouter({
                     name:'mybadge',
                     path:'mybadge',
                     component: BadgeSystem
+                },
+                {
+                    name:'artree-camera',
+                    path:'artree-camera',
+                    component:ARTreeCamera
                 }
             ],
             redirect:'/mainpage/chatwindow'
         },
-         
         {
             path:'/',
             redirect:'/login'

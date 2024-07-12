@@ -2,7 +2,6 @@ import axios from "axios";
 import {ref} from "vue";
 import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
-import router from "@/router";
 
 
 export interface TreePoints{
@@ -17,10 +16,9 @@ export const fetchTreePoints = async () => {
     const treePoints = ref<number | 1>(1);
     try {
         const response = await axios.get<{ code: string; data: number}>('/api/ARTree/init');
-        console.log(response.data)
         if (String(response.data.code) === '1') {
             const data = response.data.data;
-            treePoints.value = data; // 直接赋值给 treePoints.value
+            treePoints.value = data; 
             updateTreeImage(data, treeImageSrc);
         } else {
             ElMessage({
@@ -67,30 +65,30 @@ const updateTreeImage = (
 ) => {
     switch (treePoints) {
         case 1:
-            treeImageSrc.value = 'src/assets/treeImages/1.png';
+            treeImageSrc.value = '@/assets/treeImages/1.png';
             break;
         case 2:
-            treeImageSrc.value = 'src/assets/treeImages/2.png';
+            treeImageSrc.value = '@/assets/treeImages/2.png';
             break;
         case 3:
-            treeImageSrc.value = 'src/assets/treeImages/3.png';
+            treeImageSrc.value = '@/assets/treeImages/3.png';
             break;
         case 4:
-            treeImageSrc.value = 'src/assets/treeImages/4.png';
+            treeImageSrc.value = '@/assets/treeImages/4.png';
             break;
         case 5:
-            treeImageSrc.value = 'src/assets/treeImages/5.png';
+            treeImageSrc.value = '@/assets/treeImages/5.png';
             break;
         case 6:
-            treeImageSrc.value = 'src/assets/treeImages/6.png';
+            treeImageSrc.value = '@/assets/treeImages/6.png';
             break;
         case 7:
-            treeImageSrc.value = 'src/assets/treeImages/7.png';
+            treeImageSrc.value = '@/assets/treeImages/7.png';
             break;
         case 8:
-            treeImageSrc.value = 'src/assets/treeImages/8.png';
+            treeImageSrc.value = '@/assets/treeImages/8.png';
             break;
         default:
-            treeImageSrc.value = 'src/assets/PlantTree.png';
+            treeImageSrc.value = '@/assets/PlantTree.png';
     }
 };
