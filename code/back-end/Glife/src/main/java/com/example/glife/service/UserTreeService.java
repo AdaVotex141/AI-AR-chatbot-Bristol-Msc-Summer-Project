@@ -12,4 +12,6 @@ public interface UserTreeService  extends IService<UserTree> {
     public R<Integer> update(HttpServletRequest request);
     public R<Integer> reUpdate(HttpServletRequest request);
 
+    public R<String> plant(HttpServletRequest request);
+
 }

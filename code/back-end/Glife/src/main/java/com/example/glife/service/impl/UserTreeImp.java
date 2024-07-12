@@ -92,7 +92,6 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
                 treeCode = userTree.getTickSum();
                 if(treeCode == 1){
                     treeCode = 8;
-                    userTree.setTreeSum(userTree.getTreeSum()-1);
                     userTree.setTickSum(treeCode);
                 }else{
                     treeCode = treeCode-1;
@@ -106,6 +105,28 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
         }else{
             return R.error("Can't get userId");
         }
+    }
+
+    public R<String> plant(HttpServletRequest request){
+        Long userID = getUserID(request);
+        if(userID != null){
+            LambdaQueryWrapper<UserTree> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(UserTree::getUserid, userID);
+            UserTree userTree = baseMapper.selectOne(lambdaQueryWrapper);
+
+            if(userTree != null){
+                userTree.setTreeSum(userTree.getTreeSum()+1);
+                baseMapper.updateById(userTree);
+                return R.success("update tree_sums");
+
+            }else{
+                return R.error("user not find");
+            }
+
+        }else{
+            return R.error("Can't find user");
+        }
+
     }
 
     private Long getUserID(HttpServletRequest request){
