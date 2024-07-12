@@ -19,7 +19,9 @@ public class EmailServiceImp {
 
         helper.setTo(to);
         helper.setSubject("Glife Email Verification");
-        helper.setText("Your verification code is: " + verificationCode);
+        helper.setText("Your verification code is: " +
+                verificationCode+
+                ", the code will be expired within 10 minutes");
 
         mailSender.send(message);
     }

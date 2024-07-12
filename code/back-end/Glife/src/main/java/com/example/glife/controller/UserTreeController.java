@@ -20,6 +20,8 @@ public class UserTreeController {
 
     @GetMapping("/init")
     public R<Integer> init(HttpServletRequest request){
+        int getData = service.init(request).getData();
+        log.info("the get Data is :{}",getData);
         return service.init(request);
     }
 

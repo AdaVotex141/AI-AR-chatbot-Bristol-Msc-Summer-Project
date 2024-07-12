@@ -62,6 +62,7 @@ const router = createRouter({
             ],
             redirect:'/mainpage/chatwindow'
         },
+         
         {
             path:'/',
             redirect:'/login'
