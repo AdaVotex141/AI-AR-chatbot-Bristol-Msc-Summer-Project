@@ -17,6 +17,7 @@ export const fetchTreePoints = async () => {
     const treePoints = ref<number | 1>(1);
     try {
         const response = await axios.get<{ code: string; data: number}>('/api/ARTree/init');
+        console.log(response.data)
         if (String(response.data.code) === '1') {
             const data = response.data.data;
             treePoints.value = data; // 直接赋值给 treePoints.value
