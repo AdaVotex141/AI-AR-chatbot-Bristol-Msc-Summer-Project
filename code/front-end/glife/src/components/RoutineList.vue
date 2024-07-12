@@ -1,7 +1,7 @@
 <template>
     <ul>
-      <li v-for="(todo) in dayroutineStore.todos" :key="todo.id" :class="{ completed: todo.completed }">
-        <input type="checkbox" v-model="todo.completed" @click="dayroutineStore.changeCompletedStatus(todo.id)"/>
+      <li v-for="(todo) in props.store.todos" :key="todo.id" :class="{ completed: todo.completed }">
+        <input type="checkbox" v-model="todo.completed" @click="props.store.changeCompletedStatus(todo.id)"/>
         <el-input
           v-if="isEditing && currentTodoId === todo.id"
           v-model="editText"
@@ -9,24 +9,28 @@
           @keyup.enter="saveTodo(todo.id)"
           autofocus />
         <span v-else @click="startEditing(todo.id, todo.text)">{{ todo.text }}</span>
-        <el-button @click="dayroutineStore.removeTodo(todo.id)">Remove</el-button>
+        <el-button @click="props.store.removeTodo(todo.id)">Remove</el-button>
       </li>
     </ul>
 </template>
 
 <script setup lang="ts">
 import {onMounted} from 'vue'
-import { useDayroutineStore } from '@/stores/dayroutine';
 import {ref} from 'vue'
 import axios from 'axios';
-const dayroutineStore = useDayroutineStore()
-onMounted(()=> dayroutineStore.getTodos())
+
+const props = defineProps(['store', 'isSystemroutine'])
+
+onMounted(()=> props.store.getTodos())
 
 const isEditing = ref(false)
 const currentTodoId = ref()
 const editText = ref('')
 
 function startEditing(id:number, text:string){
+  if(props.isSystemroutine){
+    return
+  }
   isEditing.value = true
   currentTodoId.value = id
   editText.value = text
@@ -34,7 +38,7 @@ function startEditing(id:number, text:string){
 
 async function saveTodo(id:number){
   // Edit content in the frontend
-  const todo = dayroutineStore.todos.find(todo => todo.id === id)
+  const todo = props.store.todos.find(todo => todo.id === id)
   if(todo){
     todo.text = editText.value
   }
@@ -52,7 +56,6 @@ async function saveTodo(id:number){
   } catch (error){
     console.error(error)
   }
-
 }
 
 </script>

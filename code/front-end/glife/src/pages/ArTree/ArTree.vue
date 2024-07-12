@@ -2,7 +2,9 @@
     <div class="ar-container">
         <el-container>
           <el-main><div class="background-image-container"><img :src="treeImageSrc" /></div></el-main>
-          <el-footer><el-button  @click="handleClick"><h2>Plant</h2></el-button></el-footer>
+          <!-- <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer> -->
+          <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
+        </el-container>
       </el-container>
     </div>
 </template>
@@ -11,10 +13,11 @@
 import { ref, computed, onMounted } from 'vue';
 import { ElMessage } from 'element-plus'
 import { fetchTreePoints, fetchCanPlantTree, updateTreeImage } from "@/stores/treepoints";
+import router from '@/router';
 
 // define the response data
 const treeImageSrc = ref<string>('');
-const treePoints = ref<number | null>(null);
+let treePoints = ref<number | null>(null);
 const canPlantTree = ref<boolean | null>(null);
 
 // fetch the data
@@ -31,21 +34,29 @@ onMounted(async () => {
 const isDisabled = computed(() => !canPlantTree.value);
 
 // handle click
+// const handleClick = () => {
+//   if (!isDisabled.value) {
+//     ElMessage({
+//       message: 'You have to finish the day routine to get the chance',
+//       type: 'warning',
+//     });
+//   } else {
+//     ElMessage({
+//       message: 'Congratulations! Now you can plant your tree!',
+//       type: 'success',
+//     });
+//     router.push({
+//       name:'artree-camera'
+//     })
+//   }
+// };
+
 const handleClick = () => {
-  if (!isDisabled.value) {
-    ElMessage({
-      message: 'You have to finish the day routine to get the chance',
-      type: 'warning',
-    });
-  } else {
-    ElMessage({
-      message: 'Congratulations! Now you can plant your tree!',
-      type: 'success',
-    });
-    setTimeout(() => {
-      window.location.href = 'https://jiebristol.github.io/89';
-    }, 1500);
-  }
+  
+    router.push({
+      name:'artree-camera'
+    })
+  
 };
 </script>
 

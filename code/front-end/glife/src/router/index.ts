@@ -10,6 +10,7 @@ import NotFoundPage from "@/pages/NotFoundPage.vue";
 import InitPage from "@/pages/InitPage.vue";
 import Setting from "@/pages/Setting.vue";
 import BadgeSystem from "@/pages/ArTree/BadgeSystem.vue";
+import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
 import { useUserInfoStore } from '@/stores/userInfo'
 import { protectedPaths } from './protectedPaths'
 
@@ -31,12 +32,18 @@ const router = createRouter({
                     path:'chatwindow',
                     component:ChatWindow
                 },
-                
-        {
-            name:'artree',
-            path:'/artree',
-            component:ArTree
-        },
+                {
+                    name:'artree',
+                    path:'artree',
+                    component:ArTree,
+                    children:[
+                        {
+                            name:'artree-camera',
+                            path:'artree-camera',
+                            component:ARTreeCamera
+                        }
+                    ]
+                },
                 {
                     name:'dayroutine',
                     path:'dayroutine',
