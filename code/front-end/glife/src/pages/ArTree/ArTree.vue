@@ -71,12 +71,14 @@ const handleClick = () => {
 @media (min-width: 601px) {
   .background-image-container{
     display: flex;
+    align-items: center;
     background-color: white;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-width: 30vw;
-    min-height: 70vh;
+    width: 30vw;
+    height: 70vh;
+
     font-size: 2rem;
     border-radius: 1rem;
   }
@@ -85,13 +87,14 @@ const handleClick = () => {
   .background-image-container{
     display: flex;
     background-image: 'url($(treeImageSrc.value))';
-    background-size: 100% 100%;
+    background-size: 50% 50%;
     background-color: white;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-width: 80vw;
+    min-width: 60vw;
     min-height: 70vh;
+
     font-size: 2rem;
     border-radius: 1rem;
   }

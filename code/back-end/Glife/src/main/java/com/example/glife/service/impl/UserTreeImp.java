@@ -60,17 +60,18 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
                 if(treeCode == 8){
                     treeCode = 1;
                     userTree.setTickSum(treeCode);
+                    userTree.setTreeSum(userTree.getTreeSum()+1);
                 }else{
                     treeCode = treeCode+1;
                     userTree.setTickSum(treeCode);
                 }
-                baseMapper.insert(userTree);
+                baseMapper.updateById(userTree);
                 return R.success(treeCode);
             }else {
                 userTree = new UserTree();
                 userTree.setTickSum(1);
                 userTree.setUserid(userID);
-                baseMapper.updateById(userTree);
+                baseMapper.insert(userTree);
 
                 return R.success(userTree.getTickSum());
             }
@@ -91,6 +92,7 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
                 treeCode = userTree.getTickSum();
                 if(treeCode == 1){
                     treeCode = 8;
+                    userTree.setTreeSum(userTree.getTreeSum()-1);
                     userTree.setTickSum(treeCode);
                 }else{
                     treeCode = treeCode-1;

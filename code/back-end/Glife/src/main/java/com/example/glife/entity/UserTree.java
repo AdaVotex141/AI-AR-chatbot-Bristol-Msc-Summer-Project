@@ -17,4 +17,6 @@ public class UserTree implements Serializable {
     private Long userid;
 
     private int tickSum;
+
+    private int treeSum;
 }
