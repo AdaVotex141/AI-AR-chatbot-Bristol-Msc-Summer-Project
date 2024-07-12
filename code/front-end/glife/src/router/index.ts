@@ -31,11 +31,12 @@ const router = createRouter({
                     path:'chatwindow',
                     component:ChatWindow
                 },
-                {
-                    name:'artree',
-                    path:'artree',
-                    component:ArTree
-                },
+                
+        {
+            name:'artree',
+            path:'/artree',
+            component:ArTree
+        },
                 {
                     name:'dayroutine',
                     path:'dayroutine',
@@ -54,6 +55,7 @@ const router = createRouter({
             ],
             redirect:'/mainpage/chatwindow'
         },
+         
         {
             path:'/',
             redirect:'/login'
