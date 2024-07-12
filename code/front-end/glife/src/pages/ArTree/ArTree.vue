@@ -1,7 +1,7 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="ar-container">
         <el-container>
-          <el-main><div class="background-image-container"><img :src="treeImageSrc" /></div></el-main>
+          <el-main><div class="background-image-container"><img :src="treepointsStore.treeImageSrc" :alt="treepointsStore.treeImageAlt" /></div></el-main>
           <!-- <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer> -->
           <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
@@ -9,29 +9,20 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, computed, onMounted } from 'vue';
-import { fetchTreePoints, fetchCanPlantTree } from "@/stores/treepoints";
+import { ref, computed, onMounted, watch } from 'vue';
+import { useTreepointsStore } from "@/stores/treepoints";
 import router from '@/router';
-import { RouterView } from 'vue-router';
 
-// define the response data
-const treeImageSrc = ref<string>('');
-let treePoints = ref<number | null>(null);
-const canPlantTree = ref<boolean | null>(null);
+const treepointsStore = useTreepointsStore()
 
 // fetch the data
-onMounted(async () => {
-  const treeData = await fetchTreePoints();
-  treeImageSrc.value = treeData.treeImageSrc.value;
-  treePoints.value = treeData.treePoints.value;
-  console.log(treePoints.value,' and ', treeImageSrc.value)
-  const canPlantTreeData = await fetchCanPlantTree();
-  canPlantTree.value = canPlantTreeData.value;
-
+onMounted(() => {
+  treepointsStore.fetchCanPlantTree();
+  treepointsStore.fetchTreePoints()
 });
 
 // Is the plant tree button disabled
-const isDisabled = computed(() => !canPlantTree.value);
+const isDisabled = computed(() => !treepointsStore.canPlantTree);
 
 // handle click
 // const handleClick = () => {
