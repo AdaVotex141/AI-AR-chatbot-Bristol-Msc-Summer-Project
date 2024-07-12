@@ -25,4 +25,9 @@ public class UserTreeController {
         return service.init(request);
     }
 
+    @GetMapping("/addTreeSum")
+    public R<String> addTreeSum(HttpServletRequest request){
+        return service.plant(request);
+    }
+
 }
