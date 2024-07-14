@@ -11,8 +11,10 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@ar-js-org/ar.js": "^3.4.5",
     "@headlessui/vue": "^1.7.22",
     "@heroicons/vue": "^2.1.4",
+    "aframe": "^1.6.0",
     "axios": "^1.7.2",
     "clipboard": "^2.0.11",
     "element-plus": "^2.7.5",

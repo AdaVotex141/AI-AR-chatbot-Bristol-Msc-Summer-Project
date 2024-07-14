@@ -11,6 +11,16 @@
 import { ref, onMounted } from 'vue';
 
 export default {
+  async mounted() {
+    try {
+      console.log('A-Frame and AR.js scripts loading...');
+      await import('aframe');
+      await import('@ar-js-org/ar.js/aframe/build/aframe-ar.js');
+      console.log('A-Frame and AR.js scripts loaded.');
+    } catch (error) {
+      console.error('Error during mounted hook:', error);
+    }
+  },
   setup() {
     const ws = new WebSocket("ws://localhost:8080/ARtree");
     let latitude = ref(null);
@@ -18,7 +28,7 @@ export default {
     let avClicks = ref(5);
     let buttonColor = ref('green');
 
-    const getLocation = () => {
+    function getLocation(){
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
       } else {
@@ -26,12 +36,12 @@ export default {
       }
     };
 
-    const showPosition = (position) => {
+    function showPosition(position){
       latitude.value = position.coords.latitude;
       longitude.value = position.coords.longitude;
     };
 
-    const sendCurrentLocation = () => {
+    function sendCurrentLocation(){
       const message = JSON.stringify({
         type: 'current-location',
         latitude: latitude.value.toFixed(6),
@@ -41,7 +51,7 @@ export default {
       console.log('Sent:', message);
     };
 
-    const planTree = () => {
+    function planTree() {
       getLocation();
       if (avClicks.value !== 0) {
         avClicks.value--;
