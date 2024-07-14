@@ -52,13 +52,18 @@ const router = createRouter({
                     path:'mybadge',
                     component: BadgeSystem
                 },
-                {
-                    name:'artree-camera',
-                    path:'artree-camera',
-                    component:ARTreeCamera
-                }
+                // {
+                //     name:'artree-camera',
+                //     path:'artree-camera',
+                //     component: ARTreeCamera
+                // }
             ],
             redirect:'/mainpage/chatwindow'
+        },
+        {
+            name:'artree-camera',
+            path:'/artree-camera',
+            component: ARTreeCamera
         },
         {
             path:'/',

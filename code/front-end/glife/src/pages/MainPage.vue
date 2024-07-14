@@ -1,6 +1,7 @@
 <template>
     <div class="common-layout">
       <el-container>
+        <!-- Navigate bar -->
         <el-header>
         <el-menu
             v-if="isDesktop"
@@ -33,6 +34,7 @@
         </el-menu>
           <MobileMenu v-else />
         </el-header>
+        <!-- Maincontent -->
         <el-main class="main-content">
           <RouterView></RouterView>
         </el-main>
