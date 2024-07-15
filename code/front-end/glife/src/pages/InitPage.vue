@@ -7,7 +7,7 @@
         <p class="mt-6 text-lg leading-8 text-gray-600 font-bold">Glife is a website aimed at helping people live more sustainably and in an environmentally friendly way.</p>
         <button id="loginButton" @click="gotoLogin" type="button" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Getting started with Glife!</button>
       </div>
-      <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+      <div class="mx-auto mt-16 max-w-2xl sm:mt-12 lg:mt-16 lg:max-w-4xl">
         <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
           <div @click="handleFeatureClick(feature)" v-for="feature in features" :key="feature.name" class="relative pl-16 rounded-lg hover:bg-gray-300" >
             <dt class="text-base font-semibold leading-7 text-gray-900">
