@@ -1,11 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="!ARCameraStore.isCameraActivated">
     <RouterView></RouterView>
+  </div>
+  <div v-else>
+  
   </div>
 </template>
 
 <script setup lang="ts" name="App">
   import { RouterView } from 'vue-router';
+  import { useARCameraStore } from './stores/arcamera';
+  const ARCameraStore = useARCameraStore()
 </script>
 
 <style>
