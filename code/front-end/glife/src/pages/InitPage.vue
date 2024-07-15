@@ -58,7 +58,7 @@ const features = [
     description:
         'You can find all badges you got.',
     icon: ArrowLongRightIcon,
-    router: 'logout',
+    router: 'mybadge',
   },
 ]
   function handleFeatureClick(feature) {
