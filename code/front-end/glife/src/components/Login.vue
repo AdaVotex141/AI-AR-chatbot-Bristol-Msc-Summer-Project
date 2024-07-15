@@ -28,6 +28,11 @@
       </el-form>
     </el-main>
   </el-container>
+  <label class="inline-flex items-center mb-5 cursor-pointer">
+    <input type="checkbox" @click="gotoAdmin" class="sr-only peer">
+    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ switchMessage }}</span>
+  </label>
 </template>
 
 <script lang="ts" setup>
@@ -38,6 +43,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 const userInfoStore = useUserInfoStore()
+const switchMessage = ref('Toggle me to go to admin')
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -110,7 +116,12 @@ async function login(ruleFormRef: FormInstance | undefined){
       }
     }
   })
-    
+}
+
+function gotoAdmin(){
+  router.replace({
+    name:'admin-login'
+  })
 }
 </script>
 
