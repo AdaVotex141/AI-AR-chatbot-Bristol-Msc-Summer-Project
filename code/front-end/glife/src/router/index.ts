@@ -13,7 +13,6 @@ import BadgeSystem from "@/pages/ArTree/BadgeSystem.vue";
 import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
 import { useUserInfoStore } from '@/stores/userInfo'
 import { protectedPaths } from './protectedPaths'
-import AdminLogin from '@/pages/AdminLogin.vue'
 
 //create router
 const router = createRouter({
@@ -80,11 +79,6 @@ const router = createRouter({
             name:'logout',
             path:'/login',
             component:LoginRegister
-        },
-        {
-            name:'admin-login',
-            path:'/admin-login',
-            component:AdminLogin
         },
         {
             name:'startpage',

@@ -22,17 +22,15 @@
                   Click here to register
               </el-link>
           </el-form-item>
+          <el-form-item >
+            <el-switch active-text="Admin" inactive-text="User" v-model="formLabelAlign.isAdmin" />
+          </el-form-item>
           <el-form-item>
               <el-button type="primary" class="center" @click="login(ruleFormRef)">Login</el-button>
           </el-form-item>
       </el-form>
     </el-main>
   </el-container>
-  <label class="inline-flex items-center mb-5 cursor-pointer">
-    <input type="checkbox" @click="gotoAdmin" class="sr-only peer">
-    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ switchMessage }}</span>
-  </label>
 </template>
 
 <script lang="ts" setup>
@@ -43,13 +41,14 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 const userInfoStore = useUserInfoStore()
-const switchMessage = ref('Toggle me to go to admin')
+const switchMessage = ref('Toggle me to go to admin login')
 
 const ruleFormRef = ref<FormInstance>()
 
 const formLabelAlign = reactive({
     username: '',
     password: '',
+    isAdmin: false
 })
 
 const rules = reactive({
@@ -81,8 +80,18 @@ async function login(ruleFormRef: FormInstance | undefined){
         type: 'warning'
       })
     } else {
+      // Choose login methods according to the switch statement
+      let apiPath = ''
+      let nextPageName = ''
+      if(!formLabelAlign.isAdmin){
+        apiPath = '/api/login'
+        nextPageName = 'startpage'
+      } else {
+        apiPath = '/api/login' // TODO: change the api request path
+        nextPageName = 'adminpage'
+      }
       try{
-        const response = await axios.post('/api/login',{
+        const response = await axios.post(apiPath,{
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
@@ -96,7 +105,7 @@ async function login(ruleFormRef: FormInstance | undefined){
             type: 'success'
           })
           router.push({
-            name:'startpage'
+            name: nextPageName
           })
           // Change the user info
           userInfoStore.login(formLabelAlign.username)
@@ -108,21 +117,16 @@ async function login(ruleFormRef: FormInstance | undefined){
           formLabelAlign.password = ''
         }
       } catch (error){
-          console.error('Error sending data:', error)
-          alert('Error sending data')
-          router.push({
-            name:'notfound'
-          })
+        console.error('Error sending data:', error)
+        alert('Error sending data')
+        router.push({
+          name:'notfound'
+        })
       }
     }
   })
 }
 
-function gotoAdmin(){
-  router.replace({
-    name:'admin-login'
-  })
-}
 </script>
 
 <style scoped>

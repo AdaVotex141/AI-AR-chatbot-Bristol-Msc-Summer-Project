@@ -6,7 +6,6 @@
 <script lang='ts' setup>
 import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
-import AdminLogin from '@/pages/AdminLogin.vue'
 import { ref } from 'vue';
 
 const showLogin = ref(true)

@@ -20,6 +20,7 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElText: typeof import('element-plus/es')['ElText']
     FormItem: typeof import('./src/components/FormItem.vue')['default']
     InitialChatWindow: typeof import('./src/components/InitialChatWindow.vue')['default']
