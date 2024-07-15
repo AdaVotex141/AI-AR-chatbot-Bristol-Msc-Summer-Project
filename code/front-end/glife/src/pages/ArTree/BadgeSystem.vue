@@ -41,11 +41,9 @@
 }
 @media(max-width: 600px) {
   .main-container {
-    margin-top: 2.5rem;
+    margin: 0 auto;
     width: 100vw;
     height: 90vh;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 

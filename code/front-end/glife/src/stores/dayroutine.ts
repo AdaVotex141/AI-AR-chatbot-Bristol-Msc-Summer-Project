@@ -91,7 +91,6 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
     };
 
     async function changeCompletedStatus(id:number){
-        console.log('chufa')
         // Sending api request to the backend
         try{
             const response = await axios.post('/api/routine/tick', id, {
@@ -108,8 +107,6 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
             router.push({name:'notfound'});
         }
     }
-
-    
 
     return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 

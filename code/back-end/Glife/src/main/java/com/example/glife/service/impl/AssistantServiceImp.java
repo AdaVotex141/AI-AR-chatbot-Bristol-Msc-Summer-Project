@@ -196,41 +196,4 @@ public class AssistantServiceImp implements AssistantService {
         return "0";
     }
 
-
-    // for test only
-    public static void main(String[] args) {
-        //test init
-        IamAuthenticator authenticator = new IamAuthenticator("S4m5c3m1vdnSy0WKlEHwbTndaAxqZBKcKiDDTAIKbuO5");
-        Assistant assistant = new Assistant("2023-06-15", authenticator);
-        assistant.setServiceUrl("https://api.eu-gb.assistant.watson.cloud.ibm.com");
-
-        // create session
-        CreateSessionOptions createSessionOptions = new CreateSessionOptions
-                .Builder("f450d030-5b09-4c55-94b3-59f66c4088cb")
-                .build();
-        SessionResponse sessionResponse = assistant.createSession(createSessionOptions).execute().getResult();
-        String sessionId = sessionResponse.getSessionId();
-        System.out.print("sessionID:"+sessionId+"\n");
-
-        //test input
-        MessageInput input = new MessageInput.Builder()
-                .messageType("text")
-                .text("suggestion food")
-                .build();
-
-        MessageOptions options = new MessageOptions.Builder("f450d030-5b09-4c55-94b3-59f66c4088cb", sessionId)
-                .input(input)
-                .build();
-        StatefulMessageResponse response = assistant.message(options).execute().getResult();
-        System.out.print("response"+response);
-
-        //close session
-     /*   if (sessionId != null) {
-            assistant.deleteSession(new DeleteSessionOptions.Builder("f450d030-5b09-4c55-94b3-59f66c4088cb", sessionId).build()).execute();
-            sessionId = null;
-            //log.info("Session closed successfully.");
-        }*/
-
-
-    }
 }

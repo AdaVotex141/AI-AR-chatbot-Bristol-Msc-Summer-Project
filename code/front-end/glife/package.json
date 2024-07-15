@@ -11,14 +11,21 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@ar-js-org/ar.js": "^3.4.5",
     "@headlessui/vue": "^1.7.22",
     "@heroicons/vue": "^2.1.4",
+    "aframe": "^1.6.0",
+    "aframe-ar": "^0.2.1-a",
     "axios": "^1.7.2",
+    "clipboard": "^2.0.11",
     "element-plus": "^2.7.5",
+    "leaflet": "^1.9.4",
     "pinia": "^2.1.7",
     "vite-plugin": "^0.0.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.3"
+    "vue-cookies": "^1.8.4",
+    "vue-router": "^4.3.3",
+    "vue-websocket": "^0.2.3"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

@@ -10,6 +10,9 @@ import NotFoundPage from "@/pages/NotFoundPage.vue";
 import InitPage from "@/pages/InitPage.vue";
 import Setting from "@/pages/Setting.vue";
 import BadgeSystem from "@/pages/ArTree/BadgeSystem.vue";
+import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
+import { useUserInfoStore } from '@/stores/userInfo'
+import { protectedPaths } from './protectedPaths'
 
 //create router
 const router = createRouter({
@@ -32,7 +35,7 @@ const router = createRouter({
                 {
                     name:'artree',
                     path:'artree',
-                    component:ArTree
+                    component:ArTree,
                 },
                 {
                     name:'dayroutine',
@@ -48,9 +51,19 @@ const router = createRouter({
                     name:'mybadge',
                     path:'mybadge',
                     component: BadgeSystem
-                }
+                },
+                // {
+                //     name:'artree-camera',
+                //     path:'artree-camera',
+                //     component: ARTreeCamera
+                // }
             ],
             redirect:'/mainpage/chatwindow'
+        },
+        {
+            name:'artree-camera',
+            path:'/artree-camera',
+            component: ARTreeCamera
         },
         {
             path:'/',
@@ -72,6 +85,17 @@ const router = createRouter({
             component: InitPage
         }
     ]
+})
+
+router.beforeEach((to, from, next)=>{
+    const userInfoStore = useUserInfoStore()
+    // Check if the path is protected or not, using the protectedPaths.ts file
+    const isProtected = protectedPaths.some(path => to.path.startsWith(path))
+    if(isProtected && !userInfoStore.isAuthenticated){
+        next('/login')
+    } else {
+        next()
+    }
 })
 
 //export router

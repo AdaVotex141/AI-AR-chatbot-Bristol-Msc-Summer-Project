@@ -17,6 +17,7 @@ html, body {
   background-color: #e8e8e8;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
 }
 
 #app {
