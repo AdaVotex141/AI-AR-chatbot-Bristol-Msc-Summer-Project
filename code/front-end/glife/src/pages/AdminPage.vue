@@ -14,23 +14,13 @@
             text-color="white"
             active-text-color="black"
         >
-          <el-menu-item index="/welcome">
-            <div class="title" @click="navigateTo('startpage')">Glife</div>
+          <el-menu-item index="/admin">
+            <div class="title" @click="navigateTo('admin')">Glife Admin</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Chat</el-menu-item>
-          <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Routine</el-menu-item>
-          <el-sub-menu index="3">
-            <template #title>ARTree</template>
-            <el-menu-item index="/mainpage/artree" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
-            <el-menu-item index="/mainpage/badge" @click="navigateTo('mybadge')">My Badge</el-menu-item>
-            <el-menu-item index="/mainpage/share" @click="navigateTo('notfound')">Share VR Tree</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="10">
-            <template #title>Profile</template>
-            <el-menu-item index="/mainpage/setting" @click="navigateTo('setting')">Setting</el-menu-item>
-            <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
-          </el-sub-menu>
+          <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Tasks</el-menu-item>
+          <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Management</el-menu-item>
+          <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
         </el-menu>
           <MobileMenu v-else />
         </el-header>

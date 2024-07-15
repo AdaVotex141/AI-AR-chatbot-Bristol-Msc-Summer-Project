@@ -88,7 +88,7 @@ async function login(ruleFormRef: FormInstance | undefined){
         nextPageName = 'startpage'
       } else {
         apiPath = '/api/login' // TODO: change the api request path
-        nextPageName = 'adminpage'
+        nextPageName = 'admin'
       }
       try{
         const response = await axios.post(apiPath,{
