@@ -45,14 +45,14 @@ const features = [
   {
     name: 'Plant AR tree',
     description:
-        'You can plant some AR tree,look all badges you got, and share your AR tree in here.',
+        'You can plant some AR tree and share your AR tree in here.',
     icon: ArrowLongDownIcon,
     router: 'artree',
   },
   {
-    name: 'Log out',
+    name: 'My Badges',
     description:
-        'See you again soon! We are looking forward to your next login!',
+        'You can find all badges you got.',
     icon: ArrowLongRightIcon,
     router: 'logout',
   },
