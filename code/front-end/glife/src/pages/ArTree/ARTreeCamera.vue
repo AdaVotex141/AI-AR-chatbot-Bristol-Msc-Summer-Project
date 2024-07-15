@@ -9,8 +9,30 @@
 
 <script>
 import { ref, onMounted } from 'vue';
+import VueWs from 'vue-websocket';
 
 export default {
+  mixins:[VueWs],
+  created() {
+    this.connect("ws://localhost:8040");
+  },
+  data(){
+    return{
+      message:""
+    }
+  },
+  methods:{
+    handleDate(data){
+      console.log(data);
+    },
+    sendMessage(){
+      this.send("hello,word");
+    },
+    closeConnection(){
+      this.close()
+    }
+
+  },
   async mounted() {
     try {
       console.log('A-Frame and AR.js scripts loading...');
@@ -22,7 +44,6 @@ export default {
     }
   },
   setup() {
-    const ws = new WebSocket("ws://localhost:8080/ARtree");
     let latitude = ref(null);
     let longitude = ref(null);
     let avClicks = ref(5);
@@ -34,22 +55,13 @@ export default {
       } else {
         console.error("Geolocation is not supported by this browser.");
       }
-    };
+    }
+
 
     function showPosition(position){
       latitude.value = position.coords.latitude;
       longitude.value = position.coords.longitude;
-    };
-
-    function sendCurrentLocation(){
-      const message = JSON.stringify({
-        type: 'current-location',
-        latitude: latitude.value.toFixed(6),
-        longitude: longitude.value.toFixed(6)
-      });
-      ws.send(message);
-      console.log('Sent:', message);
-    };
+    }
 
     function planTree() {
       getLocation();
@@ -63,18 +75,11 @@ export default {
         newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
         scene.appendChild(newEntity);
         document.getElementById("myButton").value = `Plan Tree remaining times: ${avClicks.value}`;
-        const message = JSON.stringify({
-          type: 'plant-location',
-          latitude: latitude.value + 0.00001,
-          longitude: longitude.value + 0.00001
-        });
-        ws.send(message);
       }
       if (avClicks.value === 0) {
         buttonColor.value = 'grey';
       }
-    };
-
+    }
     onMounted(() => {
       getLocation();
       document.getElementById("myButton").value = `Plan Tree remaining times: ${avClicks.value}`;
