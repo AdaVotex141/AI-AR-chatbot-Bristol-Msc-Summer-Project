@@ -22,6 +22,9 @@
                   Click here to register
               </el-link>
           </el-form-item>
+          <el-form-item >
+            <el-switch active-text="Admin" inactive-text="User" v-model="formLabelAlign.isAdmin" />
+          </el-form-item>
           <el-form-item>
               <el-button type="primary" class="center" @click="login(ruleFormRef)">Login</el-button>
           </el-form-item>
@@ -38,12 +41,14 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 const userInfoStore = useUserInfoStore()
+const switchMessage = ref('Toggle me to go to admin login')
 
 const ruleFormRef = ref<FormInstance>()
 
 const formLabelAlign = reactive({
     username: '',
     password: '',
+    isAdmin: false
 })
 
 const rules = reactive({
@@ -75,8 +80,18 @@ async function login(ruleFormRef: FormInstance | undefined){
         type: 'warning'
       })
     } else {
+      // Choose login methods according to the switch statement
+      let apiPath = ''
+      let nextPageName = ''
+      if(!formLabelAlign.isAdmin){
+        apiPath = '/api/login'
+        nextPageName = 'startpage'
+      } else {
+        apiPath = '/api/admin/login' // TODO: change the api request path
+        nextPageName = 'admin'
+      }
       try{
-        const response = await axios.post('/api/login',{
+        const response = await axios.post(apiPath,{
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
@@ -90,7 +105,7 @@ async function login(ruleFormRef: FormInstance | undefined){
             type: 'success'
           })
           router.push({
-            name:'startpage'
+            name: nextPageName
           })
           // Change the user info
           userInfoStore.login(formLabelAlign.username)
@@ -102,16 +117,16 @@ async function login(ruleFormRef: FormInstance | undefined){
           formLabelAlign.password = ''
         }
       } catch (error){
-          console.error('Error sending data:', error)
-          alert('Error sending data')
-          router.push({
-            name:'notfound'
-          })
+        console.error('Error sending data:', error)
+        alert('Error sending data')
+        router.push({
+          name:'notfound'
+        })
       }
     }
   })
-    
 }
+
 </script>
 
 <style scoped>
