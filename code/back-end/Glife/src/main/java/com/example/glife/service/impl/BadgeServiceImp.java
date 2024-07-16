@@ -1,6 +1,7 @@
 package com.example.glife.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.glife.common.R;
 import com.example.glife.entity.Badge;
 import com.example.glife.mapper.BadgeMapper;
 import com.example.glife.service.BadgeService;
@@ -12,23 +13,34 @@ import java.util.List;
 public class BadgeServiceImp extends ServiceImpl<BadgeMapper, Badge> implements BadgeService {
 
     @Override
-    public List<Badge> getAllBadges() {
-        return list();
+    public R<List<Badge>> getAllBadges() {
+        List<Badge> badges = list();
+        return R.success(badges);
     }
 
     @Override
-    public Badge getBadgeById(Long id) {
-        return getById(id);
+    public R<Badge> getBadgeById(Long id) {
+        Badge badge = getById(id);
+        if (badge != null) {
+            return R.success(badge);
+        } else {
+            return R.error("Badge not found");
+        }
     }
 
     @Override
-    public Badge createBadge(Badge badge) {
+    public R<Badge> createBadge(Badge badge) {
         save(badge);
-        return badge;
+        return R.success(badge);
     }
 
     @Override
-    public void deleteBadge(Long id) {
-        removeById(id);
+    public R<String> deleteBadge(Long id) {
+        boolean success = removeById(id);
+        if (success) {
+            return R.success("Badge deleted successfully");
+        } else {
+            return R.error("Failed to delete badge");
+        }
     }
 }

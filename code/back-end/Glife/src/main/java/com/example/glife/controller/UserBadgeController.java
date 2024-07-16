@@ -1,5 +1,6 @@
 package com.example.glife.controller;
 
+import com.example.glife.common.R;
 import com.example.glife.entity.UserBadge;
 import com.example.glife.service.UserBadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,17 @@ public class UserBadgeController {
     private UserBadgeService userBadgeService;
 
     @GetMapping("/user/{userId}")
-    public List<UserBadge> getUserBadges(@PathVariable Long userId) {
+    public R<List<UserBadge>> getUserBadges(@PathVariable Long userId) {
         return userBadgeService.getUserBadgesByUserId(userId);
     }
 
     @PostMapping
-    public UserBadge addUserBadge(@RequestBody UserBadge userBadge) {
+    public R<UserBadge> addUserBadge(@RequestBody UserBadge userBadge) {
         return userBadgeService.addUserBadge(userBadge);
     }
 
     @DeleteMapping("/user/{userId}/badge/{badgeId}")
-    public void deleteUserBadge(@PathVariable Long userId, @PathVariable Long badgeId) {
-        userBadgeService.deleteUserBadge(userId, badgeId);
+    public R<String> deleteUserBadge(@PathVariable Long userId, @PathVariable Long badgeId) {
+        return userBadgeService.deleteUserBadge(userId, badgeId);
     }
 }
