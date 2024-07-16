@@ -18,8 +18,8 @@
             <div class="title" @click="navigateTo('admin')">Glife Admin</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Tasks</el-menu-item>
-          <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Management</el-menu-item>
+          <el-menu-item index="/admin/task" @click="navigateTo('task')">Tasks</el-menu-item>
+          <el-menu-item index="/admin/adminlist" @click="navigateTo('adminlist')">Management</el-menu-item>
           <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
         </el-menu>
           <MobileMenu v-else />
@@ -105,8 +105,10 @@
 }
 .main-content{
   display: flex;
-  max-height: 100vh;
+  max-height: calc(100vh - 4rem); 
   max-width: 100vw;
+  padding-top: 4rem;
+  justify-content: center;
 }
 .title{
   font-weight: bold;
@@ -122,9 +124,8 @@
   position: fixed;
   top:0;
   z-index: 101;
+  height: 4rem; 
 }
-
-
 
 .flex-grow {
   flex-grow: 1;

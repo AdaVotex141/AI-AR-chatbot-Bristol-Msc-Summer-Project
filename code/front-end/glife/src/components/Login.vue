@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container :class="{'admin-background': formLabelAlign.isAdmin}">
     <el-header class="title">LOG IN</el-header>
     <div style="margin: 10px" />
     <el-main>
@@ -17,17 +17,15 @@
               <el-input v-model="formLabelAlign.password" type="password" show-password/>
           </el-form-item>
           <el-form-item class="tip-message">
-              Don't have an account? 
-              <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
+              {{tipMessage}}
+              <el-link v-show="!formLabelAlign.isAdmin" type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
                   Click here to register
               </el-link>
           </el-form-item>
           <el-form-item >
-            <el-switch active-text="Admin" inactive-text="User" v-model="formLabelAlign.isAdmin" />
-          </el-form-item>
-          <el-form-item>
               <el-button type="primary" class="center" @click="login(ruleFormRef)">Login</el-button>
           </el-form-item>
+          <el-switch class="center-switch" active-text="Admin" inactive-text="User" v-model="formLabelAlign.isAdmin" />       
       </el-form>
     </el-main>
   </el-container>
@@ -37,11 +35,10 @@
 import { useUserInfoStore } from '@/stores/userInfo';
 import axios from 'axios';
 import { ElMessage, type FormInstance } from 'element-plus';
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 const userInfoStore = useUserInfoStore()
-const switchMessage = ref('Toggle me to go to admin login')
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -49,6 +46,10 @@ const formLabelAlign = reactive({
     username: '',
     password: '',
     isAdmin: false
+})
+
+const tipMessage = computed(()=>{
+  return formLabelAlign.isAdmin ? 'Welcome to glife admin system. Please log in.' : 'Don\'t have an account?'
 })
 
 const rules = reactive({
@@ -177,5 +178,15 @@ body{
 .el-button.center:hover {
   background-color:darkseagreen;
   color: #fff;
+}
+
+.center-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-background {
+  background-color: #f5f5dc;
 }
 </style>
