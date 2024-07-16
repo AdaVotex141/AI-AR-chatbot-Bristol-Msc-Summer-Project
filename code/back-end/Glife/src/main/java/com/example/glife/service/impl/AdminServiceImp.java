@@ -43,7 +43,7 @@ public class AdminServiceImp extends ServiceImpl<AdminMapper, Admin> implements 
         Admin foundAdmin = getOne(lambdaQueryWrapper);
 
         if (foundAdmin == null) {
-            return R.error("username not existed");
+            return R.error("This user has no permission to enter admin system.");
         }
         if(!passwordEncoder.matchPassword(inputPassword, foundAdmin.getPassword())){
             return R.error("password wrong");
@@ -98,8 +98,7 @@ public class AdminServiceImp extends ServiceImpl<AdminMapper, Admin> implements 
         }
 
         if (foundAdmin != null) {
-            foundAdmin.setPermission(foundAdmin.getPermission() == 1 ? 0 : 1);
-            baseMapper.updateById(foundAdmin);
+            baseMapper.deleteById(foundAdmin);
             return R.success("Change permission success");
         } else {
             return R.error("Admin not found");

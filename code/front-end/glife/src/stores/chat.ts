@@ -28,7 +28,7 @@ export const useChatStore = defineStore('chat',()=>{
     }
 
     async function handleSendMessage(message:string){
-        // TODO: where should I put this function in?
+        // Turn off the initial window
         setIsInitialWindowToFalse()
         
         // Show the message on the window
