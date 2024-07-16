@@ -1,6 +1,7 @@
 package com.example.glife.service;
 
 import com.example.glife.common.R;
+import com.example.glife.entity.RandomTask;
 import com.example.glife.entity.SystemRoutine;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,9 @@ public interface SystemRoutineService {
 
     public R<String> addFromAssistant(HttpServletRequest request, int schedule);
 
-    public R<String> addFromRandomTask(HttpServletRequest request, String content);
+    public R<String> addFromRandomTask(HttpServletRequest request, RandomTask randomTask);
 
     public R<String> updateSchedule(HttpServletRequest request, SystemRoutine systemRoutine);
-
 
     public void resetDaily();
 

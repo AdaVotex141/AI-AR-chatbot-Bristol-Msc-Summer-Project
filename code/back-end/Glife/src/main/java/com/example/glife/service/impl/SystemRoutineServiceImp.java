@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.R;
 import com.example.glife.common.RedisConstants;
+import com.example.glife.entity.RandomTask;
 import com.example.glife.entity.Routine;
 import com.example.glife.entity.SystemRoutine;
 import com.example.glife.entity.User;
@@ -188,12 +189,22 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     /**
      * TODO
      * @param request
-     * @param content
+     * @param randomTask
      * @return
      */
-    public R<String> addFromRandomTask(HttpServletRequest request, String content){
+    public R<String> addFromRandomTask(HttpServletRequest request, RandomTask randomTask){
+        Long userId = getUserID(request);
+        SystemRoutine systemRoutine = new SystemRoutine();
+        systemRoutine.setUserid(userId);
+        systemRoutine.setType(1);
+        systemRoutine.setSchedule(randomTask.getShedule());
+        systemRoutine.setContent(randomTask.getContent());
+        systemRoutine.setTick(0);
+        systemRoutine.setCreateTime(LocalDateTime.now());
 
-        return null;
+
+        baseMapper.insert(systemRoutine);
+        return R.success("add successfully");
     }
 
     /**
@@ -210,7 +221,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     /**
      * reset the routine weekly in GMT 0:00
      */
-    @Scheduled(cron = "0 0 * * *", zone = "GMT")
+    @Scheduled(cron = "0 0 * * 0", zone = "GMT")
     public void resetWeekly() {
         LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(SystemRoutine::getType, 1)
@@ -220,7 +231,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     /**
      * reset the routine monthly in GMT 0:00
      */
-    @Scheduled(cron = "0 0 * * *",zone = "GMT")
+    @Scheduled(cron = "0 0 0 1 * *",zone = "GMT")
     public void resetMonthly(){
         LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(SystemRoutine::getType, 2)
