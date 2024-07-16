@@ -2,6 +2,7 @@ package com.example.glife.common;
 
 import com.alibaba.fastjson.JSON;
 import com.example.glife.common.PasswordEncoder;
+import com.example.glife.entity.Admin;
 import com.example.glife.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,13 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
+        Admin admin = AdminHolder.getAdmin();
+        if(admin != null){
+            log.info("admin has logged in, -------pass-------");
+            filterChain.doFilter(request,response) ;
+            return;
+        }
+
         response.getWriter().write((JSON.toJSONString(R.error("NOTLOGIN"))));
         String contextPath = request.getContextPath();
         response.sendRedirect(contextPath + "/index.html");
@@ -75,7 +83,8 @@ public class LoginCheckFilter implements Filter {
                 "/sendCode",
                 "/routine/**",
                 "/assistant/**",
-                "/system_routine/**"
+                "/system_routine/**",
+                "/admin/**"
         };
         for(String url: urls){
             if(PATH_MATCHER.match(url,requestURI)){

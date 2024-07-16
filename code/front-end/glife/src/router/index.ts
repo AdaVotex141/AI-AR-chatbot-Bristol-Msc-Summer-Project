@@ -19,6 +19,7 @@ const router = createRouter({
     history:createWebHistory(),
     routes:[
         {
+            name:'login',
             path:'/login',
             component:LoginRegister
         },
@@ -67,7 +68,7 @@ const router = createRouter({
         },
         {
             path:'/',
-            redirect:'/login'
+            redirect:'/welcome'
         },
         {
             name: 'notfound',
