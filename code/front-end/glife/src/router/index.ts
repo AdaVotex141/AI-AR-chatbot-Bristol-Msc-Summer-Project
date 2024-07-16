@@ -14,7 +14,8 @@ import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
 import { useUserInfoStore } from '@/stores/userInfo'
 import { protectedPaths } from './protectedPaths'
 import AdminPage from '@/pages/AdminPage.vue'
-import MemberList from '@/components/MemberList.vue'
+import MemberList from '@/pages/MemberList.vue'
+import Task from '@/pages/Task.vue'
 
 //create router
 const router = createRouter({
@@ -72,6 +73,11 @@ const router = createRouter({
                     name:'adminlist',
                     path:'adminlist',
                     component: MemberList
+                },
+                {
+                    name:'task',
+                    path:'task',
+                    component: Task
                 }
             ]
         },

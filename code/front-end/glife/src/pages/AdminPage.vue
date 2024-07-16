@@ -18,7 +18,7 @@
             <div class="title" @click="navigateTo('admin')">Glife Admin</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="/admin/adminlist" @click="navigateTo('adminlist')">Tasks</el-menu-item>
+          <el-menu-item index="/admin/task" @click="navigateTo('task')">Tasks</el-menu-item>
           <el-menu-item index="/admin/adminlist" @click="navigateTo('adminlist')">Management</el-menu-item>
           <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
         </el-menu>
