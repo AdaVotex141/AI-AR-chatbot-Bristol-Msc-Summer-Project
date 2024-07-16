@@ -98,8 +98,7 @@ public class AdminServiceImp extends ServiceImpl<AdminMapper, Admin> implements 
         }
 
         if (foundAdmin != null) {
-            foundAdmin.setPermission(foundAdmin.getPermission() == 1 ? 0 : 1);
-            baseMapper.updateById(foundAdmin);
+            baseMapper.deleteById(foundAdmin);
             return R.success("Change permission success");
         } else {
             return R.error("Admin not found");

@@ -38,8 +38,8 @@ public class SystemRoutineController {
     }
 
     @PostMapping("/add-assistant")
-    public R<String> addFromAssistant(HttpServletRequest request){
-        return routineService.addFromAssistant(request);
+    public R<String> addFromAssistant(HttpServletRequest request, @RequestBody int schedule){
+        return routineService.addFromAssistant(request, schedule);
     }
 
 
@@ -47,6 +47,11 @@ public class SystemRoutineController {
     public R<String> addFromRandomTask(HttpServletRequest request, String content){
         //TODO
         return null;
+    }
+
+    @PostMapping("/update-schedule")
+    public R<String> updateSchedule(HttpServletRequest request, @RequestBody SystemRoutine systemRoutine){
+
     }
 
 

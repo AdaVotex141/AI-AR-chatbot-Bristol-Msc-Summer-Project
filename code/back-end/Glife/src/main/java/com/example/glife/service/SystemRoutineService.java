@@ -13,9 +13,16 @@ public interface SystemRoutineService {
 
     public R<SystemRoutine> tick(HttpServletRequest request, Long id);
 
-    public R<String> addFromAssistant(HttpServletRequest request);
+    public R<String> addFromAssistant(HttpServletRequest request, int schedule);
 
     public R<String> addFromRandomTask(HttpServletRequest request, String content);
 
-    public void reset();
+    public R<String> updateSchedule(HttpServletRequest request, SystemRoutine systemRoutine);
+
+
+    public void resetDaily();
+
+    public void resetWeekly();
+
+    public void resetMonthly();
 }

@@ -3,6 +3,7 @@ package com.example.glife.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -148,7 +149,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
      * @param request
      * @return
      */
-    public R<String> addFromAssistant(HttpServletRequest request){
+    public R<String> addFromAssistant(HttpServletRequest request, int schedule){
         //get selection from redis
         Long userid = assistantService.getUserID(request);
         String key =  RedisConstants.User_SELECTION+userid;
@@ -161,11 +162,27 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
         newRoutine.setContent(content);
         newRoutine.setTick(0);
         newRoutine.setCreateTime(LocalDateTime.now());
+        newRoutine.setType(0);
+        newRoutine.setSchedule(schedule);
+
         baseMapper.insert(newRoutine);
         deleteInRedis(request);
 
-
         return R.success("create routine success");
+    }
+
+    public R<String> updateSchedule(HttpServletRequest request, SystemRoutine systemRoutine){
+        LambdaQueryWrapper<SystemRoutine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(SystemRoutine::getId, systemRoutine.getId());
+        SystemRoutine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
+        if(selectRoutine == null){
+            return R.error("fail to find this routine");
+        }
+
+        selectRoutine.setSchedule(systemRoutine.getSchedule());
+        baseMapper.updateById(selectRoutine);
+
+        return R.success("update successfully");
     }
 
     /**
@@ -182,12 +199,36 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     /**
      * reset the routine everyday in GMT 0:00
      */
-    @Scheduled(cron = "0 0 * * *",zone = "GMT")
-    public void reset(){
-        UpdateWrapper<SystemRoutine> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.set("tick", 0);
+    @Scheduled(cron = "0 0 * * *", zone = "GMT")
+    public void resetDaily() {
+        LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SystemRoutine::getType, 0)
+                .set(SystemRoutine::getTick, 0);
         baseMapper.update(null, updateWrapper);
     }
+
+    /**
+     * reset the routine weekly in GMT 0:00
+     */
+    @Scheduled(cron = "0 0 * * *", zone = "GMT")
+    public void resetWeekly() {
+        LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SystemRoutine::getType, 1)
+                .set(SystemRoutine::getTick, 0);
+        baseMapper.update(null, updateWrapper);
+    }
+    /**
+     * reset the routine monthly in GMT 0:00
+     */
+    @Scheduled(cron = "0 0 * * *",zone = "GMT")
+    public void resetMonthly(){
+        LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SystemRoutine::getType, 2)
+                .set(SystemRoutine::getTick, 0);
+        baseMapper.update(null, updateWrapper);
+    }
+
+
 
     private Long getUserID(HttpServletRequest request){
         HttpSession session = request.getSession(false);
