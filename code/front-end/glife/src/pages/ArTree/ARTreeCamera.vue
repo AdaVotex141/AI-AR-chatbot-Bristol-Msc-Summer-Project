@@ -3,7 +3,7 @@
     <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false" renderer="antialias: true; alpha: true">
       <a-camera gps-new-camera="gpsMinDistance: 3"></a-camera>
     </a-scene>
-    <button id="myButton" @click="planTree">Plan tree</button>
+    <button id="myButton" @click="planTree" :style="{backgroundColor:buttonColor}">Plan tree</button>
   </div>
 </template>
 
@@ -13,6 +13,7 @@ const latitude = ref<number | null>(null);
 const longitude = ref<number | null>(null);
 let buttonColor = ref('green');
 function planTree(){
+  getLocation();
   if (latitude.value && longitude.value) {
     const scene = document.querySelector('a-scene');
     if (scene) {
@@ -56,7 +57,6 @@ onMounted(()=>{
   transform: translateX(-50%);
   padding: 15px 30px;
   font-size: 18px;
-  background-color: green;
   color: white;
   border: none;
   border-radius: 5px;
