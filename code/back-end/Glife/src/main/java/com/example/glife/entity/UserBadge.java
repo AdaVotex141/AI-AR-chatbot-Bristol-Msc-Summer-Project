@@ -2,7 +2,6 @@ package com.example.glife.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -14,12 +13,22 @@ import java.time.LocalDateTime;
 public class UserBadge implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @TableId
+    @TableField("user_id")
     private Long userId;
 
-    @TableId
+    @TableField("badge_id")
     private Long badgeId;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime earnedTime;
+
+    // Composite key class
+    public UserBadgeId getId() {
+        return new UserBadgeId(userId, badgeId);
+    }
+
+    public void setId(UserBadgeId id) {
+        this.userId = id.getUserId();
+        this.badgeId = id.getBadgeId();
+    }
 }

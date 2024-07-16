@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/badges")
+@RequestMapping("/badges")
 public class BadgeController {
 
     @Autowired
