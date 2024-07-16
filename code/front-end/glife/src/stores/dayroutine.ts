@@ -14,6 +14,12 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
     const newTodo = ref('');
     const periodOfNewToDo = ref('')
     const todos = ref<Todo[]>([]);
+    const tabs = [
+        { id: 'daily', label: 'Daily' },
+        { id: 'weekly', label: 'Weekly' },
+        { id: 'monthly', label: 'Monthly' },
+    ];
+    const activeTab = ref('daily');
     
     async function getTodos(){
         try{
@@ -111,6 +117,10 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         }
     }
 
-    return {newTodo, todos, periodOfNewToDo, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    function setActiveTab(tabId: string) {
+        activeTab.value = tabId;
+    }
+
+    return {newTodo, todos, periodOfNewToDo, tabs, activeTab, setActiveTab, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
     
