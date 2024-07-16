@@ -87,7 +87,7 @@ async function login(ruleFormRef: FormInstance | undefined){
         apiPath = '/api/login'
         nextPageName = 'startpage'
       } else {
-        apiPath = '/api/login' // TODO: change the api request path
+        apiPath = '/api/admin/login' // TODO: change the api request path
         nextPageName = 'admin'
       }
       try{

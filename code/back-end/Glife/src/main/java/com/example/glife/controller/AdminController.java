@@ -29,7 +29,7 @@ public class AdminController {
        return adminService.add(request,admin);
     }
 
-    @RequestMapping("/permission")
+    @RequestMapping("/remove")
     public R<String> changePermission(HttpServletRequest request,@RequestBody Admin admin){
         return adminService.changePermission(request, admin);
     }
