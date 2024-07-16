@@ -12,9 +12,9 @@ interface Todo{
 
 export const useDayroutineStore = defineStore('dayroutine',()=> {
     const newTodo = ref('');
+    const periodOfNewToDo = ref('')
     const todos = ref<Todo[]>([]);
     
-
     async function getTodos(){
         try{
             const response = await axios.get('/api/routine/init')
@@ -43,11 +43,14 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         if (newTodo.value.trim() !== '') {
             // Get newTodo's value and set it to empty string on the frontend
             const content = newTodo.value
-            newTodo.value = '';
+            const period = periodOfNewToDo.value
+            newTodo.value = ''
+            periodOfNewToDo.value = ''
             // Send api request and user input to backend
             try {
                 const response = await axios.post('/api/routine/add', {
-                    content: content
+                    content: content,
+                    schedule: period
                 })
                 if (String(response.data.code) === '1') {
                     ElMessage({
@@ -108,6 +111,6 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         }
     }
 
-    return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    return {newTodo, todos, periodOfNewToDo, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
     

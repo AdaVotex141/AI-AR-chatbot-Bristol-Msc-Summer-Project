@@ -5,7 +5,8 @@
     <el-main>
       <div class="user-input">
         <el-input v-model="dayroutineStore.newTodo" @keyup.enter="dayroutineStore.addTodo" placeholder="Add a new routine!" clearable />
-        <el-button type="primary" @click="dayroutineStore.addTodo">Add</el-button>
+        <!-- <el-button type="primary" @click="dayroutineStore.addTodo">Add</el-button> -->
+        <RoutineDialog />
       </div>
       <el-divider content-position="left">Your routines:</el-divider>
       <!-- RoutineList -->
@@ -19,6 +20,7 @@
 </template>
 
 <script setup lang='ts'>
+  import RoutineDialog from '@/components/RoutineDialog.vue'
   import RoutineList from '@/components/RoutineList.vue';
   import { useDayroutineStore } from '@/stores/dayroutine';
   import { useSystemroutineStore } from '@/stores/systemroutine';
@@ -55,7 +57,6 @@
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    z-index: 100;
   }
 }
 
@@ -82,9 +83,7 @@
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    position: sticky;
     top: 5%;
-    z-index: 100;
   }
 }
 
