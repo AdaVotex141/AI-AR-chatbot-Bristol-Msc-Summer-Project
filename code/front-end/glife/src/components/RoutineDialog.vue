@@ -6,7 +6,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
           <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
         </svg>
-
         Add your routine here!
       </el-button>
       <!-- Main modal -->
@@ -35,7 +34,7 @@
               </div>
               <p class="text-gray-500 dark:text-gray-400 mb-4">Select your desired routine's period:</p>
               <ul class="space-y-4 mb-4">
-                <li v-for="(period, index) in periods" :key="period.value">
+                <li v-for="period in periods" :key="period.value">
                   <input :id="period.value" name="period" type="radio" :value="period.value" class="hidden peer" v-model="dayroutineStore.periodOfNewToDo" />
                   <label :for="period.value" class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
                     <div class="block">

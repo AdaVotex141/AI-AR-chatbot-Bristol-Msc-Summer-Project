@@ -14,6 +14,7 @@ import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
 import { useUserInfoStore } from '@/stores/userInfo'
 import { protectedPaths } from './protectedPaths'
 import AdminPage from '@/pages/AdminPage.vue'
+import MemberList from '@/components/MemberList.vue'
 
 //create router
 const router = createRouter({
@@ -65,7 +66,14 @@ const router = createRouter({
         {
             name:'admin',
             path:'/admin',
-            component: AdminPage
+            component: AdminPage,
+            children:[
+                {
+                    name:'adminlist',
+                    path:'adminlist',
+                    component: MemberList
+                }
+            ]
         },
         {
             name:'artree-camera',

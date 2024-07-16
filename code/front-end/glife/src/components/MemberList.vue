@@ -1,78 +1,54 @@
 <template>
-    <div class="dashboard-container" id="member-app">
-    <div class="container">
-      <div class="tableBar">
-        <el-button
-          type="primary"
-          @click="addMemberHandle('add')"
-        >
-          + 添加员工
-        </el-button>
-      </div>
-      <el-table
-        :data="tableData"
-        stripe
-        class="tableBox"
-      >
-        <el-table-column
-          prop="username"
-          label="USERNAME"
-        ></el-table-column>
-        <el-table-column label="账号状态">
-          <template slot-scope="scope">
-            {{ String(scope.row.status) === '0' ? '已禁用' : '正常' }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="操作"
-          width="160"
-          align="center"
-        >
-          <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              class="blueBug"
-              @click="addMemberHandle(scope.row.id)"
-              :class="{notAdmin:userInfoStore.user !== 'admin'}"
-            >
-              编辑
-            </el-button>
-            <el-button
-              type="text"
-              size="small"
-              class="delBut non"
-              @click="statusHandle(scope.row)"
-              v-if="userInfoStore.user === 'admin'"
-            >
-              {{ scope.row.status == '1' ? '禁用' : '启用' }}
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <!-- Add new admin button -->
+
+    <!-- Table -->
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">Name</th>
+          <th scope="col" class="px-6 py-3">Permission</th>
+          <th scope="col" class="px-6 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="admin in filteredUsers" :key="admin.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+            <div>
+              <div class="text-base font-semibold">{{ admin.name }}</div>
+              <div class="font-normal text-gray-500">{{ admin.email }}</div>
+            </div>  
+          </th>
+          <td class="px-6 py-4">{{ admin.permission }}</td>
+          <td class="px-6 py-4">
+            <button v-show='admin.permission !== "root"' type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
+
 <script setup lang="ts">
-import { useMemberStore } from '@/stores/member';
-import { useUserInfoStore } from '@/stores/userInfo';
-import { ref } from 'vue';
+import { reactive } from 'vue';
 
-const userInfoStore = useUserInfoStore()
-const memberStore = useMemberStore()
 
-let input = ref('')
-let counts = ref(0)
-let tableData = ref([])
-let id = ref('')
-let status = ref('')
-
-async function init(){
-    
-}
-
+const filteredUsers = reactive([
+  { 
+    id: 1,
+    name: 'hxy',
+    email: 'hxy@outlook.com',
+    permission: 'Bristol'
+  },
+  { 
+    id: 2,
+    name: 'rdh',
+    email: 'rdh@gmail.com',
+    permission: 'root'
+  },
+])
 </script>
 
 <style scoped>
-    
+
 </style>
