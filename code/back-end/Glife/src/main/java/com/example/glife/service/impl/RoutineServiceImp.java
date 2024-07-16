@@ -3,11 +3,13 @@ package com.example.glife.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.R;
 import com.example.glife.common.RedisConstants;
 import com.example.glife.entity.Routine;
+import com.example.glife.entity.SystemRoutine;
 import com.example.glife.entity.User;
 import com.example.glife.mapper.RoutineMapper;
 import com.example.glife.service.AssistantService;
@@ -15,6 +17,7 @@ import com.example.glife.service.RoutineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +41,10 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
     /**
      *
      * @param request
-     * @param content
+     * @param routine
      * @return
      */
-    public R<String> add(HttpServletRequest request, String content){
+    public R<String> add(HttpServletRequest request, Routine routine){
         //get current login user
         HttpSession session = request.getSession(false);
         User user = null;
@@ -56,9 +59,12 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         //set new Routine
         Routine newRoutine = new Routine();
         newRoutine.setUserid(userid);
-        newRoutine.setContent(content);
+        newRoutine.setContent(routine.getContent());
         newRoutine.setTick(0);
         newRoutine.setCreateTime(LocalDateTime.now());
+        newRoutine.setSchedule(routine.getSchedule());
+
+
         baseMapper.insert(newRoutine);
 
         deleteInRedis(request);
@@ -74,8 +80,6 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
      */
 
     public R<Routine> update(HttpServletRequest request, Routine routine){
-        //find current line of routine
-
 
         boolean updateSuccess = updateById(routine);
         if (!updateSuccess) {
@@ -85,6 +89,20 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         deleteInRedis(request);
 
         return R.success(routine);
+    }
+
+    public R<String> updateSchedule(HttpServletRequest request, Routine routine){
+        LambdaQueryWrapper<Routine> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Routine :: getId, routine.getId());
+        Routine selectRoutine = baseMapper.selectOne(lambdaQueryWrapper);
+        if(selectRoutine == null){
+            return R.error("fail to find this routine");
+        }
+
+        selectRoutine.setSchedule(routine.getSchedule());
+        baseMapper.updateById(selectRoutine);
+
+        return R.success("update successfully");
     }
 
     /**
@@ -187,6 +205,40 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
 
         return R.success("delete success");
     }
+
+    /**
+     * Reset routine daily at GMT 00:00
+     */
+    @Scheduled(cron = "0 0 * * * *", zone = "GMT")
+    public void resetDaily() {
+        LambdaUpdateWrapper<Routine> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Routine::getSchedule, 0)
+                .set(Routine::getTick, 0);
+        baseMapper.update(null, updateWrapper);
+    }
+
+    /**
+     * Reset routine weekly on Sunday at GMT 00:00
+     */
+    @Scheduled(cron = "0 0 0 * * 0", zone = "GMT")
+    public void resetWeekly() {
+        LambdaUpdateWrapper<Routine> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Routine::getSchedule, 1)
+                .set(Routine::getTick, 0);
+        baseMapper.update(null, updateWrapper);
+    }
+    /**
+     * reset the routine monthly in GMT 0:00
+     */
+    @Scheduled(cron = "0 0 0 1 * *",zone = "GMT")
+    public void resetMonthly(){
+        LambdaUpdateWrapper<Routine> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Routine::getSchedule, 2)
+                .set(Routine::getTick, 0);
+        baseMapper.update(null, updateWrapper);
+    }
+
+
 
     private Long getUserID(HttpServletRequest request){
         HttpSession session = request.getSession(false);

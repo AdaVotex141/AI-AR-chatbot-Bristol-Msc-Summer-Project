@@ -208,23 +208,23 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     }
 
     /**
-     * reset the routine everyday in GMT 0:00
+     * Reset routine daily at GMT 00:00
      */
-    @Scheduled(cron = "0 0 * * *", zone = "GMT")
+    @Scheduled(cron = "0 0 * * * *", zone = "GMT")
     public void resetDaily() {
         LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(SystemRoutine::getType, 0)
+        updateWrapper.eq(SystemRoutine::getSchedule, 0)
                 .set(SystemRoutine::getTick, 0);
         baseMapper.update(null, updateWrapper);
     }
 
     /**
-     * reset the routine weekly in GMT 0:00
+     * Reset routine weekly on Sunday at GMT 00:00
      */
-    @Scheduled(cron = "0 0 * * 0", zone = "GMT")
+    @Scheduled(cron = "0 0 0 * * 0", zone = "GMT")
     public void resetWeekly() {
         LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(SystemRoutine::getType, 1)
+        updateWrapper.eq(SystemRoutine::getSchedule, 1)
                 .set(SystemRoutine::getTick, 0);
         baseMapper.update(null, updateWrapper);
     }
@@ -234,7 +234,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     @Scheduled(cron = "0 0 0 1 * *",zone = "GMT")
     public void resetMonthly(){
         LambdaUpdateWrapper<SystemRoutine> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(SystemRoutine::getType, 2)
+        updateWrapper.eq(SystemRoutine::getSchedule, 2)
                 .set(SystemRoutine::getTick, 0);
         baseMapper.update(null, updateWrapper);
     }

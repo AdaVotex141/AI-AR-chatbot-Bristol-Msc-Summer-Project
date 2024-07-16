@@ -51,7 +51,7 @@ public class SystemRoutineController {
 
     @PostMapping("/update-schedule")
     public R<String> updateSchedule(HttpServletRequest request, @RequestBody SystemRoutine systemRoutine){
-
+        return routineService.updateSchedule(request, systemRoutine);
     }
 
 
