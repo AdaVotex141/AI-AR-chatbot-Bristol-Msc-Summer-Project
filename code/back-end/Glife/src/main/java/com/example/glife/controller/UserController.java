@@ -55,4 +55,14 @@ public class UserController {
     public R<String> sendCode(HttpServletRequest request, @RequestBody String email) throws MessagingException {
         return userService.sendCode(request,email);
     }
+
+    @PostMapping("/getUser")
+    public R<String> getUser(HttpServletRequest request){
+
+        HttpSession httpSession = request.getSession();
+
+        User user = (User) httpSession.getAttribute("user");
+        String userId = user.getId().toString();
+        return R.success(userId);
+    }
 }

@@ -45,6 +45,7 @@ public class WsHandler extends AbstractWebSocketHandler {
         super.afterConnectionEstablished(session);
         SessionBean sessionBean=new SessionBean(session,clientID.getAndIncrement());
         sessionBeanMap.put(session.getId(),sessionBean);
+
         log.info(sessionBeanMap.get(session.getId()).getID()+":"+"connect");
     }
 
