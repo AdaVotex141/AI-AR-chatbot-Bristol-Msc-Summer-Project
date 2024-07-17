@@ -11,10 +11,13 @@
 <script setup lang="ts">
 import { ref, onMounted ,onBeforeUnmount, defineComponent} from 'vue';
 import router from "@/router";
+import { useUserInfoStore } from '@/stores/userInfo';
 const latitude = ref<number | null>(null);
 const longitude = ref<number | null>(null);
-let buttonColor = ref('green');
+const buttonColor = ref('green');
 const socket = ref<WebSocket | null>(null);
+const userName = ref('');
+const userInfoStore = useUserInfoStore()
 function planTree(){
   getLocation();
   if (latitude.value && longitude.value) {
@@ -33,7 +36,8 @@ function planTree(){
         const message = JSON.stringify({
           type: 'plant-location',
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
+          userName: userName
         });
         socket.value.send(message.toString());
         console.log("yes")
@@ -59,8 +63,10 @@ function showPosition(position:GeolocationPosition){
   longitude.value = position.coords.longitude;
 }
 onMounted(()=>{
-  socket.value=new WebSocket("ws://localhost:8040/ARtree")
   getLocation();
+  userName.value=userInfoStore.user;
+  console.log(userName.value);
+  socket.value=new WebSocket("ws://localhost:8040/ARtree")
   socket.value.onmessage = (event) => {
     const receivedMessage = JSON.parse(event.data);
   };
