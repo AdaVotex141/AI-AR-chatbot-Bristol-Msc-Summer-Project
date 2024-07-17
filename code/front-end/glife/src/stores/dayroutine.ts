@@ -33,7 +33,25 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         { id: 'monthly', label: 'Monthly' },
     ];
     const activeTab = ref('daily');
-    
+    const activeTabValue = computed(()=>{
+        switch(activeTab.value){
+            case 'daily':
+                return 0;
+            case 'weekly':
+                return 1;
+            case 'monthly':
+                return 2;
+            default:
+                return 0;
+        }
+    })
+
+    const filteredTodos = computed(()=>{
+        return todos.value
+        .filter(todo => todo.period === activeTabValue.value)
+        .sort((a, b) => b.id - a.id)
+    })
+
     async function getTodos(){
         try{
             const response = await axios.get('/api/routine/init')
@@ -136,6 +154,6 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         activeTab.value = tabId;
     }
 
-    return {newTodo, todos, periodOfNewToDo, tabs, activeTab, setActiveTab, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    return {newTodo, todos, filteredTodos, periodOfNewToDo, tabs, activeTab, setActiveTab, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
     
