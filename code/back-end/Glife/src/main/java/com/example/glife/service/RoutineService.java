@@ -10,9 +10,11 @@ import java.util.List;
 
 public interface RoutineService extends IService<Routine> {
 
-    public R<String> add(HttpServletRequest request, String content);
+    public R<String> add(HttpServletRequest request, Routine routine);
 
     public R<Routine> update(HttpServletRequest request, Routine routine);
+
+    public R<String> updateSchedule(HttpServletRequest request, Routine routine);
 
     public R<Routine> tick(HttpServletRequest request, Long id);
 
