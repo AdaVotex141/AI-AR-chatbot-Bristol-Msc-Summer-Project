@@ -1,18 +1,31 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import router from "@/router";
 import {defineStore} from 'pinia'
 
 interface Todo{
     id: number;
     text: string;
+    period: number;
     completed: boolean;
 }
 
 export const useDayroutineStore = defineStore('dayroutine',()=> {
     const newTodo = ref('');
     const periodOfNewToDo = ref('')
+    const periodValue = computed(()=>{
+        switch(periodOfNewToDo.value){
+            case 'daily':
+                return 0;
+            case 'weekly':
+                return 1;
+            case 'monthly':
+                return 2;
+            default:
+                return 0;
+        }
+    })
     const todos = ref<Todo[]>([]);
     const tabs = [
         { id: 'daily', label: 'Daily' },
@@ -24,13 +37,15 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
     async function getTodos(){
         try{
             const response = await axios.get('/api/routine/init')
+            console.log(response.data.data) // TODO: delete it----------------
             if(String(response.data.code) === '1'){
                 //Get the data from response
-                const data: {id: number; content: string; tick: number}[] = response.data.data
+                const data: {id: number; content: string; schedule:number; tick: number}[] = response.data.data
                 //Map the data to todos and Sort them with id ascendingly
                 todos.value = data.map(item => ({
                     id: item.id,
                     text: item.content,
+                    period: item.schedule,
                     completed: Boolean(item.tick)
                 }))
                 .sort((a, b) => b.id - a.id)
@@ -49,7 +64,7 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         if (newTodo.value.trim() !== '') {
             // Get newTodo's value and set it to empty string on the frontend
             const content = newTodo.value
-            const period = periodOfNewToDo.value
+            const period = periodValue.value
             newTodo.value = ''
             periodOfNewToDo.value = ''
             // Send api request and user input to backend
