@@ -79,7 +79,8 @@ const router = createRouter({
                     path:'task',
                     component: Task
                 }
-            ]
+            ],
+            redirect:'/admin/task'
         },
         {
             name:'artree-camera',

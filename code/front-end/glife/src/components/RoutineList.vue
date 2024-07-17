@@ -1,6 +1,6 @@
 <template>
     <ul>
-      <li v-for="(todo) in props.store.todos" :key="todo.id" :class="{ completed: todo.completed }">
+      <li v-for="(todo) in props.store.filteredTodos" :key="todo.id" :class="{ completed: todo.completed }">
         <input type="checkbox" v-model="todo.completed" @click="props.store.changeCompletedStatus(todo.id)"/>
         <el-input
           v-if="isEditing && currentTodoId === todo.id"
