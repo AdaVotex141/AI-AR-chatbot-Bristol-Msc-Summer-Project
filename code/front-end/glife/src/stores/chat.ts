@@ -18,6 +18,7 @@ export const useChatStore = defineStore('chat',()=>{
 
     const messages = reactive<chatMessage[]>([])
     let isInitialWindow = ref(true)
+    const timePhrases = ['daily', 'weekly', 'monthly']
 
     function addMessage(message:chatMessage){
         messages.push(message)
@@ -34,13 +35,13 @@ export const useChatStore = defineStore('chat',()=>{
         // Show the message on the window
         addMessage({ text: message, sender: 'user', type: 'text'});
 
-        // 'Yes' message
-        if(message === 'Yes'){
-          handleYesMessage()
-        }
-      
-        // Send api request to the backend
         try{
+          // 'timePhrases' message
+          if(timePhrases.includes(message)){
+            const resultOfAdding = addSystemRoutine(message)
+            if(!resultOfAdding) throw new Error("Cannot add it to the system routine");
+          }
+          // Send api request to the backend
           const response = await axios.post('/api/assistant/input', {
             inputMessage: message
           })
@@ -67,12 +68,30 @@ export const useChatStore = defineStore('chat',()=>{
       })
     }
     
-    async function handleYesMessage(){
+    async function addSystemRoutine(message:string){
+      // Get period code according to the message
+      let period = 0
+      if(message === 'daily'){
+        period = 0
+      } else if (message === 'weekly') {
+        period = 1
+      } else if (message === 'monthly') {
+        period = 2
+      }
+      // Sending the api request
       try{
-        const response = axios.post('/api/system_routine/add-assistant')
-        console.log('yes message')
+        const response = await axios.post('/api/system_routine/add-assistant', period, {
+          headers:{
+              'Content-Type': 'application/json'
+          }
+        })
+        if(String(response.data.code) !== '1'){
+          return false
+        } else {
+          return true
+        }
       } catch (error){
-        
+        return false
       }
     }
 
