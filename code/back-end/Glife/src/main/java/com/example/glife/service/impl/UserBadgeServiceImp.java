@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.R;
 import com.example.glife.entity.UserBadge;
+import com.example.glife.entity.UserBadgeId;
 import com.example.glife.mapper.UserBadgeMapper;
 import com.example.glife.service.UserBadgeService;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
     @Override
     public R<List<UserBadge>> getUserBadgesByUserId(Long userId) {
         LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserBadge::getUserId, userId);
+        queryWrapper.eq(UserBadge::getId, new UserBadgeId(userId, null));
         List<UserBadge> userBadges = list(queryWrapper);
         return R.success(userBadges);
     }
@@ -30,7 +31,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
     @Override
     public R<String> deleteUserBadge(Long userId, Long badgeId) {
         LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserBadge::getUserId, userId).eq(UserBadge::getBadgeId, badgeId);
+        queryWrapper.eq(UserBadge::getId, new UserBadgeId(userId, badgeId));
         boolean success = remove(queryWrapper);
         if (success) {
             return R.success("UserBadge deleted successfully");

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.persistence.EmbeddedId;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,22 +14,17 @@ import java.time.LocalDateTime;
 public class UserBadge implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @TableField("user_id")
-    private Long userId;
-
-    @TableField("badge_id")
-    private Long badgeId;
+    @EmbeddedId
+    private UserBadgeId id;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime earnedTime;
 
-    // Composite key class
     public UserBadgeId getId() {
-        return new UserBadgeId(userId, badgeId);
+        return id;
     }
 
     public void setId(UserBadgeId id) {
-        this.userId = id.getUserId();
-        this.badgeId = id.getBadgeId();
+        this.id = id;
     }
 }
