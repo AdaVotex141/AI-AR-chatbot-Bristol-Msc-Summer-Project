@@ -28,12 +28,12 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
             const response = await axios.get('/api/system_routine/init')
             if(String(response.data.code) === '1'){
                 //Get the data from response
-                const data: {id: number; content: string; scheduel: number; tick: number}[] = response.data.data
+                const data: {id: number; content: string; schedule:number; tick: number}[] = response.data.data
                 //Map the data to todos and Sort them with id ascendingly
                 todos.value = data.map(item => ({
                     id: item.id,
                     text: item.content,
-                    period: item.scheduel,
+                    period: item.schedule,
                     completed: Boolean(item.tick)
                 }))
                 .sort((a, b) => b.id - a.id)
@@ -47,37 +47,6 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
             router.push({name:'notfound'});
         }
     }
-    // TODO: period
-    async function addTodo() {
-        if (newTodo.value.trim() !== '') {
-            // Get newTodo's value and set it to empty string on the frontend
-            const content = newTodo.value
-            newTodo.value = '';
-            // Send api request and user input to backend
-            try {
-                const response = await axios.post('/api/system_routine/add', {
-                    content: content
-                })
-                if (String(response.data.code) === '1') {
-                    ElMessage({
-                        message: 'Add routine successfully',
-                        type: 'success'
-                    })
-                } else {
-                    ElMessage({
-                        message: 'Bad things happened',
-                        type: 'error'
-                    })
-                }
-            } catch (error) {
-                console.error('Error add to do:', error)
-                alert('Error happened when adding dayroutine')
-                router.push({name:'notfound'});
-            }
-            // Get latest data from backend
-            getTodos()
-        }
-    };
 
     async function removeTodo(idOfRecord:number){
         // Sending api request to the backend
@@ -117,6 +86,6 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
         }
     }
 
-    return {newTodo, todos, filteredTodos, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    return {newTodo, todos, filteredTodos, removeTodo, getTodos, changeCompletedStatus}
 }) 
     
