@@ -23,5 +23,9 @@ public class SystemRoutine implements Serializable {
 
     private int tick;
 
+    private int schedule;
+
+    private int type;
+
 
 }

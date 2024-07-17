@@ -45,6 +45,7 @@ public class WsHandler extends AbstractWebSocketHandler {
         super.afterConnectionEstablished(session);
         SessionBean sessionBean=new SessionBean(session,clientID.getAndIncrement());
         sessionBeanMap.put(session.getId(),sessionBean);
+
         log.info(sessionBeanMap.get(session.getId()).getID()+":"+"connect");
     }
 
@@ -74,11 +75,13 @@ public class WsHandler extends AbstractWebSocketHandler {
 
 
     private void handleMessageType(WebSocketSession session, String message){
+        log.info("______");
         JSONObject jsonObject = JSONUtil.parseObj(message);
         String type = jsonObject.getStr("type");
 
         switch (type) {
             case "current-location":
+                log.info("____");
                 handleCurrentLocation(session, jsonObject);
                 break;
             case "plant-location":
@@ -123,6 +126,7 @@ public class WsHandler extends AbstractWebSocketHandler {
             double latitude = jsonObject.getDouble("latitude");
 
             locationServiceImp.store(request, longitude, latitude);
+            log.info(longitude+""+latitude);
         }
 
     }

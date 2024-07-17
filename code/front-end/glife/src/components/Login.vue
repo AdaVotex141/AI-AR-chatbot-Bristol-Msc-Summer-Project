@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container :class="{'admin-background': formLabelAlign.isAdmin}">
     <el-header class="title">LOG IN</el-header>
     <div style="margin: 10px" />
     <el-main>
@@ -17,14 +17,15 @@
               <el-input v-model="formLabelAlign.password" type="password" show-password/>
           </el-form-item>
           <el-form-item class="tip-message">
-              Don't have an account? 
-              <el-link type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
+              {{tipMessage}}
+              <el-link v-show="!formLabelAlign.isAdmin" type="primary" :underline="false" @click="$emit('toggle-page')" target="_blank">
                   Click here to register
               </el-link>
           </el-form-item>
-          <el-form-item>
+          <el-form-item >
               <el-button type="primary" class="center" @click="login(ruleFormRef)">Login</el-button>
           </el-form-item>
+          <el-switch class="center-switch" active-text="Admin" inactive-text="User" v-model="formLabelAlign.isAdmin" />       
       </el-form>
     </el-main>
   </el-container>
@@ -34,7 +35,7 @@
 import { useUserInfoStore } from '@/stores/userInfo';
 import axios from 'axios';
 import { ElMessage, type FormInstance } from 'element-plus';
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 const userInfoStore = useUserInfoStore()
@@ -44,6 +45,11 @@ const ruleFormRef = ref<FormInstance>()
 const formLabelAlign = reactive({
     username: '',
     password: '',
+    isAdmin: false
+})
+
+const tipMessage = computed(()=>{
+  return formLabelAlign.isAdmin ? 'Welcome to glife admin system. Please log in.' : 'Don\'t have an account?'
 })
 
 const rules = reactive({
@@ -75,8 +81,18 @@ async function login(ruleFormRef: FormInstance | undefined){
         type: 'warning'
       })
     } else {
+      // Choose login methods according to the switch statement
+      let apiPath = ''
+      let nextPageName = ''
+      if(!formLabelAlign.isAdmin){
+        apiPath = '/api/login'
+        nextPageName = 'startpage'
+      } else {
+        apiPath = '/api/admin/login' // TODO: change the api request path
+        nextPageName = 'admin'
+      }
       try{
-        const response = await axios.post('/api/login',{
+        const response = await axios.post(apiPath,{
             username: formLabelAlign.username,
             password: formLabelAlign.password
         })
@@ -90,7 +106,7 @@ async function login(ruleFormRef: FormInstance | undefined){
             type: 'success'
           })
           router.push({
-            name:'startpage'
+            name: nextPageName
           })
           // Change the user info
           userInfoStore.login(formLabelAlign.username)
@@ -102,16 +118,16 @@ async function login(ruleFormRef: FormInstance | undefined){
           formLabelAlign.password = ''
         }
       } catch (error){
-          console.error('Error sending data:', error)
-          alert('Error sending data')
-          router.push({
-            name:'notfound'
-          })
+        console.error('Error sending data:', error)
+        alert('Error sending data')
+        router.push({
+          name:'notfound'
+        })
       }
     }
   })
-    
 }
+
 </script>
 
 <style scoped>
@@ -162,5 +178,15 @@ body{
 .el-button.center:hover {
   background-color:darkseagreen;
   color: #fff;
+}
+
+.center-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-background {
+  background-color: #f5f5dc;
 }
 </style>

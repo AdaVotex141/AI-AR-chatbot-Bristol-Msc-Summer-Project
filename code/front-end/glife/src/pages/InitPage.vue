@@ -4,7 +4,7 @@
       <div class="mx-auto max-w-4xl lg:text-center">
         <h2 class="mt-2 text-4xl font-bold tracking-tight sm:text-4xl lg:text-7xl">Glife</h2>
         <h2 class="mt-6 text-lg leading-8 lg:text-3xl">Help you build a greener, greater life!</h2>
-        <p class="mt-6 text-lg leading-8 text-gray-600 font-bold">Glife is a website aimed at helping people live more sustainably and in an environmentally friendly way.</p>
+        <p class="mt-6 text-lg leading-8 text-gray-600 font-bold">{{welcomeMessage}}</p>
         <button v-show="!userInfoStore.isAuthenticated" id="loginButton" @click="gotoLogin" type="button" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Getting started with Glife!</button>
       </div>
       <div class="mx-auto mt-16 max-w-2xl sm:mt-12 lg:mt-16 lg:max-w-4xl">
@@ -28,9 +28,14 @@
 import { ArrowLongDownIcon, ChatBubbleBottomCenterTextIcon , ArrowLongRightIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
 import router from "@/router";
 import { useUserInfoStore } from '@/stores/userInfo';
+import { computed } from 'vue';
 
 const userInfoStore = useUserInfoStore()
-
+const welcomeMessage = computed(()=>{
+  return userInfoStore.isAuthenticated ? 
+  `Welcome to Glife, ${userInfoStore.user}! Let's start it.` 
+  : 'Glife is a website aimed at helping people live more sustainably and in an environmentally friendly way.'
+})
 const features = [
   {
     name: 'Chat Window',
@@ -58,7 +63,7 @@ const features = [
     description:
         'You can find all badges you got.',
     icon: ArrowLongRightIcon,
-    router: 'logout',
+    router: 'mybadge',
   },
 ]
   function handleFeatureClick(feature) {

@@ -1,16 +1,21 @@
 <template>
     <p v-if="message.type === 'text'"class="text-sm font-normal text-gray-900 dark:text-white">{{ message.text }}</p>
-        <div v-else="message.type === 'options'">
-            <div class="options">
-                <el-button v-for="option in message.options" 
-                @click="handleOptionClick(option)" 
-                :key="option"
-                :disabled="optionClicked"
-                type="success" plain >
-                {{ option }}
-                </el-button>
-            </div>
+    <div v-else="message.type === 'options'">
+        <div class="options" v-for="option in message.options" >
+            <button 
+            :class="{
+                'text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2': !optionClicked,
+                'font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 text-gray-900 bg-lime-300 cursor-not-allowed': optionClicked
+            }"
+            @click="handleOptionClick(option)" 
+            :key="option"
+            :disabled="optionClicked"
+            plain 
+            >
+            {{ option }}
+            </button>
         </div>
+    </div>
 </template>
 
 <script setup lang='ts'>

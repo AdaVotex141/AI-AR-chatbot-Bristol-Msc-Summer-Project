@@ -1,30 +1,68 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import router from "@/router";
 import {defineStore} from 'pinia'
 
 interface Todo{
     id: number;
     text: string;
+    period: number;
     completed: boolean;
 }
 
 export const useDayroutineStore = defineStore('dayroutine',()=> {
     const newTodo = ref('');
+    const periodOfNewToDo = ref('')
+    const periodValue = computed(()=>{
+        switch(periodOfNewToDo.value){
+            case 'daily':
+                return 0;
+            case 'weekly':
+                return 1;
+            case 'monthly':
+                return 2;
+            default:
+                return 0;
+        }
+    })
     const todos = ref<Todo[]>([]);
-    
+    const tabs = [
+        { id: 'daily', label: 'Daily' },
+        { id: 'weekly', label: 'Weekly' },
+        { id: 'monthly', label: 'Monthly' },
+    ];
+    const activeTab = ref('daily');
+    const activeTabValue = computed(()=>{
+        switch(activeTab.value){
+            case 'daily':
+                return 0;
+            case 'weekly':
+                return 1;
+            case 'monthly':
+                return 2;
+            default:
+                return 0;
+        }
+    })
+
+    const filteredTodos = computed(()=>{
+        return todos.value
+        .filter(todo => todo.period === activeTabValue.value)
+        .sort((a, b) => b.id - a.id)
+    })
 
     async function getTodos(){
         try{
             const response = await axios.get('/api/routine/init')
             if(String(response.data.code) === '1'){
                 //Get the data from response
-                const data: {id: number; content: string; tick: number}[] = response.data.data
+                const data: {id: number; content: string; schedule:number; tick: number}[] = response.data.data
                 //Map the data to todos and Sort them with id ascendingly
                 todos.value = data.map(item => ({
                     id: item.id,
                     text: item.content,
+                    period: item.schedule,
                     completed: Boolean(item.tick)
                 }))
                 .sort((a, b) => b.id - a.id)
@@ -43,11 +81,14 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         if (newTodo.value.trim() !== '') {
             // Get newTodo's value and set it to empty string on the frontend
             const content = newTodo.value
-            newTodo.value = '';
+            const period = periodValue.value
+            newTodo.value = ''
+            periodOfNewToDo.value = ''
             // Send api request and user input to backend
             try {
                 const response = await axios.post('/api/routine/add', {
-                    content: content
+                    content: content,
+                    schedule: period
                 })
                 if (String(response.data.code) === '1') {
                     ElMessage({
@@ -108,6 +149,10 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         }
     }
 
-    return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    function setActiveTab(tabId: string) {
+        activeTab.value = tabId;
+    }
+
+    return {newTodo, todos, filteredTodos, periodOfNewToDo, tabs, activeTab, activeTabValue, setActiveTab, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
     

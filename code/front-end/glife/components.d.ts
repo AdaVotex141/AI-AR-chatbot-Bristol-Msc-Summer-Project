@@ -20,6 +20,7 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElText: typeof import('element-plus/es')['ElText']
     FormItem: typeof import('./src/components/FormItem.vue')['default']
     InitialChatWindow: typeof import('./src/components/InitialChatWindow.vue')['default']
@@ -33,7 +34,9 @@ declare module 'vue' {
     Register: typeof import('./src/components/Register.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    RoutineDialog: typeof import('./src/components/RoutineDialog.vue')['default']
     RoutineList: typeof import('./src/components/RoutineList.vue')['default']
+    RoutineTags: typeof import('./src/components/RoutineTags.vue')['default']
     TinyMap: typeof import('./src/components/TinyMap.vue')['default']
   }
 }
