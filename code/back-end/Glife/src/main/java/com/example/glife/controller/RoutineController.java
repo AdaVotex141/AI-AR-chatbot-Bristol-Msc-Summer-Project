@@ -25,15 +25,20 @@ public class RoutineController {
     }
 
     @PostMapping("/add")
-    public R<String> add(HttpServletRequest request, @RequestBody String content){
-        JSONObject jsonObject = JSONUtil.parseObj(content);
-        String extractedValue = jsonObject.getStr("content");
-        return routineService.add(request,extractedValue);
+    public R<String> add(HttpServletRequest request, @RequestBody  Routine routine){
+//        JSONObject jsonObject = JSONUtil.parseObj(content);
+//        String extractedValue = jsonObject.getStr("content");
+        return routineService.add(request, routine);
     }
 
     @PostMapping("/update")
     public R<Routine> update(HttpServletRequest request, @RequestBody Routine routine){
         return routineService.update(request,routine);
+    }
+
+    @PostMapping("/update-schedule")
+    public R<String> updateSchedule(HttpServletRequest request, @RequestBody Routine routine){
+        return routineService.updateSchedule(request, routine);
     }
 
     @PostMapping("/tick")

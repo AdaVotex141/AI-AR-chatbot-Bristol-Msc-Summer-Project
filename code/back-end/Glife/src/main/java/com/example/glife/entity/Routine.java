@@ -21,4 +21,6 @@ public class Routine implements Serializable {
     private LocalDateTime createTime;
 
     private int tick;
+
+    private int schedule;
 }
