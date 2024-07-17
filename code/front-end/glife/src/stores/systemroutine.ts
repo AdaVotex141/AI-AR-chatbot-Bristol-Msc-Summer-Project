@@ -1,30 +1,39 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import router from "@/router";
 import {defineStore} from 'pinia'
+import { useDayroutineStore } from './dayroutine';
 
 interface Todo{
     id: number;
     text: string;
+    period: number;
     completed: boolean;
 }
 
 export const useSystemroutineStore = defineStore('systemroutine',()=> {
     const newTodo = ref('');
     const todos = ref<Todo[]>([]);
-    
+    const dayroutineStore = useDayroutineStore()
+
+    const filteredTodos = computed(()=>{
+        return todos.value
+        .filter(todo => todo.period === dayroutineStore.activeTabValue)
+        .sort((a, b) => b.id - a.id)
+    })
 
     async function getTodos(){
         try{
             const response = await axios.get('/api/system_routine/init')
             if(String(response.data.code) === '1'){
                 //Get the data from response
-                const data: {id: number; content: string; tick: number}[] = response.data.data
+                const data: {id: number; content: string; scheduel: number; tick: number}[] = response.data.data
                 //Map the data to todos and Sort them with id ascendingly
                 todos.value = data.map(item => ({
                     id: item.id,
                     text: item.content,
+                    period: item.scheduel,
                     completed: Boolean(item.tick)
                 }))
                 .sort((a, b) => b.id - a.id)
@@ -38,7 +47,7 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
             router.push({name:'notfound'});
         }
     }
-
+    // TODO: period
     async function addTodo() {
         if (newTodo.value.trim() !== '') {
             // Get newTodo's value and set it to empty string on the frontend
@@ -108,6 +117,6 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
         }
     }
 
-    return {newTodo, todos, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    return {newTodo, todos, filteredTodos, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
     

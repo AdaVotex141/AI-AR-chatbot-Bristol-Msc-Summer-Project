@@ -55,7 +55,6 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
     async function getTodos(){
         try{
             const response = await axios.get('/api/routine/init')
-            console.log(response.data.data) // TODO: delete it----------------
             if(String(response.data.code) === '1'){
                 //Get the data from response
                 const data: {id: number; content: string; schedule:number; tick: number}[] = response.data.data
@@ -154,6 +153,6 @@ export const useDayroutineStore = defineStore('dayroutine',()=> {
         activeTab.value = tabId;
     }
 
-    return {newTodo, todos, filteredTodos, periodOfNewToDo, tabs, activeTab, setActiveTab, addTodo, removeTodo, getTodos, changeCompletedStatus}
+    return {newTodo, todos, filteredTodos, periodOfNewToDo, tabs, activeTab, activeTabValue, setActiveTab, addTodo, removeTodo, getTodos, changeCompletedStatus}
 }) 
     
