@@ -14,47 +14,10 @@
 <script setup lang="ts">
 import RoutineEdit from './RoutineEdit.vue'
 import {onMounted} from 'vue'
-import {ref} from 'vue'
-import axios from 'axios';
 
 const props = defineProps(['store', 'isSystemroutine'])
 
 onMounted(()=> props.store.getTodos())
-
-const isEditing = ref(false)
-const currentTodoId = ref()
-const editText = ref('')
-
-function startEditing(id:number, text:string){
-  if(props.isSystemroutine){
-    return
-  }
-  isEditing.value = true
-  currentTodoId.value = id
-  editText.value = text
-}
-
-async function saveTodo(id:number){
-  // Edit content in the frontend
-  const todo = props.store.todos.find(todo => todo.id === id)
-  if(todo){
-    todo.text = editText.value
-  }
-  isEditing.value = false
-  currentTodoId.value = null
-  // Sending request to the backend
-  try{
-    const response = await axios.post('/api/routine/update', {
-      id: id,
-      content: editText.value
-    })
-    if(String(response.data.code) !== '1'){
-      console.error('Error happened during update data in backend')
-    }
-  } catch (error){
-    console.error(error)
-  }
-}
 
 </script>
 
