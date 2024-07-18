@@ -117,7 +117,8 @@ public class WsHandler extends AbstractWebSocketHandler {
             double longitude = jsonObject.getDouble("longitude");
             double latitude = jsonObject.getDouble("latitude");
 
-//            locationServiceImp.getNearByPosition(session, longitude, latitude);
+
+            locationServiceImp.getNearByPosition(session, longitude, latitude);
             List<Point> points = locationServiceImp.getNearByPosition(session, longitude, latitude).getData();
             for (Point point : points) {
                 double x = point.getX();
