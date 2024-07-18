@@ -28,21 +28,30 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
 
     @Override
     public R<List<Long>> getUserBadgesByUserId(Long userId) {
-        LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserBadge::getUserId, userId);
-        List<UserBadge> userBadges = list(queryWrapper);
+        if (userExists(userId)) {
+            LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(UserBadge::getUserId, userId);
+            List<UserBadge> userBadges = list(queryWrapper);
 
-        List<Long> badgeIds = userBadges.stream()
-                .map(UserBadge::getBadgeId)
-                .collect(Collectors.toList());
+            List<Long> badgeIds = userBadges.stream()
+                    .map(UserBadge::getBadgeId)
+                    .collect(Collectors.toList());
 
-        return R.success(badgeIds);
+            return R.success(badgeIds);
+        } else {
+            return R.error("User not found");
+        }
     }
 
     @Override
     public R<UserBadge> addUserBadge(UserBadge userBadge) {
-        save(userBadge);
-        return R.success(userBadge);
+        Long userId = userBadge.getUserId();
+        if (userExists(userId)) {
+            save(userBadge);
+            return R.success(userBadge);
+        } else {
+            return R.error("User not found");
+        }
     }
 
     @Transactional
@@ -75,17 +84,24 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
 
     @Override
     public R<String> deleteUserBadge(Long userId, Long badgeId) {
-        LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserBadge::getUserId, userId)
-                .eq(UserBadge::getBadgeId, badgeId);
-        boolean success = remove(queryWrapper);
-        if (success) {
-            return R.success("UserBadge deleted successfully");
+        if (userExists(userId)) {
+            LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, badgeId);
+            boolean success = remove(queryWrapper);
+            if (success) {
+                return R.success("UserBadge deleted successfully");
+            } else {
+                return R.error("Failed to delete UserBadge");
+            }
         } else {
-            return R.error("Failed to delete UserBadge");
+            return R.error("User not found");
         }
     }
-
+    private boolean userExists(Long userId) {
+        // Logic to check if user exists in the database
+        return userId != null && userId > 0;
+    }
     private Long getUserID(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         User user = null;
