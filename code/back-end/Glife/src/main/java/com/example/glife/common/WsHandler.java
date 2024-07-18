@@ -3,6 +3,7 @@ package com.example.glife.common;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import com.example.glife.service.UserService;
 import com.example.glife.service.impl.LocationServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class WsHandler extends AbstractWebSocketHandler {
     @Autowired
     LocationServiceImp locationServiceImp;
 
+    @Autowired
+    UserService userService;
+
 
     static{
         sessionBeanMap=new ConcurrentHashMap<>();
@@ -54,6 +58,17 @@ public class WsHandler extends AbstractWebSocketHandler {
         super.handleTextMessage(session, message);
         log.info(sessionBeanMap.get(session.getId()).getID()+":"+message.getPayload());
 
+
+
+        JSONObject jsonObject = JSONUtil.parseObj(message.getPayload());
+        JSONObject userNameObj = jsonObject.getJSONObject("userName");
+
+        String name = userNameObj != null ? userNameObj.getStr("_value") : null;
+        log.info("name is ------:{}", name);
+        Long userID = userService.getUserID(name);
+        if(!session.getAttributes().containsKey(name)){
+            session.getAttributes().put("userID", userID);
+        }
         handleMessageType(session,message.getPayload());
     }
 
@@ -96,14 +111,14 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject){
-        HttpServletRequest request = getCurrentHttpRequest();
+//        HttpServletRequest request = getCurrentHttpRequest();
 
-        if (request != null) {
+        if (session != null) {
             double longitude = jsonObject.getDouble("longitude");
             double latitude = jsonObject.getDouble("latitude");
 
-            locationServiceImp.getNearByPosition(request, longitude, latitude);
-            List<Point> points = locationServiceImp.getNearByPosition(request, longitude, latitude).getData();
+//            locationServiceImp.getNearByPosition(session, longitude, latitude);
+            List<Point> points = locationServiceImp.getNearByPosition(session, longitude, latitude).getData();
             for (Point point : points) {
                 double x = point.getX();
                 double y = point.getY();
@@ -119,17 +134,21 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject){
-        HttpServletRequest request = getCurrentHttpRequest();
+//        HttpServletRequest request = getCurrentHttpRequest();
 
-        if (request != null) {
-            double longitude = jsonObject.getDouble("longitude");
-            double latitude = jsonObject.getDouble("latitude");
+        if (session != null) {
+            JSONObject userLongtitueObj = jsonObject.getJSONObject("longitude");
+            JSONObject LattitueObj = jsonObject.getJSONObject("latitude");
+            double longitude = userLongtitueObj.getDouble("_value");
+            double latitude = LattitueObj.getDouble("_value");
 
-            locationServiceImp.store(request, longitude, latitude);
-            log.info(longitude+""+latitude);
+            locationServiceImp.store(session, longitude, latitude);
+            log.info("long:"+longitude+"latitude"+latitude);
         }
 
     }
+
+
 
 
 
@@ -143,10 +162,10 @@ public class WsHandler extends AbstractWebSocketHandler {
      * this is for getting session in the request
      * @return
      */
-    private HttpServletRequest getCurrentHttpRequest() {
-        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return (attrs != null) ? attrs.getRequest() : null;
-    }
+//    private HttpServletRequest getCurrentHttpRequest() {
+//        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        return (attrs != null) ? attrs.getRequest() : null;
+//    }
 
 
 

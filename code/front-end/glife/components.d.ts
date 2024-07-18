@@ -35,6 +35,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     RoutineDialog: typeof import('./src/components/RoutineDialog.vue')['default']
+    RoutineEdit: typeof import('./src/components/RoutineEdit.vue')['default']
     RoutineList: typeof import('./src/components/RoutineList.vue')['default']
     RoutineTags: typeof import('./src/components/RoutineTags.vue')['default']
     TinyMap: typeof import('./src/components/TinyMap.vue')['default']
