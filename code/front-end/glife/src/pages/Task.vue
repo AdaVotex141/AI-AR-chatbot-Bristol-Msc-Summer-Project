@@ -3,14 +3,10 @@
     <el-container class="dayroutine-app">
       <el-header>{{ getCurrentDate() }} Routine: </el-header>
       <el-main>
-        <RoutineDialog class="add-button" />
-        <RoutineTags />
+
         <el-divider content-position="left">Your {{dayroutineStore.activeTab}} routines:</el-divider>
         <!-- RoutineList -->
-        <div class="systemroutine">
-          <RoutineList :store="systemroutineStore" :isSystemroutine="true"/>
-        </div>
-        <RoutineList :store="dayroutineStore" :isSystemroutine="false"/>
+
       </el-main>
     </el-container>
     </div>

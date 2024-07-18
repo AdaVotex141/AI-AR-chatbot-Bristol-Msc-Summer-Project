@@ -60,7 +60,6 @@
     window.removeEventListener('resize', checkScreenSize);
   });
 
-
     // Watch the current router
     const route = useRoute();
     const activeIndex = ref(route.path);
