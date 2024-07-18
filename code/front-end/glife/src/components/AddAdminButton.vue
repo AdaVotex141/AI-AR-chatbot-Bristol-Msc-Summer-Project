@@ -27,19 +27,8 @@
             </div>
             <!-- Modal body -->
             <div class="p-4 md:p-5">
-              <!-- username -->
-              <p class="text-gray-500 dark:text-gray-400 mb-4">The username:</p>
-              <div class="user-input">
-                <el-input v-model="adminStore.usernameOfNewAdmin" placeholder="Please input the username" clearable />
-              </div>
-              <!-- password -->
-              <p class="text-gray-500 dark:text-gray-400 mb-4">The password:</p>
-              <div class="user-input">
-                <el-input v-model="adminStore.passwordOfNewAdmin" placeholder="Please input the password" clearable />
-              </div>
-              <button @click="addTodo" class="addButton text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Add
-              </button>
+                <!-- Register Form -->
+                <AdminRegisterForm :toggleModal="toggleModal" />
             </div>
           </div>
         </div>
@@ -48,6 +37,7 @@
   </template>
   
 <script setup lang='ts'>
+import AdminRegisterForm from '@/components/AdminRegisterForm.vue'
 import { useAdminStore } from '@/stores/admin';
 import { ref } from 'vue';
 
@@ -56,11 +46,6 @@ let isModalOpen = ref(false)
 
 function toggleModal() {
     isModalOpen.value = !isModalOpen.value;
-}
-
-function addTodo(){
-  dayroutineStore.addTodo()
-  toggleModal()
 }
 
 </script>

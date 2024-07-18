@@ -26,9 +26,14 @@
             <div class="text-base font-semibold">{{ admin.username }}</div>
             <!-- <div class="font-normal text-gray-500">{{ admin.email }}</div> -->
           </th>
-          <td class="px-6 py-4">{{ admin.permission }}</td>
+          <td class="px-6 py-4">{{ getPermissionString(admin.permission) }}</td>
           <td class="px-6 py-4">
-            <button v-show='admin.permission !== "root admin" && userInfoStore.permission === 2' type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Remove</button>
+            <button @click="adminStore.removeAdmin(admin.id)" 
+            v-show='admin.permission !== 2 && userInfoStore.permission === 2' 
+            type="button" 
+            class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+            Remove
+          </button>
           </td>
         </tr>
       </tbody>
@@ -48,6 +53,16 @@ const userInfoStore = useUserInfoStore()
 onMounted(()=>{
   adminStore.getAdmins()
 })
+
+const permissionMap: { [key: number]: string } = {
+  0: 'user',
+  1: 'admin',
+  2: 'root admin'
+};
+
+const getPermissionString = (permission: number): string => {
+  return permissionMap[permission] || 'user';
+};
 </script>
 
 <style scoped>

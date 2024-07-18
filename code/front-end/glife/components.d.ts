@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddAdminButton: typeof import('./src/components/AddAdminButton.vue')['default']
+    AdminRegister: typeof import('./src/components/AdminRegister.vue')['default']
+    AdminRegisterForm: typeof import('./src/components/AdminRegisterForm.vue')['default']
     Clipboard: typeof import('./src/components/Clipboard.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']

@@ -6,18 +6,11 @@ import { ref } from 'vue'
 interface Admin{
     id:number
     username:string
-    permission:string
+    permission:number
 }
 
 export const useAdminStore = defineStore('admin',()=>{
-    const usernameOfNewAdmin = ref('')
-    const passwordOfNewAdmin = ref('')
     const admins = ref<Admin[]>([])
-    const permissionMap = new Map<number, string>([
-        [0, 'user'],
-        [1, 'admin'],
-        [2, 'root admin']
-    ])
 
     async function getAdmins(){
         try{
@@ -29,9 +22,15 @@ export const useAdminStore = defineStore('admin',()=>{
                 admins.value = data.map(item => ({
                     id: item.id,
                     username: item.username,
-                    permission: permissionMap.get(item.permission) || 'user'
+                    permission: item.permission
                 }))
-                .sort((a, b) => a.id - b.id)
+                .sort((a, b) => {
+                    if(a.permission !== b.permission){
+                        return b.permission - a.permission
+                    } else {
+                        return a.username.localeCompare(b.username)
+                    }
+                })
             } else {
                 alert('Backend give a code 0?') // TODO: need to be deleted after ensuring the fault
                 router.push({name:'notfound'});
@@ -43,5 +42,23 @@ export const useAdminStore = defineStore('admin',()=>{
         }
     }
 
-    return {usernameOfNewAdmin, passwordOfNewAdmin, admins, getAdmins}
+    async function removeAdmin(id:number){
+        // Sending api request to the backend
+        try{
+            const response = await axios.post('/api/admin/remove', {
+                id: id
+            })
+            if(String(response.data.code) !== '1'){
+                console.error('Remove api request fail')
+                router.push({name:'notfound'});
+            }
+        } catch (error){
+            console.error(error)
+            router.push({name:'notfound'});
+        }
+        // Set the latest todos
+        getAdmins()
+    };
+
+    return {admins, getAdmins, removeAdmin}
 })
