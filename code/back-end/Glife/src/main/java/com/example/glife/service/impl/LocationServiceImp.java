@@ -31,14 +31,15 @@ public class LocationServiceImp {
 
     /**
      *
-     * @param request
+     * @param session
      * @param latitude
      * @param longitude
      * @return
      */
-    public R<String> store(HttpServletRequest request, double longitude, double latitude){
+    public R<String> store(WebSocketSession session, double longitude, double latitude){
 
-        Long userID = getUserID(request);
+//        Long userID = getUserID(request);
+        Long userID = (Long)session.getAttributes().get("userID");
 
         if(userID != null && StrUtil.isNotBlank(userID.toString())){
             String key = LOCATION_KEY;
@@ -135,15 +136,15 @@ public class LocationServiceImp {
 
 
 
-    private Long getUserID(javax.servlet.http.HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        User user = null;
-        Long userid = Long.valueOf(0);
-        if(session != null && session.getAttribute("user") != null){
-            user = (User) session.getAttribute("user");
-        }
-        userid = user.getId();
-        return userid;
-    }
+//    private Long getUserID(javax.servlet.http.HttpServletRequest request){
+//        HttpSession session = request.getSession(false);
+//        User user = null;
+//        Long userid = Long.valueOf(0);
+//        if(session != null && session.getAttribute("user") != null){
+//            user = (User) session.getAttribute("user");
+//        }
+//        userid = user.getId();
+//        return userid;
+//    }
 
 }

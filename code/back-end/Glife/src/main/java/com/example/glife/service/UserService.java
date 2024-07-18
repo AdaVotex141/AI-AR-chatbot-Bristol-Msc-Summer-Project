@@ -18,5 +18,6 @@ public interface UserService extends IService<User> {
     public R<String> logout(HttpServletRequest request);
 
     public R<String> sendCode(HttpServletRequest request, String email) throws MessagingException;
-    
+
+    public Long getUserID(String name);
 }
