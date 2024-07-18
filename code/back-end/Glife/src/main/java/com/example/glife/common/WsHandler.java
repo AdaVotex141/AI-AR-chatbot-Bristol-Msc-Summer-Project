@@ -49,6 +49,7 @@ public class WsHandler extends AbstractWebSocketHandler {
 
         log.info(sessionBeanMap.get(session.getId()).getID()+":"+"connect");
     }
+    //jjjjj
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
