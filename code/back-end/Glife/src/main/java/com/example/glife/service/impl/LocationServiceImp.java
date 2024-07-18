@@ -28,6 +28,12 @@ public class LocationServiceImp {
     @Autowired
     StringRedisTemplate template;
 
+<<<<<<< HEAD
+=======
+//    @Autowired
+//    RedisTemplate<String, Point> redisTemplate;
+
+>>>>>>> main
     /**
      *
      * @param request
@@ -45,9 +51,19 @@ public class LocationServiceImp {
             String shortUUID = UUID.randomUUID().toString().substring(0, 8);
             String locationUniqueID =  userID + "-" + shortUUID;
 
+<<<<<<< HEAD
             //store in opsForGEO()
             template.opsForGeo().add(key, point, locationUniqueID);
         }else{
+=======
+            // Store in opsForGeo()
+            template.opsForGeo().add(key, point, locationUniqueID);
+
+            //TODO: add treeSum
+
+            return R.success("Location stored successfully");
+        } else {
+>>>>>>> main
             return R.error("Can't find user");
         }
 
@@ -59,6 +75,7 @@ public class LocationServiceImp {
         Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
         String key = LOCATION_KEY;
 
+<<<<<<< HEAD
         GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
                 template.opsForGeo().radius(key, String.valueOf(currentLocation), radius);
 
@@ -67,6 +84,20 @@ public class LocationServiceImp {
             Point point = geoResult.getContent().getPoint();
             points.add(point);
         }
+=======
+        // Construct Circle object for the radius query
+        Circle circle = new Circle(currentLocation, radius);
+
+//        // Perform radius query
+//        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
+//                template.opsForGeo().radius(key, circle);
+//
+        List<Point> points = new ArrayList<>();
+//        for (GeoResult<RedisGeoCommands.GeoLocation<Point>> geoResult : geoResults) {
+//            Point point = geoResult.getContent().getPoint();
+//            points.add(point);
+//        }
+>>>>>>> main
 
         return R.success(points);
     }
