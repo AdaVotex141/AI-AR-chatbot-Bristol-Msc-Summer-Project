@@ -52,8 +52,10 @@ public class AdminServiceImp extends ServiceImpl<AdminMapper, Admin> implements 
         if(foundAdmin.getPermission() == 0){
             return R.error("Doesn't have permission to the admin panel");
         }
-        AdminHolder.saveAdmin(foundAdmin);
-        log.info("adminHolder:{}", AdminHolder.getAdmin());
+
+        request.getSession().setAttribute("admin", foundAdmin);
+//        AdminHolder.saveAdmin(foundAdmin);
+//        log.info("adminHolder:{}", AdminHolder.getAdmin());
 
         return R.success(foundAdmin);
     }
@@ -92,8 +94,11 @@ public class AdminServiceImp extends ServiceImpl<AdminMapper, Admin> implements 
         lambdaQueryWrapper.eq(Admin::getUsername, admin.getUsername());
 
         Admin foundAdmin = getOne(lambdaQueryWrapper);
+        //get session admin
+        Admin loginAdmin = (Admin) request.getSession(false).getAttribute("admin");
+
         //check current login admin
-        if(foundAdmin == null ||AdminHolder.getAdmin().getPermission() != 2 ||foundAdmin.getPermission() == 2){
+        if(foundAdmin == null ||loginAdmin.getPermission() != 2 ||foundAdmin.getPermission() == 2){
             return R.error("You don't have permission to change others' permission");
         }
 

@@ -5,10 +5,7 @@ import com.example.glife.common.R;
 import com.example.glife.common.RedisConstants;
 import com.example.glife.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.GeoResult;
-import org.springframework.data.geo.GeoResults;
-import org.springframework.data.geo.Point;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -61,7 +58,7 @@ public class LocationServiceImp {
         return R.success("add success");
     }
 
-    public R<List<Point>> getNearByPosition(HttpServletRequest request, double longitude, double latitude){
+    public R<List<Point>> getNearByPosition(double longitude, double latitude){
         Point currentLocation = new Point(longitude, latitude);
 
         Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
@@ -69,7 +66,7 @@ public class LocationServiceImp {
         String key = LOCATION_KEY;
 
         // Construct Circle object for the radius query
-//        Circle circle = new Circle(currentLocation, radius);
+        Circle circle = new Circle(currentLocation, radius);
 
 ////        // Perform radius query
         GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
