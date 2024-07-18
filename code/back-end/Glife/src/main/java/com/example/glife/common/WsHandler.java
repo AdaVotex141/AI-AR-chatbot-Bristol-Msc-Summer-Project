@@ -38,7 +38,7 @@ public class WsHandler extends AbstractWebSocketHandler {
 
     @Autowired
     UserService userService;
-
+//add userServcie
 
     static{
         sessionBeanMap=new ConcurrentHashMap<>();
