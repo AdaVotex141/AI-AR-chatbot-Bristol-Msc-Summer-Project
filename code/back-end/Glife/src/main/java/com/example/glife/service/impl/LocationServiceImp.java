@@ -5,10 +5,7 @@ import com.example.glife.common.R;
 import com.example.glife.common.RedisConstants;
 import com.example.glife.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.GeoResult;
-import org.springframework.data.geo.GeoResults;
-import org.springframework.data.geo.Point;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -29,6 +26,9 @@ public class LocationServiceImp {
     @Autowired
     StringRedisTemplate template;
 
+    @Autowired
+    RedisTemplate<String, Point> redisTemplate;
+
     /**
      *
      * @param session
@@ -36,65 +36,67 @@ public class LocationServiceImp {
      * @param longitude
      * @return
      */
-    public R<String> store(WebSocketSession session, double longitude, double latitude){
+    public R<String> store(WebSocketSession session, double longitude, double latitude) {
+        Long userID = (Long) session.getAttributes().get("userID");
 
-//        Long userID = getUserID(request);
-        Long userID = (Long)session.getAttributes().get("userID");
-
-        if(userID != null && StrUtil.isNotBlank(userID.toString())){
+        if (userID != null && StrUtil.isNotBlank(userID.toString())) {
             String key = LOCATION_KEY;
             Point point = new Point(longitude, latitude);
             String shortUUID = UUID.randomUUID().toString().substring(0, 8);
-            String locationUniqueID =  userID + "-" + shortUUID;
+            String locationUniqueID = shortUUID;
+            Point locationUniqueIDPoint = new Point(longitude, latitude);
 
-            //store in opsForGEO()
-            template.opsForGeo().add(key, point, locationUniqueID);
-        }else{
+            // Store in opsForGeo()
+            redisTemplate.opsForGeo().add(key, point, locationUniqueIDPoint);
+
+            return R.success("Location stored successfully");
+        } else {
             return R.error("Can't find user");
         }
-
-        return R.success("add success");
     }
 
     public R<List<Point>> getNearByPosition(WebSocketSession session, double longitude, double latitude){
         Point currentLocation = new Point(longitude, latitude);
-        Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
+        Distance radius = new Distance(RADIUS, org.springframework.data.geo.Metrics.MILES);
         String key = LOCATION_KEY;
 
-        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
-                template.opsForGeo().radius(key, String.valueOf(currentLocation), radius);
+        // Construct Circle object for the radius query
+        Circle circle = new Circle(currentLocation, radius);
+
+        // Perform radius query
+        GeoResults<RedisGeoCommands.GeoLocation<Point>> geoResults =
+                redisTemplate.opsForGeo().radius(key, circle);
 
         List<Point> points = new ArrayList<>();
-        for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
+        for (GeoResult<RedisGeoCommands.GeoLocation<Point>> geoResult : geoResults) {
             Point point = geoResult.getContent().getPoint();
             points.add(point);
         }
-        //why!!!!!!!!!!!
 
         return R.success(points);
     }
 
-    public R<Map<Point, Long>> getNearByPostionByUser(HttpServletRequest request, double longitude, double latitude){
-        Point currentLocation = new Point(longitude, latitude);
-        Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
-        String key = LOCATION_KEY;
-
-        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
-                template.opsForGeo().radius(key, String.valueOf(currentLocation), radius);
-
-        Map<Point, Long> pointsMap = new HashMap<>();
-        for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
-            Point point = geoResult.getContent().getPoint();
-            String locationID = geoResult.getContent().getName();
-
-            String[] IDs = locationID.split("-");
-            Long userID = Long.parseLong(IDs[0]);
-
-            pointsMap.put(point,userID);
-        }
-
-        return R.success(pointsMap);
-    }
+//    public R<Map<Point, Long>> getNearByPostionByUser(HttpServletRequest request, double longitude, double latitude){
+//        Point currentLocation = new Point(longitude, latitude);
+//        Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
+//        String key = LOCATION_KEY;
+//
+//        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
+//                template.opsForGeo().radius(key, String.valueOf(currentLocation), radius);
+//
+//        Map<Point, Long> pointsMap = new HashMap<>();
+//        for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
+//            Point point = geoResult.getContent().getPoint();
+//            String locationID = geoResult.getContent().getName();
+//
+//            String[] IDs = locationID.split("-");
+//            Long userID = Long.parseLong(IDs[0]);
+//
+//            pointsMap.put(point,userID);
+//        }
+//
+//        return R.success(pointsMap);
+//    }
 
 //    public R<Map<Long, List<Point>>> getNearByPostionByUser(HttpServletRequest request, double longitude, double latitude){
 //        Point currentLocation = new Point(longitude, latitude);
