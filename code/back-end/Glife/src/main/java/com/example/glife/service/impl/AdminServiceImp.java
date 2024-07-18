@@ -89,7 +89,7 @@ public class AdminServiceImp extends ServiceImpl<AdminMapper, Admin> implements 
      */
     public R<String> changePermission(HttpServletRequest request, Admin admin){
         LambdaQueryWrapper<Admin> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Admin::getId, admin.getId());
+        lambdaQueryWrapper.eq(Admin::getUsername, admin.getUsername());
 
         Admin foundAdmin = getOne(lambdaQueryWrapper);
         //check current login admin
