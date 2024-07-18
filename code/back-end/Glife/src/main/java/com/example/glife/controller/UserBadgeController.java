@@ -16,9 +16,10 @@ public class UserBadgeController {
     private UserBadgeService userBadgeService;
 
     @GetMapping("/user/{userId}")
-    public R<List<UserBadge>> getUserBadges(@PathVariable Long userId) {
+    public R<List<Long>> getUserBadges(@PathVariable Long userId) {
         return userBadgeService.getUserBadgesByUserId(userId);
     }
+
 
     @PostMapping
     public R<UserBadge> addUserBadge(@RequestBody UserBadge userBadge) {

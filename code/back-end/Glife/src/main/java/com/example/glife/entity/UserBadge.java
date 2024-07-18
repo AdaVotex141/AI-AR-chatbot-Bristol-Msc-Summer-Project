@@ -5,26 +5,20 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.IdClass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @TableName("user_badge")
+@IdClass(UserBadgeId.class)
 public class UserBadge implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private UserBadgeId id;
+    private Long userId;
+
+    private Long badgeId;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime earnedTime;
-
-    public UserBadgeId getId() {
-        return id;
-    }
-
-    public void setId(UserBadgeId id) {
-        this.id = id;
-    }
 }

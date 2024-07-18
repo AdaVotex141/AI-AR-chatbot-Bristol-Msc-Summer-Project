@@ -15,7 +15,6 @@ public class UserBadgeId implements Serializable {
     }
 
     // Getters and setters
-
     public Long getUserId() {
         return userId;
     }
@@ -31,8 +30,6 @@ public class UserBadgeId implements Serializable {
     public void setBadgeId(Long badgeId) {
         this.badgeId = badgeId;
     }
-
-    // Override equals and hashCode for composite key comparison
 
     @Override
     public boolean equals(Object o) {

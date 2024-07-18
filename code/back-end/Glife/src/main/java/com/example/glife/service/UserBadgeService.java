@@ -6,7 +6,8 @@ import com.example.glife.entity.UserBadge;
 import java.util.List;
 
 public interface UserBadgeService {
-    R<List<UserBadge>> getUserBadgesByUserId(Long userId);
+    R<List<Long>> getUserBadgesByUserId(Long userId);
     R<UserBadge> addUserBadge(UserBadge userBadge);
     R<String> deleteUserBadge(Long userId, Long badgeId);
+    void checkAndAwardFirstTreePlanterBadge(Long userId);
 }
