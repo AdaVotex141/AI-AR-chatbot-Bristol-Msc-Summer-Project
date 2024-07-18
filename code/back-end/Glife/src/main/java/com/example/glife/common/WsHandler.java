@@ -36,6 +36,10 @@ public class WsHandler extends AbstractWebSocketHandler {
     LocationServiceImp locationServiceImp;
 
 
+    @Autowired
+    UserService userService;
+
+
     static{
         sessionBeanMap=new ConcurrentHashMap<>();
         clientID=new AtomicInteger(0);
