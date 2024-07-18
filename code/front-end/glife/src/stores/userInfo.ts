@@ -7,6 +7,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     let loginDays = ref(0)
     let userid = ref(0)
     let email = ref('')
+    let permission = ref(0)
 
     function login(data:any){
         isAuthenticated.value = true
@@ -14,6 +15,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         loginDays.value = data.loginDays
         userid.value = data.id
         email.value = data.email
+        permission.value = data.permission
     }
 
     function logout(){
@@ -22,7 +24,8 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         loginDays.value = 0
         userid.value = 0
         email.value = ''
+        permission.value = 0
     }
 
-    return {isAuthenticated, user, loginDays, userid, email, login, logout}
+    return {isAuthenticated, user, loginDays, userid, email, permission, login, logout}
 })
