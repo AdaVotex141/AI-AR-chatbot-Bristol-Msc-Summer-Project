@@ -26,8 +26,8 @@ public class LocationServiceImp {
     @Autowired
     StringRedisTemplate template;
 
-    @Autowired
-    RedisTemplate<String, Point> redisTemplate;
+//    @Autowired
+//    RedisTemplate<String, Point> redisTemplate;
 
     /**
      *
@@ -47,7 +47,9 @@ public class LocationServiceImp {
             Point locationUniqueIDPoint = new Point(longitude, latitude);
 
             // Store in opsForGeo()
-            redisTemplate.opsForGeo().add(key, point, locationUniqueIDPoint);
+            template.opsForGeo().add(key, point, locationUniqueID);
+
+            //TODO: add treeSum
 
             return R.success("Location stored successfully");
         } else {
@@ -63,15 +65,15 @@ public class LocationServiceImp {
         // Construct Circle object for the radius query
         Circle circle = new Circle(currentLocation, radius);
 
-        // Perform radius query
-        GeoResults<RedisGeoCommands.GeoLocation<Point>> geoResults =
-                redisTemplate.opsForGeo().radius(key, circle);
-
+//        // Perform radius query
+//        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
+//                template.opsForGeo().radius(key, circle);
+//
         List<Point> points = new ArrayList<>();
-        for (GeoResult<RedisGeoCommands.GeoLocation<Point>> geoResult : geoResults) {
-            Point point = geoResult.getContent().getPoint();
-            points.add(point);
-        }
+//        for (GeoResult<RedisGeoCommands.GeoLocation<Point>> geoResult : geoResults) {
+//            Point point = geoResult.getContent().getPoint();
+//            points.add(point);
+//        }
 
         return R.success(points);
     }
