@@ -3,7 +3,6 @@ package com.example.glife.common;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
-import com.example.glife.service.UserService;
 import com.example.glife.service.impl.LocationServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,6 @@ public class WsHandler extends AbstractWebSocketHandler {
     @Autowired
     LocationServiceImp locationServiceImp;
 
-    @Autowired
-    UserService userService;
-
 
     static{
         sessionBeanMap=new ConcurrentHashMap<>();
@@ -69,6 +65,7 @@ public class WsHandler extends AbstractWebSocketHandler {
         if(!session.getAttributes().containsKey(name)){
             session.getAttributes().put("userID", userID);
         }
+
         handleMessageType(session,message.getPayload());
     }
 
@@ -111,14 +108,11 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject){
-//        HttpServletRequest request = getCurrentHttpRequest();
+        HttpServletRequest request = getCurrentHttpRequest();
 
-        if (session != null) {
-            JSONObject userLongtitueObj = jsonObject.getJSONObject("longitude");
-            JSONObject LattitueObj = jsonObject.getJSONObject("latitude");
-            double longitude = userLongtitueObj.getDouble("_value");
-            double latitude = LattitueObj.getDouble("_value");
-
+        if (request != null) {
+            double longitude = jsonObject.getDouble("longitude");
+            double latitude = jsonObject.getDouble("latitude");
 
             List<Point> points = locationServiceImp.getNearByPosition(session, longitude, latitude).getData();
 
@@ -133,6 +127,7 @@ public class WsHandler extends AbstractWebSocketHandler {
                             throw new RuntimeException(e);
                         }
                     }
+
                 }
             } else {
                 points = new ArrayList<>();
@@ -144,21 +139,17 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject){
-//        HttpServletRequest request = getCurrentHttpRequest();
+        HttpServletRequest request = getCurrentHttpRequest();
 
-        if (session != null) {
-            JSONObject userLongtitueObj = jsonObject.getJSONObject("longitude");
-            JSONObject LattitueObj = jsonObject.getJSONObject("latitude");
-            double longitude = userLongtitueObj.getDouble("_value");
-            double latitude = LattitueObj.getDouble("_value");
+        if (request != null) {
+            double longitude = jsonObject.getDouble("longitude");
+            double latitude = jsonObject.getDouble("latitude");
 
-            locationServiceImp.store(session, longitude, latitude);
-            log.info("long:"+longitude+"latitude"+latitude);
+            locationServiceImp.store(request, longitude, latitude);
+            log.info(longitude+""+latitude);
         }
 
     }
-
-
 
 
 
@@ -172,10 +163,10 @@ public class WsHandler extends AbstractWebSocketHandler {
      * this is for getting session in the request
      * @return
      */
-//    private HttpServletRequest getCurrentHttpRequest() {
-//        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//        return (attrs != null) ? attrs.getRequest() : null;
-//    }
+    private HttpServletRequest getCurrentHttpRequest() {
+        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return (attrs != null) ? attrs.getRequest() : null;
+    }
 
 
 

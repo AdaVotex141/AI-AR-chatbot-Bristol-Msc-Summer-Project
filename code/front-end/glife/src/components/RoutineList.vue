@@ -4,7 +4,7 @@
         <input type="checkbox" v-model="todo.completed" @click="props.store.changeCompletedStatus(todo.id)"/>
         <span>{{ todo.text }}</span>
         <div class="right-button">
-          <RoutineEdit :todo="todo" />
+          <RoutineEdit :todo="todo" v-show="!props.isSystemroutine"/>
           <el-button @click="props.store.removeTodo(todo.id)">Remove</el-button>
         </div>
       </li>
