@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 
 import static com.example.glife.common.RedisConstants.LOGIN_CODE_KEY;
 import static com.example.glife.common.RedisConstants.LOGIN_CODE_TTL;
+import static java.lang.Long.valueOf;
 
 @Service
 @Slf4j
@@ -137,6 +138,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         return R.success(foundUser);
     }
 
+
     /**
      *
      * @param request
@@ -178,6 +180,19 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         LocalDate lastLoginDate = lastLogin.toLocalDate();
 
         return now.minusDays(1).isEqual(lastLoginDate);
+    }
+
+    public Long getUserID(String name){
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, name);
+        User foundUser = getOne(lambdaQueryWrapper);
+        
+        if(foundUser != null){
+            return foundUser.getId();
+        }else{
+            log.error("Error-----Can't find user");
+            return valueOf(0);
+        }
     }
 
 
