@@ -9,6 +9,7 @@ import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.domain.geo.GeoLocation;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -43,8 +44,8 @@ public class LocationServiceImp {
             String key = LOCATION_KEY;
             Point point = new Point(longitude, latitude);
             String shortUUID = UUID.randomUUID().toString().substring(0, 8);
-            String locationUniqueID = shortUUID;
-            Point locationUniqueIDPoint = new Point(longitude, latitude);
+            String locationUniqueID = userID+"-"+shortUUID;
+//            Point locationUniqueIDPoint = new Point(longitude, latitude);
 
             // Store in opsForGeo()
             template.opsForGeo().add(key, point, locationUniqueID);
@@ -59,21 +60,24 @@ public class LocationServiceImp {
 
     public R<List<Point>> getNearByPosition(WebSocketSession session, double longitude, double latitude){
         Point currentLocation = new Point(longitude, latitude);
-        Distance radius = new Distance(RADIUS, org.springframework.data.geo.Metrics.MILES);
+        Distance radius = new Distance(RADIUS, Metrics.MILES);
         String key = LOCATION_KEY;
 
         // Construct Circle object for the radius query
         Circle circle = new Circle(currentLocation, radius);
 
-//        // Perform radius query
-//        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
-//                template.opsForGeo().radius(key, circle);
-//
+////        // Perform radius query
+        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
+                template.opsForGeo().radius(key, circle);
+
+
         List<Point> points = new ArrayList<>();
-//        for (GeoResult<RedisGeoCommands.GeoLocation<Point>> geoResult : geoResults) {
-//            Point point = geoResult.getContent().getPoint();
-//            points.add(point);
-//        }
+        if(geoResults != null && geoResults.getContent()!= null && !geoResults.getContent().isEmpty()){
+            for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
+                Point point = geoResult.getContent().getPoint();
+                points.add(point);
+            }
+        }
 
         return R.success(points);
     }

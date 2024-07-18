@@ -19,6 +19,7 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,7 +58,6 @@ public class WsHandler extends AbstractWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
         log.info(sessionBeanMap.get(session.getId()).getID()+":"+message.getPayload());
-
 
 
         JSONObject jsonObject = JSONUtil.parseObj(message.getPayload());
@@ -120,17 +120,24 @@ public class WsHandler extends AbstractWebSocketHandler {
             double latitude = LattitueObj.getDouble("_value");
 
 
-            locationServiceImp.getNearByPosition(session, longitude, latitude);
             List<Point> points = locationServiceImp.getNearByPosition(session, longitude, latitude).getData();
-            for (Point point : points) {
-                double x = point.getX();
-                double y = point.getY();
-                try {
-                    session.sendMessage(new TextMessage(x+","+y));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+            if (points != null && !points.isEmpty()) {
+                for (Point point : points) {
+                    if (point != null) {
+                        double x = point.getX();
+                        double y = point.getY();
+                        try {
+                            session.sendMessage(new TextMessage(x + "," + y));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
+            } else {
+                points = new ArrayList<>();
             }
+
 
         }
 
