@@ -31,7 +31,7 @@
               <p class="text-gray-500 dark:text-gray-400 mb-4">Select your desired routine's period:</p>
               <ul class="space-y-4 mb-4">
                 <li v-for="period in periods" :key="period.value">
-                  <input :id="period.value" name="period" type="radio" :value="period.value" class="hide peer" v-model="editPeriod" />
+                  <input :id="period.value" name="period" type="radio" :value="period.value" class="hidden peer" v-model="editPeriod" />
                   <label :for="period.value" class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
                     <div class="block">
                       <div class="w-full text-lg font-semibold">{{ period.title }}</div>
