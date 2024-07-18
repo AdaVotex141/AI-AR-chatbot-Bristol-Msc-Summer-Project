@@ -67,6 +67,7 @@ public class LocationServiceImp {
             Point point = geoResult.getContent().getPoint();
             points.add(point);
         }
+        //why!!!!!!!!!!!
 
         return R.success(points);
     }
