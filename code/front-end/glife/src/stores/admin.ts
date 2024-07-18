@@ -42,11 +42,12 @@ export const useAdminStore = defineStore('admin',()=>{
         }
     }
 
-    async function removeAdmin(id:number){
+    async function removeAdmin(username:string){
         // Sending api request to the backend
         try{
             const response = await axios.post('/api/admin/remove', {
-                id: id
+                id: 1,
+                username: username
             })
             if(String(response.data.code) !== '1'){
                 console.error('Remove api request fail')
