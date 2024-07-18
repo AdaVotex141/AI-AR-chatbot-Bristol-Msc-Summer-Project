@@ -2,19 +2,17 @@
     <ul>
       <li v-for="(todo) in props.store.filteredTodos" :key="todo.id" :class="{ completed: todo.completed }">
         <input type="checkbox" v-model="todo.completed" @click="props.store.changeCompletedStatus(todo.id)"/>
-        <el-input
-          v-if="isEditing && currentTodoId === todo.id"
-          v-model="editText"
-          @blur="saveTodo(todo.id)"
-          @keyup.enter="saveTodo(todo.id)"
-          autofocus />
-        <span v-else @click="startEditing(todo.id, todo.text)">{{ todo.text }}</span>
-        <el-button @click="props.store.removeTodo(todo.id)">Remove</el-button>
+        <span>{{ todo.text }}</span>
+        <div class="right-button">
+          <RoutineEdit :todo="todo" />
+          <el-button @click="props.store.removeTodo(todo.id)">Remove</el-button>
+        </div>
       </li>
     </ul>
 </template>
 
 <script setup lang="ts">
+import RoutineEdit from './RoutineEdit.vue'
 import {onMounted} from 'vue'
 import {ref} from 'vue'
 import axios from 'axios';
