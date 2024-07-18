@@ -108,8 +108,9 @@ async function login(ruleFormRef: FormInstance | undefined){
           router.push({
             name: nextPageName
           })
+          console.log(response.data.data)
           // Change the user info
-          userInfoStore.login(formLabelAlign.username)
+          userInfoStore.login(response.data.data)
         } else {
           ElMessage({
             message: response.data.msg,
