@@ -187,5 +187,18 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         return now.minusDays(1).isEqual(lastLoginDate);
     }
 
+    public Long getUserID(String name){
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, name);
+        User foundUser = getOne(lambdaQueryWrapper);
+
+        if(foundUser != null){
+            return foundUser.getId();
+        }else{
+            log.error("ERROR-----Can't find user");
+            return null;
+        }
+    }
+
 
 }

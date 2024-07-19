@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.domain.geo.GeoLocation;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,16 +37,23 @@ public class LocationServiceImp {
      * @param longitude
      * @return
      */
-    public R<String> store(double longitude, double latitude){
+    public R<String> store(WebSocketSession session, double longitude, double latitude) {
+        Long userID = (Long) session.getAttributes().get("userID");
 
+        if (userID != null && StrUtil.isNotBlank(userID.toString())) {
             String key = LOCATION_KEY;
             Point point = new Point(longitude, latitude);
-            String locationUniqueID = UUID.randomUUID().toString().substring(0, 8);
+            String shortUUID = UUID.randomUUID().toString().substring(0, 8);
+
+            String locationUniqueID = userID + "-" + shortUUID;
 
             //store in opsForGEO()
             template.opsForGeo().add(key, point, locationUniqueID);
 
-        return R.success("add success");
+            return R.success("add success");
+        }else{
+            return R.error("Can't find user");
+        }
     }
 
     public R<List<Point>> getNearByPosition(double longitude, double latitude){
@@ -58,9 +66,10 @@ public class LocationServiceImp {
         // Construct Circle object for the radius query
         Circle circle = new Circle(currentLocation, radius);
 
-       // Perform radius query
+////        // Perform radius query
         GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
                 template.opsForGeo().radius(key, circle);
+
 
         List<Point> points = new ArrayList<>();
         if(geoResults != null && geoResults.getContent()!= null && !geoResults.getContent().isEmpty()){
@@ -135,15 +144,15 @@ public class LocationServiceImp {
 
 
 
-    private Long getUserID(javax.servlet.http.HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        User user = null;
-        Long userid = Long.valueOf(0);
-        if(session != null && session.getAttribute("user") != null){
-            user = (User) session.getAttribute("user");
-        }
-        userid = user.getId();
-        return userid;
-    }
+//    private Long getUserID(javax.servlet.http.HttpServletRequest request){
+//        HttpSession session = request.getSession(false);
+//        User user = null;
+//        Long userid = Long.valueOf(0);
+//        if(session != null && session.getAttribute("user") != null){
+//            user = (User) session.getAttribute("user");
+//        }
+//        userid = user.getId();
+//        return userid;
+//    }
 
 }
