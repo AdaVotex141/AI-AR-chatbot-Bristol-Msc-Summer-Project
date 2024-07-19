@@ -114,16 +114,19 @@ public class WsHandler extends AbstractWebSocketHandler {
 
     private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject){
             if(session != null){
+
                 JSONObject LongObj = jsonObject.getJSONObject("longitude");
                 JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
                 double longitude = LongObj.getDouble("_value");
                 double latitude = LatitudeObj.getDouble("_value");
 
+                log.info("longtitude:{}, latitude:{}", longitude, latitude);
 
 
             List<Point> points = locationServiceImp.getNearByPosition(longitude, latitude).getData();
 
             if (points != null && !points.isEmpty()) {
+                log.info("getting points");
                 for (Point point : points) {
                     if (point != null) {
                         double x = point.getX();

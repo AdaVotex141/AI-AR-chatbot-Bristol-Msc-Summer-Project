@@ -83,6 +83,7 @@ onMounted(()=>{
   socket.value=new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 50000);
   socket.value.onmessage = (event) => {
+    console.log("111111111")
     const receivedMessage = JSON.parse(event.data);
     const scene = document.querySelector('a-scene');
     const newEntity = document.createElement('a-entity');
