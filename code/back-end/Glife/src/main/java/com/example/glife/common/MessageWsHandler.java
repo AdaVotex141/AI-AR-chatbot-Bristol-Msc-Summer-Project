@@ -68,7 +68,6 @@ public class MessageWsHandler extends TextWebSocketHandler {
         System.out.println("Received message: " + message.getPayload());
         String payload = message.getPayload();
 
-
     }
 
     @Override
