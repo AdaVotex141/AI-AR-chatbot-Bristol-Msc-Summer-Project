@@ -81,7 +81,7 @@ onMounted(()=>{
   userName.value=userInfoStore.user;
   console.log(userName.value);
   socket.value=new WebSocket("ws://localhost:8040/ARtree")
-  intervalId.value = window.setInterval(sendPeriodicMessage, 50000);
+  intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
   socket.value.onmessage = (event) => {
     const receivedMessage = JSON.parse(event.data);
     const scene = document.querySelector('a-scene');

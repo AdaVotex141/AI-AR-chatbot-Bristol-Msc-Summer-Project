@@ -73,9 +73,17 @@ public class LocationServiceImp {
 
         List<Point> points = new ArrayList<>();
         if(geoResults != null && geoResults.getContent()!= null && !geoResults.getContent().isEmpty()){
+            List<String> names = new ArrayList<>();
             for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
-                Point point = geoResult.getContent().getPoint();
-                points.add(point);
+
+                String name = geoResult.getContent().getName();
+                names.add(name);
+            }
+            List<Point> positionList = template.opsForGeo().position(key, names.toArray(new String[0]));
+            for (Point point : positionList) {
+                if (point != null) {
+                    points.add(point);
+                }
             }
         }
 
