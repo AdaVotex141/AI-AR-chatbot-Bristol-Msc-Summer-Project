@@ -183,6 +183,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
         selectRoutine.setSchedule(systemRoutine.getSchedule());
         baseMapper.updateById(selectRoutine);
 
+        deleteInRedis(request);
         return R.success("update successfully");
     }
 

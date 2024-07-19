@@ -100,7 +100,9 @@ public class RoutineServiceImp extends ServiceImpl<RoutineMapper, Routine> imple
         }
 
         selectRoutine.setSchedule(routine.getSchedule());
+
         baseMapper.updateById(selectRoutine);
+        deleteInRedis(request);
 
         return R.success("update successfully");
     }
