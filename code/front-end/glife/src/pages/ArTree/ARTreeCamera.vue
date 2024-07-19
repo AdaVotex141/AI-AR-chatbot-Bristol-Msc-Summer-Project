@@ -3,7 +3,7 @@
     <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false" renderer="antialias: true; alpha: true">
       <a-camera gps-new-camera="gpsMinDistance: 3"></a-camera>
     </a-scene>
-    <button id="myButton" @click="planTree" :style="{backgroundColor:buttonColor}">Plan tree</button>
+    <button id="myButton" @click="plantTree" :style="{backgroundColor:buttonColor}">Plant</button>
     <button id="myButton2" @click="returnToARTree">GO back</button>
   </div>
 </template>
@@ -19,7 +19,7 @@ const socket = ref<WebSocket | null>(null);
 const userName = ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
-function planTree(){
+function plantTree(){
   getLocation();
   if (latitude.value && longitude.value) {
     const scene = document.querySelector('a-scene');
