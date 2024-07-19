@@ -32,28 +32,18 @@ public class LocationServiceImp {
 
     /**
      *
-     * @param request
      * @param latitude
      * @param longitude
      * @return
      */
-    public R<String> store(HttpServletRequest request, double longitude, double latitude){
+    public R<String> store(double longitude, double latitude){
 
-        Long userID = getUserID(request);
-
-        if(userID != null && StrUtil.isNotBlank(userID.toString())){
             String key = LOCATION_KEY;
             Point point = new Point(longitude, latitude);
-            String shortUUID = UUID.randomUUID().toString().substring(0, 8);
-
-            String locationUniqueID =  userID + "-" + shortUUID;
+            String locationUniqueID = UUID.randomUUID().toString().substring(0, 8);
 
             //store in opsForGEO()
             template.opsForGeo().add(key, point, locationUniqueID);
-        }else{
-
-            return R.error("Can't find user");
-        }
 
         return R.success("add success");
     }
@@ -68,10 +58,9 @@ public class LocationServiceImp {
         // Construct Circle object for the radius query
         Circle circle = new Circle(currentLocation, radius);
 
-////        // Perform radius query
+       // Perform radius query
         GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
                 template.opsForGeo().radius(key, circle);
-
 
         List<Point> points = new ArrayList<>();
         if(geoResults != null && geoResults.getContent()!= null && !geoResults.getContent().isEmpty()){
@@ -84,27 +73,27 @@ public class LocationServiceImp {
         return R.success(points);
     }
 
-    public R<Map<Point, Long>> getNearByPostionByUser(HttpServletRequest request, double longitude, double latitude){
-        Point currentLocation = new Point(longitude, latitude);
-        Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
-        String key = LOCATION_KEY;
-
-        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
-                template.opsForGeo().radius(key, String.valueOf(currentLocation), radius);
-
-        Map<Point, Long> pointsMap = new HashMap<>();
-        for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
-            Point point = geoResult.getContent().getPoint();
-            String locationID = geoResult.getContent().getName();
-
-            String[] IDs = locationID.split("-");
-            Long userID = Long.parseLong(IDs[0]);
-
-            pointsMap.put(point,userID);
-        }
-
-        return R.success(pointsMap);
-    }
+//    public R<Map<Point, Long>> getNearByPostionByUser(double longitude, double latitude){
+//        Point currentLocation = new Point(longitude, latitude);
+//        Distance radius = new Distance(RADIUS, RedisGeoCommands.DistanceUnit.METERS);
+//        String key = LOCATION_KEY;
+//
+//        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults =
+//                template.opsForGeo().radius(key, String.valueOf(currentLocation), radius);
+//
+//        Map<Point, Long> pointsMap = new HashMap<>();
+//        for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
+//            Point point = geoResult.getContent().getPoint();
+//            String locationID = geoResult.getContent().getName();
+//
+//            String[] IDs = locationID.split("-");
+//            Long userID = Long.parseLong(IDs[0]);
+//
+//            pointsMap.put(point,userID);
+//        }
+//
+//        return R.success(pointsMap);
+//    }
 
 //    public R<Map<Long, List<Point>>> getNearByPostionByUser(HttpServletRequest request, double longitude, double latitude){
 //        Point currentLocation = new Point(longitude, latitude);

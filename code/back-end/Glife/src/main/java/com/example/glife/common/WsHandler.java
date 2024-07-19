@@ -113,9 +113,7 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject){
-        HttpServletRequest request = getCurrentHttpRequest();
 
-        if (request != null) {
             double longitude = jsonObject.getDouble("longitude");
             double latitude = jsonObject.getDouble("latitude");
 
@@ -139,20 +137,19 @@ public class WsHandler extends AbstractWebSocketHandler {
             }
 
 
-        }
 
     }
 
     private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject){
-        HttpServletRequest request = getCurrentHttpRequest();
+//        HttpServletRequest request = getCurrentHttpRequest();
 
-        if (request != null) {
+//        if (request != null) {
             double longitude = jsonObject.getDouble("longitude");
             double latitude = jsonObject.getDouble("latitude");
 
-            locationServiceImp.store(request, longitude, latitude);
+            locationServiceImp.store(longitude, latitude);
             log.info(longitude+""+latitude);
-        }
+//        }
 
     }
 
@@ -168,10 +165,10 @@ public class WsHandler extends AbstractWebSocketHandler {
      * this is for getting session in the request
      * @return
      */
-    private HttpServletRequest getCurrentHttpRequest() {
-        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return (attrs != null) ? attrs.getRequest() : null;
-    }
+//    private HttpServletRequest getCurrentHttpRequest() {
+//        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        return (attrs != null) ? attrs.getRequest() : null;
+//    }
 
 
 

@@ -12,6 +12,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -81,8 +82,18 @@ public class MessageWsHandler extends TextWebSocketHandler {
 
         log.info("user disconnected:{}", userID);
     }
+//    public void sendAfterLogin(HttpServletRequest request){
+//        //get tasklist before user login
+//        List<String> taskList = template.opsForList().range(USER_MESSAGES + userID, 0, -1);
+//        if (taskList != null && !taskList.isEmpty()) {
+//            for (String task : taskList) {
+//                sendTaskToOneUser(session, task);
+//            }
+//            template.delete(USER_MESSAGES + userID);
+//        }
+//    }
 
-    private void broadCast(String task){
+    public void broadCast(HttpServletRequest request, String task){
         //broadCast all the user online
         for (Map.Entry<Long, WebSocketSession> entry : userSessions.entrySet()){
             WebSocketSession session = entry.getValue();
