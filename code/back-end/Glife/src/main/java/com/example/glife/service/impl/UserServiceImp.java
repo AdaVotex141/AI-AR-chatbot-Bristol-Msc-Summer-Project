@@ -27,8 +27,7 @@ import java.util.concurrent.TimeUnit;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.example.glife.common.RedisConstants.LOGIN_CODE_KEY;
-import static com.example.glife.common.RedisConstants.LOGIN_CODE_TTL;
+import static com.example.glife.common.RedisConstants.*;
 
 @Service
 @Slf4j
@@ -47,6 +46,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 
     @Autowired
     private EmailServiceImp emailServiceImp;
+
 
     /**
      *
@@ -133,6 +133,9 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         //create a new assistant after log in, and store it in session
         assistantService.initializeAssistant();
         session.setAttribute("assistantService", assistantService);
+
+        stringRedisTemplate.opsForSet().remove(USER_OFFLINE,foundUser.getId().toString());
+        stringRedisTemplate.opsForSet().add(USER_ONLINE,foundUser.getId().toString());
         //routineService.init(request);
         return R.success(foundUser);
     }
@@ -145,9 +148,13 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
     public R<String> logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session != null) {
+            User user = (User) session.getAttribute("user");
             session.removeAttribute("user");
+
+
             if(session.getAttribute("assistantService") != null){
                 session.removeAttribute("assistantService");
+
             }
         }
         return R.success("Successfully logout");
