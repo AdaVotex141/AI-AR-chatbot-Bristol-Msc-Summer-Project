@@ -17,6 +17,7 @@ const longitude = ref<number | null>(null);
 const buttonColor = ref('green');
 const socket = ref<WebSocket | null>(null);
 const userName = ref('');
+const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
 function planTree(){
   getLocation();
@@ -58,6 +59,19 @@ function getLocation(){
     console.error("Geolocation is not supported by this browser.");
   }
 }
+function sendPeriodicMessage() {
+  getLocation();
+  if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+    const message = JSON.stringify({
+      type: 'current-location',
+      latitude: latitude,
+      longitude: longitude,
+      userName: userName
+    });
+    socket.value.send(message.toString());
+    console.log('Sent message:', message);
+  }
+}
 function showPosition(position:GeolocationPosition){
   latitude.value = position.coords.latitude;
   longitude.value = position.coords.longitude;
@@ -67,9 +81,19 @@ onMounted(()=>{
   userName.value=userInfoStore.user;
   console.log(userName.value);
   socket.value=new WebSocket("ws://localhost:8040/ARtree")
+  intervalId.value = window.setInterval(sendPeriodicMessage, 50000);
   socket.value.onmessage = (event) => {
     const receivedMessage = JSON.parse(event.data);
-  };
+    const scene = document.querySelector('a-scene');
+    const newEntity = document.createElement('a-entity');
+    newEntity.setAttribute('gltf-model', '/src/assets/3DTree/tree.glb');
+    newEntity.setAttribute('gps-new-entity-place', `latitude: ${receivedMessage.latitude}; longitude: ${receivedMessage.longitude}`);
+    const scaleValue = 0.007;
+    newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
+    if (scene) {
+      scene.appendChild(newEntity);
+    }
+  }
 })
 
 onBeforeUnmount(() => {
