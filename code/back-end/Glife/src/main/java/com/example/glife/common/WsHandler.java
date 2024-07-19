@@ -66,10 +66,10 @@ public class WsHandler extends AbstractWebSocketHandler {
 
         String name = userNameObj != null ? userNameObj.getStr("_value") : null;
         log.info("name is ------:{}", name);
-////        Long userID = userService.getUserID(name);
-//        if(!session.getAttributes().containsKey(name)){
-//            session.getAttributes().put("userID", userID);
-//        }
+        Long userID = userService.getUserID(name);
+        if(!session.getAttributes().containsKey(name)){
+            session.getAttributes().put("userID", userID);
+        }
 
         handleMessageType(session,message.getPayload());
     }
@@ -113,11 +113,13 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject){
-        HttpServletRequest request = getCurrentHttpRequest();
+            if(session != null){
+                JSONObject LongObj = jsonObject.getJSONObject("longitude");
+                JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
+                double longitude = LongObj.getDouble("_value");
+                double latitude = LatitudeObj.getDouble("_value");
 
-        if (request != null) {
-            double longitude = jsonObject.getDouble("longitude");
-            double latitude = jsonObject.getDouble("latitude");
+
 
             List<Point> points = locationServiceImp.getNearByPosition(longitude, latitude).getData();
 
@@ -137,22 +139,20 @@ public class WsHandler extends AbstractWebSocketHandler {
             } else {
                 points = new ArrayList<>();
             }
+            }
 
 
-        }
 
     }
 
     private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject){
-        HttpServletRequest request = getCurrentHttpRequest();
+        JSONObject LongObj = jsonObject.getJSONObject("longitude");
+        JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
+        double longitude = LongObj.getDouble("_value");
+        double latitude = LatitudeObj.getDouble("_value");
 
-        if (request != null) {
-            double longitude = jsonObject.getDouble("longitude");
-            double latitude = jsonObject.getDouble("latitude");
-
-            locationServiceImp.store(request, longitude, latitude);
+            locationServiceImp.store(session, longitude, latitude);
             log.info(longitude+""+latitude);
-        }
 
     }
 
@@ -168,10 +168,10 @@ public class WsHandler extends AbstractWebSocketHandler {
      * this is for getting session in the request
      * @return
      */
-    private HttpServletRequest getCurrentHttpRequest() {
-        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return (attrs != null) ? attrs.getRequest() : null;
-    }
+//    private HttpServletRequest getCurrentHttpRequest() {
+//        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        return (attrs != null) ? attrs.getRequest() : null;
+//    }
 
 
 
