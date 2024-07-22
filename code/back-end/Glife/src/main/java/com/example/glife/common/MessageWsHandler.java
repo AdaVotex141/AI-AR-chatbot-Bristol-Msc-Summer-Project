@@ -44,6 +44,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
                 Long userID = Long.parseLong(userIdStr);
                 session.getAttributes().put("userID", userID);
                 userSessions.put(userID, session);
+
                 template.opsForSet().remove(USER_OFFLINE,userID.toString());
                 template.opsForSet().add(USER_ONLINE,userID.toString());
                 //get tasklist before user login
@@ -93,7 +94,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
 //        }
 //    }
 
-    public void broadCast(HttpServletRequest request, String task){
+    public void broadCast(String task){
         //broadCast all the user online
         for (Map.Entry<Long, WebSocketSession> entry : userSessions.entrySet()){
             WebSocketSession session = entry.getValue();
