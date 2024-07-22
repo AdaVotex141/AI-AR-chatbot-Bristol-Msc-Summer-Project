@@ -8,18 +8,22 @@
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="px-6 py-3">Name</th>
-            <th scope="col" class="px-6 py-3">Permission</th>
-            <th scope="col" class="px-6 py-3">Action</th>
+            <th scope="col" class="px-6 py-3">Task name</th>
+            <th scope="col" class="px-6 py-3">Description</th>
+            <th scope="col" class="px-6 py-3">Creator</th>
+            <th scope="col" class="px-6 py-3">Create time</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="admin in adminStore.admins" :key="admin.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">{{ admin.username }}</div>
+              <div class="text-base font-semibold">Creator</div>
               <!-- <div class="font-normal text-gray-500">{{ admin.email }}</div> -->
             </th>
-            <td class="px-6 py-4">{{ getPermissionString(admin.permission) }}</td>
+            <td class="px-6 py-4">taskname</td>
+            <td class="px-6 py-4">description of task</td>
+            <td class="px-6 py-4">Create time</td>
+            <!-- <td class="px-6 py-4">{{ getPermissionString(admin.permission) }}</td>
             <td class="px-6 py-4">
               <button @click="adminStore.removeAdmin(admin.username)" 
               v-show='admin.permission !== 2 && userInfoStore.permission === 2' 
@@ -27,7 +31,7 @@
               class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
               Remove
             </button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -47,15 +51,7 @@
     adminStore.getAdmins()
   })
   
-  const permissionMap: { [key: number]: string } = {
-    0: 'user',
-    1: 'admin',
-    2: 'root admin'
-  };
-  
-  const getPermissionString = (permission: number): string => {
-    return permissionMap[permission] || 'user';
-  };
+
   </script>
   
   <style scoped>
