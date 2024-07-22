@@ -1,8 +1,16 @@
 package com.example.glife.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.glife.entity.RandomTask;
-import com.example.glife.entity.Routine;
 
-public interface RandomTaskService extends IService<RandomTask> {
+import com.example.glife.common.R;
+import com.example.glife.entity.RandomTask;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+public interface RandomTaskService {
+
+    public R<String> send(HttpServletRequest request, RandomTask randomTask);
+    public R<List<RandomTask>> init(HttpServletRequest request);
+
+
 }
