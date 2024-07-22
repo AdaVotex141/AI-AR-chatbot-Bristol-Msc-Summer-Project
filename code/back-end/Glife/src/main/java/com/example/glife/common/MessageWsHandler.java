@@ -66,9 +66,8 @@ public class MessageWsHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        System.out.println("Received message: " + message.getPayload());
-        String payload = message.getPayload();
-
+//        System.out.println("Received message: " + message.getPayload());
+//        String payload = message.getPayload();
     }
 
     @Override
@@ -82,16 +81,6 @@ public class MessageWsHandler extends TextWebSocketHandler {
 
         log.info("user disconnected:{}", userID);
     }
-//    public void sendAfterLogin(HttpServletRequest request){
-//        //get tasklist before user login
-//        List<String> taskList = template.opsForList().range(USER_MESSAGES + userID, 0, -1);
-//        if (taskList != null && !taskList.isEmpty()) {
-//            for (String task : taskList) {
-//                sendTaskToOneUser(session, task);
-//            }
-//            template.delete(USER_MESSAGES + userID);
-//        }
-//    }
 
     public void broadCast(HttpServletRequest request, String task){
         //broadCast all the user online

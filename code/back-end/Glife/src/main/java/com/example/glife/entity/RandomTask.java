@@ -3,6 +3,7 @@ package com.example.glife.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 
@@ -18,10 +19,9 @@ public class RandomTask {
 
     private String creater;
 
-    private String sender;
-
     private LocalDateTime createTime;
 
-    private LocalDateTime lastSendTime;
+    private int schedule;
+
 
 }
