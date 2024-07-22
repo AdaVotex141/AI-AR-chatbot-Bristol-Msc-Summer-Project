@@ -17,6 +17,12 @@ public class RedisConstants {
 
     public static final String LOCATION_KEY = "location";
 
+    public static final String USER_MESSAGES = "user:messages";
+
+    public static final String USER_ONLINE = "online:";
+
+    public static final String USER_OFFLINE = "offline:";
+
 
     public static final int RADIUS = 10;
 
