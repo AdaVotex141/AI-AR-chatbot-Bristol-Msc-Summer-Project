@@ -13,8 +13,12 @@
         <el-form-item label="Description" prop="description">
             <el-input v-model="formLabelAlign.description" type="textarea" />
         </el-form-item>
-        <el-form-item label="Publish it" prop="isPublish">
-            <el-switch v-model="formLabelAlign.isPublish" />
+        <el-form-item label="Periods" prop="period">
+            <el-radio-group v-model="formLabelAlign.period">
+                <el-radio border value="daily">Daily</el-radio>
+                <el-radio border value="weekly">Weekly</el-radio>
+                <el-radio border value="monthly">Monthly</el-radio>
+            </el-radio-group>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" class="center text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
@@ -41,7 +45,7 @@ const props = defineProps({
 const formLabelAlign = reactive({
     taskname: '',
     description: '',
-    isPublish:false,
+    period:'daily',
 })
 
 const rules = reactive({
@@ -59,6 +63,13 @@ const rules = reactive({
         trigger: 'blur'
     }
     ],
+    period: [
+    {
+      required: true,
+      message: 'Please select the period',
+      trigger: 'change',
+    },
+  ],
 })
 
 async function addNewTask(ruleFormRef: FormInstance | undefined){
