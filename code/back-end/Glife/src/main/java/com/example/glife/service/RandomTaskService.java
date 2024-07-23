@@ -1,5 +1,6 @@
 package com.example.glife.service;
 
+
 import com.example.glife.common.R;
 import com.example.glife.entity.RandomTask;
 
@@ -10,5 +11,6 @@ public interface RandomTaskService {
 
     public R<String> send(HttpServletRequest request, RandomTask randomTask);
     public R<List<RandomTask>> init(HttpServletRequest request);
+
 
 }

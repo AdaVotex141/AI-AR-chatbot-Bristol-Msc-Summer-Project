@@ -1,5 +1,6 @@
 package com.example.glife.service.impl;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.MessageWsHandler;
@@ -73,6 +74,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
         }
         return task;
     }
+
 
 
 
