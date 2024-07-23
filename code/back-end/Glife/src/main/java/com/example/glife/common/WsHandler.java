@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @Slf4j
 public class WsHandler extends AbstractWebSocketHandler {
-    private static Map<String,SessionBean> sessionBeanMap;
+    private static Map<String, SessionBean> sessionBeanMap;
     private static AtomicInteger clientID;
 
     @Autowired
@@ -41,24 +41,24 @@ public class WsHandler extends AbstractWebSocketHandler {
     UserService userService;
 
 
-    static{
-        sessionBeanMap=new ConcurrentHashMap<>();
-        clientID=new AtomicInteger(0);
+    static {
+        sessionBeanMap = new ConcurrentHashMap<>();
+        clientID = new AtomicInteger(0);
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        SessionBean sessionBean=new SessionBean(session,clientID.getAndIncrement());
-        sessionBeanMap.put(session.getId(),sessionBean);
+        SessionBean sessionBean = new SessionBean(session, clientID.getAndIncrement());
+        sessionBeanMap.put(session.getId(), sessionBean);
 
-        log.info(sessionBeanMap.get(session.getId()).getID()+":"+"connect");
+        log.info(sessionBeanMap.get(session.getId()).getID() + ":" + "connect");
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
-        log.info(sessionBeanMap.get(session.getId()).getID()+":"+message.getPayload());
+        log.info(sessionBeanMap.get(session.getId()).getID() + ":" + message.getPayload());
 
 
         JSONObject jsonObject = JSONUtil.parseObj(message.getPayload());
@@ -67,17 +67,17 @@ public class WsHandler extends AbstractWebSocketHandler {
         String name = userNameObj != null ? userNameObj.getStr("_value") : null;
         log.info("name is ------:{}", name);
         Long userID = userService.getUserID(name);
-        if(!session.getAttributes().containsKey(name)){
+        if (!session.getAttributes().containsKey(name)) {
             session.getAttributes().put("userID", userID);
         }
 
-        handleMessageType(session,message.getPayload());
+        handleMessageType(session, message.getPayload());
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         super.handleTransportError(session, exception);
-        if(session.isOpen()){
+        if (session.isOpen()) {
             session.close();
         }
         sessionBeanMap.remove(session.getId());
@@ -86,12 +86,11 @@ public class WsHandler extends AbstractWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
-        log.info(sessionBeanMap.get(session.getId()).getID()+":"+"close");
+        log.info(sessionBeanMap.get(session.getId()).getID() + ":" + "close");
     }
 
 
-
-    private void handleMessageType(WebSocketSession session, String message){
+    private void handleMessageType(WebSocketSession session, String message) {
         log.info("______");
         JSONObject jsonObject = JSONUtil.parseObj(message);
         String type = jsonObject.getStr("type");
@@ -112,13 +111,12 @@ public class WsHandler extends AbstractWebSocketHandler {
         }
     }
 
-    private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject){
-            if(session != null){
-                JSONObject LongObj = jsonObject.getJSONObject("longitude");
-                JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
-                double longitude = LongObj.getDouble("_value");
-                double latitude = LatitudeObj.getDouble("_value");
-
+    private void handleCurrentLocation(WebSocketSession session, JSONObject jsonObject) {
+        if (session != null) {
+            JSONObject LongObj = jsonObject.getJSONObject("longitude");
+            JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
+            double longitude = LongObj.getDouble("_value");
+            double latitude = LatitudeObj.getDouble("_value");
 
 
             List<Point> points = locationServiceImp.getNearByPosition(longitude, latitude).getData();
@@ -128,7 +126,7 @@ public class WsHandler extends AbstractWebSocketHandler {
                     if (point != null) {
                         double x = point.getX();
                         double y = point.getY();
-                        log.info(x+"   "+y);
+                        log.info(x + "   " + y);
                         try {
                             session.sendMessage(new TextMessage(x + "," + y));
                         } catch (IOException e) {
@@ -137,32 +135,34 @@ public class WsHandler extends AbstractWebSocketHandler {
                     }
 
                 }
+                try {
+                    session.sendMessage(new TextMessage("end"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 points = new ArrayList<>();
             }
-            }
-
+        }
 
 
     }
 
-    private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject){
+    private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject) {
         JSONObject LongObj = jsonObject.getJSONObject("longitude");
         JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
         double longitude = LongObj.getDouble("_value");
         double latitude = LatitudeObj.getDouble("_value");
 
-            locationServiceImp.store(session, longitude, latitude);
-            log.info(longitude+""+latitude);
+        locationServiceImp.store(session, longitude, latitude);
+        log.info(longitude + "" + latitude);
 
     }
 
 
-
-    private void handleMSG(WebSocketSession session, JSONObject jsonObject){
+    private void handleMSG(WebSocketSession session, JSONObject jsonObject) {
 
     }
-
 
 
     /**
@@ -173,8 +173,6 @@ public class WsHandler extends AbstractWebSocketHandler {
 //        ServletRequestAttributes attrs =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 //        return (attrs != null) ? attrs.getRequest() : null;
 //    }
-
-
 
 
 }
