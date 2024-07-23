@@ -47,8 +47,6 @@ public class MessageWsHandler extends TextWebSocketHandler {
                 session.getAttributes().put("userID", userID);
                 userSessions.put(userID, session);
 
-                template.opsForSet().remove(USER_OFFLINE,userID.toString());
-                template.opsForSet().add(USER_ONLINE,userID.toString());
 
                 log.info("set Session:{}", userID);
             } catch (NumberFormatException e) {
@@ -73,8 +71,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
         if(userID != null){
             userSessions.remove(userID);
         }
-        template.opsForSet().add(USER_OFFLINE,userID.toString());
-        template.opsForSet().remove(USER_ONLINE,userID.toString());
+
 
         log.info("user disconnected:{}", userID);
     }
@@ -86,6 +83,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
             if(session.isOpen()){
                 try{
                     session.sendMessage(new TextMessage(task));
+
                 } catch (IOException e) {
                     log.error("Failed to send message to user: {}", entry.getKey(), e);
                 }

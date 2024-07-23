@@ -10,10 +10,7 @@ import com.example.glife.service.SystemRoutineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +34,13 @@ public class RandomTaskReceiverController {
     }
 
     @PostMapping("/add")
-    public R<String> add(HttpServletRequest request, String task){
+    public R<String> add(HttpServletRequest request, @RequestBody String task){
         return randomTaskReceiverService.add(request, task);
+    }
+
+    @PostMapping("/length")
+    public R<Long> MessageQueueLength(HttpServletRequest request){
+        return randomTaskReceiverService.MessageQueueLength(request);
     }
 
 
