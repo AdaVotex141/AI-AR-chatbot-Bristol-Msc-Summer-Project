@@ -37,7 +37,9 @@ public class MessageWsHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         // Get userID from session URI
+        log.info("start connection");
         String userIdStr = getUserIdFromSession(session);
+        log.info("find IDStr:{}", userIdStr);
         if (userIdStr != null) {
             try {
                 //set UserID
@@ -48,6 +50,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
                 template.opsForSet().remove(USER_OFFLINE,userID.toString());
                 template.opsForSet().add(USER_ONLINE,userID.toString());
 
+                log.info("set Session:{}", userID);
             } catch (NumberFormatException e) {
                 session.close();
                 throw new IllegalArgumentException("Invalid user ID format", e);

@@ -187,26 +187,15 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     }
 
     /**
-     * TODO
+     *
      * @param request
-     * @param randomTask
+     * @param routine
      * @return
      */
-    public R<String> addFromRandomTask(HttpServletRequest request, RandomTask randomTask){
-//        Long userId = getUserID(request);
-//        SystemRoutine systemRoutine = new SystemRoutine();
-//        systemRoutine.setUserid(userId);
-//        systemRoutine.setType(1);
-//        systemRoutine.setSchedule(randomTask.getShedule());
-//        systemRoutine.setContent(randomTask.getContent());
-//        systemRoutine.setTick(0);
-//        systemRoutine.setCreateTime(LocalDateTime.now());
-//
-//
-//        baseMapper.insert(systemRoutine);
-//        return R.success("add successfully");
+    public R<String> addFromRandomTask(HttpServletRequest request, SystemRoutine routine){
+        baseMapper.insert(routine);
 
-        return null;
+        return R.success("added successfully");
     }
 
     /**
