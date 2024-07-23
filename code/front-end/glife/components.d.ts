@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddAdminButton: typeof import('./src/components/AddAdminButton.vue')['default']
     AddTaskButton: typeof import('./src/components/AddTaskButton.vue')['default']
-    AdminRegister: typeof import('./src/components/AdminRegister.vue')['default']
     AdminRegisterForm: typeof import('./src/components/AdminRegisterForm.vue')['default']
     Clipboard: typeof import('./src/components/Clipboard.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -45,7 +44,6 @@ declare module 'vue' {
     RoutineList: typeof import('./src/components/RoutineList.vue')['default']
     RoutineTags: typeof import('./src/components/RoutineTags.vue')['default']
     TaskForm: typeof import('./src/components/TaskForm.vue')['default']
-    TaskTags: typeof import('./src/components/TaskTags.vue')['default']
     TinyMap: typeof import('./src/components/TinyMap.vue')['default']
   }
 }

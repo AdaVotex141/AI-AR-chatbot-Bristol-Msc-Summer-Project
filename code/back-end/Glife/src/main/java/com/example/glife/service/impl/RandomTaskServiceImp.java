@@ -28,6 +28,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
     public R<String> send(HttpServletRequest request, RandomTask randomTask){
 
         StringBuilder task = buildTask(randomTask);
+        System.out.print(task.toString());
         wsHandler.broadCast(task.toString());
         //websocket session
 
@@ -66,14 +67,14 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
     private StringBuilder buildTask(RandomTask randomTask){
         StringBuilder task = new StringBuilder();
         task.append("Hi, you received a random task!\n");
-        task.append("Title: " + randomTask.getTitle() + "\n");
+        task.append("Title:" + randomTask.getTitle() + "\n");
         task.append("Description:"+randomTask.getDescription()+"\n");
         if(randomTask.getSchedule() == 0){
-            task.append("Schedule: daily");
+            task.append("Schedule: daily\n");
         }else if(randomTask.getSchedule() == 1){
-            task.append("Schedule: weekly");
+            task.append("Schedule: weekly\n");
         }else{
-            task.append("Schedule: monthly");
+            task.append("Schedule: monthly\n");
         }
         return task;
     }
