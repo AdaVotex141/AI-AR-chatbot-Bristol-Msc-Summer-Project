@@ -28,7 +28,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
     public R<String> send(HttpServletRequest request, RandomTask randomTask){
 
         StringBuilder task = buildTask(randomTask);
-        wsHandler.broadCast(request, task.toString());
+        wsHandler.broadCast(task.toString());
 
         //store the message in SQL
         RandomTask storeRandomTask = new RandomTask();
