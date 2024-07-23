@@ -45,5 +45,6 @@ declare module 'vue' {
     RoutineTags: typeof import('./src/components/RoutineTags.vue')['default']
     TaskForm: typeof import('./src/components/TaskForm.vue')['default']
     TinyMap: typeof import('./src/components/TinyMap.vue')['default']
+    UserRandomTask: typeof import('./src/components/UserRandomTask.vue')['default']
   }
 }

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useWebSocketStore } from './websocket'
 
 export const useUserInfoStore = defineStore('userInfo',()=>{
     let isAuthenticated = ref(false)
@@ -8,6 +9,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     let userid = ref('')
     let email = ref('')
     let permission = ref(0)
+    const websocketStore = useWebSocketStore()
 
     function login(data:any){
         isAuthenticated.value = true
@@ -16,6 +18,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         userid.value = String(data.id)
         email.value = data.email
         permission.value = data.permission
+        websocketStore.connect(`ws://localhost:8040/message?userId=${userid.value}`)
     }
 
     function logout(){
@@ -25,6 +28,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         userid.value = ''
         email.value = ''
         permission.value = 0
+        websocketStore.close()
     }
 
     return {isAuthenticated, user, loginDays, userid, email, permission, login, logout}
