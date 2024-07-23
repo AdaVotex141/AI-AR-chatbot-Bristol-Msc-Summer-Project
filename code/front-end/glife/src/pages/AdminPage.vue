@@ -77,21 +77,23 @@
     }
 
     async function logout(){
-      try{
-        const response = await axios.post('/api/logout')
-        if(String(response.data.code) !== '1'){
-          alert('Logout fail, please try again')
-        } else {
-          // Message given to the user
-          alert('logout successful')
-          // Use router to go to the login page
-          router.replace({name:'logout'})
-          // Change the userInfo
-          userInfoStore.logout()
-        }
-      } catch (error) {
-        router.push({name:'notfound'})
-      }
+      // try{
+      //   const response = await axios.post('/api/logout')
+      //   if(String(response.data.code) !== '1'){
+      //     alert('Logout fail, please try again')
+      //   } else {
+      //     // Message given to the user
+      //     alert('logout successful')
+      //     // Use router to go to the login page
+      //     router.replace({name:'logout'})
+      //     // Change the userInfo
+      //     userInfoStore.logout()
+      //   }
+      // } catch (error) {
+      //   router.push({name:'notfound'})
+      // }
+      router.replace({name:'logout'})
+      userInfoStore.logout()
     }
 
 

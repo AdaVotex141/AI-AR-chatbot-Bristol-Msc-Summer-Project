@@ -30,7 +30,7 @@ public class RandomTaskController {
     }
 
     @PostMapping("/send")
-    public R<String> send(HttpServletRequest request, RandomTask randomTask){
+    public R<String> send(HttpServletRequest request, @RequestBody RandomTask randomTask){
         return randomTaskService.send(request, randomTask);
     }
 
