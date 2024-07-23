@@ -14,12 +14,13 @@
         <tbody>
           <tr v-for="task in taskStore.tasks" :key="task.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Creator</div>
+              <div class="text-base font-semibold">{{task.title}}</div>
               <!-- <div class="font-normal text-gray-500">{{ admin.email }}</div> -->
             </th>
-            <td class="px-6 py-4">taskname</td>
-            <td class="px-6 py-4">description of task</td>
-            <td class="px-6 py-4">Create time</td>
+            <td class="px-6 py-4">{{ task.description }}</td>
+            <td class="px-6 py-4">{{ getScheduleLabel(task.schedule) }}</td>
+            <td class="px-6 py-4">{{ task.creator }}</td>
+            <td class="px-6 py-4">{{ task.create_time }}</td>
             <!-- <td class="px-6 py-4">{{ getPermissionString(admin.permission) }}</td>
             <td class="px-6 py-4">
               <button @click="adminStore.removeAdmin(admin.username)" 
@@ -38,16 +39,26 @@
   <script setup lang="ts">
   import { onMounted } from 'vue';
   import AddTaskButton from '@/components/AddTaskButton.vue'
-  import { useUserInfoStore } from '@/stores/userInfo';
   import { useTaskStore } from '@/stores/task';
   
-  const userInfoStore = useUserInfoStore()
   const taskStore = useTaskStore()
   const listHeads = ['Task name', 'Description', 'Schedule', 'Creator', 'Create time']
 
   onMounted(()=>{
     taskStore.getTasks()
   })
+
+  function getScheduleLabel(schedule:number) {
+    if(schedule !== 0 && schedule !== 1 && schedule !== 2){
+      return
+    }
+    const scheduleMap = {
+      0: 'daily',
+      1: 'weekly',
+      2: 'monthly'
+    }
+    return scheduleMap[schedule]
+  }
 
   </script>
   

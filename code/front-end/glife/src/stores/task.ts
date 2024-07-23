@@ -35,11 +35,18 @@ export const useTaskStore = defineStore('task',()=>{
                     id:number;
                     title:string;
                     description:string;
-                    creator:string;
-                    create_time:string;
+                    creater:string;
+                    createTime:string;
                     schedule:number}[] = response.data.data
-                //Save data in the tasks
-                tasks.value = data
+                //Map the data to todos and Sort them with id ascendingly
+                tasks.value = data.map(item => ({
+                    id: item.id,
+                    title: item.title,
+                    description: item.description,
+                    creator: item.creater,
+                    create_time: item.createTime,
+                    schedule: item.schedule
+                }))
             } else {
                 alert('Backend give a code 0?') // TODO: need to be deleted after ensuring the fault
                 router.push({name:'notfound'});
