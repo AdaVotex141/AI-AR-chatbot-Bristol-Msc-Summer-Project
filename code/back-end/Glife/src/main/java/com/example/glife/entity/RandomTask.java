@@ -17,7 +17,7 @@ public class RandomTask {
 
     private String title;
 
-    private String content;
+    private String description;
 
     private String creater;
 
