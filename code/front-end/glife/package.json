@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "@ar-js-org/ar.js": "^3.4.5",
+    "@googlemaps/js-api-loader": "^1.16.6",
     "@headlessui/vue": "^1.7.22",
     "@heroicons/vue": "^2.1.4",
     "axios": "^1.7.2",
     "clipboard": "^2.0.11",
     "element-plus": "^2.7.5",
     "engine.io-client": "^6.6.0",
+    "json-bigint": "^1.0.0",
     "leaflet": "^1.9.4",
     "nice-color-palettes": "^3.0.0",
     "pinia": "^2.1.7",
@@ -27,10 +29,12 @@
     "vite-plugin": "^0.0.0",
     "vue": "^3.4.21",
     "vue-cookies": "^1.8.4",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "vue3-google-map": "^0.20.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "@types/google.maps": "^3.55.11",
     "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",
