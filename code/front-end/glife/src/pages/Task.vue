@@ -17,10 +17,10 @@
               <div class="text-base font-semibold">{{task.title}}</div>
               <!-- <div class="font-normal text-gray-500">{{ admin.email }}</div> -->
             </th>
-            <td class="px-6 py-4">{{ task.description }}</td>
-            <td class="px-6 py-4">{{ getScheduleLabel(task.schedule) }}</td>
-            <td class="px-6 py-4">{{ task.creator }}</td>
-            <td class="px-6 py-4">{{ task.create_time }}</td>
+            <td class="table-cell">{{ task.description }}</td>
+            <td class="table-cell">{{ getScheduleLabel(task.schedule) }}</td>
+            <td class="table-cell">{{ task.creator }}</td>
+            <td class="table-cell">{{ task.create_time }}</td>
             <!-- <td class="px-6 py-4">{{ getPermissionString(admin.permission) }}</td>
             <td class="px-6 py-4">
               <button @click="adminStore.removeAdmin(admin.username)" 
@@ -63,6 +63,13 @@
   </script>
   
   <style scoped>
+  .table-cell {
+    padding: 1.5rem; 
+    max-width: 200px; 
+    word-wrap: break-word; 
+    white-space: normal; 
+  }
+  
   .right-button{
     display: flex;
     justify-content: flex-end;

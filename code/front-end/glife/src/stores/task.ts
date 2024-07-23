@@ -28,7 +28,6 @@ export const useTaskStore = defineStore('task',()=>{
     async function getTasks(){
         try{
             const response = await axios.post('/api/admin/randomTask/init')
-            console.log(response.data.data)
             if(String(response.data.code) === '1'){
                 //Get the data from response
                 const data: {

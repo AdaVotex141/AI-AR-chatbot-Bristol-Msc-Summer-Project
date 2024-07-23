@@ -62,8 +62,12 @@
     isDesktop.value = window.innerWidth > 600;
   };
 
+  const socket = ref<WebSocket | null>(null)
+
   onMounted(() => {
     window.addEventListener('resize', checkScreenSize);
+    // add websocket
+    connetWebsocket()
   });
 
   onBeforeUnmount(() => {
@@ -102,6 +106,14 @@
         }
       } catch (error) {
         router.push({name:'notfound'})
+      }
+    }
+
+    function connetWebsocket(){
+      const userId = String(userInfoStore.userid)
+      socket.value = new WebSocket(`ws://localhost:8040/message&userId=${userId}`)
+      socket.value.onmessage = (event) => {
+        console.log(event.data)
       }
     }
 
