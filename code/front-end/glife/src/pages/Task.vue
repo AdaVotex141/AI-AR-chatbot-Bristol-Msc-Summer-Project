@@ -1,129 +1,91 @@
 <template>
-    <div class="routine-container">
-    <el-container class="dayroutine-app">
-      <el-header>{{ getCurrentDate() }} Routine: </el-header>
-      <el-main>
-
-        <el-divider content-position="left">Your {{dayroutineStore.activeTab}} routines:</el-divider>
-        <!-- RoutineList -->
-
-      </el-main>
-    </el-container>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <!-- Add new admin button -->
+      <div class="right-button">
+        <AddTaskButton />
+      </div>
+      <!-- Table -->
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th v-for="listHead in listHeads" scope="col" class="px-6 py-3">{{listHead}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="task in taskStore.tasks" :key="task.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="text-base font-semibold">{{task.title}}</div>
+              <!-- <div class="font-normal text-gray-500">{{ admin.email }}</div> -->
+            </th>
+            <td class="table-cell">{{ task.description }}</td>
+            <td class="table-cell">{{ getScheduleLabel(task.schedule) }}</td>
+            <td class="table-cell">{{ task.creator }}</td>
+            <td class="table-cell">{{ task.create_time }}</td>
+            <!-- <td class="px-6 py-4">{{ getPermissionString(admin.permission) }}</td>
+            <td class="px-6 py-4">
+              <button @click="adminStore.removeAdmin(admin.username)" 
+              v-show='admin.permission !== 2 && userInfoStore.permission === 2' 
+              type="button" 
+              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+              Remove
+            </button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
     </div>
-</template>
+  </template>
+  
+  <script setup lang="ts">
+  import { onMounted } from 'vue';
+  import AddTaskButton from '@/components/AddTaskButton.vue'
+  import { useTaskStore } from '@/stores/task';
+  
+  const taskStore = useTaskStore()
+  const listHeads = ['Task name', 'Description', 'Schedule', 'Creator', 'Create time']
 
-<script setup lang='ts'>
-import RoutineTags from '@/components/RoutineTags.vue'
-import RoutineDialog from '@/components/RoutineDialog.vue'
-import RoutineList from '@/components/RoutineList.vue';
-import { useDayroutineStore } from '@/stores/dayroutine';
-import { useSystemroutineStore } from '@/stores/systemroutine';
+  onMounted(()=>{
+    taskStore.getTasks()
+  })
 
-const dayroutineStore = useDayroutineStore()
-const systemroutineStore = useSystemroutineStore()
+  function getScheduleLabel(schedule:number) {
+    if(schedule !== 0 && schedule !== 1 && schedule !== 2){
+      return
+    }
+    const scheduleMap = {
+      0: 'daily',
+      1: 'weekly',
+      2: 'monthly'
+    }
+    return scheduleMap[schedule]
+  }
 
-// Get the date information
-function getCurrentDate() {
-    return new Date().toLocaleDateString('en-GB');
-}
-
-</script>
-
-<style scoped>
-@media(max-width: 600px) {
-.routine-container {
-    margin: 0 auto;
-    width: 100vw;
-    height: 90vh;
-}
-.el-header{
+  </script>
+  
+  <style scoped>
+  .table-cell {
+    padding: 1.5rem; 
+    max-width: 200px; 
+    word-wrap: break-word; 
+    white-space: normal; 
+  }
+  
+  .right-button{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .addButton {
+    padding: 10px;
+    margin: 5px;
     background-color: #9cb470;
-    padding: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-    color: whitesmoke;
-    font-weight: bold;
-    font-family: 'Cooper Black',sans-serif;
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: 0.8rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-}
-
-@media(min-width: 601px) {
-.routine-container  {
-    margin-top: 2.5rem;
-    width: 60vw;
-    height: 90vh;
-    margin-left: auto;
-    margin-right: auto;
-}
-.el-header{
-    background-color: #9cb470;
-    padding: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-    color: whitesmoke;
-    font-weight: bold;
-    font-family: 'Cooper Black',sans-serif;
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: 0.8rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    top: 5%;
-}
-}
-.add-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.el-main{
-overflow-y: hidden;
-}
-.user-input {
-display: flex;
-align-items: center;
-position: sticky;
-top: 0;
-z-index: 99;
-}
-
-.todo-app {
-max-width: 500px;
-margin: 0 auto;
-text-align: center;
-}
-
-input[type="text"] {
-width: 80%;
-padding: 10px;
-margin: 10px 0;
-}
-
-button {
-padding: 10px;
-margin: 5px;
-background-color: #9cb470;
-border-color: transparent;
-}
-
-button:hover {
-background-color:darkseagreen;
-color: #fff;
-border-color: transparent;
-}
-
-.systemroutine {
-background-color: gold;
-}
-
-</style>
+    border-color: transparent;
+  }
+  
+  .addButton:hover {
+    background-color:darkseagreen;
+    color: #fff;
+    border-color: transparent;
+  }
+  </style>
+  

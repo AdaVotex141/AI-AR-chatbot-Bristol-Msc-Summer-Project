@@ -37,6 +37,17 @@ import axios from 'axios';
 import { ElMessage, type FormInstance } from 'element-plus';
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
+import JSONBIG from 'json-bigint'
+
+axios.defaults.transformResponse = [
+  function (data){
+    const json = JSONBIG({
+      storeAsString: true
+    })
+    const res = json.parse(data)
+    return res
+  }
+]
 
 const userInfoStore = useUserInfoStore()
 
@@ -108,7 +119,6 @@ async function login(ruleFormRef: FormInstance | undefined){
           router.push({
             name: nextPageName
           })
-          console.log(response.data.data)
           // Change the user info
           userInfoStore.login(response.data.data)
         } else {

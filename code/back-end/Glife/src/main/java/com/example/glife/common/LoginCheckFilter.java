@@ -87,6 +87,7 @@ public class LoginCheckFilter implements Filter {
                 "/admin/**",
                 "/badges/**",
                 "/user_badges/**"
+                "/message/**"
         };
         for(String url: urls){
             if(PATH_MATCHER.match(url,requestURI)){

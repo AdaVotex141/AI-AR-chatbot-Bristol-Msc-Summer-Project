@@ -90,6 +90,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         newUser.setCreateTime(LocalDateTime.now());
         baseMapper.insert(newUser);
 
+
         return R.success("Register success");
     }
 
@@ -149,8 +150,11 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         HttpSession session = request.getSession(false);
         if (session != null) {
             User user = (User) session.getAttribute("user");
+            Long userID = user.getId();
             session.removeAttribute("user");
 
+            stringRedisTemplate.opsForSet().add(USER_OFFLINE,userID.toString());
+            stringRedisTemplate.opsForSet().remove(USER_ONLINE,userID.toString());
 
             if(session.getAttribute("assistantService") != null){
                 session.removeAttribute("assistantService");
@@ -185,6 +189,19 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         LocalDate lastLoginDate = lastLogin.toLocalDate();
 
         return now.minusDays(1).isEqual(lastLoginDate);
+    }
+
+    public Long getUserID(String name){
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, name);
+        User foundUser = getOne(lambdaQueryWrapper);
+
+        if(foundUser != null){
+            return foundUser.getId();
+        }else{
+            log.error("ERROR-----Can't find user");
+            return null;
+        }
     }
 
 

@@ -29,4 +29,4 @@ public class WebSockeconfig implements WebSocketConfigurer {
         registry.addHandler(wsHandler,"/ARtree").addInterceptors(ARtreeInterceptor).setAllowedOrigins("*");
         registry.addHandler(messageWsHandler,"/message").addInterceptors(messageInterceptor).setAllowedOrigins("*");
     }
-}
+}//webo/message&userId=238908290348093289023
