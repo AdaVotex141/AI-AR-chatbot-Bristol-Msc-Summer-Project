@@ -18,6 +18,7 @@
             <div class="title" @click="navigateTo('startpage')">Glife</div>
           </el-menu-item>
           <div class="flex-grow" />
+          <el-menu-item index="/mainpage/dashboard" @click="navigateTo('dashboard')">DashBoard</el-menu-item>
           <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Chat</el-menu-item>
           <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Routine</el-menu-item>
           <el-sub-menu index="3">
