@@ -82,7 +82,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
         log.info("user disconnected:{}", userID);
     }
 
-    public void broadCast(HttpServletRequest request, String task){
+    public void broadCast(String task){
         //broadCast all the user online
         for (Map.Entry<Long, WebSocketSession> entry : userSessions.entrySet()){
             WebSocketSession session = entry.getValue();
