@@ -86,7 +86,7 @@ public class LoginCheckFilter implements Filter {
                 "/system_routine/**",
                 "/admin/**",
                 "/badges/**",
-                "/user_badges/**"
+                "/user_badges/**",
                 "/message/**"
         };
         for(String url: urls){

@@ -21,10 +21,10 @@ public class UserBadgeController {
     }
 
 
-    @PostMapping
-    public R<UserBadge> addUserBadge(@RequestBody UserBadge userBadge) {
-        return userBadgeService.addUserBadge(userBadge);
-    }
+//    @PostMapping
+//    public R<UserBadge> addUserBadge(@RequestBody UserBadge userBadge) {
+//        return userBadgeService.addUserBadge(userBadge);
+//    }
 
     @DeleteMapping("/user/{userId}/badge/{badgeId}")
     public R<String> deleteUserBadge(@PathVariable Long userId, @PathVariable Long badgeId) {

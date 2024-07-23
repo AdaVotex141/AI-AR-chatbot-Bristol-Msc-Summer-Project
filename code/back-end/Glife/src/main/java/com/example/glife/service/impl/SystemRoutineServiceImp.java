@@ -15,10 +15,7 @@ import com.example.glife.entity.SystemRoutine;
 import com.example.glife.entity.User;
 import com.example.glife.mapper.SystemRoutineMapper;
 import com.example.glife.mapper.UserMapper;
-import com.example.glife.service.AssistantService;
-import com.example.glife.service.SystemRoutineService;
-import com.example.glife.service.UserService;
-import com.example.glife.service.UserTreeService;
+import com.example.glife.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -44,6 +41,9 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
     StringRedisTemplate stringRedisTemplate;
     @Autowired
     UserTreeService userTreeService;
+    @Autowired
+    UserBadgeService userBadgeService;
+
 
     /**
      *
@@ -131,16 +131,27 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
             return R.error("fail to find this routine");
         }
 
+        boolean firstCompletion = false;
+
         if(selectRoutine.getTick() == 0){
             selectRoutine.setTick(1);
             userTreeService.update(request);
+            firstCompletion = true;
         }else if(selectRoutine.getTick() == 1){
             selectRoutine.setTick(0);
             userTreeService.reUpdate(request);
         }
+
+
         baseMapper.updateById(selectRoutine);
         deleteInRedis(request);
 
+        if (firstCompletion) {
+            Long userId = getUserID(request);
+            if (selectRoutine.getType() == 1) {
+                userBadgeService.checkAndAwardFirstTaskAchieverBadge(userId);
+            }
+        }
 
         return R.success(selectRoutine);
     }
@@ -193,6 +204,8 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
      * @return
      */
     public R<String> addFromRandomTask(HttpServletRequest request, SystemRoutine routine){
+        routine.setType(1);
+        routine.setTick(0);
         baseMapper.insert(routine);
 
         return R.success("added successfully");

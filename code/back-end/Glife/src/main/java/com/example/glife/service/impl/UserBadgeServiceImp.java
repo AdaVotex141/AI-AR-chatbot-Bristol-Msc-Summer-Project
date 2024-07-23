@@ -43,17 +43,34 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
         }
     }
 
-    @Override
-    public R<UserBadge> addUserBadge(UserBadge userBadge) {
-        Long userId = userBadge.getUserId();
-        if (userExists(userId)) {
-            save(userBadge);
-            return R.success(userBadge);
-        } else {
-            return R.error("User not found");
+//    @Override
+//    public R<UserBadge> addUserBadge(UserBadge userBadge) {
+//        Long userId = userBadge.getUserId();
+//        if (userExists(userId)) {
+//            save(userBadge);
+//            return R.success(userBadge);
+//        } else {
+//            return R.error("User not found");
+//        }
+//    }
+    @Transactional
+    public void checkAndAwardFirstTaskAchieverBadge(Long userId) {
+        LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserBadge::getUserId, userId)
+                .eq(UserBadge::getBadgeId, 1L); // Badge ID 1 for First Task Achiever Badge
+
+        UserBadge existingBadge = baseMapper.selectOne(queryWrapper);
+
+        if (existingBadge == null) {
+            // Award the badge
+            UserBadge newBadge = new UserBadge();
+            newBadge.setUserId(userId);
+            newBadge.setBadgeId(1L);  // Badge ID 1 for First Task Achiever Badge
+            newBadge.setEarnedTime(LocalDateTime.now());
+
+            baseMapper.insert(newBadge);
         }
     }
-
     @Transactional
     public void checkAndAwardFirstTreePlanterBadge(Long userId) {
         // Check if the user has already planted a tree

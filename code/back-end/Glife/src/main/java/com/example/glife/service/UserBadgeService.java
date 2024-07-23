@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface UserBadgeService {
     R<List<Long>> getUserBadgesByUserId(Long userId);
-    R<UserBadge> addUserBadge(UserBadge userBadge);
+//    R<UserBadge> addUserBadge(UserBadge userBadge);
     R<String> deleteUserBadge(Long userId, Long badgeId);
     void checkAndAwardFirstTreePlanterBadge(Long userId);
+    void checkAndAwardFirstTaskAchieverBadge(Long userId);
+
 }
