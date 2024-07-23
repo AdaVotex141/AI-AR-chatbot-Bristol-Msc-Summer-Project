@@ -29,6 +29,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
 
         StringBuilder task = buildTask(randomTask);
         wsHandler.broadCast(task.toString());
+        //websocket session
 
         //store the message in SQL
         RandomTask storeRandomTask = new RandomTask();
@@ -42,7 +43,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
 
         storeRandomTask.setCreater(admin.getUsername());
         storeRandomTask.setCreateTime(LocalDateTime.now());
-        storeRandomTask.setContent(randomTask.getContent());
+        storeRandomTask.setDescription(randomTask.getDescription());
         storeRandomTask.setTitle(randomTask.getTitle());
         baseMapper.insert(randomTask);
 
@@ -64,7 +65,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
         StringBuilder task = new StringBuilder();
         task.append("Hi, you received a random task!\n");
         task.append("Title: " + randomTask.getTitle() + "\n");
-        task.append("Description:"+randomTask.getContent()+"\n");
+        task.append("Description:"+randomTask.getDescription()+"\n");
         if(randomTask.getSchedule() == 0){
             task.append("Schedule: daily");
         }else if(randomTask.getSchedule() == 1){
