@@ -29,7 +29,7 @@ import static com.example.glife.common.RedisConstants.*;
 public class MessageWsHandler extends TextWebSocketHandler {
 
     //<userID, session>
-    private static ConcurrentMap<Long, WebSocketSession> userSessions = new ConcurrentHashMap<>();
+    public static ConcurrentMap<Long, WebSocketSession> userSessions = new ConcurrentHashMap<>();
     //User online
     @Autowired
     StringRedisTemplate template;
@@ -47,14 +47,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
 
                 template.opsForSet().remove(USER_OFFLINE,userID.toString());
                 template.opsForSet().add(USER_ONLINE,userID.toString());
-                //get tasklist before user login
-                List<String> taskList = template.opsForList().range(USER_MESSAGES + userID, 0, -1);
-                if (taskList != null && !taskList.isEmpty()) {
-                    for (String task : taskList) {
-                        sendTaskToOneUser(session, task);
-                    }
-                    template.delete(USER_MESSAGES + userID);
-                }
+
             } catch (NumberFormatException e) {
                 session.close();
                 throw new IllegalArgumentException("Invalid user ID format", e);
@@ -105,13 +98,33 @@ public class MessageWsHandler extends TextWebSocketHandler {
         }
     }
 
+//    public void sendTaskList(WebSocketSession session){
+//        // Get userID from session URI
+//        String userIdStr = getUserIdFromSession(session);
+//        Long userID = Long.parseLong(userIdStr);
+//        //get tasklist before user login
+//        String task = template.opsForList().leftPop(USER_MESSAGES+userID);
+//        if(task!= null){
+//            sendTaskToOneUser(session,task);
+//        }else{
+//            log.info("No tasks found for user: {}", userID);
+//        }
+////        List<String> taskList = template.opsForList().range(USER_MESSAGES + userID, 0, -1);
+////        if (taskList != null && !taskList.isEmpty()) {
+////            for (String task : taskList) {
+////                sendTaskToOneUser(session, task);
+////            }
+////            template.delete(USER_MESSAGES + userID);
+////        }
+//    }
+
 
     /**
      * this is one to one message
      * @param session
      * @param task
      */
-    private void sendTaskToOneUser(WebSocketSession session, String task) {
+    public void sendTaskToOneUser(WebSocketSession session, String task) {
         try {
             if (session.isOpen()) {
                 session.sendMessage(new TextMessage(task));
@@ -121,7 +134,7 @@ public class MessageWsHandler extends TextWebSocketHandler {
         }
     }
 
-    private static String getUserIdFromSession(WebSocketSession session) {
+    public static String getUserIdFromSession(WebSocketSession session) {
         URI sessionUri = session.getUri();
         if (sessionUri != null) {
             String query = sessionUri.getQuery();
