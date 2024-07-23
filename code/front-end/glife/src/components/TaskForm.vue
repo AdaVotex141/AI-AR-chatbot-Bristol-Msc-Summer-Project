@@ -15,14 +15,14 @@
         </el-form-item>
         <el-form-item label="Periods" prop="period">
             <el-radio-group v-model="formLabelAlign.period">
-                <el-radio border value="daily">Daily</el-radio>
-                <el-radio border value="weekly">Weekly</el-radio>
-                <el-radio border value="monthly">Monthly</el-radio>
+                <el-radio border value="0">Daily</el-radio>
+                <el-radio border value="1">Weekly</el-radio>
+                <el-radio border value="2">Monthly</el-radio>
             </el-radio-group>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" class="center text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-            @click="addNewTask(ruleFormRef)">Add</el-button>
+            @click="addNewTask(ruleFormRef)">Publish</el-button>
         </el-form-item>
     </el-form>
   </template>
@@ -31,7 +31,8 @@
 import { reactive, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage, type FormInstance } from 'element-plus';
-import router from "@/router";
+import { useTaskStore } from '@/stores/task';
+import router from '@/router';
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -45,7 +46,7 @@ const props = defineProps({
 const formLabelAlign = reactive({
     taskname: '',
     description: '',
-    period:'daily',
+    period:'0',
 })
 
 const rules = reactive({
@@ -72,6 +73,8 @@ const rules = reactive({
   ],
 })
 
+const taksStore = useTaskStore()
+
 async function addNewTask(ruleFormRef: FormInstance | undefined){
     if (!ruleFormRef) return
     await ruleFormRef.validate(async (valid) => {
@@ -81,36 +84,37 @@ async function addNewTask(ruleFormRef: FormInstance | undefined){
             type: 'warning'
             })
         } else {
-            // // Send api request to the back end, TODO -----
-            // try{
-            //     const response = await axios.post('/api/admin/add',{
-            //         taskname: formLabelAlign.taskname,
-            //         description: formLabelAlign.description,
-            //     })
-            //     // Check if the register is successful
-            //     if(String(response.data.code) === '1'){
-            //         ElMessage({
-            //             message: 'Congrats, adding new task successfully',
-            //             type: 'success'
-            //         })
-            //         formLabelAlign.taskname = '';
-            //         formLabelAlign.description = '';
-            //         // Turn off the modal and call get function
-            //         adminStore.getAdmins()
-            //         props.toggleModal()
-            //     } else {
-            //         ElMessage({
-            //             message: response.data.msg,
-            //             type: 'error'
-            //         })
-            //     }
-            // } catch (error){
-            //     console.error('Error sending data:', error)
-            //     alert('Error sending data')
-            //     router.push({
-            //     name:'notfound'
-            //     })
-            // }
+            // Send api request to the back end (add a new task)
+            try{
+                const response = await axios.post('/api/admin/randomTask/send',{
+                    title: formLabelAlign.taskname,
+                    description: formLabelAlign.description,
+                    schedule: Number(formLabelAlign.period)
+                })
+                // Check if the register is successful
+                if(String(response.data.code) === '1'){
+                    ElMessage({
+                        message: 'Congrats, adding new task successfully',
+                        type: 'success'
+                    })
+                    formLabelAlign.taskname = '';
+                    formLabelAlign.description = '';
+                    // Turn off the modal and call get function
+                    taksStore.getTasks()
+                    props.toggleModal()
+                } else {
+                    ElMessage({
+                        message: response.data.msg,
+                        type: 'error'
+                    })
+                }
+            } catch (error){
+                console.error('Error sending data:', error)
+                alert('Error sending data')
+                router.push({
+                name:'notfound'
+                })
+            }
         }          
     })
 }
