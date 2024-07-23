@@ -16,6 +16,7 @@ import { protectedPaths } from './protectedPaths'
 import AdminPage from '@/pages/AdminPage.vue'
 import MemberList from '@/pages/MemberList.vue'
 import Task from '@/pages/Task.vue'
+import DashBoard from '@/pages/DashBoard.vue'
 
 //create router
 const router = createRouter({
@@ -56,11 +57,11 @@ const router = createRouter({
                     path:'mybadge',
                     component: BadgeSystem
                 },
-                // {
-                //     name:'artree-camera',
-                //     path:'artree-camera',
-                //     component: ARTreeCamera
-                // }
+                {
+                    name:'dashboard',
+                    path:'dashboard',
+                    component: DashBoard
+                }
             ],
             redirect:'/mainpage/chatwindow'
         },
