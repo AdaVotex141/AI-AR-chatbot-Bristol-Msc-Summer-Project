@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false" renderer="antialias: true; alpha: true">
+    <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
+             renderer="antialias: true; alpha: true">
       <a-camera gps-new-camera="gpsMinDistance: 3"></a-camera>
     </a-scene>
     <button id="myButton" @click="plantTree" :style="{backgroundColor:buttonColor}">Plant</button>
@@ -9,9 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted ,onBeforeUnmount} from 'vue';
+import {ref, onMounted, onBeforeUnmount} from 'vue';
 import router from "@/router";
-import { useUserInfoStore } from '@/stores/userInfo';
+import {useUserInfoStore} from '@/stores/userInfo';
+
 const latitude = ref<number | null>(null);
 const longitude = ref<number | null>(null);
 const buttonColor = ref('green');
@@ -19,49 +21,53 @@ const socket = ref<WebSocket | null>(null);
 const userName = ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
-function plantTree(){
+
+function addModel(a: number, b: number) {
+  const scene = document.querySelector('a-scene');
+  if (scene) {
+    const newEntity = document.createElement('a-entity');
+    newEntity.setAttribute('gltf-model', '/src/assets/3DTree/tree.glb');
+    newEntity.setAttribute('gps-new-entity-place', `latitude: ${a + 0.000015}; longitude: ${b}`);
+    const scaleValue = 0.007;
+    newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
+    scene.appendChild(newEntity);
+  } else {
+    console.error('a-scene not found.');
+  }
+}
+
+function plantTree() {
   getLocation();
   if (latitude.value && longitude.value) {
-    const scene = document.querySelector('a-scene');
-    if (scene) {
-      const newEntity = document.createElement('a-entity');
-      newEntity.setAttribute('gltf-model', '/src/assets/3DTree/tree.glb');
-      newEntity.setAttribute('gps-new-entity-place', `latitude: ${latitude.value+ 0.000015}; longitude: ${longitude.value}`);
-      const scaleValue = 0.007;
-      console.log(latitude.value);
-      console.log(longitude.value);
-      newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
-      scene.appendChild(newEntity);
-      buttonColor.value = 'grey';
-      if (socket.value && socket.value.readyState === WebSocket.OPEN) {
-        const message = JSON.stringify({
-          type: 'plant-location',
-          latitude: latitude,
-          longitude: longitude,
-          userName: userName
-        });
-        socket.value.send(message.toString());
-        console.log("yes")
-      } else {
-        console.error('WebSocket is not open.');
-      }
+    addModel(latitude.value, longitude.value);
+    buttonColor.value = 'grey';
+    if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+      const message = JSON.stringify({
+        type: 'plant-location',
+        latitude: latitude,
+        longitude: longitude,
+        userName: userName
+      });
+      socket.value.send(message.toString());
     } else {
-      console.error('a-scene not found.');
+      console.error('WebSocket is not open.');
     }
   } else {
     console.error('Latitude and/or Longitude not available.');
   }
 }
-function getLocation(){
+
+function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
     console.error("Geolocation is not supported by this browser.");
   }
 }
+
 function sendPeriodicMessage() {
   getLocation();
-  if(latitude.value && longitude.value){
+  if (latitude.value && longitude.value) {
     if (socket.value && socket.value.readyState === WebSocket.OPEN) {
       const message = JSON.stringify({
         type: 'current-location',
@@ -70,32 +76,27 @@ function sendPeriodicMessage() {
         userName: userName
       });
       socket.value.send(message.toString());
-      console.log('Sent message:', message);
+    }else {
+      console.error('WebSocket is not open.');
     }
+  }else {
+    console.error('Latitude and/or Longitude not available.');
   }
 }
-function showPosition(position:GeolocationPosition){
+
+function showPosition(position: GeolocationPosition) {
   latitude.value = position.coords.latitude;
   longitude.value = position.coords.longitude;
 }
-onMounted(()=>{
+
+onMounted(() => {
   getLocation();
-  userName.value=userInfoStore.user;
-  console.log(userName.value);
-  socket.value=new WebSocket("ws://localhost:8040/ARtree")
+  userName.value = userInfoStore.user;
+  socket.value = new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
   socket.value.onmessage = (event) => {
-    latitude.value
     const [newLongitude, newLatitude] = event.data.split(",").map(Number);
-    const scene = document.querySelector('a-scene');
-    const newEntity = document.createElement('a-entity');
-    newEntity.setAttribute('gltf-model', '/src/assets/3DTree/tree.glb');
-    newEntity.setAttribute('gps-new-entity-place', `latitude: ${newLongitude}; longitude: ${newLatitude}`);
-    const scaleValue = 0.007;
-    newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
-    if (scene) {
-      scene.appendChild(newEntity);
-    }
+    addModel(newLongitude, newLatitude);
   }
 })
 
@@ -122,9 +123,9 @@ function cleanupARScene() {
 }
 
 
-function returnToARTree(){
+function returnToARTree() {
   router.replace({
-    name:'artree'
+    name: 'artree'
   })
 }
 
@@ -142,8 +143,9 @@ function returnToARTree(){
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  z-index: 1; /* Make sure the button is on top of the AR scene */
+  z-index: 1;
 }
+
 #myButton2 {
   position: absolute;
   top: 20px;
