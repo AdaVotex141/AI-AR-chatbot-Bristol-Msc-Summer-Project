@@ -16,6 +16,8 @@ import {useUserInfoStore} from '@/stores/userInfo';
 
 const latitude = ref<number | null>(null);
 const longitude = ref<number | null>(null);
+const oldLatitude = ref<number | null>(null);
+const oldLongitude = ref<number | null>(null);
 const buttonColor = ref('green');
 const socket = ref<WebSocket | null>(null);
 const userName = ref('');
@@ -95,8 +97,14 @@ onMounted(() => {
   socket.value = new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
   socket.value.onmessage = (event) => {
-    const [newLongitude, newLatitude] = event.data.split(",").map(Number);
-    addModel(newLongitude, newLatitude);
+    if(event.data=="end"){
+      oldLatitude.value=latitude.value;
+      oldLongitude.value=longitude.value;
+    }else {
+      const [newLongitude, newLatitude] = event.data.split(",").map(Number);
+      addModel(newLongitude, newLatitude);
+    }
+
   }
 })
 
