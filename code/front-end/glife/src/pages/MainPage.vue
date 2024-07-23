@@ -112,7 +112,7 @@
     function connetWebsocket(){
       console.log('link to the backend')
       const userId = String(userInfoStore.userid)
-      socket.value = new WebSocket(`ws://localhost:8040/message&userId=${userId}`)
+      socket.value = new WebSocket(`ws://localhost:8040/message?userId=${userId}`)
       socket.value.onmessage = (event) => {
         console.log(event.data)
       }

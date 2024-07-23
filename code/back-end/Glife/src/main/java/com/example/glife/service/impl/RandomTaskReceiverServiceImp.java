@@ -1,5 +1,6 @@
 package com.example.glife.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.Length;
 import com.example.glife.common.MessageWsHandler;
 import com.example.glife.common.R;
 import com.example.glife.entity.RandomTask;
@@ -38,6 +39,7 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
 
 
     public R<String> init(HttpServletRequest request){
+
         Long userID = getUserID(request);
         if(!userID.equals(Long.valueOf(0))){
             WebSocketSession webSocketSession = MessageWsHandler.userSessions.get(userID);
@@ -75,6 +77,21 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
 
         return R.success("add success!");
     }
+
+    public R<Long> MessageQueueLength(HttpServletRequest request) {
+        Long userID = getUserID(request);
+        Long lengthLong = template.opsForList().size(USER_MESSAGES + userID);
+        if (lengthLong != null) {
+            if (lengthLong == 0) {
+                return R.success(0L);
+            } else {
+                return R.success(lengthLong);
+            }
+        } else {
+            return R.error("Doesn't have queue");
+        }
+    }
+
 
     private Long getUserID(HttpServletRequest request){
         HttpSession httpSession = request.getSession(false);
