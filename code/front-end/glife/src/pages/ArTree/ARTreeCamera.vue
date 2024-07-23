@@ -61,15 +61,17 @@ function getLocation(){
 }
 function sendPeriodicMessage() {
   getLocation();
-  if (socket.value && socket.value.readyState === WebSocket.OPEN) {
-    const message = JSON.stringify({
-      type: 'current-location',
-      latitude: latitude,
-      longitude: longitude,
-      userName: userName
-    });
-    socket.value.send(message.toString());
-    console.log('Sent message:', message);
+  if(latitude.value && longitude.value){
+    if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+      const message = JSON.stringify({
+        type: 'current-location',
+        latitude: latitude,
+        longitude: longitude,
+        userName: userName
+      });
+      socket.value.send(message.toString());
+      console.log('Sent message:', message);
+    }
   }
 }
 function showPosition(position:GeolocationPosition){
@@ -83,11 +85,12 @@ onMounted(()=>{
   socket.value=new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
   socket.value.onmessage = (event) => {
-    const receivedMessage = JSON.parse(event.data);
+    latitude.value
+    const [newLongitude, newLatitude] = event.data.split(",").map(Number);
     const scene = document.querySelector('a-scene');
     const newEntity = document.createElement('a-entity');
     newEntity.setAttribute('gltf-model', '/src/assets/3DTree/tree.glb');
-    newEntity.setAttribute('gps-new-entity-place', `latitude: ${receivedMessage.latitude}; longitude: ${receivedMessage.longitude}`);
+    newEntity.setAttribute('gps-new-entity-place', `latitude: ${newLongitude}; longitude: ${newLatitude}`);
     const scaleValue = 0.007;
     newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
     if (scene) {

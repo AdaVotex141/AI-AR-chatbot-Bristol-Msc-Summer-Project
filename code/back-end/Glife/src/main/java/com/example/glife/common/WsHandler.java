@@ -128,6 +128,7 @@ public class WsHandler extends AbstractWebSocketHandler {
                     if (point != null) {
                         double x = point.getX();
                         double y = point.getY();
+                        log.info(x+"   "+y);
                         try {
                             session.sendMessage(new TextMessage(x + "," + y));
                         } catch (IOException e) {
