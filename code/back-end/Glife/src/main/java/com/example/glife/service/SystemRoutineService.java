@@ -16,7 +16,7 @@ public interface SystemRoutineService {
 
     public R<String> addFromAssistant(HttpServletRequest request, int schedule);
 
-    public R<String> addFromRandomTask(HttpServletRequest request, RandomTask randomTask);
+    public R<String> addFromRandomTask(HttpServletRequest request, SystemRoutine routine);
 
     public R<String> updateSchedule(HttpServletRequest request, SystemRoutine systemRoutine);
 

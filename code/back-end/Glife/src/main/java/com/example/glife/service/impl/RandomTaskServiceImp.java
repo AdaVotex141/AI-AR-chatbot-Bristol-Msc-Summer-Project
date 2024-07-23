@@ -45,7 +45,9 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
         storeRandomTask.setCreateTime(LocalDateTime.now());
         storeRandomTask.setDescription(randomTask.getDescription());
         storeRandomTask.setTitle(randomTask.getTitle());
-        baseMapper.insert(randomTask);
+        storeRandomTask.setSchedule(randomTask.getSchedule());
+
+        baseMapper.insert(storeRandomTask);
 
         return R.success("Send successfully");
     }
@@ -54,7 +56,7 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
         List<RandomTask> taskList = new ArrayList<>();
 
         LambdaQueryWrapper<RandomTask> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.orderByAsc(RandomTask::getCreateTime);
+        lambdaQueryWrapper.orderByDesc(RandomTask::getCreateTime);
 
         taskList = baseMapper.selectList(lambdaQueryWrapper);
 
@@ -75,9 +77,6 @@ public class RandomTaskServiceImp extends ServiceImpl<RandomTaskMapper, RandomTa
         }
         return task;
     }
-
-
-
 
 
 }
