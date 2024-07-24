@@ -16,7 +16,7 @@
   </div>
   <!-- tutorial -->
   <div>
-    <el-tour v-model="open">
+    <el-tour v-model="userInfoStore.tutorialStatement['routine']">
       <el-tour-step title="Routine" description="Here is your routine!" />
       <el-tour-step :target="ref1?.$el" title="Routine">
         <div>You can click here to add a customized routine.</div>
@@ -39,10 +39,11 @@
   import { ref } from 'vue';
   import { MoreFilled } from '@element-plus/icons-vue'
   import type { ButtonInstance } from 'element-plus'
+  import { useUserInfoStore } from '@/stores/userInfo';
 
   const dayroutineStore = useDayroutineStore()
   const systemroutineStore = useSystemroutineStore()
-  const open = ref(true)
+  const userInfoStore = useUserInfoStore()
   const ref1 = ref<ButtonInstance>()
   const ref2 = ref<ButtonInstance>()
 
