@@ -9,9 +9,11 @@ import com.example.glife.entity.UserTree;
 import com.example.glife.mapper.RoutineMapper;
 import com.example.glife.mapper.UserTreeMapper;
 import com.example.glife.service.RoutineService;
+import com.example.glife.service.UserBadgeService;
 import com.example.glife.service.UserTreeService;
 import com.fasterxml.jackson.core.TreeCodec;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpSession;
 @Service
 @Slf4j
 public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implements UserTreeService {
+    @Autowired
+    private UserBadgeService userBadgeService;
 
     public R<Integer> init(HttpServletRequest request){
         Long userID = getUserID(request);
@@ -117,6 +121,10 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
             if(userTree != null){
                 userTree.setTreeSum(userTree.getTreeSum()+1);
                 baseMapper.updateById(userTree);
+
+                userBadgeService.checkAndAwardFirstTreePlanterBadge(userID); // Check and award badge
+                userBadgeService.checkAndAwardGreenThumbMasterBadge(userID);
+
                 return R.success("update tree_sums");
 
             }else{
