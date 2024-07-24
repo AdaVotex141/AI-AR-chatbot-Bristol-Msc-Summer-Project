@@ -29,4 +29,8 @@ public class User implements Serializable {
 
     private int loginDays;
 
+    // New field, not persisted in database
+    @TableField(exist = false)
+    private boolean isNewUser;
+
 }

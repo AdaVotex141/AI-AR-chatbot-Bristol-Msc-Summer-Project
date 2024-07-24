@@ -107,25 +107,6 @@ public class MessageWsHandler extends TextWebSocketHandler {
         }
     }
 
-//    public void sendTaskList(WebSocketSession session){
-//        // Get userID from session URI
-//        String userIdStr = getUserIdFromSession(session);
-//        Long userID = Long.parseLong(userIdStr);
-//        //get tasklist before user login
-//        String task = template.opsForList().leftPop(USER_MESSAGES+userID);
-//        if(task!= null){
-//            sendTaskToOneUser(session,task);
-//        }else{
-//            log.info("No tasks found for user: {}", userID);
-//        }
-////        List<String> taskList = template.opsForList().range(USER_MESSAGES + userID, 0, -1);
-////        if (taskList != null && !taskList.isEmpty()) {
-////            for (String task : taskList) {
-////                sendTaskToOneUser(session, task);
-////            }
-////            template.delete(USER_MESSAGES + userID);
-////        }
-//    }
 
 
     /**
