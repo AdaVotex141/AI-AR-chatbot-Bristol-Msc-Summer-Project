@@ -120,8 +120,11 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
 
             if(userTree != null){
                 userTree.setTreeSum(userTree.getTreeSum()+1);
-                userBadgeService.checkAndAwardFirstTreePlanterBadge(userID); // Check and award badge
                 baseMapper.updateById(userTree);
+
+                userBadgeService.checkAndAwardFirstTreePlanterBadge(userID); // Check and award badge
+                userBadgeService.checkAndAwardGreenThumbMasterBadge(userID);
+
                 return R.success("update tree_sums");
 
             }else{

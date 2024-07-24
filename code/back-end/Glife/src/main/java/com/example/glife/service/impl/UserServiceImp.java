@@ -10,6 +10,7 @@ import com.example.glife.entity.User;
 import com.example.glife.mapper.UserMapper;
 import com.example.glife.service.AssistantService;
 import com.example.glife.service.RoutineService;
+import com.example.glife.service.UserBadgeService;
 import com.example.glife.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -46,6 +47,8 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 
     @Autowired
     private EmailServiceImp emailServiceImp;
+    @Autowired
+    private UserBadgeService userBadgeService;
 
 
     /**
@@ -130,6 +133,12 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 
         foundUser.setLastLogin(LocalDateTime.now());
         updateById(foundUser);
+
+        // Check and award Routine Streak Master Badge
+        userBadgeService.checkAndAwardRoutineStreakMasterBadge(foundUser.getId());
+
+        // Check and award Routine Streak Master Badge
+        userBadgeService.checkAndAwardMonthlyRoutineChampionBadge(foundUser.getId());
 
         //create a new assistant after log in, and store it in session
         assistantService.initializeAssistant();

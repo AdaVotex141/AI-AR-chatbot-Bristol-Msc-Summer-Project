@@ -12,5 +12,7 @@ public interface UserBadgeService {
     void checkAndAwardFirstTreePlanterBadge(Long userId);
     void checkAndAwardFirstTaskAchieverBadge(Long userId);
     void checkAndAwardDailyRoutineStarterBadge(Long userId);
-
+    void checkAndAwardRoutineStreakMasterBadge(Long userId);
+    void checkAndAwardMonthlyRoutineChampionBadge(Long userId);
+    void checkAndAwardGreenThumbMasterBadge(Long userId);
 }
