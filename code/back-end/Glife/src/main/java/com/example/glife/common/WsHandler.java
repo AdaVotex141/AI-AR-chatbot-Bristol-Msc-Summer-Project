@@ -3,6 +3,7 @@ package com.example.glife.common;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import com.example.glife.entity.Marker;
 import com.example.glife.service.UserService;
 import com.example.glife.service.impl.LocationServiceImp;
 import lombok.extern.slf4j.Slf4j;
@@ -73,9 +74,10 @@ public class WsHandler extends AbstractWebSocketHandler {
 
         String name = userNameObj != null ? userNameObj.getStr("_value") : null;
         log.info("name is ------:{}", name);
-        Long userID = userService.getUserID(name);
+        //Long userID = userService.getUserID(name);
         if (!session.getAttributes().containsKey(name)) {
-            session.getAttributes().put("userID", userID);
+            //session.getAttributes().put("userID", userID);
+            session.getAttributes().put("name", name);
         }
 
         handleMessageType(session, message.getPayload());
@@ -156,27 +158,36 @@ public class WsHandler extends AbstractWebSocketHandler {
         return (rad * c > 10);
     }
 
-    private void sendLocation(WebSocketSession session, JSONObject jsonObject){
-        JSONObject LongObj = jsonObject.getJSONObject("longitude");
-        JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
-        double longitude = LongObj.getDouble("_value");
-        double latitude = LatitudeObj.getDouble("_value");
-        List<Point> points = locationServiceImp.getNearByPosition(longitude, latitude).getData();
-        if (points != null && !points.isEmpty()) {
-            for (Point point : points) {
-                if (point != null) {
+    private void sendLocation(WebSocketSession session, JSONObject jsonObject) {
+        // 从 JSON 对象中提取经度和纬度
+        JSONObject longitudeObj = jsonObject.getJSONObject("longitude");
+        JSONObject latitudeObj = jsonObject.getJSONObject("latitude");
+        double longitude = longitudeObj.getDouble("_value");
+        double latitude = latitudeObj.getDouble("_value");
+
+        List<Marker> markers = locationServiceImp.getNearByPosition(longitude, latitude).getData();
+
+        if (markers != null && !markers.isEmpty()) {
+            for (Marker marker : markers) {
+                if (marker != null) {
+                    Point point = marker.getPoint();
+                    String userName = marker.getName();
+
                     double x = point.getX();
                     double y = point.getY();
-                    log.info(x + "   " + y);
+
+                    log.info("User: " + userName + " - X: " + x + ", Y: " + y);
+
                     try {
-                        session.sendMessage(new TextMessage(x + "," + y));
+                        String message = String.format("User: %s, Location: %.6f, %.6f", userName, x, y);
+                        session.sendMessage(new TextMessage(message));
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        log.error("Error sending WebSocket message", e);
                     }
                 }
             }
         } else {
-            points = new ArrayList<>();
+            log.info("No nearby markers found");
         }
     }
 
