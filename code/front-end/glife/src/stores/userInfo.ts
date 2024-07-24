@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useWebSocketStore } from './websocket'
+import { useUserTaskStore } from './usertask'
 
 export const useUserInfoStore = defineStore('userInfo',()=>{
     let isAuthenticated = ref(false)
@@ -10,6 +11,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     let email = ref('')
     let permission = ref(0)
     const websocketStore = useWebSocketStore()
+    const userTaskStore = useUserTaskStore()
 
     function login(data:any){
         isAuthenticated.value = true

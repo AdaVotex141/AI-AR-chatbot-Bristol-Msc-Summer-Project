@@ -6,6 +6,7 @@ import { ref } from 'vue'
 export const useUserTaskStore = defineStore('usertask',()=>{
 
     const numberOfTasks = ref(0)
+    const taskContent = ref('')
     
     async function getRandomTask(){
         // Sending api request to the backend
@@ -25,8 +26,7 @@ export const useUserTaskStore = defineStore('usertask',()=>{
     async function getNumberOfTask(){
         // Sending api request to the backend
         try {
-            const response = await axios.get('/api/randomTask/length')
-            console.log(response.data)
+            const response = await axios.post('/api/randomTask/length')
             if (String(response.data.code) !== '1') {
                 console.error('Backend send code 0')
                 router.push({ name: 'notfound' });
@@ -39,5 +39,9 @@ export const useUserTaskStore = defineStore('usertask',()=>{
         }
     }
 
-    return {numberOfTasks, getRandomTask, getNumberOfTask}
+    function setTaskContent(content:string){
+        taskContent.value = content
+    }
+
+    return {numberOfTasks, taskContent, setTaskContent, getRandomTask, getNumberOfTask}
 })
