@@ -101,7 +101,7 @@ async function login(ruleFormRef: FormInstance | undefined){
       let nextPageName = ''
       if(!formLabelAlign.isAdmin){
         apiPath = '/api/login'
-        nextPageName = 'startpage'
+        nextPageName = 'dashboard'
       } else {
         apiPath = '/api/admin/login' // TODO: change the api request path
         nextPageName = 'admin'

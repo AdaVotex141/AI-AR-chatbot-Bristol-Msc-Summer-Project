@@ -28,6 +28,8 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElText: typeof import('element-plus/es')['ElText']
+    ElTour: typeof import('element-plus/es')['ElTour']
+    ElTourStep: typeof import('element-plus/es')['ElTourStep']
     FormItem: typeof import('./src/components/FormItem.vue')['default']
     InitialChatWindow: typeof import('./src/components/InitialChatWindow.vue')['default']
     LoadingEffect: typeof import('./src/components/LoadingEffect.vue')['default']
