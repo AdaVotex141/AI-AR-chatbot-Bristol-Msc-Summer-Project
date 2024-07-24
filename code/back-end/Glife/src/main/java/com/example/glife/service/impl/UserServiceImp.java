@@ -123,16 +123,22 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         HttpSession session = request.getSession();
         session.setAttribute("user", foundUser);
 
+        boolean isNewUser = false;
         //check if last_Login and now is different date
-        LocalDateTime lastLogin = foundUser.getLastLogin();
-        if(lastLogin == null || isConsecutiveDays(lastLogin)){
-            foundUser.setLoginDays(foundUser.getLoginDays()+1);
-        }else{
-            foundUser.setLoginDays(1);
+        if (foundUser.getLastLogin() == null) {
+            isNewUser = true;
+            foundUser.setLastLogin(LocalDateTime.now());
+        } else {
+            // Check if last login and now are on different days
+            if (isConsecutiveDays(foundUser.getLastLogin())) {
+                foundUser.setLoginDays(foundUser.getLoginDays() + 1);
+            } else {
+                foundUser.setLoginDays(1);
+            }
+            foundUser.setLastLogin(LocalDateTime.now());
         }
-
-        foundUser.setLastLogin(LocalDateTime.now());
         updateById(foundUser);
+        foundUser.setNewUser(isNewUser);
 
         // Check and award Routine Streak Master Badge
         userBadgeService.checkAndAwardRoutineStreakMasterBadge(foundUser.getId());
