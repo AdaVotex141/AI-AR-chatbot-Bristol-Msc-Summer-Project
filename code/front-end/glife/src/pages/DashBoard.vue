@@ -5,7 +5,7 @@
             <RoutineStatistic ref="ref2" class="routine-part" />
         </el-space>
 
-        <el-tour v-model="open">
+        <el-tour v-model="userInfoStore.tutorialStatement['dashboard']">
             <el-tour-step :target="ref1?.$el" title="Random Tasks">
             <div>Here, you can add random tasks to your routine!</div>
             </el-tour-step>
@@ -20,17 +20,14 @@
 <script setup lang="ts">
 import RoutineStatistic from '@/components/RoutineStatistic.vue';
 import UserRandomTask from '@/components/UserRandomTask.vue';
+import { useUserInfoStore } from '@/stores/userInfo';
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
+const userInfoStore = useUserInfoStore()
 const ref1 = ref<ButtonInstance>()
 const ref2 = ref<ButtonInstance>()
-const open = ref(false)
-
-onMounted(()=>{
-    open.value = true
-})
 
 </script>
 <style scoped>

@@ -6,7 +6,7 @@
     <div class="input">
       <MessageInput ref="ref1" />
     </div>
-    <el-tour v-model="open">
+    <el-tour v-model="userInfoStore.tutorialStatement['chatwindow']">
       <el-tour-step title="Chat Window" description="You can talk to the chatbot here!" />
       <el-tour-step :target="ref1?.$el" title="Chat Window">
         <div>You can input the content here.</div>
@@ -31,10 +31,11 @@ import MessageInput from '@/components/MessageInput.vue';
 import { ref } from 'vue'
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'
+import { useUserInfoStore } from '@/stores/userInfo';
 
+const userInfoStore = useUserInfoStore()
 const ref1 = ref<ButtonInstance>()
 
-const open = ref(true)
 
 </script>
 
