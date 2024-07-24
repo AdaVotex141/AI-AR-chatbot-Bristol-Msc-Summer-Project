@@ -21,11 +21,6 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         userid.value = String(data.id)
         email.value = data.email
         permission.value = data.permission
-        // Connect websocket
-        websocketStore.connect(`ws://localhost:8040/message?userId=${userid.value}`)
-        // Get user's random task
-        userTaskStore.getNumberOfTask()
-        userTaskStore.getRandomTask()
     }
 
     function logout(){

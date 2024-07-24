@@ -13,6 +13,7 @@ export const useWebSocketStore = defineStore('websocket',()=>{
             // Event info
             console.log("WebSocket receive message: ", event)
             userTaskStore.setTaskContent(event.data)
+            userTaskStore.getNumberOfTask()
         }
     }
 

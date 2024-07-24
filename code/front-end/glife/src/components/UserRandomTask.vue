@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div class="container">
         <el-container>
             <el-header>Random Task</el-header>
             <el-main>
                 <div class="task-content-container">
-                    <span class="task-content"> {{ userTaskStore.taskContent }} </span>
-                    <span class="task-count">
+                    <span class="task-content"> {{ userTaskStore.stringOfTask }} </span>
+                    <span class="task-count" v-show="userTaskStore.numberOfTasks > 0">
                         {{ userTaskStore.numberOfTasks }}
                     </span>
                 </div>
-                <div class="button-container">
-                    <el-button>Add it</el-button>
-                    <el-button>Choose another one</el-button>
+                <div class="button-container" v-show="userTaskStore.numberOfTasks > 0">
+                    <el-button @click="addTask">Add it</el-button>
+                    <el-button @click="changeTask">Choose another one</el-button>
                 </div>
             </el-main>
         </el-container>
@@ -21,14 +21,32 @@
 import { useUserTaskStore } from '@/stores/usertask';
 import { onMounted } from 'vue';
 
-onMounted(()=>{
-    console.log(userTaskStore.taskContent)
-})
 const userTaskStore = useUserTaskStore()
+
+onMounted(()=>{
+    // Get user's random task
+    userTaskStore.getNumberOfTask()
+    userTaskStore.getRandomTask()
+})
+
+async function addTask(){
+    userTaskStore.addTaskToRoutine()
+    // call changeTask() to give a new task
+    changeTask()
+}
+
+function changeTask(){
+    userTaskStore.getRandomTask()
+    userTaskStore.getNumberOfTask()
+}
 
 </script>
 
 <style scoped>
+.container{
+    background-color: bisque;
+}
+
 .task-container {
     border: 1px solid #ccc;
     padding: 16px;
@@ -44,6 +62,7 @@ const userTaskStore = useUserTaskStore()
 .task-content {
     display: block;
     max-width: 100%;
+    white-space: pre-wrap;
 }
 
 .task-count {
