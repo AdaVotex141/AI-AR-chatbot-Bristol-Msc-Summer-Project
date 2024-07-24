@@ -7,12 +7,23 @@
     <button id="myButton" @click="plantTree" :style="{backgroundColor:buttonColor}">Plant</button>
     <button id="myButton2" @click="returnToARTree">GO back</button>
   </div>
+  <div id="map">
+    <GoogleMap
+        api-key="AIzaSyD7yNhMUS2eFelVVz1x6i9hsTbePnK48to"
+        style="width: 100%; height: 500px"
+        :center="center"
+        :zoom="15"
+    >
+      <Marker :options="{ position: center }" />
+    </GoogleMap>
+  </div>
 </template>
 
 <script setup lang="ts">
 import {ref, onMounted, onBeforeUnmount} from 'vue';
 import router from "@/router";
 import {useUserInfoStore} from '@/stores/userInfo';
+import { GoogleMap, Marker } from 'vue3-google-map'
 
 const latitude = ref<number | null>(null);
 const longitude = ref<number | null>(null);
@@ -23,6 +34,7 @@ const socket = ref<WebSocket | null>(null);
 const userName = ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
+const center = { lat: 40.689247, lng: -74.044502 }
 
 function addModel(a: number, b: number) {
   const scene = document.querySelector('a-scene');
@@ -85,6 +97,13 @@ function sendPeriodicMessage() {
     console.error('Latitude and/or Longitude not available.');
   }
 }
+function removeAllEntities() {
+  const scene = document.querySelector('a-scene');
+  if (scene) {
+    const entities = scene.querySelectorAll('a-entity');
+    entities.forEach(entity => entity.remove());
+  }
+}
 
 function showPosition(position: GeolocationPosition) {
   latitude.value = position.coords.latitude;
@@ -97,14 +116,9 @@ onMounted(() => {
   socket.value = new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
   socket.value.onmessage = (event) => {
-    if(event.data=="end"){
-      oldLatitude.value=latitude.value;
-      oldLongitude.value=longitude.value;
-    }else {
-      const [newLongitude, newLatitude] = event.data.split(",").map(Number);
-      addModel(newLongitude, newLatitude);
-    }
-
+    //removeAllEntities();
+    const [newLongitude, newLatitude] = event.data.split(",").map(Number);
+    addModel(newLongitude, newLatitude);
   }
 })
 
@@ -165,6 +179,14 @@ function returnToARTree() {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  z-index: 1;
+}
+#map {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20%;
+  height: 20%;
   z-index: 1;
 }
 </style>

@@ -119,7 +119,7 @@ async function login(ruleFormRef: FormInstance | undefined){
           router.push({
             name: nextPageName
           })
-          // Change the user info
+          // Change the user info and connect to the websocket
           userInfoStore.login(response.data.data)
         } else {
           ElMessage({

@@ -95,7 +95,6 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
 
     private Long getUserID(HttpServletRequest request){
         HttpSession httpSession = request.getSession(false);
-
         User user = (User) httpSession.getAttribute("user");
         if(user != null){
             return user.getId();

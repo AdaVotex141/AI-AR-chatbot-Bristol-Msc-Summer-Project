@@ -133,12 +133,6 @@ public class WsHandler extends AbstractWebSocketHandler {
                             throw new RuntimeException(e);
                         }
                     }
-
-                }
-                try {
-                    session.sendMessage(new TextMessage("end"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             } else {
                 points = new ArrayList<>();

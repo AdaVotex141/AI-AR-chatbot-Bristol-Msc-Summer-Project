@@ -3,12 +3,16 @@
         <el-container>
             <el-header>Random Task</el-header>
             <el-main>
-                <span> {{ userTaskStore.taskContent }} </span>
-                <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-                    {{ userTaskStore.numberOfTasks }}
-                </span>
-                <el-button>Add it</el-button>
-                <el-button>Choose another one</el-button>
+                <div class="task-content-container">
+                    <span class="task-content"> {{ userTaskStore.taskContent }} </span>
+                    <span class="task-count">
+                        {{ userTaskStore.numberOfTasks }}
+                    </span>
+                </div>
+                <div class="button-container">
+                    <el-button>Add it</el-button>
+                    <el-button>Choose another one</el-button>
+                </div>
             </el-main>
         </el-container>
     </div>
@@ -17,14 +21,50 @@
 import { useUserTaskStore } from '@/stores/usertask';
 import { onMounted } from 'vue';
 
+onMounted(()=>{
+    console.log(userTaskStore.taskContent)
+})
 const userTaskStore = useUserTaskStore()
 
-onMounted(()=>{
-    userTaskStore.getNumberOfTask()
-    userTaskStore.getRandomTask()
-})
 </script>
 
 <style scoped>
-    
+.task-container {
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.task-content-container {
+    position: relative;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.task-content {
+    display: block;
+    max-width: 100%;
+}
+
+.task-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    background-color: #bfdbfe;
+    border-radius: 9999px;
+}
+
+.button-container {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+}
 </style>
