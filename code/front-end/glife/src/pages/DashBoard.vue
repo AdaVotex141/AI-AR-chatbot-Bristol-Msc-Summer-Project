@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <el-space class="container">
             <UserRandomTask ref="ref1" />
             <RoutineStatistic ref="ref2" class="routine-part" />

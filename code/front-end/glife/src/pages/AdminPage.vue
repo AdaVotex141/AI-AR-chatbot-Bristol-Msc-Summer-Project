@@ -4,7 +4,6 @@
         <!-- Navigate bar -->
         <el-header>
         <el-menu
-            v-if="isDesktop"
             :default-active="activeIndex"
             class="el-menu-desktop"
             mode="horizontal"
@@ -22,7 +21,7 @@
           <el-menu-item index="/admin/adminlist" @click="navigateTo('adminlist')">Management</el-menu-item>
           <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
         </el-menu>
-          <MobileMenu v-else />
+          <!-- <MobileMenu v-else /> -->
         </el-header>
         <!-- Maincontent -->
         <el-main class="main-content">

@@ -3,8 +3,8 @@
   <el-container class="dayroutine-app">
     <el-header>{{ getCurrentDate() }} Routine: </el-header>
     <el-main>
-      <RoutineDialog class="add-button" />
-      <RoutineTags />
+      <RoutineDialog class="add-button" ref="ref1" />
+      <RoutineTags ref="ref2" />
       <el-divider content-position="left">Your {{dayroutineStore.activeTab}} routines:</el-divider>
       <!-- RoutineList -->
       <div class="systemroutine">
@@ -14,6 +14,20 @@
     </el-main>
   </el-container>
   </div>
+  <!-- tutorial -->
+  <div>
+    <el-tour v-model="open">
+      <el-tour-step title="Routine" description="Here is your routine!" />
+      <el-tour-step :target="ref1?.$el" title="Routine">
+        <div>You can click here to add a customized routine.</div>
+      </el-tour-step>
+      <el-tour-step
+        :target="ref2?.$el"
+        title="Routine"
+        description="You can navigate through these tabs to access and review your various routines."
+      />
+    </el-tour>
+  </div>
 </template>
 
 <script setup lang='ts'>
@@ -22,9 +36,15 @@
   import RoutineList from '@/components/RoutineList.vue';
   import { useDayroutineStore } from '@/stores/dayroutine';
   import { useSystemroutineStore } from '@/stores/systemroutine';
+  import { ref } from 'vue';
+  import { MoreFilled } from '@element-plus/icons-vue'
+  import type { ButtonInstance } from 'element-plus'
 
   const dayroutineStore = useDayroutineStore()
   const systemroutineStore = useSystemroutineStore()
+  const open = ref(true)
+  const ref1 = ref<ButtonInstance>()
+  const ref2 = ref<ButtonInstance>()
 
   // Get the date information
   function getCurrentDate() {
