@@ -135,8 +135,6 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
         assistantService.initializeAssistant();
         session.setAttribute("assistantService", assistantService);
 
-        stringRedisTemplate.opsForSet().remove(USER_OFFLINE,foundUser.getId().toString());
-        stringRedisTemplate.opsForSet().add(USER_ONLINE,foundUser.getId().toString());
         //routineService.init(request);
         return R.success(foundUser);
     }
@@ -153,8 +151,7 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
             Long userID = user.getId();
             session.removeAttribute("user");
 
-            stringRedisTemplate.opsForSet().add(USER_OFFLINE,userID.toString());
-            stringRedisTemplate.opsForSet().remove(USER_ONLINE,userID.toString());
+
 
             if(session.getAttribute("assistantService") != null){
                 session.removeAttribute("assistantService");
