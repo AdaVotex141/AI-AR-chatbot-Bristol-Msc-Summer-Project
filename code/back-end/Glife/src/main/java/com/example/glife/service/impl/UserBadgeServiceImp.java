@@ -3,10 +3,8 @@ package com.example.glife.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.R;
-import com.example.glife.entity.User;
-import com.example.glife.entity.UserBadge;
-import com.example.glife.entity.UserBadgeId;
-import com.example.glife.entity.UserTree;
+import com.example.glife.entity.*;
+import com.example.glife.mapper.SystemRoutineMapper;
 import com.example.glife.mapper.UserBadgeMapper;
 import com.example.glife.mapper.UserTreeMapper;
 import com.example.glife.service.UserBadgeService;
@@ -25,6 +23,8 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
 
     @Autowired
     private UserTreeMapper userTreeMapper;
+    @Autowired
+    private SystemRoutineMapper systemRoutineMapper;
 
     @Override
     public R<List<Long>> getUserBadgesByUserId(Long userId) {
@@ -71,6 +71,38 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
             baseMapper.insert(newBadge);
         }
     }
+    @Transactional
+    public void checkAndAwardDailyRoutineStarterBadge(Long userId) {
+        // 检查用户是否已经完成所有日常任务
+        LambdaQueryWrapper<SystemRoutine> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemRoutine::getUserid, userId)
+                .eq(SystemRoutine::getSchedule, 0) // 0 表示日常任务
+                .eq(SystemRoutine::getTick, 0); // 确保所有日常任务都未被完成
+
+        List<SystemRoutine> dailyRoutines = systemRoutineMapper.selectList(queryWrapper);
+
+        boolean allCompleted = dailyRoutines.stream().allMatch(task -> task.getTick() == 1);
+
+        if (allCompleted) {
+            // 检查用户是否已经获得了这个徽章
+            LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
+            badgeQueryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 7L); // 7L 为 Daily Routine Starter Badge 的 ID
+
+            UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
+
+            if (existingBadge == null) {
+                // 授予徽章
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(7L);  // 7L 为 Daily Routine Starter Badge 的 ID
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
+
     @Transactional
     public void checkAndAwardFirstTreePlanterBadge(Long userId) {
         // Check if the user has already planted a tree

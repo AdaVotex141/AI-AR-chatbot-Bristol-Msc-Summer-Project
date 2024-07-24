@@ -151,6 +151,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
             if (selectRoutine.getType() == 1) {
                 userBadgeService.checkAndAwardFirstTaskAchieverBadge(userId);
             }
+            userBadgeService.checkAndAwardDailyRoutineStarterBadge(userId);
         }
 
         return R.success(selectRoutine);

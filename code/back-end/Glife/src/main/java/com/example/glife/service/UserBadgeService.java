@@ -11,5 +11,6 @@ public interface UserBadgeService {
     R<String> deleteUserBadge(Long userId, Long badgeId);
     void checkAndAwardFirstTreePlanterBadge(Long userId);
     void checkAndAwardFirstTaskAchieverBadge(Long userId);
+    void checkAndAwardDailyRoutineStarterBadge(Long userId);
 
 }
