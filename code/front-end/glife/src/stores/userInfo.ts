@@ -10,6 +10,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     let userid = ref('')
     let email = ref('')
     let permission = ref(0)
+    let isNewUser = ref(true)
     const websocketStore = useWebSocketStore()
     const userTaskStore = useUserTaskStore()
 
@@ -21,6 +22,7 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         userid.value = String(data.id)
         email.value = data.email
         permission.value = data.permission
+        isNewUser.value = data.newUser
     }
 
     function logout(){
