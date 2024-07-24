@@ -12,9 +12,13 @@
         api-key="AIzaSyD7yNhMUS2eFelVVz1x6i9hsTbePnK48to"
         style="width: 100%; height: 500px"
         :center="center"
-        :zoom="15"
+        :zoom="17"
     >
-      <Marker :options="{ position: center }" />
+      <Marker
+          v-for="(marker, index) in markers"
+          :key="index"
+          :options="marker"
+      />
     </GoogleMap>
   </div>
 </template>
@@ -25,16 +29,17 @@ import router from "@/router";
 import {useUserInfoStore} from '@/stores/userInfo';
 import { GoogleMap, Marker } from 'vue3-google-map'
 
-const latitude = ref<number | null>(null);
-const longitude = ref<number | null>(null);
-const oldLatitude = ref<number | null>(null);
-const oldLongitude = ref<number | null>(null);
+const latitude = ref<number>(51.4558853);
+const longitude = ref<number>(-2.6029143);
 const buttonColor = ref('green');
 const socket = ref<WebSocket | null>(null);
 const userName = ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
-const center = { lat: 40.689247, lng: -74.044502 }
+const center = ref({ lat: 40.689247, lng: -74.044502 });
+const markers = ref<Array<{ position: { lat: number, lng: number }, title: string }>>([
+
+]);
 
 function addModel(a: number, b: number) {
   const scene = document.querySelector('a-scene');
@@ -112,6 +117,9 @@ function showPosition(position: GeolocationPosition) {
 
 onMounted(() => {
   getLocation();
+  center.value.lat = latitude.value;
+  center.value.lng=longitude.value;
+  console.log(latitude.value+""+longitude.value)
   userName.value = userInfoStore.user;
   socket.value = new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
@@ -119,6 +127,10 @@ onMounted(() => {
     //removeAllEntities();
     const [newLongitude, newLatitude] = event.data.split(",").map(Number);
     addModel(newLongitude, newLatitude);
+    markers.value.push({
+      position: { lat: newLatitude, lng: newLongitude },
+      title: `Marker ${markers.value.length + 1}`
+    });
   }
 })
 

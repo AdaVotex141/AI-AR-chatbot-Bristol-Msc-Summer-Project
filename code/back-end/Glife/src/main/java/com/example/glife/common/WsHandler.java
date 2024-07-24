@@ -33,6 +33,10 @@ public class WsHandler extends AbstractWebSocketHandler {
     private static Map<String, SessionBean> sessionBeanMap;
     private static AtomicInteger clientID;
 
+    private static Map<String,Boolean> setMap;
+    private static Map<String,Double> latitudeMap;
+    private static Map<String,Double> longitudeMap;
+
     @Autowired
     LocationServiceImp locationServiceImp;
 
@@ -43,6 +47,9 @@ public class WsHandler extends AbstractWebSocketHandler {
 
     static {
         sessionBeanMap = new ConcurrentHashMap<>();
+        setMap= new ConcurrentHashMap<>();
+        latitudeMap=new ConcurrentHashMap<>();
+        longitudeMap=new ConcurrentHashMap<>();
         clientID = new AtomicInteger(0);
     }
 
@@ -51,7 +58,7 @@ public class WsHandler extends AbstractWebSocketHandler {
         super.afterConnectionEstablished(session);
         SessionBean sessionBean = new SessionBean(session, clientID.getAndIncrement());
         sessionBeanMap.put(session.getId(), sessionBean);
-
+        setMap.put(session.getId(),false);
         log.info(sessionBeanMap.get(session.getId()).getID() + ":" + "connect");
     }
 
@@ -117,29 +124,60 @@ public class WsHandler extends AbstractWebSocketHandler {
             JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
             double longitude = LongObj.getDouble("_value");
             double latitude = LatitudeObj.getDouble("_value");
-
-
-            List<Point> points = locationServiceImp.getNearByPosition(longitude, latitude).getData();
-
-            if (points != null && !points.isEmpty()) {
-                for (Point point : points) {
-                    if (point != null) {
-                        double x = point.getX();
-                        double y = point.getY();
-                        log.info(x + "   " + y);
-                        try {
-                            session.sendMessage(new TextMessage(x + "," + y));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
+            if(!setMap.get(session.getId())) {
+                sendLocation(session, jsonObject);
+                setMap.remove(session.getId());
+                setMap.put(session.getId(), true);
+                latitudeMap.put(session.getId(), latitude);
+                longitudeMap.put(session.getId(), longitude);
+            }else {
+                if(arePointsNear(latitudeMap.get(session.getId()),longitudeMap.get(session.getId()),latitude,longitude)){
+                    sendLocation(session, jsonObject);
+                    latitudeMap.remove(session.getId());
+                    latitudeMap.put(session.getId(), latitude);
+                    longitudeMap.remove(session.getId());
+                    longitudeMap.put(session.getId(), longitude);
                 }
-            } else {
-                points = new ArrayList<>();
             }
         }
+    }
 
+    private Boolean arePointsNear(Double latitudeSession,Double longitudeSession,Double latitude,Double longitude){
+        double dLat = Math.toRadians(latitudeSession-latitude);
+        double dLon = Math.toRadians(longitudeSession-longitude);
+        double latitude1=Math.toRadians(latitude);
+        double latitude2=Math.toRadians(latitudeSession);
+        double a = Math.pow(Math.sin(dLat / 2), 2) +
+                Math.pow(Math.sin(dLon / 2), 2) *
+                        Math.cos(latitude1) *
+                        Math.cos(latitude2);
+        double rad = 6371000;
+        double c = 2 * Math.asin(Math.sqrt(a));
+        return (rad * c > 10);
+    }
 
+    private void sendLocation(WebSocketSession session, JSONObject jsonObject){
+        JSONObject LongObj = jsonObject.getJSONObject("longitude");
+        JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
+        double longitude = LongObj.getDouble("_value");
+        double latitude = LatitudeObj.getDouble("_value");
+        List<Point> points = locationServiceImp.getNearByPosition(longitude, latitude).getData();
+        if (points != null && !points.isEmpty()) {
+            for (Point point : points) {
+                if (point != null) {
+                    double x = point.getX();
+                    double y = point.getY();
+                    log.info(x + "   " + y);
+                    try {
+                        session.sendMessage(new TextMessage(x + "," + y));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        } else {
+            points = new ArrayList<>();
+        }
     }
 
     private void handlePlantLocation(WebSocketSession session, JSONObject jsonObject) {
@@ -147,8 +185,18 @@ public class WsHandler extends AbstractWebSocketHandler {
         JSONObject LatitudeObj = jsonObject.getJSONObject("latitude");
         double longitude = LongObj.getDouble("_value");
         double latitude = LatitudeObj.getDouble("_value");
-
         locationServiceImp.store(session, longitude, latitude);
+        for(String key:sessionBeanMap.keySet()){
+            double longitudeLocation=longitudeMap.get(key);
+            double latitudeLocation=latitudeMap.get(key);
+            if(!arePointsNear(latitudeLocation,longitudeLocation,latitude,longitude)){
+                try {
+                    sessionBeanMap.get(key).getWebSocketSession().sendMessage(new TextMessage(longitude+","+latitude));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         log.info(longitude + "" + latitude);
 
     }
