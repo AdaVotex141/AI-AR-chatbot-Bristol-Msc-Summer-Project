@@ -49,6 +49,7 @@ const ref3 = ref<ButtonInstance>()
 }
 
 .dashboard-container {
+    margin-top: 4rem;
     flex-direction: column;    
 }
 
@@ -58,16 +59,22 @@ const ref3 = ref<ButtonInstance>()
 }
 
 .bottom-container {
+    margin-top: 2rem;
     display: grid;
     flex: 1; 
     grid-template-columns: 1fr 1fr;
+
 }
 
 .randomtask {
     background-color: #a8e6cf;
+    margin-right: 2rem;
+    text-align: center;
 }
 
 .treestatistic {
     background-color: #dcedc1;
+    margin-left: 2rem;
+    text-align: center;
 }
 </style>

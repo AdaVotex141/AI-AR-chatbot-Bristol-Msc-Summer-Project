@@ -98,7 +98,9 @@ span{
     display: flex;
     margin: 0 auto;
     flex-direction: column; 
-    gap: 20px; 
+    gap: 20px;
+    min-width: 75%;
+    max-width: 75%;
 }
 
 .progress-item {
