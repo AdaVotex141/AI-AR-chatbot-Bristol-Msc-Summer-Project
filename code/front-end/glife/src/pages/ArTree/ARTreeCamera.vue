@@ -33,6 +33,7 @@ const longitude = ref<number>(-2.6029143);
 const buttonColor = ref('green');
 const socket = ref<WebSocket | null>(null);
 const userName = ref('');
+const userID =ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
 const center = ref({ lat: 40.689247, lng: -74.044502 });
@@ -91,7 +92,8 @@ function sendPeriodicMessage() {
         type: 'current-location',
         latitude: latitude,
         longitude: longitude,
-        userName: userName
+        userName: userName,
+        userID: userID
       });
       socket.value.send(message.toString());
     }else {
@@ -120,6 +122,7 @@ onMounted(() => {
   center.value.lng=longitude.value;
   console.log(latitude.value+""+longitude.value)
   userName.value = userInfoStore.user;
+  userID.value=userInfoStore.userid;
   socket.value = new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 1000);
   socket.value.onmessage = (event) => {

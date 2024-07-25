@@ -5,7 +5,10 @@
             <div class="background-image-container" :style="{ backgroundImage: 'url(' + treepointsStore.treeImageSrc + ')' }" />
           </el-main>
           <!-- <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer> -->
-          <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
+          <el-footer>
+            <el-button @click="handlePlant"><h2>Plant</h2></el-button>
+            <el-button @click="handleCamera"><h2>Camera</h2></el-button>
+          </el-footer>
         </el-container>
     </div>
 </template>
@@ -14,6 +17,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useTreepointsStore } from "@/stores/treepoints";
 import router from '@/router';
+import { ElMessage } from 'element-plus';
 
 const treepointsStore = useTreepointsStore()
 
@@ -26,31 +30,35 @@ onMounted(() => {
 // Is the plant tree button disabled
 const isDisabled = computed(() => !treepointsStore.canPlantTree);
 
-// handle click
-// const handleClick = () => {
-//   if (!isDisabled.value) {
-//     ElMessage({
-//       message: 'You have to finish the day routine to get the chance',
-//       type: 'warning',
-//     });
-//   } else {
-//     ElMessage({
-//       message: 'Congratulations! Now you can plant your tree!',
-//       type: 'success',
-//     });
-//     router.push({
-//       name:'artree-camera'
-//     })
-//   }
-// };
-
-const handleClick = () => {
-  
+// handle plant
+const handlePlant = () => {
+  if (!isDisabled.value) {
+    ElMessage({
+      message: 'You have to finish the day routine to get the chance',
+      type: 'warning',
+    });
+  } else {
+    ElMessage({
+      message: 'Congratulations! Now you can plant your tree!',
+      type: 'success',
+    });
     router.push({
       name:'artree-camera'
     })
-  
+  }
 };
+
+// const handlePlant = () => {
+//     router.push({
+//       name:'artree-camera'
+//     })
+// };
+
+function handleCamera(){
+  router.push({
+    name:'ar-camera'
+  })
+}
 </script>
 
 <style scoped>
