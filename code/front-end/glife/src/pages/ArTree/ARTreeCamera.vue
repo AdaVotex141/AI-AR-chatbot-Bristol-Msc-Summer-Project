@@ -10,7 +10,6 @@
   <div>
     <GoogleMap id="map"
         api-key="AIzaSyD7yNhMUS2eFelVVz1x6i9hsTbePnK48to"
-
         :center="center"
         :zoom="17"
     >
@@ -37,7 +36,7 @@ const userName = ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
 const center = ref({ lat: 40.689247, lng: -74.044502 });
-const markers = ref<Array<{ position: { lat: number, lng: number }, title: string }>>([
+const markers = ref<Array<{ position: { lat: number, lng: number }, title: string ,icon: { url: string, scaledSize: { width: number; height: number } }}>>([
 
 ]);
 
@@ -133,7 +132,11 @@ onMounted(() => {
     console.log(name);
     markers.value.push({
       position: { lat: newLatitude, lng: newLongitude },
-      title: `Tree: ${name.trim()}`
+      title: `Tree: ${name.trim()}`,
+      icon: {
+        url: '/src/assets/marker/MarkerTree.png',
+        scaledSize: { width: 30, height: 30 }
+      }
     })
   }
 })
