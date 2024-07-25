@@ -9,7 +9,6 @@
             class="el-menu-desktop"
             mode="horizontal"
             :ellipsis="false"
-            @select="handleSelect"
             background-color="#738352"
             text-color="white"
             active-text-color="black"
@@ -79,9 +78,6 @@
       activeIndex.value = newRoute.path;
     });
 
-    const handleSelect = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath)
-    }
     function navigateTo(routeName: string) {
       router.push({
         name: routeName
