@@ -1,6 +1,6 @@
 <template>
     <ul>
-      <li v-for="(todo) in props.store.filteredTodos" :key="todo.id" :class="{ completed: todo.completed }">
+      <li v-for="(todo) in props.todos" :key="todo.id" :class="{ completed: todo.completed }">
         <input type="checkbox" v-model="todo.completed" @click="props.store.changeCompletedStatus(todo.id)"/>
         <span>{{ todo.text }}</span>
         <div class="right-button">
@@ -15,9 +15,11 @@
 import RoutineEdit from './RoutineEdit.vue'
 import {onMounted} from 'vue'
 
-const props = defineProps(['store', 'isSystemroutine'])
+const props = defineProps(['store', 'isSystemroutine', 'todos'])
 
-onMounted(()=> props.store.getTodos())
+onMounted(()=> {
+  props.store.getTodos()
+})
 
 </script>
 

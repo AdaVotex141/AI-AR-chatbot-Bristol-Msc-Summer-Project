@@ -44,11 +44,23 @@ export const useUserTaskStore = defineStore('usertask',()=>{
 
     async function addTaskToRoutine(){
         try{
-            const response = await axios.post('/api/randomTask/add', taskContent.value, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            const response = await axios.post('/api/randomTask/add')
+            if(String(response.data.code)!=='1'){
+                console.error('Cannot be added.')
+            }
+        } catch (error){
+            console.error(error)
+            router.push({ name: 'notfound' });
+        }
+    }
+
+    async function throwCurrentTask(){
+        try{
+            const response = await axios.post('/api/randomTask/throw')
+            if(String(response.data.code)!=='1'){
+                console.error('Cannot get another task.')
+            }
+            console.log(response.data)
         } catch (error){
             console.error(error)
             router.push({ name: 'notfound' });
@@ -59,5 +71,5 @@ export const useUserTaskStore = defineStore('usertask',()=>{
         taskContent.value = content
     }
 
-    return {numberOfTasks, taskContent, stringOfTask, setTaskContent, getRandomTask, getNumberOfTask, addTaskToRoutine}
+    return {numberOfTasks, taskContent, stringOfTask, setTaskContent, getRandomTask, getNumberOfTask, addTaskToRoutine, throwCurrentTask}
 })

@@ -14,11 +14,18 @@ interface Todo{
 
 export const useSystemroutineStore = defineStore('systemroutine',()=> {
     const newTodo = ref('');
-    const todos = ref<Todo[]>([]);
+    const systemTodos = ref<Todo[]>([]);
+    const randomTaskTodos = ref<Todo[]>([]);
     const dayroutineStore = useDayroutineStore()
 
-    const filteredTodos = computed(()=>{
-        return todos.value
+    const filteredSystemTodos = computed(()=>{
+        return systemTodos.value
+        .filter(todo => todo.period === dayroutineStore.activeTabValue)
+        .sort((a, b) => b.id - a.id)
+    })
+
+    const filteredRandomTaskTodos = computed(()=>{
+        return randomTaskTodos.value
         .filter(todo => todo.period === dayroutineStore.activeTabValue)
         .sort((a, b) => b.id - a.id)
     })
@@ -28,9 +35,18 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
             const response = await axios.get('/api/system_routine/init')
             if(String(response.data.code) === '1'){
                 //Get the data from response
-                const data: {id: number; content: string; schedule:number; tick: number}[] = response.data.data
+                const data: {id: number; content: string; schedule:number; tick: number; type:number}[] = response.data.data
+                const randomTaskRoutineData = data.filter(item => item.type === 1);
+                const systemRoutineData = data.filter(item => item.type === 0);
                 //Map the data to todos and Sort them with id ascendingly
-                todos.value = data.map(item => ({
+                randomTaskTodos.value = randomTaskRoutineData.map(item => ({
+                    id: item.id,
+                    text: item.content,
+                    period: item.schedule,
+                    completed: Boolean(item.tick)
+                }))
+                .sort((a, b) => b.id - a.id)
+                systemTodos.value = systemRoutineData.map(item => ({
                     id: item.id,
                     text: item.content,
                     period: item.schedule,
@@ -86,6 +102,6 @@ export const useSystemroutineStore = defineStore('systemroutine',()=> {
         }
     }
 
-    return {newTodo, todos, filteredTodos, removeTodo, getTodos, changeCompletedStatus}
+    return {newTodo, systemTodos, filteredSystemTodos, randomTaskTodos, filteredRandomTaskTodos, removeTodo, getTodos, changeCompletedStatus}
 }) 
     
