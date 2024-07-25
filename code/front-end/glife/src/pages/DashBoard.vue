@@ -1,10 +1,12 @@
 <template>
-    <div class colorMan>
-        <el-space class="container">
+    <div class="dashboard">
+        <el-container class="dashboard-container">
             <RoutineStatistic ref="ref2" class="routine-part" />
-            <UserRandomTask ref="ref1" />
-            <TreeStatistic ref="ref3" />
-        </el-space>
+            <div class="bottom-container">
+                <UserRandomTask ref="ref1" class="randomtask" />
+                <TreeStatistic ref="ref3" class="treestatistic" />
+            </div>
+        </el-container>
 
         <el-tour v-model="userInfoStore.tutorialStatement['dashboard']">
             <el-tour-step :target="ref1?.$el" title="Random Tasks">
@@ -26,6 +28,7 @@
 <script setup lang="ts">
 import RoutineStatistic from '@/components/RoutineStatistic.vue';
 import UserRandomTask from '@/components/UserRandomTask.vue';
+import TreeStatistic from '@/components/TreeStatistic.vue';
 import { useUserInfoStore } from '@/stores/userInfo';
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'
@@ -38,18 +41,33 @@ const ref3 = ref<ButtonInstance>()
 
 </script>
 <style scoped>
-.container {
-    padding-top: 4rem;
-    flex-direction: column; 
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
+.dashboard{
+    margin:0 auto;
+    margin-top: 2.5rem;
+    width: 100vw;
+    height: 100vh;
+}
+
+.dashboard-container {
+    flex-direction: column;    
 }
 
 .routine-part {
-    display:position;
-    top:10%;
-    height: 40vh; 
-    width: 100vw; 
+    flex: 1; 
+    background-color: lightblue;
+}
+
+.bottom-container {
+    display: grid;
+    flex: 1; 
+    grid-template-columns: 1fr 1fr;
+}
+
+.randomtask {
+    background-color: lightcoral;
+}
+
+.treestatistic {
+    background-color: cyan;
 }
 </style>
