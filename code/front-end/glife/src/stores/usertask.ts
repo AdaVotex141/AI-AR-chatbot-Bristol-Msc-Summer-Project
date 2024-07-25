@@ -17,7 +17,7 @@ export const useUserTaskStore = defineStore('usertask',()=>{
             const response = await axios.get('/api/randomTask/init')
             console.log(response.data)
             if (String(response.data.code) !== '1') {
-                console.error('Backend send code 0')
+                console.error('Cannot get random task from backend')
                 router.push({ name: 'notfound' });
             }
         } catch (error) {
