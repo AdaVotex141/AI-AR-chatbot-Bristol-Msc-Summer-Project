@@ -64,10 +64,10 @@ const ref3 = ref<ButtonInstance>()
 }
 
 .randomtask {
-    background-color: lightcoral;
+    background-color: #a8e6cf;
 }
 
 .treestatistic {
-    background-color: cyan;
+    background-color: #dcedc1;
 }
 </style>
