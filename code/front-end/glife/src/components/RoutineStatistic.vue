@@ -67,6 +67,7 @@ onMounted(()=>{
 </script>
   
 <style scoped>
+
 .el-header{
     background-color: #9cb470;
     padding: 1.5rem;
@@ -76,7 +77,6 @@ onMounted(()=>{
     font-weight: bold;
     font-family: 'Cooper Black',sans-serif;
     border-bottom: 1px solid #e0e0e0;
-    border-radius: 0.8rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
@@ -90,11 +90,13 @@ span{
 }
 
 .el-container{
-    background-color: bisque;
+    background-color: #fff;
+    max-width: 100vw;
 }
 
 .progress-container {
     display: flex;
+    margin: 0 auto;
     flex-direction: column; 
     gap: 20px; 
 }
@@ -103,6 +105,7 @@ span{
     display: flex;
     align-items: center; 
     gap: 10px; 
+    max-width: 100vw;
 }
 
 .el-progress {
