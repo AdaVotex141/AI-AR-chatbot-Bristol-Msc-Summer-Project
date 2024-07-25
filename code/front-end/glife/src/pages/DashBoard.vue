@@ -49,6 +49,7 @@ const ref3 = ref<ButtonInstance>()
 }
 
 .dashboard-container {
+    margin-top: 4rem;
     flex-direction: column;    
 }
 
@@ -73,5 +74,7 @@ const ref3 = ref<ButtonInstance>()
 
 .treestatistic {
     background-color: #dcedc1;
+    margin-left: 2rem;
+    text-align: center;
 }
 </style>

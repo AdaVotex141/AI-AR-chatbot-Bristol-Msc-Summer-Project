@@ -81,8 +81,11 @@ async function changeTask(){
 
 .button-container {
     margin-top: 16px;
-    display: flex;
     gap: 8px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
 }
 
 .el-header {
