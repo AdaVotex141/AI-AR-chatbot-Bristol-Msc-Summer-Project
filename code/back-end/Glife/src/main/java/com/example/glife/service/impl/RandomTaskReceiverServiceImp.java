@@ -80,6 +80,14 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
         return R.success("add success!");
     }
 
+    public R<String> throwAway(HttpServletRequest request){
+        //task
+        Long userID = getUserID(request);
+        template.opsForList().leftPop(USER_MESSAGES + userID);
+
+        return R.success("throw away success!");
+    }
+
     public R<Long> MessageQueueLength(HttpServletRequest request) {
         Long userID = getUserID(request);
         Long lengthLong = template.opsForList().size(USER_MESSAGES + userID);
