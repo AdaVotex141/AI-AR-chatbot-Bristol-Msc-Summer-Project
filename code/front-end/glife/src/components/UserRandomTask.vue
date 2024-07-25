@@ -86,9 +86,9 @@ function changeTask(){
 .button-container {
     margin-top: 16px;
     gap: 8px;
-  display: flex; /* 使用Flexbox布局 */
-  justify-content: flex-end; /* 水平左对齐，可以根据需要调整 */
-  align-items: center; /* 垂直居中对齐 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
 }
 </style>
