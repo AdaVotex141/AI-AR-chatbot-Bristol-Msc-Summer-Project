@@ -132,7 +132,7 @@ h2{
   box-shadow: none;           /* 禁用状态移除阴影 */
   opacity: 0.6;               /* 禁用状态降低不透明度 */
 }
-.button:disabled:hover {
+.el-button:disabled:hover {
   background-color: #cccccc; /* 仍然保持灰色 */
 }
 .el-footer{
