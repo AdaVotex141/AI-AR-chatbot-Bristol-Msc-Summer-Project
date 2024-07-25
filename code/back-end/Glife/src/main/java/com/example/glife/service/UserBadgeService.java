@@ -19,5 +19,7 @@ public interface UserBadgeService {
     void checkAndAwardGreenThumbMasterBadge(Long userId);
     void checkAndAwardWeeklyWarriorBadge(Long userId);
     void checkAndAwardMonthlyMastermindBadge(Long userId);
+    void checkAndAwardGreenChallengeMasterBadge(Long userId);
+    void checkAndAwardEcoMilestoneBadge(Long userId);
 
 }

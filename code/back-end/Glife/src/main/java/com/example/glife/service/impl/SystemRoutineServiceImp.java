@@ -187,7 +187,8 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
 
         baseMapper.insert(newRoutine);
         deleteInRedis(request);
-
+        userBadgeService.checkAndAwardGreenChallengeMasterBadge(userid);
+        userBadgeService.checkAndAwardEcoMilestoneBadge(userid);
         return R.success("create routine success");
     }
 
@@ -215,7 +216,8 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
         routine.setType(1);
         routine.setTick(0);
         baseMapper.insert(routine);
-
+        userBadgeService.checkAndAwardGreenChallengeMasterBadge(routine.getUserid());
+        userBadgeService.checkAndAwardEcoMilestoneBadge(routine.getUserid());
         return R.success("added successfully");
     }
 

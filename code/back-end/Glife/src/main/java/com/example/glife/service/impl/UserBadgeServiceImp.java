@@ -295,6 +295,63 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
         }
     }
 
+    @Transactional
+    public void checkAndAwardGreenChallengeMasterBadge(Long userId) {
+        // Check the number of different daily routines added by the user
+        LambdaQueryWrapper<SystemRoutine> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemRoutine::getUserid, userId);
+
+        List<SystemRoutine> routines = systemRoutineMapper.selectList(queryWrapper);
+        long distinctRoutineCount = routines.stream().map(SystemRoutine::getContent).distinct().count();
+
+        if (distinctRoutineCount >= 5) {
+            // Check if the user already has the badge
+            LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
+            badgeQueryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 11L);
+
+            UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
+
+            if (existingBadge == null) {
+                // Award the badge
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(11L);
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
+    @Transactional
+    public void checkAndAwardEcoMilestoneBadge(Long userId) {
+        // Check the number of different daily routines added by the user
+        LambdaQueryWrapper<SystemRoutine> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemRoutine::getUserid, userId);
+
+        List<SystemRoutine> routines = systemRoutineMapper.selectList(queryWrapper);
+        long distinctRoutineCount = routines.stream().map(SystemRoutine::getContent).distinct().count();
+
+        if (distinctRoutineCount >= 10) {
+            // Check if the user already has the badge
+            LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
+            badgeQueryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 12L);
+
+            UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
+
+            if (existingBadge == null) {
+                // Award the badge
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(12L);
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
+
     @Override
     public R<String> deleteUserBadge(Long userId, Long badgeId) {
         if (userExists(userId)) {

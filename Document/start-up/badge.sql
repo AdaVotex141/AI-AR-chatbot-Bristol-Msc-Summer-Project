@@ -11,7 +11,7 @@
  Target Server Version : 80300 (8.3.0)
  File Encoding         : 65001
 
- Date: 16/07/2024 14:45:05
+ Date: 25/07/2024 17:54:52
 */
 
 SET NAMES utf8mb4;
@@ -32,18 +32,18 @@ CREATE TABLE `badge` (
 -- Records of badge
 -- ----------------------------
 BEGIN;
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (1, 'First Task Achiever Badge', 'Awarded for completing the first task.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (2, 'Daily Routine Starter Badge', 'Awarded for completing a daily routine for the first time.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (3, 'Routine Streak Master Badge', 'Awarded for maintaining a daily routine streak for 7 consecutive days.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (4, 'Monthly Routine Champion Badge', 'Awarded for consistently completing daily routines for a month.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (5, 'Personal Best Record Badge', 'Awarded for breaking a personal record in completing the daily routine.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (6, 'First Tree Planter Badge', 'Awarded for planting the first virtual tree in the AR forest.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (7, 'Green Thumb Master Badge', 'Awarded for planting 5 virtual trees.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (8, 'Eco Warrior Badge', 'Awarded for completing 10 eco-friendly tasks.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (9, 'Eco Mentor Badge', 'Awarded for sharing the link of your already attained badge.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (10, 'Challenge Accepted Badge', 'Awarded for completing the first random green challenge.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (11, 'Green Challenge Master Badge', 'Awarded for completing 10 random green challenges.');
-INSERT INTO `badge` (`id`, `name`, `description`) VALUES (12, 'Eco Milestone Badge', 'Awarded for showing continuous improvement in eco-friendly activities over time.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (1, 'First Task Achiever Badge', 'Awarded for completing the first random task.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (2, 'Daily Routine Starter Badge', 'Awarded for completing all the tasks in the daily routine for the first time.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (3, 'Routine Streak Master Badge', 'Awarded for logging in for 7 consecutive days.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (4, 'Monthly Routine Champion Badge', 'Awarded for logging in for 30 consecutive days.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (5, 'Quarterly Routine Champion Badge', 'Awarded for logging in for 90 consecutive days.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (6, 'Yearly Routine Champion Badge', 'Awarded for logging in for 365 consecutive days.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (7, 'First Tree Planter Badge', 'Awarded for planting the first virtual tree in the AR forest.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (8, 'Green Thumb Master Badge', 'Awarded for planting 5 virtual trees.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (9, 'Weekly Warrior Badge', 'Awarded for completing a weekly routine for the first time.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (10, 'Monthly Mastermind Badge', 'Awarded for completing a monthly routine for the first time.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (11, 'Green Challenge Master Badge', 'Awarded for adding 5 routines from random tasks or AI chatbot.');
+INSERT INTO `badge` (`id`, `name`, `description`) VALUES (12, 'Eco Milestone Badge', 'Awarded for adding 10 routines from random tasks or AI chatbot.');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
