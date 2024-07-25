@@ -122,15 +122,19 @@ onMounted(() => {
   console.log(latitude.value+""+longitude.value)
   userName.value = userInfoStore.user;
   socket.value = new WebSocket("ws://localhost:8040/ARtree")
-  intervalId.value = window.setInterval(sendPeriodicMessage, 5000);
+  intervalId.value = window.setInterval(sendPeriodicMessage, 1000);
   socket.value.onmessage = (event) => {
     //removeAllEntities();
-    const [newLongitude, newLatitude] = event.data.split(",").map(Number);
+    console.log(event.data);
+    const [newLongitudeStr, newLatitudeStr,name] = event.data.split(",");
+    const newLongitude=Number(newLongitudeStr)
+    const newLatitude=Number(newLatitudeStr)
     addModel(newLongitude, newLatitude);
+    console.log(name);
     markers.value.push({
       position: { lat: newLatitude, lng: newLongitude },
-      title: `Marker ${markers.value.length + 1}`
-    });
+      title: `Tree: ${name.trim()}`
+    })
   }
 })
 

@@ -54,6 +54,7 @@ public class WsHandler extends AbstractWebSocketHandler {
         clientID = new AtomicInteger(0);
     }
 
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
@@ -96,6 +97,10 @@ public class WsHandler extends AbstractWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
         log.info(sessionBeanMap.get(session.getId()).getID() + ":" + "close");
+        sessionBeanMap.remove(session.getId());
+        setMap.remove(session.getId());
+        latitudeMap.remove(session.getId());
+        longitudeMap.remove(session.getId());
     }
 
 
@@ -176,11 +181,13 @@ public class WsHandler extends AbstractWebSocketHandler {
                     double x = point.getX();
                     double y = point.getY();
 
-                    log.info("User: " + userName + " - X: " + x + ", Y: " + y);
+                    //log.info("User: " + userName + " - X: " + x + ", Y: " + y);
+                    log.info(x+","+y+","+userName);
 
                     try {
-                        String message = String.format("User: %s, Location: %.6f, %.6f", userName, x, y);
-                        session.sendMessage(new TextMessage(message));
+                        //String message = String.format("User: %s, Location: %.6f, %.6f", userName, x, y);
+                        //session.sendMessage(new TextMessage(message));
+                        session.sendMessage(new TextMessage(x+","+y+","+userName));
                     } catch (IOException e) {
                         log.error("Error sending WebSocket message", e);
                     }
@@ -202,7 +209,8 @@ public class WsHandler extends AbstractWebSocketHandler {
             double latitudeLocation=latitudeMap.get(key);
             if(!arePointsNear(latitudeLocation,longitudeLocation,latitude,longitude)){
                 try {
-                    sessionBeanMap.get(key).getWebSocketSession().sendMessage(new TextMessage(longitude+","+latitude));
+                    log.info(session.getAttributes().get("name").toString());
+                    sessionBeanMap.get(key).getWebSocketSession().sendMessage(new TextMessage(longitude+","+latitude+","+session.getAttributes().get("name").toString()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
