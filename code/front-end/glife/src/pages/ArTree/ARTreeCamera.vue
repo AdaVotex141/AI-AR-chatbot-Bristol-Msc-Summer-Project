@@ -7,10 +7,10 @@
     <button id="myButton" @click="plantTree" :style="{backgroundColor:buttonColor}">Plant</button>
     <button id="myButton2" @click="returnToARTree">GO back</button>
   </div>
-  <div id="map">
-    <GoogleMap
+  <div>
+    <GoogleMap id="map"
         api-key="AIzaSyD7yNhMUS2eFelVVz1x6i9hsTbePnK48to"
-        style="width: 100%; height: 500px"
+
         :center="center"
         :zoom="17"
     >
@@ -198,11 +198,19 @@ function returnToARTree() {
   z-index: 1;
 }
 #map {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
-  width: 20%;
-  height: 20%;
+  width: 20vw;
+  height: 500px;
   z-index: 1;
+}
+@media (max-width: 767px) {
+  #map {
+    width: 40vw;
+    height: 150px;
+    top: 5px;
+    right: 5px;
+  }
 }
 </style>
