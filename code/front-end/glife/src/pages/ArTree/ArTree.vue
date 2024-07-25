@@ -1,7 +1,9 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="ar-container">
         <el-container>
-          <el-main><div class="background-image-container"><img :src="treepointsStore.treeImageSrc" :alt="treepointsStore.treeImageAlt" /></div></el-main>
+          <el-main>
+            <div class="background-image-container" :style="{ backgroundImage: 'url(' + treepointsStore.treeImageSrc + ')' }" />
+          </el-main>
           <!-- <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer> -->
           <el-footer><el-button @click="handleClick"><h2>Plant</h2></el-button></el-footer>
         </el-container>
@@ -78,7 +80,6 @@ const handleClick = () => {
     background-repeat: no-repeat;
     width: 30vw;
     height: 70vh;
-
     font-size: 2rem;
     border-radius: 1rem;
   }
@@ -94,7 +95,6 @@ const handleClick = () => {
     background-repeat: no-repeat;
     min-width: 60vw;
     min-height: 70vh;
-
     font-size: 2rem;
     border-radius: 1rem;
   }

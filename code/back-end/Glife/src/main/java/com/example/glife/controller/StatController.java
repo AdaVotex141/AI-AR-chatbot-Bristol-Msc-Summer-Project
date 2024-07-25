@@ -19,7 +19,7 @@ public class StatController {
     @Autowired
     StatisticsServiceImp serviceImp;
 
-    @GetMapping
+    @GetMapping 
     public R<Statistics> init(HttpServletRequest request){
         return serviceImp.init(request);
     }
