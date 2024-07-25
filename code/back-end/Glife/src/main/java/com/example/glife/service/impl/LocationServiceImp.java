@@ -1,10 +1,14 @@
 package com.example.glife.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.glife.common.R;
 import com.example.glife.common.RedisConstants;
 import com.example.glife.entity.Marker;
 import com.example.glife.entity.User;
+import com.example.glife.entity.UserTree;
+import com.example.glife.mapper.UserTreeMapper;
+import com.example.glife.service.UserTreeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
@@ -29,6 +33,9 @@ public class LocationServiceImp {
     @Autowired
     StringRedisTemplate template;
 
+    @Autowired
+    UserTreeMapper userTreeMapper;
+
 
 //    @Autowired
 //    RedisTemplate<String, Point> redisTemplate;
@@ -52,6 +59,17 @@ public class LocationServiceImp {
 
             //store in opsForGEO()
             template.opsForGeo().add(key, point, locationUniqueID);
+
+            //userTree TreeCode -> 0
+            String userIdStr = (String) session.getAttributes().get("userID");
+            Long userId = Long.parseLong(userIdStr);
+            LambdaQueryWrapper<UserTree> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(UserTree::getUserid, userId);
+
+            UserTree userTree = userTreeMapper.selectOne(lambdaQueryWrapper);
+            userTree.setTickSum(1);
+            userTree.setTreeSum(userTree.getTreeSum()+1);
+            userTreeMapper.updateById(userTree);
 
             return R.success("add success");
         }else{

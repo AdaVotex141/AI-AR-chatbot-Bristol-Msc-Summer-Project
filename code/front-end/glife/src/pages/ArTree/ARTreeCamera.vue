@@ -57,6 +57,7 @@ function addModel(a: number, b: number) {
 
 function plantTree() {
   getLocation();
+  console.log(userID)
   if (latitude.value && longitude.value) {
     addModel(latitude.value, longitude.value);
     buttonColor.value = 'grey';
@@ -65,7 +66,8 @@ function plantTree() {
         type: 'plant-location',
         latitude: latitude,
         longitude: longitude,
-        userName: userName
+        userName: userName,
+        userID: userID
       });
       socket.value.send(message.toString());
     } else {
@@ -123,6 +125,7 @@ onMounted(() => {
   console.log(latitude.value+""+longitude.value)
   userName.value = userInfoStore.user;
   userID.value=userInfoStore.userid;
+  console.log(userID);
   socket.value = new WebSocket("ws://localhost:8040/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 1000);
   socket.value.onmessage = (event) => {

@@ -69,16 +69,20 @@ public class WsHandler extends AbstractWebSocketHandler {
         super.handleTextMessage(session, message);
         log.info(sessionBeanMap.get(session.getId()).getID() + ":" + message.getPayload());
 
-
+        //name
         JSONObject jsonObject = JSONUtil.parseObj(message.getPayload());
         JSONObject userNameObj = jsonObject.getJSONObject("userName");
 
+        JSONObject userIdObj = jsonObject.getJSONObject("userID");
+
         String name = userNameObj != null ? userNameObj.getStr("_value") : null;
+        String userID = userIdObj != null ? userIdObj.getStr("_value") : null;
         log.info("name is ------:{}", name);
         //Long userID = userService.getUserID(name);
         if (!session.getAttributes().containsKey(name)) {
             //session.getAttributes().put("userID", userID);
             session.getAttributes().put("name", name);
+            session.getAttributes().put("userID", userID);
         }
 
         handleMessageType(session, message.getPayload());
