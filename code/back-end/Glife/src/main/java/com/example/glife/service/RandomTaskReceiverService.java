@@ -12,6 +12,8 @@ public interface RandomTaskReceiverService {
 
     public R<String> add(HttpServletRequest request);
 
+    public R<String> throwAway(HttpServletRequest request);
+
     public R<Long> MessageQueueLength(HttpServletRequest request);
 
 }

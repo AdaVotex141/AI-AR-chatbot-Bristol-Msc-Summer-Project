@@ -43,6 +43,11 @@ public class RandomTaskReceiverController {
         return randomTaskReceiverService.MessageQueueLength(request);
     }
 
+    @PostMapping("/throw")
+    public R<String> throwAway(HttpServletRequest request){
+        return randomTaskReceiverService.throwAway(request);
+    }
+
 
 
 
