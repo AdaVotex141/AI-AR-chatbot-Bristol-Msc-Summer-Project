@@ -23,19 +23,21 @@ import { onMounted } from 'vue';
 
 const userTaskStore = useUserTaskStore()
 
-// onMounted(()=>{
-//     // Get user's random task
-//     userTaskStore.getNumberOfTask()
-//     userTaskStore.getRandomTask()
-// })
+onMounted(()=>{
+    // Get user's random task
+    userTaskStore.getNumberOfTask()
+    userTaskStore.getRandomTask()
+})
 
 async function addTask(){
     userTaskStore.addTaskToRoutine()
-    // call changeTask() to give a new task
-    changeTask()
+    //  give a new task
+    userTaskStore.getRandomTask()
+    userTaskStore.getNumberOfTask()
 }
 
 function changeTask(){
+    userTaskStore.pickAnotherTask()
     userTaskStore.getRandomTask()
     userTaskStore.getNumberOfTask()
 }

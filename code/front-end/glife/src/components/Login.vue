@@ -147,7 +147,7 @@ async function dataFetchAfterLogin(response:any, nextPageName:string){
     // Connect websocket
     await websocketStore.connect(`ws://localhost:8040/message?userId=${userInfoStore.userid}`)
     // Get user's random task (use timeout to ensure call this function after websocket connection is available)
-    userTaskStore.getRandomTask()
+    // await userTaskStore.getRandomTask()
   }
   router.push({
     name: nextPageName

@@ -218,6 +218,7 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
         baseMapper.insert(routine);
         userBadgeService.checkAndAwardGreenChallengeMasterBadge(routine.getUserid());
         userBadgeService.checkAndAwardEcoMilestoneBadge(routine.getUserid());
+        deleteInRedis(request);
         return R.success("added successfully");
     }
 

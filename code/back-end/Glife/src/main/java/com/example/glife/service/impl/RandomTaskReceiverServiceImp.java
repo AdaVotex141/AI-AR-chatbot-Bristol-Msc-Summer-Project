@@ -71,7 +71,7 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
         String task = template.opsForList().leftPop(USER_MESSAGES + userID);
 
         SystemRoutine routine = taskParse(task);
-        if(!userID.equals(Long.valueOf(0))){
+        if(userID.equals(Long.valueOf(0))){
             return R.error("Can't get UserID");
         }
         routine.setUserid(userID);
