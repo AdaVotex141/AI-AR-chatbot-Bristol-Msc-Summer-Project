@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>Your Routine:</el-header>
+        <el-header>Your Routine</el-header>
         <el-main>
             <div class="progress-container">
                 <div class="progress-item">
@@ -83,7 +83,7 @@ onMounted(()=>{
     align-items: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     top: 5%;
-  }
+}
 
 span{
     color: black;
@@ -99,8 +99,7 @@ span{
     margin: 0 auto;
     flex-direction: column; 
     gap: 20px;
-    min-width: 75%;
-    max-width: 75%;
+    max-width: 80vw; 
 }
 
 .progress-item {
@@ -116,6 +115,7 @@ span{
 }
 
 .el-button {
-    white-space: nowrap; 
+    white-space: nowrap;
+    min-width: 8vw; 
 }
 </style>

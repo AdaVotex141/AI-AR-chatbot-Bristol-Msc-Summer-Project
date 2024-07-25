@@ -5,18 +5,19 @@
             <el-main>
                 <div class="task-content-container">
                     <span class="task-content"> {{ userTaskStore.stringOfTask }} </span>
-                    <span class="task-count" v-show="userTaskStore.numberOfTasks > 0">
-                        {{ userTaskStore.numberOfTasks }}
-                    </span>
                 </div>
                 <div class="button-container" v-show="userTaskStore.numberOfTasks > 0">
-                    <el-button @click="addTask">Add it</el-button>
-                    <el-button @click="changeTask">Don't like it</el-button>
+                    <el-button type="primary" @click="addTask">Add it</el-button>
+                    <el-button type="primary" @click="changeTask">Don't like it</el-button>
                 </div>
+                <span class="task-count" v-show="userTaskStore.numberOfTasks > 0">
+                    {{ userTaskStore.numberOfTasks }}
+                </span>
             </el-main>
         </el-container>
     </div>
 </template>
+
 <script setup lang="ts">
 import { useUserTaskStore } from '@/stores/usertask';
 import { onMounted } from 'vue';
@@ -43,22 +44,15 @@ async function changeTask(){
     // update number, so that it will update this component when number of task become 0
     userTaskStore.getNumberOfTask()
 }
-
 </script>
 
 <style scoped>
-.container{
+.container {
     background-color: bisque;
-}
-
-.task-container {
-    border: 1px solid #ccc;
-    padding: 16px;
-    border-radius: 8px;
+    position: relative;
 }
 
 .task-content-container {
-    position: relative;
     max-width: 100%;
     word-wrap: break-word;
 }
@@ -71,8 +65,8 @@ async function changeTask(){
 
 .task-count {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 16px;
+    right: 16px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -92,5 +86,21 @@ async function changeTask(){
     justify-content: flex-end;
     align-items: center;
 
+}
+
+.el-header {
+    background-color: #9cb470;
+    padding: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: whitesmoke;
+    font-weight: bold;
+    font-family: 'Cooper Black', sans-serif;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 </style>

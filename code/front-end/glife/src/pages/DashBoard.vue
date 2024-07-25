@@ -54,6 +54,7 @@ const ref3 = ref<ButtonInstance>()
 }
 
 .routine-part {
+    margin-top: 2rem;
     flex: 1; 
     background-color: lightblue;
 }
@@ -63,13 +64,12 @@ const ref3 = ref<ButtonInstance>()
     display: grid;
     flex: 1; 
     grid-template-columns: 1fr 1fr;
-
+    gap: 1rem;
 }
 
 .randomtask {
     background-color: #a8e6cf;
-    margin-right: 2rem;
-    text-align: center;
+    min-height: 34vh;
 }
 
 .treestatistic {
