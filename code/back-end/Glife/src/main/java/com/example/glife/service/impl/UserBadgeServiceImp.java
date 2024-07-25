@@ -146,8 +146,45 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
             }
         }
     }
+    @Transactional
+    public void checkAndAwardQuarterlyRoutineChampionBadge(Long userId) {
+        User user = userMapper.selectById(userId);
+        if (user.getLoginDays() >= 90) {
+            LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 5L);
 
+            UserBadge existingBadge = baseMapper.selectOne(queryWrapper);
 
+            if (existingBadge == null) {
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(5L);
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
+    public void checkAndAwardYearlyRoutineChampionBadge(Long userId) {
+        User user = userMapper.selectById(userId);
+        if (user.getLoginDays() >= 365) {
+            LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 6L);
+
+            UserBadge existingBadge = baseMapper.selectOne(queryWrapper);
+
+            if (existingBadge == null) {
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(6L);
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
     @Transactional
     public void checkAndAwardFirstTreePlanterBadge(Long userId) {
         // Check if the user has already planted a tree
@@ -160,7 +197,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
             // Check if the user already has the badge
             LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
             badgeQueryWrapper.eq(UserBadge::getUserId, userId)
-                    .eq(UserBadge::getBadgeId, 6L); //  badge ID 6 is for the First Tree Planter Badge
+                    .eq(UserBadge::getBadgeId, 7L);
 
             UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
 
@@ -168,7 +205,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
                 // Award the badge
                 UserBadge newBadge = new UserBadge();
                 newBadge.setUserId(userId);
-                newBadge.setBadgeId(6L);  //  badge ID 6 is for the First Tree Planter Badge
+                newBadge.setBadgeId(7L);
                 newBadge.setEarnedTime(LocalDateTime.now());
 
                 baseMapper.insert(newBadge);
@@ -187,7 +224,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
             // Check if the user already has the badge
             LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
             badgeQueryWrapper.eq(UserBadge::getUserId, userId)
-                    .eq(UserBadge::getBadgeId, 7L); // badge ID 7 is for the Green Thumb Master Badge
+                    .eq(UserBadge::getBadgeId, 8L);
 
             UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
 
@@ -195,7 +232,62 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
                 // Award the badge
                 UserBadge newBadge = new UserBadge();
                 newBadge.setUserId(userId);
-                newBadge.setBadgeId(7L); // badge ID 7 is for the Green Thumb Master Badge
+                newBadge.setBadgeId(8L);
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
+    @Transactional
+    public void checkAndAwardWeeklyWarriorBadge(Long userId) {
+        // Check if the user has already completed a weekly routine task
+        LambdaQueryWrapper<SystemRoutine> routineQueryWrapper = new LambdaQueryWrapper<>();
+        routineQueryWrapper.eq(SystemRoutine::getUserid, userId).eq(SystemRoutine::getSchedule, 1).eq(SystemRoutine::getTick, 1);
+
+        List<SystemRoutine> userRoutines = systemRoutineMapper.selectList(routineQueryWrapper);
+
+        if (!userRoutines.isEmpty()) {
+            // Check if the user already has the badge
+            LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
+            badgeQueryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 9L);
+
+            UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
+
+            if (existingBadge == null) {
+                // Award the badge
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(9L);
+                newBadge.setEarnedTime(LocalDateTime.now());
+
+                baseMapper.insert(newBadge);
+            }
+        }
+    }
+
+    @Transactional
+    public void checkAndAwardMonthlyMastermindBadge(Long userId) {
+        // Check if the user has already completed a monthly routine task
+        LambdaQueryWrapper<SystemRoutine> routineQueryWrapper = new LambdaQueryWrapper<>();
+        routineQueryWrapper.eq(SystemRoutine::getUserid, userId).eq(SystemRoutine::getSchedule, 2).eq(SystemRoutine::getTick, 1);
+
+        List<SystemRoutine> userRoutines = systemRoutineMapper.selectList(routineQueryWrapper);
+
+        if (!userRoutines.isEmpty()) {
+            // Check if the user already has the badge
+            LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
+            badgeQueryWrapper.eq(UserBadge::getUserId, userId)
+                    .eq(UserBadge::getBadgeId, 10L);
+
+            UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
+
+            if (existingBadge == null) {
+                // Award the badge
+                UserBadge newBadge = new UserBadge();
+                newBadge.setUserId(userId);
+                newBadge.setBadgeId(10L);
                 newBadge.setEarnedTime(LocalDateTime.now());
 
                 baseMapper.insert(newBadge);

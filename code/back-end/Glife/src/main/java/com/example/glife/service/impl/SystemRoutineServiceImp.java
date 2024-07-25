@@ -153,6 +153,12 @@ public class SystemRoutineServiceImp extends ServiceImpl<SystemRoutineMapper, Sy
             }
             userBadgeService.checkAndAwardDailyRoutineStarterBadge(userId);
             userBadgeService.checkAndAwardRoutineStreakMasterBadge(userId);
+
+            if (selectRoutine.getSchedule() == 1) {
+                userBadgeService.checkAndAwardWeeklyWarriorBadge(userId);
+            } else if (selectRoutine.getSchedule() == 2) {
+                userBadgeService.checkAndAwardMonthlyMastermindBadge(userId);
+            }
         }
 
         return R.success(selectRoutine);
