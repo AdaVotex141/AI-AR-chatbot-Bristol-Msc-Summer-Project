@@ -25,7 +25,9 @@
 </template>
 
 <script setup>
-import { ArrowLongDownIcon, ChatBubbleBottomCenterTextIcon , ArrowLongRightIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
+import { ChatBubbleBottomCenterTextIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
+import ArTreeIcon from "@/assets/icons/ArTreeIcon.js"
+import BadgeIcon from "@/assets/icons/BadgeIcon.js";
 import router from "@/router";
 import { useUserInfoStore } from '@/stores/userInfo';
 import { computed } from 'vue';
@@ -55,14 +57,14 @@ const features = [
     name: 'Plant AR tree',
     description:
         'You can plant some AR tree and share your AR tree in here.',
-    icon: ArrowLongDownIcon,
+    icon: ArTreeIcon,
     router: 'artree',
   },
   {
     name: 'My Badges',
     description:
         'You can find all badges you got.',
-    icon: ArrowLongRightIcon,
+    icon: BadgeIcon,
     router: 'mybadge',
   },
 ]
