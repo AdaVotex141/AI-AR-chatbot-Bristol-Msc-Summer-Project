@@ -46,7 +46,7 @@ function changeTask(){
 
 <style scoped>
 .container{
-    background-color: bisque;
+    background-color: #fff;
 }
 
 .task-container {
