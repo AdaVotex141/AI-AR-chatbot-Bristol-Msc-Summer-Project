@@ -17,6 +17,7 @@ import AdminPage from '@/pages/AdminPage.vue'
 import MemberList from '@/pages/MemberList.vue'
 import Task from '@/pages/Task.vue'
 import DashBoard from '@/pages/DashBoard.vue'
+import ARCamera from '@/pages/ArTree/ARCamera.vue'
 
 //create router
 const router = createRouter({
@@ -87,6 +88,11 @@ const router = createRouter({
             name:'artree-camera',
             path:'/artree-camera',
             component: ARTreeCamera
+        },
+        {
+            name:'ar-camera',
+            path:'/ar-camera',
+            component: ARCamera
         },
         {
             path:'/',
