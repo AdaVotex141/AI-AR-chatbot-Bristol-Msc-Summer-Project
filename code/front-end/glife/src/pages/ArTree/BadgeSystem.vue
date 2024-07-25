@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import { useBadgeStates } from '@/stores/badgesystems';
 
 const badgeStore = useBadgeStates();
 const allBadgeIds = Array.from({ length: 12 }, (_, i) => i + 1);
 
 const badgeImageSrc = badgeStore.badgeImageSrc;
-
 onMounted(async () => {
   try {
     await badgeStore.fetchBadgeStatus();
@@ -15,6 +14,15 @@ onMounted(async () => {
     console.error('Error fetching badges:', error);
   }
 });
+const showMessage = ref(false);
+const badgeMessage = computed(() => {
+  if(badgeStore.badgeNumbers===0){
+    showMessage.value = !showMessage.value;
+    return "You haven't earned any badges yet, keep it up!";
+  }else{
+    return "Congratulations! You already get the " + badgeStore.badgeNumbers +  " badges!" ;
+  }
+})
 </script>
 
 <template>
@@ -23,7 +31,8 @@ onMounted(async () => {
             flex-direction: column;
             background-color: transparent;
             text-align: center;
-            align-items: center;" > You don't have any badges yet...Complete tasks to earn badges... all badge pictures in here...
+            align-items: center;" >
+      {{badgeMessage}}
     </div>
       <div class="badge-show">
         <img class = "badge-show" v-for="badgeId in allBadgeIds" :key="badgeId" :src="badgeImageSrc[badgeId]" :alt="'Badge ' + badgeId" />

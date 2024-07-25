@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import { defineStore } from 'pinia';
 import { ElMessage } from 'element-plus';
 import { useUserInfoStore } from './userInfo';
@@ -61,10 +61,14 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
         // Set gotten badges to colored
         gottenBadges.value.forEach((id) => updateBadgeImage(id, true));
     }
+    const badgeNumbers= computed(()=> {
+        return gottenBadges.value.length;
+    })
     return {
         gottenBadges,
         fetchBadgeStatus,
         updateBadgeImages,
         badgeImageSrc,
+        badgeNumbers,
     };
 });
