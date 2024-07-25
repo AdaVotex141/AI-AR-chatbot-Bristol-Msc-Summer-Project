@@ -72,7 +72,11 @@ public class StatisticsServiceImp {
         double weeklyPercentage = totalWeekly > 0 ? (double) weeklyCount / totalWeekly * 100 : 0;
         double monthlyPercentage = totalMonthly > 0 ? (double) monthlyCount / totalMonthly * 100 : 0;
 
-        // Set the statistics object
+        dailyPercentage = Double.parseDouble(String.format("%.2f", dailyPercentage));
+        weeklyPercentage = Double.parseDouble(String.format("%.2f", weeklyPercentage));
+        monthlyPercentage = Double.parseDouble(String.format("%.2f", monthlyPercentage));
+
+// Set the statistics object
         stat.setDaily(dailyPercentage);
         stat.setWeekly(weeklyPercentage);
         stat.setMonthly(monthlyPercentage);
