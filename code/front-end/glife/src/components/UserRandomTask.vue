@@ -11,7 +11,7 @@
                 </div>
                 <div class="button-container" v-show="userTaskStore.numberOfTasks > 0">
                     <el-button @click="addTask">Add it</el-button>
-                    <el-button @click="changeTask">Choose another one</el-button>
+                    <el-button @click="changeTask">Don't like it</el-button>
                 </div>
             </el-main>
         </el-container>
@@ -33,12 +33,14 @@ async function addTask(){
     userTaskStore.addTaskToRoutine()
     //  give a new task
     userTaskStore.getRandomTask()
+    // update number, so that it will update this component when number of task become 0
     userTaskStore.getNumberOfTask()
 }
 
-function changeTask(){
-    userTaskStore.pickAnotherTask()
+async function changeTask(){
+    userTaskStore.throwCurrentTask()
     userTaskStore.getRandomTask()
+    // update number, so that it will update this component when number of task become 0
     userTaskStore.getNumberOfTask()
 }
 
@@ -46,7 +48,7 @@ function changeTask(){
 
 <style scoped>
 .container{
-    background-color: #fff;
+    background-color: bisque;
 }
 
 .task-container {
