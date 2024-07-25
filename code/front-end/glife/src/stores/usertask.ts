@@ -54,7 +54,7 @@ export const useUserTaskStore = defineStore('usertask',()=>{
         }
     }
 
-    async function pickAnotherTask(){
+    async function throwCurrentTask(){
         try{
             const response = await axios.post('/api/randomTask/throw')
             if(String(response.data.code)!=='1'){
@@ -71,5 +71,5 @@ export const useUserTaskStore = defineStore('usertask',()=>{
         taskContent.value = content
     }
 
-    return {numberOfTasks, taskContent, stringOfTask, setTaskContent, getRandomTask, getNumberOfTask, addTaskToRoutine, pickAnotherTask}
+    return {numberOfTasks, taskContent, stringOfTask, setTaskContent, getRandomTask, getNumberOfTask, addTaskToRoutine, throwCurrentTask}
 })

@@ -7,10 +7,13 @@
       <RoutineTags ref="ref2" />
       <el-divider content-position="left">Your {{dayroutineStore.activeTab}} routines:</el-divider>
       <!-- RoutineList -->
-      <div class="systemroutine">
-        <RoutineList :store="systemroutineStore" :isSystemroutine="true"/>
+      <div class="randomtask">
+        <RoutineList :store="systemroutineStore" :todos="systemroutineStore.filteredRandomTaskTodos" :isSystemroutine="true"/>
       </div>
-      <RoutineList :store="dayroutineStore" :isSystemroutine="false"/>
+      <div class="systemroutine">
+        <RoutineList :store="systemroutineStore" :todos="systemroutineStore.filteredSystemTodos" :isSystemroutine="true"/>
+      </div>
+      <RoutineList :store="dayroutineStore" :todos="dayroutineStore.filteredTodos" :isSystemroutine="false"/>
     </el-main>
   </el-container>
   </div>
@@ -36,7 +39,7 @@
   import RoutineList from '@/components/RoutineList.vue';
   import { useDayroutineStore } from '@/stores/dayroutine';
   import { useSystemroutineStore } from '@/stores/systemroutine';
-  import { ref } from 'vue';
+  import { onUpdated, ref } from 'vue';
   import { MoreFilled } from '@element-plus/icons-vue'
   import type { ButtonInstance } from 'element-plus'
   import { useUserInfoStore } from '@/stores/userInfo';
@@ -149,6 +152,10 @@ button:hover {
 
 .systemroutine {
   background-color: gold;
+}
+
+.randomtask{
+  background-color: aquamarine;
 }
 
 </style>
