@@ -1,8 +1,9 @@
 <template>
-    <div>
+    <div class colorMan>
         <el-space class="container">
+        <RoutineStatistic ref="ref2" class="routine-part" />
             <UserRandomTask ref="ref1" />
-            <RoutineStatistic ref="ref2" class="routine-part" />
+            
         </el-space>
 
         <el-tour v-model="userInfoStore.tutorialStatement['dashboard']">
@@ -32,16 +33,17 @@ const ref2 = ref<ButtonInstance>()
 </script>
 <style scoped>
 .container {
-    display: flex;
+    padding-top: 4rem;
     flex-direction: column; 
     width: 100%;
     height: 100%;
+    margin: 0 auto;
 }
 
 .routine-part {
-    display: flex;
+    display:position;
+    top:10%;
     height: 40vh; 
-    width: 80vw; 
-    border: 1px solid #000; 
+    width: 100vw; 
 }
 </style>

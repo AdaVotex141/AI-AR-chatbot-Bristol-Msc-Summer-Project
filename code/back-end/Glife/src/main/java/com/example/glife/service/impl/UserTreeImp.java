@@ -62,9 +62,9 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
             if (userTree != null) {
                 treeCode = userTree.getTickSum();
                 if(treeCode == 8){
-                    treeCode = 1;
+                    //treeCode = 1;
                     userTree.setTickSum(treeCode);
-                    userTree.setTreeSum(userTree.getTreeSum()+1);
+                    //userTree.setTreeSum(userTree.getTreeSum()+1);
                 }else{
                     treeCode = treeCode+1;
                     userTree.setTickSum(treeCode);
@@ -95,8 +95,8 @@ public class UserTreeImp extends ServiceImpl<UserTreeMapper, UserTree> implement
             if (userTree != null) {
                 treeCode = userTree.getTickSum();
                 if(treeCode == 1){
-                    treeCode = 8;
-                    userTree.setTickSum(treeCode);
+                    //treeCode = 8;
+                    //userTree.setTickSum(treeCode);
                 }else{
                     treeCode = treeCode-1;
                     userTree.setTickSum(treeCode);

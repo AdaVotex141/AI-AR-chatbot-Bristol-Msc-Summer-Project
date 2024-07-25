@@ -19,4 +19,6 @@ public class UserTree implements Serializable {
     private int tickSum;
 
     private int treeSum;
+
+
 }

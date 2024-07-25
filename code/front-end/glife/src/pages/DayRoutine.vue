@@ -151,11 +151,11 @@ button:hover {
 }
 
 .systemroutine {
-  background-color: gold;
+  background-color: #a8e6cf;
 }
 
 .randomtask{
-  background-color: aquamarine;
+  background-color: #dcedc1;
 }
 
 </style>
