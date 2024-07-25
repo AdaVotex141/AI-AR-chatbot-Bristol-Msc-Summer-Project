@@ -77,15 +77,17 @@ public class LocationServiceImp {
         List<Marker> points = new ArrayList<>();
         if(geoResults != null && geoResults.getContent()!= null && !geoResults.getContent().isEmpty()){
             List<String> names = new ArrayList<>();
+            List<String> originNames = new ArrayList<>();
             for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoResult : geoResults) {
 
                 String name = geoResult.getContent().getName();
+                originNames.add(name);
                 String[] parts = name.split("-");
                 if (parts.length > 0) {
                     names.add(parts[0]);
                 }
             }
-            List<Point> positionList = template.opsForGeo().position(key, names.toArray(new String[0]));
+            List<Point> positionList = template.opsForGeo().position(key, originNames.toArray(new String[0]));
 //            for (Point point : positionList) {
 //                if (point != null) {
 //                    Marker thisMarker = new Marker();
