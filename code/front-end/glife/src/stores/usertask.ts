@@ -44,11 +44,8 @@ export const useUserTaskStore = defineStore('usertask',()=>{
 
     async function addTaskToRoutine(){
         try{
-            const response = await axios.post('/api/randomTask/add', taskContent.value, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            const response = await axios.post('/api/randomTask/add')
+            
         } catch (error){
             console.error(error)
             router.push({ name: 'notfound' });
