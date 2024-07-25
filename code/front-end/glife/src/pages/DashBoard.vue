@@ -1,9 +1,9 @@
 <template>
     <div class colorMan>
         <el-space class="container">
-        <RoutineStatistic ref="ref2" class="routine-part" />
+            <RoutineStatistic ref="ref2" class="routine-part" />
             <UserRandomTask ref="ref1" />
-            
+            <TreeStatistic ref="ref3" />
         </el-space>
 
         <el-tour v-model="userInfoStore.tutorialStatement['dashboard']">
@@ -14,6 +14,11 @@
             :target="ref2?.$el"
             title="Routine Information"
             description="Here you can review the progress and completion status of your routine."
+            />
+            <el-tour-step
+            :target="ref3?.$el"
+            title="Tree Information"
+            description="Here you can review the status of your trees."
             />
         </el-tour>
     </div>
@@ -29,6 +34,7 @@ import { ref } from 'vue';
 const userInfoStore = useUserInfoStore()
 const ref1 = ref<ButtonInstance>()
 const ref2 = ref<ButtonInstance>()
+const ref3 = ref<ButtonInstance>()
 
 </script>
 <style scoped>
