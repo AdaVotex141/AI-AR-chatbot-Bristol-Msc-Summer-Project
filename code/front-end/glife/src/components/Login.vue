@@ -120,18 +120,7 @@ async function login(ruleFormRef: FormInstance | undefined){
             message: 'Login successfully',
             type: 'success'
           })
-          router.push({
-            name: nextPageName
-          })
-          // Change the user info 
-          userInfoStore.login(response.data.data)
-          // If it is a user
-          if(!formLabelAlign.isAdmin){
-            // Connect websocket
-            websocketStore.connect(`ws://localhost:8040/message?userId=${userInfoStore.userid}`)
-            // Get user's random task
-            userTaskStore.getRandomTask()
-          }
+          dataFetchAfterLogin(response, nextPageName)
         } else {
           ElMessage({
             message: response.data.msg,
@@ -147,6 +136,21 @@ async function login(ruleFormRef: FormInstance | undefined){
         })
       }
     }
+  })
+}
+
+async function dataFetchAfterLogin(response:any, nextPageName:string){
+  // Change the user info 
+  userInfoStore.login(response.data.data)
+  // If it is a user
+  if(!formLabelAlign.isAdmin){
+    // Connect websocket
+    await websocketStore.connect(`ws://localhost:8040/message?userId=${userInfoStore.userid}`)
+    // Get user's random task (use timeout to ensure call this function after websocket connection is available)
+    await userTaskStore.getRandomTask()
+  }
+  router.push({
+    name: nextPageName
   })
 }
 
