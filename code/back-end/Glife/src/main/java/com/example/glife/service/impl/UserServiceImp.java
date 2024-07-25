@@ -145,6 +145,8 @@ public class UserServiceImp extends ServiceImpl<UserMapper, User> implements Use
 
         // Check and award Routine Streak Master Badge
         userBadgeService.checkAndAwardMonthlyRoutineChampionBadge(foundUser.getId());
+        userBadgeService.checkAndAwardQuarterlyRoutineChampionBadge(foundUser.getId());
+        userBadgeService.checkAndAwardYearlyRoutineChampionBadge(foundUser.getId());
 
         //create a new assistant after log in, and store it in session
         assistantService.initializeAssistant();
