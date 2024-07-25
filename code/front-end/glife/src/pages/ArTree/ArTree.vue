@@ -6,7 +6,7 @@
           </el-main>
           <!-- <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer> -->
           <el-footer>
-            <el-button @click="handlePlant"><h2>Plant</h2></el-button>
+            <el-button @click="handlePlant" :disabled="isDisabled"><h2>Plant</h2></el-button>
             <el-button @click="handleCamera"><h2>Camera</h2></el-button>
           </el-footer>
         </el-container>
@@ -28,24 +28,19 @@ onMounted(() => {
 });
 
 // Is the plant tree button disabled
-const isDisabled = computed(() => !treepointsStore.canPlantTree);
+const isDisabled = computed(() => {
+  if(treepointsStore.treePoints == 8){
+    return false
+  } else {
+    return true
+  }
+});
 
 // handle plant
 const handlePlant = () => {
-  if (!isDisabled.value) {
-    ElMessage({
-      message: 'You have to finish the day routine to get the chance',
-      type: 'warning',
-    });
-  } else {
-    ElMessage({
-      message: 'Congratulations! Now you can plant your tree!',
-      type: 'success',
-    });
     router.push({
       name:'artree-camera'
     })
-  }
 };
 
 // const handlePlant = () => {
@@ -129,6 +124,16 @@ h2{
   background-color:darkseagreen;
   color: #fff;
   border-color: transparent;
+}
+.el-button:disabled {
+  background-color: #90EE90;    /* 禁用状态背景颜色 */
+  color: black;                /* 禁用状态文字颜色 */
+  cursor: not-allowed;        /* 禁用状态鼠标样式 */
+  box-shadow: none;           /* 禁用状态移除阴影 */
+  opacity: 0.6;               /* 禁用状态降低不透明度 */
+}
+.button:disabled:hover {
+  background-color: #cccccc; /* 仍然保持灰色 */
 }
 .el-footer{
   display: flex;
