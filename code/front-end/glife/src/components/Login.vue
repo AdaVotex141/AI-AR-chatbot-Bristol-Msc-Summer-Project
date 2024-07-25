@@ -38,6 +38,8 @@ import { ElMessage, type FormInstance } from 'element-plus';
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import JSONBIG from 'json-bigint'
+import { useWebSocketStore } from '@/stores/websocket';
+import { useUserTaskStore } from '@/stores/usertask';
 
 axios.defaults.transformResponse = [
   function (data){
@@ -50,6 +52,8 @@ axios.defaults.transformResponse = [
 ]
 
 const userInfoStore = useUserInfoStore()
+const websocketStore = useWebSocketStore()
+const userTaskStore = useUserTaskStore()
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -97,7 +101,7 @@ async function login(ruleFormRef: FormInstance | undefined){
       let nextPageName = ''
       if(!formLabelAlign.isAdmin){
         apiPath = '/api/login'
-        nextPageName = 'startpage'
+        nextPageName = 'dashboard'
       } else {
         apiPath = '/api/admin/login' // TODO: change the api request path
         nextPageName = 'admin'
@@ -119,8 +123,15 @@ async function login(ruleFormRef: FormInstance | undefined){
           router.push({
             name: nextPageName
           })
-          // Change the user info
+          // Change the user info 
           userInfoStore.login(response.data.data)
+          // If it is a user
+          if(!formLabelAlign.isAdmin){
+            // Connect websocket
+            websocketStore.connect(`ws://localhost:8040/message?userId=${userInfoStore.userid}`)
+            // Get user's random task
+            userTaskStore.getRandomTask()
+          }
         } else {
           ElMessage({
             message: response.data.msg,

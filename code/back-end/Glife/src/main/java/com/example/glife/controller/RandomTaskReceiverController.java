@@ -34,8 +34,8 @@ public class RandomTaskReceiverController {
     }
 
     @PostMapping("/add")
-    public R<String> add(HttpServletRequest request, @RequestBody String task){
-        return randomTaskReceiverService.add(request, task);
+    public R<String> add(HttpServletRequest request){
+        return randomTaskReceiverService.add(request);
     }
 
     @PostMapping("/length")

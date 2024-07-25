@@ -159,7 +159,7 @@ public class WsHandler extends AbstractWebSocketHandler {
     }
 
     private void sendLocation(WebSocketSession session, JSONObject jsonObject) {
-        // 从 JSON 对象中提取经度和纬度
+
         JSONObject longitudeObj = jsonObject.getJSONObject("longitude");
         JSONObject latitudeObj = jsonObject.getJSONObject("latitude");
         double longitude = longitudeObj.getDouble("_value");

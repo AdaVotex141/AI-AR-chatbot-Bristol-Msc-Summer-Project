@@ -10,7 +10,7 @@ public interface RandomTaskReceiverService {
 
     public R<String> init(HttpServletRequest request);
 
-    public R<String> add(HttpServletRequest request, String task);
+    public R<String> add(HttpServletRequest request);
 
     public R<Long> MessageQueueLength(HttpServletRequest request);
 

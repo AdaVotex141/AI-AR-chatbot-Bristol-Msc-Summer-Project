@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useWebSocketStore } from './websocket'
+import { useUserTaskStore } from './usertask'
 
 export const useUserInfoStore = defineStore('userInfo',()=>{
     let isAuthenticated = ref(false)
@@ -9,16 +10,34 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     let userid = ref('')
     let email = ref('')
     let permission = ref(0)
+    let isNewUser = ref(true)
+    const tutorialStatement = ref({
+        dashboard: false,
+        chatwindow: false,
+        routine: false
+    })
     const websocketStore = useWebSocketStore()
+    const userTaskStore = useUserTaskStore()
 
     function login(data:any){
+        // Add user info
         isAuthenticated.value = true
         user.value = data.username
         loginDays.value = data.loginDays
         userid.value = String(data.id)
         email.value = data.email
         permission.value = data.permission
-        websocketStore.connect(`ws://localhost:8040/message?userId=${userid.value}`)
+        isNewUser.value = data.newUser
+        if(isNewUser.value){
+            setAllToTrue()
+        }
+    }
+
+    function setAllToTrue() {
+        const keys = Object.keys(tutorialStatement.value) as (keyof typeof tutorialStatement.value)[];
+        keys.forEach(key => {
+            tutorialStatement.value[key] = true;
+        });
     }
 
     function logout(){
@@ -31,5 +50,6 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
         websocketStore.close()
     }
 
-    return {isAuthenticated, user, loginDays, userid, email, permission, login, logout}
+    return {isAuthenticated, user, loginDays, userid, email, permission,
+        tutorialStatement, login, logout}
 })

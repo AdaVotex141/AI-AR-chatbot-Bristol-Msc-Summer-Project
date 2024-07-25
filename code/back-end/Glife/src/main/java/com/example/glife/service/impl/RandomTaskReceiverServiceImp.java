@@ -50,7 +50,7 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
                     return R.error("Invalid WebSocket session");
                 }
 
-                String task = template.opsForList().leftPop(USER_MESSAGES + userID);
+                String task = template.opsForList().index(USER_MESSAGES + userID, 0);
                 if (task != null) {
                     messageWsHandler.sendTaskToOneUser(webSocketSession, task);
                     return R.success("Task sent to WebSocket");
@@ -65,10 +65,12 @@ public class RandomTaskReceiverServiceImp implements RandomTaskReceiverService {
         }
     }
 
-    public R<String> add(HttpServletRequest request, String task){
+    public R<String> add(HttpServletRequest request){
         //task
-        SystemRoutine routine = taskParse(task);
         Long userID = getUserID(request);
+        String task = template.opsForList().leftPop(USER_MESSAGES + userID);
+
+        SystemRoutine routine = taskParse(task);
         if(!userID.equals(Long.valueOf(0))){
             return R.error("Can't get UserID");
         }

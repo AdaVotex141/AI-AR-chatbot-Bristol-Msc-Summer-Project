@@ -4,14 +4,38 @@
       <MessageList />
     </div>
     <div class="input">
-      <MessageInput />
+      <MessageInput ref="ref1" />
     </div>
+    <el-tour v-model="userInfoStore.tutorialStatement['chatwindow']">
+      <el-tour-step title="Chat Window" description="You can talk to the chatbot here!" />
+      <el-tour-step :target="ref1?.$el" title="Chat Window">
+        <div>You can input the content here.</div>
+      </el-tour-step>
+      <el-tour-step
+        :target="ref1?.$el"
+        title="Chat Window"
+        placement="right"
+        description="And you can click here or press 'Enter' to send a message"
+      />
+      <el-tour-step
+        title="Other Actions"
+        description="You can also choose one answer you like in the list!"
+      />
+    </el-tour>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MessageList from '@/components/MessageList.vue';
 import MessageInput from '@/components/MessageInput.vue';
+import { ref } from 'vue'
+import { MoreFilled } from '@element-plus/icons-vue'
+import type { ButtonInstance } from 'element-plus'
+import { useUserInfoStore } from '@/stores/userInfo';
+
+const userInfoStore = useUserInfoStore()
+const ref1 = ref<ButtonInstance>()
+
 
 </script>
 
