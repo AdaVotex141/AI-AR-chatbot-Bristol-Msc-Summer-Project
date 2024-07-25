@@ -49,7 +49,7 @@ function navigateTo(routeName: string) {
         <div class="tooltip-arrow" data-popper-arrow></div>
       </div>
 <!--      Back to home button style-->
-      <button :class="{'active-button': isActive('startpage').value}" data-tooltip-target="tooltip-home" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-600 group" @click="navigateTo('startpage')">
+      <button :class="{'active-button': isActive('startpage').value}" data-tooltip-target="tooltip-home" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-600 group" @click="navigateTo('dashboard')">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 22" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-500" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
         </svg>
