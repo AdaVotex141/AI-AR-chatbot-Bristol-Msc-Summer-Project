@@ -14,7 +14,6 @@ const introductionMsg = ref('Hi! I’m a virtual assistant. How can I help you t
 const messages = reactive([
     'Give me some advice on green lifestyle.',
     'What can I do with you?',
-    'Hi, bot.'
 ])
 const chatStore = useChatStore()
 

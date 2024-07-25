@@ -134,8 +134,6 @@
   z-index: 101;
 }
 
-
-
 .flex-grow {
   flex-grow: 1;
 }
