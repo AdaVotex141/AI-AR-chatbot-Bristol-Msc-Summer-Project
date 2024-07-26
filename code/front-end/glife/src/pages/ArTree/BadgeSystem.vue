@@ -23,6 +23,9 @@ const badgeMessage = computed(() => {
     return "Congratulations! You already get the " + badgeStore.badgeNumbers +  " badges!" ;
   }
 })
+const getDescriptionById = (id: number) => {
+  return badgeStore.getDescriptionById(id);
+}
 </script>
 
 <template>
@@ -34,9 +37,15 @@ const badgeMessage = computed(() => {
             align-items: center;" >
       {{badgeMessage}}
     </div>
-      <div class="badge-show">
-        <img class = "badge-show" v-for="badgeId in allBadgeIds" :key="badgeId" :src="badgeImageSrc[badgeId]" :alt="'Badge ' + badgeId" />
+<!--      <div class="badge-show">-->
+<!--        <img class = "badge-show" v-for="badgeId in allBadgeIds" :key="badgeId" :src="badgeImageSrc[badgeId]" :alt="'Badge ' + badgeId" />-->
+<!--      </div>-->
+    <div class="badge-show">
+      <div class="badge" v-for="badgeId in allBadgeIds" :key="badgeId">
+        <img :src="badgeImageSrc[badgeId]" :alt="getDescriptionById(badgeId)" />
+        <div class="image-description">{{ getDescriptionById(badgeId) }}</div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -74,8 +83,24 @@ const badgeMessage = computed(() => {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 10px;
   background-color: transparent;
-  min-height: 180px;
-  min-width: 180px;
+  min-height: 200px;
+  min-width: 200px;
+}
+
+.image-description {
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.badge:hover .image-description {
+  display: block;
 }
 
 </style>

@@ -5,11 +5,13 @@ import { ElMessage } from 'element-plus';
 import { useUserInfoStore } from './userInfo';
 
 export interface BadgeSystems{
-    badgeId: number ; // 1-12 total badge id
+    id: number; // 1-12 total badge id
+    description: string; // The Description for the each badges
 }
 
 export const useBadgeStates= defineStore('badgessystems', () =>{
-    const gottenBadges = ref<BadgeSystems[]>([]);
+    const gottenBadgesIds = ref<number[]>([]);
+    const gottenBadgesDescriptions = ref<string[]>([]);
     const badgeImageSrc = ref<Record<number, string>>({});
     const userInfoStore = useUserInfoStore();
     console.log(userInfoStore.userid);
@@ -19,8 +21,15 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
             console.log(response)
             if (String(response.data.code) === '1') {
                 // get the gotten badges list from back-end
-                gottenBadges.value = response.data.data;
-                console.log('Fetched badges:', gottenBadges.value);
+                const data: {id:number;description:string;}[] = response.data.data;
+                // gottenBadges.value = data.map(item => ({
+                //    id: item.id,
+                //     description: item.description
+                // }))
+                gottenBadgesIds.value = data.map(item => item.id);
+                gottenBadgesDescriptions.value = data.map(item => item.description);
+                console.log('Fetched badges:', gottenBadgesIds.value);
+                console.log('Fetched badges:', gottenBadgesDescriptions.value);
                 // update the badge image color
                 updateBadgeImages();
             }
@@ -50,7 +59,7 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
         }
     }
     // update all the badges
-    function updateBadgeImages(badgeId: number){
+    function updateBadgeImages(){
         // badgeImageSrc.value = badgeImages[`/src/assets/badgeImages/${badgeId}.png`]?.default
         // Assume badge IDs range from 1 to 12
         const allBadgeIds = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -59,15 +68,23 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
         allBadgeIds.forEach(badgeId => updateBadgeImage(badgeId, false));
 
         // Set gotten badges to colored
-        gottenBadges.value.forEach((id) => updateBadgeImage(id, true));
+        gottenBadgesIds.value.forEach((id) => updateBadgeImage(id, true));
     }
+    //get the badge description by gotten badges id
+    function getDescriptionById(id: number): string {
+        const index = gottenBadgesIds.value.indexOf(id);
+        return index !== -1 ? gottenBadgesDescriptions.value[index] : 'Badge description not available';
+    }
+
     const badgeNumbers= computed(()=> {
-        return gottenBadges.value.length;
+        return gottenBadgesIds.value.length;
     })
     return {
-        gottenBadges,
+        gottenBadgesIds,
+        gottenBadgesDescriptions,
         fetchBadgeStatus,
         updateBadgeImages,
+        getDescriptionById,
         badgeImageSrc,
         badgeNumbers,
     };
