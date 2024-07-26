@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.glife.common.R;
 import com.example.glife.entity.*;
-import com.example.glife.mapper.SystemRoutineMapper;
-import com.example.glife.mapper.UserBadgeMapper;
-import com.example.glife.mapper.UserMapper;
-import com.example.glife.mapper.UserTreeMapper;
+import com.example.glife.mapper.*;
 import com.example.glife.service.UserBadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,9 +27,11 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
     private SystemRoutineMapper systemRoutineMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private BadgeMapper badgeMapper;
 
     @Override
-    public R<List<Long>> getUserBadgesByUserId(Long userId) {
+    public R<List<Badge>> getUserBadgesByUserId(Long userId) {
         if (userExists(userId)) {
             LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(UserBadge::getUserId, userId);
@@ -41,11 +41,35 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
                     .map(UserBadge::getBadgeId)
                     .collect(Collectors.toList());
 
-            return R.success(badgeIds);
+            if (!badgeIds.isEmpty()) {
+                LambdaQueryWrapper<Badge> badgeQueryWrapper = new LambdaQueryWrapper<>();
+                badgeQueryWrapper.in(Badge::getId, badgeIds);
+                List<Badge> badges = badgeMapper.selectList(badgeQueryWrapper);
+
+                return R.success(badges);
+            } else {
+                return R.success(Collections.emptyList());
+            }
         } else {
             return R.error("User not found");
         }
     }
+
+//    public R<List<Long>> getUserBadgesByUserId(Long userId) {
+//        if (userExists(userId)) {
+//            LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
+//            queryWrapper.eq(UserBadge::getUserId, userId);
+//            List<UserBadge> userBadges = list(queryWrapper);
+//
+//            List<Long> badgeIds = userBadges.stream()
+//                    .map(UserBadge::getBadgeId)
+//                    .collect(Collectors.toList());
+//
+//            return R.success(badgeIds);
+//        } else {
+//            return R.error("User not found");
+//        }
+//    }
 
 //    @Override
 //    public R<UserBadge> addUserBadge(UserBadge userBadge) {

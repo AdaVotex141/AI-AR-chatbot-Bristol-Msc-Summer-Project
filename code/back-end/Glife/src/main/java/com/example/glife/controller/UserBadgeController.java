@@ -1,6 +1,7 @@
 package com.example.glife.controller;
 
 import com.example.glife.common.R;
+import com.example.glife.entity.Badge;
 import com.example.glife.entity.UserBadge;
 import com.example.glife.service.UserBadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class UserBadgeController {
     private UserBadgeService userBadgeService;
 
     @GetMapping("/user/{userId}")
-    public R<List<Long>> getUserBadges(@PathVariable Long userId) {
+    public R<List<Badge>> getUserBadges(@PathVariable Long userId) {
         return userBadgeService.getUserBadgesByUserId(userId);
     }
 
