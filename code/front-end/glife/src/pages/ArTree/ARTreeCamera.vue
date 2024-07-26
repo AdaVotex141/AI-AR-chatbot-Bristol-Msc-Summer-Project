@@ -9,6 +9,7 @@
   </div>
   <div>
     <GoogleMap id="map"
+               v-if="isLocationLoaded"
         api-key="AIzaSyD7yNhMUS2eFelVVz1x6i9hsTbePnK48to"
         :center="center"
         :zoom="17"
@@ -36,10 +37,11 @@ const userName = ref('');
 const userID =ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
-const center = ref({ lat: 40.689247, lng: -74.044502 });
+const center = ref({ lat: 0, lng: 0 });
 const markers = ref<Array<{ position: { lat: number, lng: number }, title: string ,icon: { url: string, scaledSize: { width: number; height: number } }}>>([
 
 ]);
+const isLocationLoaded = ref(false);
 
 function addModel(a: number, b: number) {
   const scene = document.querySelector('a-scene');
@@ -112,6 +114,18 @@ function removeAllEntities() {
     entities.forEach(entity => entity.remove());
   }
 }
+function getMap(){
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      center.value.lat = position.coords.latitude;
+      center.value.lng = position.coords.longitude;
+      isLocationLoaded.value = true;
+      console.log(center.value);
+    });
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
+}
 
 function showPosition(position: GeolocationPosition) {
   latitude.value = position.coords.latitude;
@@ -120,9 +134,7 @@ function showPosition(position: GeolocationPosition) {
 
 onMounted(() => {
   getLocation();
-  center.value.lat = latitude.value;
-  center.value.lng=longitude.value;
-  console.log(latitude.value+""+longitude.value)
+  getMap()
   userName.value = userInfoStore.user;
   userID.value=userInfoStore.userid;
   console.log(userID);
