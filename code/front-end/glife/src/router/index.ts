@@ -64,7 +64,7 @@ const router = createRouter({
                     component: DashBoard
                 }
             ],
-            redirect:'/mainpage/chatwindow'
+            redirect:'/mainpage/dashboard'
         },
         {
             name:'admin',

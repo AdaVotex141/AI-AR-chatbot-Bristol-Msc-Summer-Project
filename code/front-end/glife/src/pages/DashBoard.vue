@@ -44,7 +44,7 @@ const ref3 = ref<ButtonInstance>()
 .dashboard{
     margin:0 auto;
     margin-top: 2.5rem;
-    width: 100vw;
+    width: 80vw;
     height: 100vh;
 }
 
