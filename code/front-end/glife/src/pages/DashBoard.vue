@@ -1,12 +1,12 @@
 <template>
     <div class="dashboard">
-        <el-container class="dashboard-container">
+        <div class="dashboard-container">
             <RoutineStatistic ref="ref2" class="routine-part" />
             <div class="bottom-container">
                 <UserRandomTask ref="ref1" class="randomtask" />
                 <TreeStatistic ref="ref3" class="treestatistic" />
             </div>
-        </el-container>
+        </div>
 
         <el-tour v-model="userInfoStore.tutorialStatement['dashboard']">
             <el-tour-step :target="ref1?.$el" title="Random Tasks">
@@ -43,7 +43,7 @@ const ref3 = ref<ButtonInstance>()
 <style scoped>
 .dashboard{
     margin:0 auto;
-    margin-top: 2.5rem;
+    margin-top: 2.0rem;
     width: 80vw;
     height: 100vh;
 }
