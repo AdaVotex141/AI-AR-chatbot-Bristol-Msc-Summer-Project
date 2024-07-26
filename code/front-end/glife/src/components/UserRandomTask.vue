@@ -1,20 +1,18 @@
 <template>
     <div class="container">
-        <el-container>
-            <el-header>Random Task</el-header>
-            <el-main>
-                <div class="task-content-container">
-                    <span class="task-content"> {{ userTaskStore.stringOfTask }} </span>
-                </div>
-                <div class="button-container" v-show="userTaskStore.numberOfTasks > 0">
-                    <el-button type="primary" @click="addTask">Add it</el-button>
-                    <el-button type="primary" @click="changeTask">Don't like it</el-button>
-                </div>
-                <span class="task-count" v-show="userTaskStore.numberOfTasks > 0">
-                    {{ userTaskStore.numberOfTasks }}
-                </span>
-            </el-main>
-        </el-container>
+        <div class="title">Random Task</div>
+        <div class="main-content">
+            <div class="task-content-container">
+                <span class="task-content"> {{ userTaskStore.stringOfTask }} </span>
+            </div>
+            <div class="button-container" v-show="userTaskStore.numberOfTasks > 0">
+                <el-button type="primary" @click="addTask">Add it</el-button>
+                <el-button type="primary" @click="changeTask">Don't like it</el-button>
+            </div>
+            <span class="task-count" v-show="userTaskStore.numberOfTasks > 0">
+                {{ userTaskStore.numberOfTasks }}
+            </span>
+        </div>
     </div>
 </template>
 
@@ -53,14 +51,20 @@ async function changeTask(){
 }
 
 .task-content-container {
+    margin-top: 1rem;
     max-width: 100%;
     word-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .task-content {
     display: block;
     max-width: 100%;
     white-space: pre-wrap;
+    margin: 0 auto;
+    word-break: break-word;
 }
 
 .task-count {
@@ -83,15 +87,14 @@ async function changeTask(){
     margin-top: 16px;
     gap: 8px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-
 }
 
-.el-header {
+.title {
     background-color: #9cb470;
-    padding: 1.5rem;
     margin-bottom: 0.5rem;
+    padding: 0.8rem;
     font-size: 1.5rem;
     color: whitesmoke;
     font-weight: bold;
@@ -104,7 +107,7 @@ async function changeTask(){
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.el-main{
+.main-content{
     margin: 0 auto;
 }
 </style>
