@@ -106,7 +106,7 @@ span{
     display: flex;
     align-items: center; 
     gap: 10px; 
-    max-width: 100vw;
+    max-width: 80vw;
 }
 
 .el-progress {
