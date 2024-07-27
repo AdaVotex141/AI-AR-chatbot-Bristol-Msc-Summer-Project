@@ -91,7 +91,7 @@ span{
 
 .el-container{
     background-color: #fff;
-    max-width: 100vw;
+    width: auto;
 }
 
 .progress-container {
@@ -99,7 +99,8 @@ span{
     margin: 0 auto;
     flex-direction: column; 
     gap: 20px;
-    max-width: 80vw; 
+    width: auto;
+    max-width: 80vw;
 }
 
 .progress-item {
