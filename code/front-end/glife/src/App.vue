@@ -17,7 +17,8 @@ html, body {
   background-color: #e8e8e8;
   justify-content: center;
   align-items: center;
-  overflow-y: hidden;
+  overflow: visible;
+  /* overflow-y: hidden; */
 }
 
 #app {
@@ -28,5 +29,6 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: visible;
 }
 </style>

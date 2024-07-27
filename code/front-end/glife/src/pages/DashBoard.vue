@@ -32,7 +32,7 @@ import TreeStatistic from '@/components/TreeStatistic.vue';
 import { useUserInfoStore } from '@/stores/userInfo';
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const userInfoStore = useUserInfoStore()
 const ref1 = ref<ButtonInstance>()
