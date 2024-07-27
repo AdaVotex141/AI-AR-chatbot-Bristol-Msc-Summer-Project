@@ -126,6 +126,15 @@ router.beforeEach((to, from, next)=>{
         next()
     }
 })
+// hidden overflow in chat window page
+router.beforeEach((to, from, next) => {
+    if (to.name === 'chatwindow') {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+    next();
+});
 
 //export router
 export default router
