@@ -48,6 +48,7 @@ async function changeTask(){
 .container {
     background-color: bisque;
     position: relative;
+    width: auto;
 }
 
 .task-content-container {

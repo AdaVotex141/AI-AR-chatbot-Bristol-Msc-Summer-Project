@@ -36,6 +36,9 @@ async function getTreeInfo(){
 }
 </script>
 <style scoped>
+.el-container{
+    width: auto;
+}
 .el-header{
     background-color: #9cb470;
     padding: 1.5rem;
