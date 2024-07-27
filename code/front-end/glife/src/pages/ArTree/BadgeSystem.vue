@@ -9,6 +9,7 @@ const badgeImageSrc = badgeStore.badgeImageSrc;
 onMounted(async () => {
   try {
     await badgeStore.fetchBadgeStatus();
+    await badgeStore.fetchBadgeDescriptions();
     badgeStore.updateBadgeImages();
   } catch (error) {
     console.error('Error fetching badges:', error);
@@ -37,9 +38,6 @@ const getDescriptionById = (id: number) => {
             align-items: center;" >
       {{badgeMessage}}
     </div>
-<!--      <div class="badge-show">-->
-<!--        <img class = "badge-show" v-for="badgeId in allBadgeIds" :key="badgeId" :src="badgeImageSrc[badgeId]" :alt="'Badge ' + badgeId" />-->
-<!--      </div>-->
     <div class="badge-show">
       <div class="badge" v-for="badgeId in allBadgeIds" :key="badgeId">
         <img :src="badgeImageSrc[badgeId]" :alt="getDescriptionById(badgeId)" />
@@ -90,7 +88,7 @@ const getDescriptionById = (id: number) => {
 .image-description {
   display: none;
   position: absolute;
-  bottom: 10px;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.7);

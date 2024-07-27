@@ -11,25 +11,19 @@ export interface BadgeSystems{
 
 export const useBadgeStates= defineStore('badgessystems', () =>{
     const gottenBadgesIds = ref<number[]>([]);
-    const gottenBadgesDescriptions = ref<string[]>([]);
+    const allBadgesIds = ref<number[]>([]);
+    const allBadgesDescriptions = ref<string[]>([]);
     const badgeImageSrc = ref<Record<number, string>>({});
     const userInfoStore = useUserInfoStore();
     console.log(userInfoStore.userid);
     async function fetchBadgeStatus() {
         try {
             const response = await axios.get(`/api/user_badges/user/${userInfoStore.userid}`);
-            console.log(response)
             if (String(response.data.code) === '1') {
                 // get the gotten badges list from back-end
                 const data: {id:number;description:string;}[] = response.data.data;
-                // gottenBadges.value = data.map(item => ({
-                //    id: item.id,
-                //     description: item.description
-                // }))
                 gottenBadgesIds.value = data.map(item => item.id);
-                gottenBadgesDescriptions.value = data.map(item => item.description);
                 console.log('Fetched badges:', gottenBadgesIds.value);
-                console.log('Fetched badges:', gottenBadgesDescriptions.value);
                 // update the badge image color
                 updateBadgeImages();
             }
@@ -40,6 +34,26 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
                 type: 'error',
             });
         }
+    }
+    // get all badges descriptions for info user
+    async function fetchBadgeDescriptions(){
+        try {
+            const response = await axios.get('/api/badges');
+            console.log(response)
+            if(String(response.data.code) === '1'){
+                const data: {id:number;description:string;}[] = response.data.data;
+                allBadgesIds.value = data.map(item => item.id);
+                allBadgesDescriptions.value = data.map(item => item.description);
+                console.log('Fetched badges:', allBadgesDescriptions.value);
+            }
+        }catch (error){
+            console.error('Error fetching badge status:', error);
+            ElMessage({
+                message: 'Error fetching badge status',
+                type: 'error',
+            });
+        }
+
     }
     // get all gret and colored badges
     const greyBadgeImages = import.meta.glob('/src/assets/badgeImagesGrey/*.png', { eager: true });
@@ -70,10 +84,10 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
         // Set gotten badges to colored
         gottenBadgesIds.value.forEach((id) => updateBadgeImage(id, true));
     }
-    //get the badge description by gotten badges id
+    //get all the badge description by badges id
     function getDescriptionById(id: number): string {
-        const index = gottenBadgesIds.value.indexOf(id);
-        return index !== -1 ? gottenBadgesDescriptions.value[index] : 'Badge description not available';
+        const index = allBadgesIds.value.indexOf(id);
+        return index !== -1 ? allBadgesDescriptions.value[index] : 'Badge description not available';
     }
 
     const badgeNumbers= computed(()=> {
@@ -81,8 +95,9 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
     })
     return {
         gottenBadgesIds,
-        gottenBadgesDescriptions,
+        allBadgesDescriptions,
         fetchBadgeStatus,
+        fetchBadgeDescriptions,
         updateBadgeImages,
         getDescriptionById,
         badgeImageSrc,
