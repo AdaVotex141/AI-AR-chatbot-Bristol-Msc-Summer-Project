@@ -28,14 +28,20 @@
 <script setup lang="ts">
 import MessageList from '@/components/MessageList.vue';
 import MessageInput from '@/components/MessageInput.vue';
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'
 import { useUserInfoStore } from '@/stores/userInfo';
 
 const userInfoStore = useUserInfoStore()
 const ref1 = ref<ButtonInstance>()
-
+// hidden overflow in chat window page
+onMounted(() => {
+  document.body.style.overflow = 'hidden';
+});
+onBeforeUnmount(() => {
+  document.body.style.overflow = '';
+});
 
 </script>
 
