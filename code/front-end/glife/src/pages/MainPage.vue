@@ -20,7 +20,7 @@
           <el-menu-item index="/mainpage/dashboard" @click="navigateTo('dashboard')">DashBoard</el-menu-item>
           <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Chat</el-menu-item>
           <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Routine</el-menu-item>
-          <el-sub-menu index="3">
+          <el-sub-menu index="2">
             <template #title>ARTree</template>
             <el-menu-item index="/mainpage/artree" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
             <el-menu-item index="/mainpage/badge" @click="navigateTo('mybadge')">My Badge</el-menu-item>
