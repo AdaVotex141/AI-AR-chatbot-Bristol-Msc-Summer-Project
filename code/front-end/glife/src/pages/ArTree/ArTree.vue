@@ -17,18 +17,23 @@
         </el-tour-step>
         <el-tour-step
             :target="ref1?.$el"
-            title="Earn Points"
+            title="Earn Points Way"
             description="You can earn points by completing random tasks assigned by the system."
         />
         <el-tour-step
             :target="ref1?.$el"
-            title="Earn Points"
+            title="Earn Points Way"
             description="You can also earn points by completing scheduled tasks added by the robot."
         />
         <el-tour-step
             :target="ref2?.$el"
             title="Plant the Tree"
-            description="Here, by pressing this button, you can open the camera and plant a virtual tree.The button will only be enabled when the tree has grown to its final stage."
+            description="Here, by pressing this button, you can open the camera and plant a virtual tree."
+        />
+        <el-tour-step
+            :target="ref2?.$el"
+            title="Plant the Tree"
+            description="The button will only be enabled when the tree has grown to its final stage."
         />
         <el-tour-step
             :target="ref3?.$el"
