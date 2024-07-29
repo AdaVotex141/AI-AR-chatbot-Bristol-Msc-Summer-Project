@@ -23,7 +23,6 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
                 // get the gotten badges list from back-end
                 const data: {id:number;description:string;}[] = response.data.data;
                 gottenBadgesIds.value = data.map(item => item.id);
-                console.log('Fetched badges:', gottenBadgesIds.value);
                 // update the badge image color
                 updateBadgeImages();
             }
@@ -44,7 +43,6 @@ export const useBadgeStates= defineStore('badgessystems', () =>{
                 const data: {id:number;description:string;}[] = response.data.data;
                 allBadgesIds.value = data.map(item => item.id);
                 allBadgesDescriptions.value = data.map(item => item.description);
-                console.log('Fetched badges:', allBadgesDescriptions.value);
             }
         }catch (error){
             console.error('Error fetching badge status:', error);
