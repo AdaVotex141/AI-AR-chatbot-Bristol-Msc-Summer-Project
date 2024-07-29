@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import {ref, onMounted, computed} from 'vue';
 import { useBadgeStates } from '@/stores/badgesystems';
+import { useUserInfoStore } from '@/stores/userInfo';
+import type {ButtonInstance} from "element-plus";
+
+const userInfoStore = useUserInfoStore()
+const ref1 = ref<ButtonInstance>()
 
 const badgeStore = useBadgeStates();
 const allBadgeIds = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -31,7 +36,7 @@ const getDescriptionById = (id: number) => {
 
 <template>
   <div class="main-container"><div class = "title">Your Badges</div>
-    <div style="height: 1rem;
+    <div ref="ref1" style="height: 1rem;
             flex-direction: column;
             background-color: transparent;
             text-align: center;
@@ -44,6 +49,18 @@ const getDescriptionById = (id: number) => {
         <div class="image-description">{{ getDescriptionById(badgeId) }}</div>
       </div>
     </div>
+    <el-tour v-model="userInfoStore.tutorialStatement['badge']">
+      <el-tour-step
+          :target="ref1?.$el"
+          title="Badge Status"
+          description="Here, you can see the total number of badges you have already obtained!"
+      />
+      <el-tour-step
+          :target="ref1?.$el"
+          title="Badge Showcase"
+          description="You can make the badges colorful by completing specific tasks."
+      />
+    </el-tour>
   </div>
 </template>
 

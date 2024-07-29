@@ -9,22 +9,30 @@
             <el-button ref="ref3"  @click="handleCamera"><h2>Camera</h2></el-button>
           </el-footer>
         </el-container>
-
       <el-tour v-model="userInfoStore.tutorialStatement['artree']">
         <el-tour-step
             :target="ref1?.$el"
             title="Growing Tree">
-          <div>Here, you can see a growing tree with 8 different stages! You can earn points to make the tree grow by completing random tasks assigned by the system or scheduled tasks added by the robot.</div>
+          <div>Here, you can make the tree grow by earning points.</div>
         </el-tour-step>
+        <el-tour-step
+            :target="ref1?.$el"
+            title="Earn Points"
+            description="You can earn points by completing random tasks assigned by the system."
+        />
+        <el-tour-step
+            :target="ref1?.$el"
+            title="Earn Points"
+            description="You can also earn points by completing scheduled tasks added by the robot."
+        />
         <el-tour-step
             :target="ref2?.$el"
             title="Plant the Tree"
-            description="Here, by pressing this button, you can open the camera and plant a virtual tree.
-            The button will only be enabled when the tree has grown to its final stage."
+            description="Here, by pressing this button, you can open the camera and plant a virtual tree.The button will only be enabled when the tree has grown to its final stage."
         />
         <el-tour-step
             :target="ref3?.$el"
-            title="Share or Look the Tree"
+            title="Share or View the Tree"
             description="Here, you can view the status of your trees and others' trees on the map."
         />
       </el-tour>
@@ -161,7 +169,6 @@ h2{
 .el-footer{
   display: flex;
   justify-content: center;
-  max-width: 90%;
 }
 
 .el-main{
