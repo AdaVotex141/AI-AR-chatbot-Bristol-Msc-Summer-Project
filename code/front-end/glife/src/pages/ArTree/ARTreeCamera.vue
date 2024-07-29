@@ -161,6 +161,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   cleanupARScene();
+  if(intervalId.value!=null){
+    window.clearInterval(intervalId.value);
+    intervalId.value=null;
+  }
   if (socket.value) {
     socket.value.close();
   }
