@@ -14,7 +14,9 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     const tutorialStatement = ref({
         dashboard: false,
         chatwindow: false,
-        routine: false
+        routine: false,
+        artree: false,
+        badge: false
     })
     const websocketStore = useWebSocketStore()
     const userTaskStore = useUserTaskStore()

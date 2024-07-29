@@ -1,26 +1,62 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="ar-container">
         <el-container>
-          <el-main>
+          <el-main ref="ref1">
             <div class="background-image-container" :style="{ backgroundImage: 'url(' + treepointsStore.treeImageSrc + ')' }" />
           </el-main>
-          <!-- <el-footer><el-button :disabled="isDisabled" @click="handleClick"><h2>Plant</h2></el-button></el-footer> -->
           <el-footer>
-            <el-button @click="handlePlant" :disabled="isDisabled"><h2>Plant</h2></el-button>
-            <el-button @click="handleCamera"><h2>Camera</h2></el-button>
+            <el-button ref ="ref2" @click="handlePlant" :disabled="isDisabled"><h2>Plant</h2></el-button>
+            <el-button ref="ref3"  @click="handleCamera"><h2>Camera</h2></el-button>
           </el-footer>
         </el-container>
+      <el-tour v-model="userInfoStore.tutorialStatement['artree']">
+        <el-tour-step
+            :target="ref1?.$el"
+            title="Growing Tree">
+          <div>Here, you can make the tree grow by earning points.</div>
+        </el-tour-step>
+        <el-tour-step
+            :target="ref1?.$el"
+            title="Earn Points Way"
+            description="You can earn points by completing random tasks assigned by the system."
+        />
+        <el-tour-step
+            :target="ref1?.$el"
+            title="Earn Points Way"
+            description="You can also earn points by completing scheduled tasks added by the robot."
+        />
+        <el-tour-step
+            :target="ref2?.$el"
+            title="Plant the Tree"
+            description="Here, by pressing this button, you can open the camera and plant a virtual tree."
+        />
+        <el-tour-step
+            :target="ref2?.$el"
+            title="Plant the Tree"
+            description="The button will only be enabled when the tree has grown to its final stage."
+        />
+        <el-tour-step
+            :target="ref3?.$el"
+            title="Share or View the Tree"
+            description="Here, you can view the status of your trees and others' trees on the map."
+        />
+      </el-tour>
     </div>
 </template>
 
 <script lang='ts' setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useTreepointsStore } from "@/stores/treepoints";
+import { useUserInfoStore } from '@/stores/userInfo';
 import router from '@/router';
-import { ElMessage } from 'element-plus';
+import {type ButtonInstance, ElMessage} from 'element-plus';
+
+const userInfoStore = useUserInfoStore()
+const ref1 = ref<ButtonInstance>()
+const ref2 = ref<ButtonInstance>()
+const ref3 = ref<ButtonInstance>()
 
 const treepointsStore = useTreepointsStore()
-
 // fetch the data
 onMounted(() => {
   treepointsStore.fetchCanPlantTree();
@@ -126,14 +162,14 @@ h2{
   border-color: transparent;
 }
 .el-button:disabled {
-  background-color: #90EE90;    /* 禁用状态背景颜色 */
-  color: black;                /* 禁用状态文字颜色 */
-  cursor: not-allowed;        /* 禁用状态鼠标样式 */
-  box-shadow: none;           /* 禁用状态移除阴影 */
-  opacity: 0.6;               /* 禁用状态降低不透明度 */
+  background-color: #90EE90;
+  color: black;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
 }
 .el-button:disabled:hover {
-  background-color: #cccccc; /* 仍然保持灰色 */
+  background-color: #cccccc;
 }
 .el-footer{
   display: flex;
