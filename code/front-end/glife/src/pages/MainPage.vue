@@ -24,11 +24,9 @@
             <template #title>ARTree</template>
             <el-menu-item index="/mainpage/artree" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
             <el-menu-item index="/mainpage/badge" @click="navigateTo('mybadge')">My Badge</el-menu-item>
-            <el-menu-item index="/mainpage/share" @click="navigateTo('notfound')">Share VR Tree</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="10">
             <template #title>Profile</template>
-            <el-menu-item index="/mainpage/setting" @click="navigateTo('setting')">Setting</el-menu-item>
             <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
           </el-sub-menu>
         </el-menu>

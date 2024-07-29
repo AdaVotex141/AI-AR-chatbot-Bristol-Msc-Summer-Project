@@ -8,7 +8,6 @@ import LoginRegister from '@/pages/LoginRegister.vue'
 import MainPage from '@/pages/MainPage.vue'
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import InitPage from "@/pages/InitPage.vue";
-import Setting from "@/pages/Setting.vue";
 import BadgeSystem from "@/pages/ArTree/BadgeSystem.vue";
 import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
 import { useUserInfoStore } from '@/stores/userInfo'
@@ -47,11 +46,6 @@ const router = createRouter({
                     name:'dayroutine',
                     path:'dayroutine',
                     component:DayRoutine
-                },
-                {
-                    name:'setting',
-                    path:'setting',
-                    component:Setting
                 },
                 {
                     name:'mybadge',
