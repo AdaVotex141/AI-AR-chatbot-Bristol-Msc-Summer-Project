@@ -34,9 +34,9 @@
 </template>
 
 <script setup lang='ts'>
-  import RoutineTags from '@/components/RoutineTags.vue'
-  import RoutineDialog from '@/components/RoutineDialog.vue'
-  import RoutineList from '@/components/RoutineList.vue';
+  import RoutineTags from '@/components/Routine/RoutineTags.vue'
+  import RoutineDialog from '@/components/Routine/Buttons/RoutineDialog.vue'
+  import RoutineList from '@/components/Routine/RoutineList.vue';
   import { useDayroutineStore } from '@/stores/dayroutine';
   import { useSystemroutineStore } from '@/stores/systemroutine';
   import { onUpdated, ref } from 'vue';

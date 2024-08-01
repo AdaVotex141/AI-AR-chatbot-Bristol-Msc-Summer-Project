@@ -22,8 +22,8 @@
 <script setup lang='ts'>
 import {onMounted, ref} from 'vue'
 import { useChatStore } from '@/stores/chat';
-import LoadingEffect from '@/components/LoadingEffect.vue';
-import MessageContent from '@/components/MessageContent.vue';
+import LoadingEffect from '@/components/Chat/LoadingEffect.vue';
+import MessageContent from '@/components/Chat/MessageContent.vue';
 
 let name = ref()
 const chatStore = useChatStore()

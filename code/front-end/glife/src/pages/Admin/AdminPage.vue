@@ -4,30 +4,24 @@
         <!-- Navigate bar -->
         <el-header>
         <el-menu
-            v-if="isDesktop"
             :default-active="activeIndex"
             class="el-menu-desktop"
             mode="horizontal"
             :ellipsis="false"
+            @select="handleSelect"
             background-color="#738352"
             text-color="white"
             active-text-color="black"
         >
-          <el-menu-item index="/welcome">
-            <div class="title" @click="navigateTo('startpage')">Glife</div>
+          <el-menu-item index="/admin">
+            <div class="title" @click="navigateTo('admin')">Glife Admin</div>
           </el-menu-item>
           <div class="flex-grow" />
-          <el-menu-item index="/mainpage/dashboard" @click="navigateTo('dashboard')">DashBoard</el-menu-item>
-          <el-menu-item index="/mainpage/chatwindow" @click="navigateTo('chatwindow')">Chat</el-menu-item>
-          <el-menu-item index="/mainpage/dayroutine" @click="navigateTo('dayroutine')">Routine</el-menu-item>
-          <el-sub-menu index="2">
-            <template #title>ARTree</template>
-            <el-menu-item index="/mainpage/artree" @click="navigateTo('artree')">Plant VR Tree</el-menu-item>
-            <el-menu-item index="/mainpage/badge" @click="navigateTo('mybadge')">My Badge</el-menu-item>
-          </el-sub-menu>
-          <el-menu-item index="/login" @click='logout'>Logout</el-menu-item>
+          <el-menu-item index="/admin/task" @click="navigateTo('task')">Tasks</el-menu-item>
+          <el-menu-item index="/admin/adminlist" @click="navigateTo('adminlist')">Management</el-menu-item>
+          <el-menu-item index="/login" @click='logout'>Log out</el-menu-item>
         </el-menu>
-          <MobileMenu v-else />
+          <!-- <MobileMenu v-else /> -->
         </el-header>
         <!-- Maincontent -->
         <el-main class="main-content">
@@ -47,7 +41,7 @@
   import router from '@/router';
   const drawer = ref(false);
   const isDesktop = ref(window.innerWidth > 600);
-  import MobileMenu from '../components/MobileMenu.vue';
+  import MobileMenu from '@/components/MobileMenu.vue';
   import { useUserInfoStore } from '@/stores/userInfo';
 
   const userInfoStore = useUserInfoStore()
@@ -56,7 +50,6 @@
   const checkScreenSize = () => {
     isDesktop.value = window.innerWidth > 600;
   };
-
 
   onMounted(() => {
     window.addEventListener('resize', checkScreenSize);
@@ -73,6 +66,9 @@
       activeIndex.value = newRoute.path;
     });
 
+    const handleSelect = (key: string, keyPath: string[]) => {
+      console.log(key, keyPath)
+    }
     function navigateTo(routeName: string) {
       router.push({
         name: routeName
@@ -80,22 +76,25 @@
     }
 
     async function logout(){
-      try{
-        const response = await axios.post('/api/logout')
-        if(String(response.data.code) !== '1'){
-          alert('Logout fail, please try again')
-        } else {
-          // Message given to the user
-          alert('logout successful')
-          // Use router to go to the login page
-          router.replace({name:'logout'})
-          // Change the userInfo
-          userInfoStore.logout()
-        }
-      } catch (error) {
-        router.push({name:'notfound'})
-      }
+      // try{
+      //   const response = await axios.post('/api/logout')
+      //   if(String(response.data.code) !== '1'){
+      //     alert('Logout fail, please try again')
+      //   } else {
+      //     // Message given to the user
+      //     alert('logout successful')
+      //     // Use router to go to the login page
+      //     router.replace({name:'logout'})
+      //     // Change the userInfo
+      //     userInfoStore.logout()
+      //   }
+      // } catch (error) {
+      //   router.push({name:'notfound'})
+      // }
+      router.replace({name:'logout'})
+      userInfoStore.logout()
     }
+
 
 </script>
 
@@ -106,8 +105,10 @@
 }
 .main-content{
   display: flex;
-  max-height: 100vh;
+  max-height: calc(100vh - 4rem); 
   max-width: 100vw;
+  padding-top: 4rem;
+  justify-content: center;
 }
 .title{
   font-weight: bold;
@@ -123,6 +124,7 @@
   position: fixed;
   top:0;
   z-index: 101;
+  height: 4rem; 
 }
 
 .flex-grow {

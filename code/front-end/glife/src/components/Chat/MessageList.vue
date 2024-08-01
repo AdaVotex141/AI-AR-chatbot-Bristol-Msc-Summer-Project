@@ -11,7 +11,7 @@
 import InitialChatWindow from './InitialChatWindow.vue';
 import { ref, onMounted, onUpdated, watch, nextTick } from 'vue';
 import { useChatStore } from '@/stores/chat';
-import MessageBubble from '@/components/MessageBubble.vue';
+import MessageBubble from '@/components/Chat/MessageBubble.vue';
 
 const chatStore = useChatStore()
 

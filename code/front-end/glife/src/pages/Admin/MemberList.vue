@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import AddAdminButton from '@/components/AddAdminButton.vue'
+import AddAdminButton from '@/components/AdminTemplate/AdminList/AddAdminButton.vue'
 import { useAdminStore } from '@/stores/admin';
 import { useUserInfoStore } from '@/stores/userInfo';
 

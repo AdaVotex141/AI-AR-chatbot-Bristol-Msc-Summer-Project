@@ -26,9 +26,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import RoutineStatistic from '@/components/RoutineStatistic.vue';
-import UserRandomTask from '@/components/UserRandomTask.vue';
-import TreeStatistic from '@/components/TreeStatistic.vue';
+import RoutineStatistic from '@/components/DashBoard/RoutineStatistic.vue';
+import UserRandomTask from '@/components/DashBoard/UserRandomTask.vue';
+import TreeStatistic from '@/components/DashBoard/TreeStatistic.vue';
 import { useUserInfoStore } from '@/stores/userInfo';
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'

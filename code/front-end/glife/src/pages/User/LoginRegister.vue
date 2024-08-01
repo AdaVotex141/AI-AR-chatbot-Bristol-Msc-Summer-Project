@@ -4,8 +4,8 @@
 </template>
 
 <script lang='ts' setup>
-import Login from '@/components/Login.vue'
-import Register from '@/components/Register.vue'
+import Login from '@/components/Login-Register/Login.vue'
+import Register from '@/components/Login-Register/Register.vue'
 import { ref } from 'vue';
 
 const showLogin = ref(true)

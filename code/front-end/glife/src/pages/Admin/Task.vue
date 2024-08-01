@@ -38,7 +38,7 @@
   
   <script setup lang="ts">
   import { onMounted } from 'vue';
-  import AddTaskButton from '@/components/AddTaskButton.vue'
+  import AddTaskButton from '@/components/AdminTemplate/RandomTask/AddTaskButton.vue'
   import { useTaskStore } from '@/stores/task';
   
   const taskStore = useTaskStore()

@@ -1,21 +1,21 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 //import components
-import DayRoutine from '@/pages/DayRoutine.vue'
-import ChatWindow from '@/pages/ChatWindow.vue'
+import DayRoutine from '@/pages/User/DayRoutine.vue'
+import ChatWindow from '@/pages/User/ChatWindow.vue'
 import ArTree from '@/pages/ArTree/ArTree.vue'
-import LoginRegister from '@/pages/LoginRegister.vue'
-import MainPage from '@/pages/MainPage.vue'
+import LoginRegister from '@/pages/User/LoginRegister.vue'
+import MainPage from '@/pages/User/MainPage.vue'
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import InitPage from "@/pages/InitPage.vue";
 import BadgeSystem from "@/pages/ArTree/BadgeSystem.vue";
 import ARTreeCamera from "@/pages/ArTree/ARTreeCamera.vue"
 import { useUserInfoStore } from '@/stores/userInfo'
 import { protectedPaths } from './protectedPaths'
-import AdminPage from '@/pages/AdminPage.vue'
-import MemberList from '@/pages/MemberList.vue'
-import Task from '@/pages/Task.vue'
-import DashBoard from '@/pages/DashBoard.vue'
+import AdminPage from '@/pages/Admin/AdminPage.vue'
+import MemberList from '@/pages/Admin/MemberList.vue'
+import Task from '@/pages/Admin/Task.vue'
+import DashBoard from '@/pages/User/DashBoard.vue'
 import ARCamera from '@/pages/ArTree/ARCamera.vue'
 
 //create router

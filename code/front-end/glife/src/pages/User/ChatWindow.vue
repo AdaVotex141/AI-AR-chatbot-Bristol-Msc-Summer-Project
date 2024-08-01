@@ -26,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import MessageList from '@/components/MessageList.vue';
-import MessageInput from '@/components/MessageInput.vue';
+import MessageList from '@/components/Chat/MessageList.vue';
+import MessageInput from '@/components/Chat/MessageInput.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { MoreFilled } from '@element-plus/icons-vue'
 import type { ButtonInstance } from 'element-plus'

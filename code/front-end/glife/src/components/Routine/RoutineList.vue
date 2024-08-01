@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import RoutineEdit from './RoutineEdit.vue'
+import RoutineEdit from './Buttons/RoutineEdit.vue'
 import {onMounted} from 'vue'
 
 const props = defineProps(['store', 'isSystemroutine', 'todos'])

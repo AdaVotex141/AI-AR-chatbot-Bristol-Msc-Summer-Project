@@ -37,7 +37,7 @@
   </template>
   
 <script setup lang='ts'>
-import AdminRegisterForm from '@/components/AdminRegisterForm.vue'
+import AdminRegisterForm from '@/components/AdminTemplate/AdminList/AdminRegisterForm.vue'
 import { useAdminStore } from '@/stores/admin';
 import { ref } from 'vue';
 
