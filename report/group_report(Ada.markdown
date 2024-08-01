@@ -5,19 +5,21 @@ Early stage Design:
 ```
 - Methodology brainstorm(pictures)
 
-# Stage I:
+Stage I:
 We need to develop something that contains IBM chatbot and AR capabilities. After consideration, we intended to develop a website because people can use any devices to access our product easily. The main function of this website is to chat with the IBM chatbot. And the users can obtain information and advice on sustainable lifestyle through the chatbot. However, if only this main function is available on our website, it will be too similar to ChatGPT. And if the users want to cultivate lifestyles and living habits, just chatting with the chatbot is far from enough. Therefore, a routine function which allows users to insist on something sustainable is necessary for our website. 
 In order to obey coordination and consistency in design rules [reference], we wanted to give users the ability to add routines through the chatbot. In addition, we referred to the routine tools on the market (such as…) and wanted to allow users to customize routines according to their preferences. And we decided to subdivide this function into system routine and user routine so that some routines in the routine function would in line with the sustainable theme.
 In addition to the routine function, considering the enthusiasm of users to use the website, we want to build other functions that can give users positive feedback. Referring to two popular software, Forest and Ant Forest, we decided to create a badge system and a tree planting system. And we planned to add AR function to the tree planting system to improve the user experience.
 Apart from these functions, we want to create an admin page to allow administrators to manage the system and add tasks. We also want to have an activity page to store Bristol's existing sustainable activities for users to browse so that it will help users to find the activities they want. And it would be better to build a function like ‘Too Good To Go’. ‘Too Good to Go’ is a service with a mobile application that connects customers to restaurants and stores that have surplus unsold food [Reference]. Because it will aggregate information about excess resources, we believe the information can provide some chances for users’ sustainable life.
 
-# Stage II:
+Stage II:
 After a period of development, we determined that routine and chatbot were the main functions. And after users use these functions, the planting trees and badge systems will be opened to motivate users to insist on it. 
 Since the chatbot can give advice and information of activities, it would be redundant if we built an activity page on our website to give more information about sustainable activities. We decided to remove the activity page from our plan. 
 As for the ‘Too Good to Go’ page, we also wanted to remove it because we found that there is already a similar application on the market in Bristol. In addition, as a person who wants to have a sustainable life, looking for leftover or expired food is just an option [reference of sustainable lifestyle]. As a user of our website, this function seems to be dispensable. Even without this function, users can find their sustainable lifestyle in other ways through the chatbot.
 
 
 - Language + Reason
+...content here
+
 - Layout Design
 
 As a website that integrates multiple functions, we decided to build it as a single-page application [reference of single-page application]. One reason is to ensure that the layout of each function of the system is consistent, so that frequent refreshes and switching of web pages will not reduce the user experience. The second reason is that the single-page layout can make the entire page more concise, and we can use repeated parts to help users get started with our webpage faster. 
