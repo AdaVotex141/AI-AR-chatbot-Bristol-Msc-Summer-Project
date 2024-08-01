@@ -55,32 +55,6 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
         }
     }
 
-//    public R<List<Long>> getUserBadgesByUserId(Long userId) {
-//        if (userExists(userId)) {
-//            LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
-//            queryWrapper.eq(UserBadge::getUserId, userId);
-//            List<UserBadge> userBadges = list(queryWrapper);
-//
-//            List<Long> badgeIds = userBadges.stream()
-//                    .map(UserBadge::getBadgeId)
-//                    .collect(Collectors.toList());
-//
-//            return R.success(badgeIds);
-//        } else {
-//            return R.error("User not found");
-//        }
-//    }
-
-//    @Override
-//    public R<UserBadge> addUserBadge(UserBadge userBadge) {
-//        Long userId = userBadge.getUserId();
-//        if (userExists(userId)) {
-//            save(userBadge);
-//            return R.success(userBadge);
-//        } else {
-//            return R.error("User not found");
-//        }
-//    }
     @Transactional
     public void checkAndAwardFirstTaskAchieverBadge(Long userId) {
         LambdaQueryWrapper<UserBadge> queryWrapper = new LambdaQueryWrapper<>();
@@ -104,8 +78,8 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
         // 检查用户是否已经完成所有日常任务
         LambdaQueryWrapper<SystemRoutine> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SystemRoutine::getUserid, userId)
-                .eq(SystemRoutine::getSchedule, 0) // 0 表示日常任务
-                .eq(SystemRoutine::getTick, 0); // 确保所有日常任务都未被完成
+                .eq(SystemRoutine::getSchedule, 0)
+                .eq(SystemRoutine::getTick, 0);
 
         List<SystemRoutine> dailyRoutines = systemRoutineMapper.selectList(queryWrapper);
 
@@ -115,7 +89,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
             // 检查用户是否已经获得了这个徽章
             LambdaQueryWrapper<UserBadge> badgeQueryWrapper = new LambdaQueryWrapper<>();
             badgeQueryWrapper.eq(UserBadge::getUserId, userId)
-                    .eq(UserBadge::getBadgeId, 2L); // 2L 为 Daily Routine Starter Badge 的 ID
+                    .eq(UserBadge::getBadgeId, 2L); 
 
             UserBadge existingBadge = baseMapper.selectOne(badgeQueryWrapper);
 
@@ -123,7 +97,7 @@ public class UserBadgeServiceImp extends ServiceImpl<UserBadgeMapper, UserBadge>
                 // 授予徽章
                 UserBadge newBadge = new UserBadge();
                 newBadge.setUserId(userId);
-                newBadge.setBadgeId(2L);  // 2L 为 Daily Routine Starter Badge 的 ID
+                newBadge.setBadgeId(2L);
                 newBadge.setEarnedTime(LocalDateTime.now());
 
                 baseMapper.insert(newBadge);
