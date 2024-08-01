@@ -116,11 +116,11 @@ async function login(ruleFormRef: FormInstance | undefined){
         If passed, push to the mainpage; If not, give an alert
         */
         if(String(response.data.code) === '1'){
+          dataFetchAfterLogin(response, nextPageName)
           ElMessage({
             message: 'Login successfully',
             type: 'success'
           })
-          dataFetchAfterLogin(response, nextPageName)
         } else {
           ElMessage({
             message: response.data.msg,
