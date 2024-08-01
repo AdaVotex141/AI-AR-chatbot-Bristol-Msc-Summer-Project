@@ -5,25 +5,36 @@ Early stage Design:
 ```
 - Methodology brainstorm(pictures)
 
-# Stage I:
+Stage I:
 We need to develop something that contains IBM chatbot and AR capabilities. After consideration, we intended to develop a website because people can use any devices to access our product easily. The main function of this website is to chat with the IBM chatbot. And the users can obtain information and advice on sustainable lifestyle through the chatbot. However, if only this main function is available on our website, it will be too similar to ChatGPT. And if the users want to cultivate lifestyles and living habits, just chatting with the chatbot is far from enough. Therefore, a routine function which allows users to insist on something sustainable is necessary for our website. 
+
 In order to obey coordination and consistency in design rules [reference], we wanted to give users the ability to add routines through the chatbot. In addition, we referred to the routine tools on the market (such as…) and wanted to allow users to customize routines according to their preferences. And we decided to subdivide this function into system routine and user routine so that some routines in the routine function would in line with the sustainable theme.
+
 In addition to the routine function, considering the enthusiasm of users to use the website, we want to build other functions that can give users positive feedback. Referring to two popular software, Forest and Ant Forest, we decided to create a badge system and a tree planting system. And we planned to add AR function to the tree planting system to improve the user experience.
+
 Apart from these functions, we want to create an admin page to allow administrators to manage the system and add tasks. We also want to have an activity page to store Bristol's existing sustainable activities for users to browse so that it will help users to find the activities they want. And it would be better to build a function like ‘Too Good To Go’. ‘Too Good to Go’ is a service with a mobile application that connects customers to restaurants and stores that have surplus unsold food [Reference]. Because it will aggregate information about excess resources, we believe the information can provide some chances for users’ sustainable life.
 
-# Stage II:
+Stage II:
 After a period of development, we determined that routine and chatbot were the main functions. And after users use these functions, the planting trees and badge systems will be opened to motivate users to insist on it. 
+
 Since the chatbot can give advice and information of activities, it would be redundant if we built an activity page on our website to give more information about sustainable activities. We decided to remove the activity page from our plan. 
+
 As for the ‘Too Good to Go’ page, we also wanted to remove it because we found that there is already a similar application on the market in Bristol. In addition, as a person who wants to have a sustainable life, looking for leftover or expired food is just an option [reference of sustainable lifestyle]. As a user of our website, this function seems to be dispensable. Even without this function, users can find their sustainable lifestyle in other ways through the chatbot.
 
 
 - Language + Reason
+...content here
+
 - Layout Design
 
 As a website that integrates multiple functions, we decided to build it as a single-page application [reference of single-page application]. One reason is to ensure that the layout of each function of the system is consistent, so that frequent refreshes and switching of web pages will not reduce the user experience. The second reason is that the single-page layout can make the entire page more concise, and we can use repeated parts to help users get started with our webpage faster. 
+
 We decided to display different functions to users separately to avoid too much content on a single page. To give user control and freedom, we want to add a navigation bar so that users can choose system functions they want. And the navigation bar will show where the user is.
+
 As for the strategic plan for styling issues, we used styled components package (a library to generate component level styles), Bootstrap and CSS code to adjust the visual aspects of the website. 
+
 The styled components packages such as ‘element plus’ and ‘tailwind UI’ can provide us with some mature design patterns. These components follow design disciplines such as consistency, feedback, efficiency, controllability and so on. We believe that we can design the layout based on these components, so that the layout of our website is more in line with modern web design concepts. And, because we can directly use tags to adjust the layout, it can save us a lot of time compared to writing CSS code from scratch. However, styled components only provide limited style options. We want to make modifications to these components to make the layout more consistent with the Glife. So we want to use Bootstrap and CSS in vue.js to modify the style.
+
 Bootstrap [Reference] is one of the most popular CSS frameworks. It is convenient to use Bootstrap to adjust the responsive layout because Bootstrap provides many easy-to-understand and straightforward classes. By using Bootstrap, we can reduce the duplication of CSS code to modify the layout and achieve responsive layout in a relatively short time. In addition, we want to provide better experience for both computer users and mobile phone users. Therefore, we want to design two different layouts separately for both mobile phone and computer. We adopt ‘media queries’[reference], described by MDN docs as “to modify your site or app depending on a device’s general type (such as print vs. screen)”, to show different components according to the media size.
 
 
@@ -64,8 +75,11 @@ We built the front-end project in Modular form. It is the most suitable project 
 ![](Front-end_Structure.jpg)
  
 At the first, our project is divided into logical modules such as initial page and main page. According to the official document, “Each module has its own components, composables, assets, utils; probably api, routes, views, layouts.” The module in our project has only components, assets, router and pages. Instead of setting composables and utils folders, we created stores folder because we used Pinia to manage statement. By using Pinia, we could write Typescript file to store the composition functions in stores folder and these Store structures can be used in components and pages, which is like the logic of building composables and utils. 
+
 As for the pages folder, the file in it is more like a page template composed of many single components. So we take these components out of the components folder and put them separately in the pages folder. We also applied simple atomic design to components structure. The hierarchical structure based on component complexity makes the structure of components scalable and organized [reference of atomic design]. And we categorized all the components and place them in correspond subfolders of components folder so that retrieval and browsing are easier. In addition, rather than using redundant atoms, molecules and organisms in each subfolder of components folder, we only created some specific folders for reusable components. The rationale behind this decision is that our project is a small-scale initiative with a constrained development timeline. Given that the front-end design is relatively straightforward and does not involve extensive reuse of components, we implemented the structure previously mentioned. 
+
 The router folder is just like the routes folder mentioned in official documentation. As a single-page website, we need router to change the content in the page. So we put the routing configuration file and the file containing the routing paths to be protected in this folder. The assets folder is used to store some static resources that need to be preloaded, such as tree images, badge images, and some icons.
+
 ```
 - back-end: Controller- Service(Interface and Implementation) - Mapper - Entity
 - WebSocket: Config - WSHandler - ServiceImp - Redis
