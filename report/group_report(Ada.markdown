@@ -2,7 +2,7 @@
 Design
 
 Early stage Design:
-
+```
 - Methodology brainstorm(pictures)
 
 # Stage I:
@@ -66,7 +66,7 @@ We built the front-end project in Modular form. It is the most suitable project 
 At the first, our project is divided into logical modules such as initial page and main page. According to the official document, “Each module has its own components, composables, assets, utils; probably api, routes, views, layouts.” The module in our project has only components, assets, router and pages. Instead of setting composables and utils folders, we created stores folder because we used Pinia to manage statement. By using Pinia, we could write Typescript file to store the composition functions in stores folder and these Store structures can be used in components and pages, which is like the logic of building composables and utils. 
 As for the pages folder, the file in it is more like a page template composed of many single components. So we take these components out of the components folder and put them separately in the pages folder. We also applied simple atomic design to components structure. The hierarchical structure based on component complexity makes the structure of components scalable and organized [reference of atomic design]. And we categorized all the components and place them in correspond subfolders of components folder so that retrieval and browsing are easier. In addition, rather than using redundant atoms, molecules and organisms in each subfolder of components folder, we only created some specific folders for reusable components. The rationale behind this decision is that our project is a small-scale initiative with a constrained development timeline. Given that the front-end design is relatively straightforward and does not involve extensive reuse of components, we implemented the structure previously mentioned. 
 The router folder is just like the routes folder mentioned in official documentation. As a single-page website, we need router to change the content in the page. So we put the routing configuration file and the file containing the routing paths to be protected in this folder. The assets folder is used to store some static resources that need to be preloaded, such as tree images, badge images, and some icons.
-
+```
 - back-end: Controller- Service(Interface and Implementation) - Mapper - Entity
 - WebSocket: Config - WSHandler - ServiceImp - Redis
 
