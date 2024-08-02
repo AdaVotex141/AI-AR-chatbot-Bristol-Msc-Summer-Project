@@ -145,7 +145,7 @@ async function dataFetchAfterLogin(response:any, nextPageName:string){
   // If it is a user
   if(!formLabelAlign.isAdmin){
     // Connect websocket
-    await websocketStore.connect(`ws://localhost:8040/message?userId=${userInfoStore.userid}`)
+    await websocketStore.connect(`wss://gliving.net/message?userId=${userInfoStore.userid}`)
     // Get user's random task (use timeout to ensure call this function after websocket connection is available)
     // await userTaskStore.getRandomTask()
   }

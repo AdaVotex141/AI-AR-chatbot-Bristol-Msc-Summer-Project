@@ -28,6 +28,8 @@ import {ref, onMounted, onBeforeUnmount} from 'vue';
 import router from "@/router";
 import {useUserInfoStore} from '@/stores/userInfo';
 import { GoogleMap, Marker } from 'vue3-google-map'
+import '/public/3DTree/tree.glb';
+import '/public/marker/MarkerTree.png';
 
 const latitude = ref<number>(51.4558853);
 const longitude = ref<number>(-2.6029143);
@@ -38,16 +40,14 @@ const userID =ref('');
 const intervalId = ref<number | null>(null);
 const userInfoStore = useUserInfoStore()
 const center = ref({ lat: 0, lng: 0 });
-const markers = ref<Array<{ position: { lat: number, lng: number }, title: string ,icon: { url: string, scaledSize: { width: number; height: number } }}>>([
-
-]);
+const markers = ref<Array<google.maps.MarkerOptions>>([]);
 const isLocationLoaded = ref(false);
 
 function addModel(a: number, b: number) {
   const scene = document.querySelector('a-scene');
   if (scene) {
     const newEntity = document.createElement('a-entity');
-    newEntity.setAttribute('gltf-model', '/src/assets/3DTree/tree.glb');
+    newEntity.setAttribute('gltf-model', '/3DTree/tree.glb');
     newEntity.setAttribute('gps-new-entity-place', `latitude: ${a + 0.000015}; longitude: ${b}`);
     const scaleValue = 0.007;
     newEntity.setAttribute('scale', `${scaleValue} ${scaleValue} ${scaleValue}`);
@@ -138,7 +138,7 @@ onMounted(() => {
   userName.value = userInfoStore.user;
   userID.value=userInfoStore.userid;
   console.log(userID);
-  socket.value = new WebSocket("ws://localhost:8040/ARtree")
+  socket.value = new WebSocket("wss://gliving.net/ARtree")
   intervalId.value = window.setInterval(sendPeriodicMessage, 1000);
   socket.value.onmessage = (event) => {
     //removeAllEntities();
@@ -152,8 +152,8 @@ onMounted(() => {
       position: { lat: newLatitude, lng: newLongitude },
       title: `Tree: ${name.trim()}`,
       icon: {
-        url: '/src/assets/marker/MarkerTree.png',
-        scaledSize: { width: 30, height: 30 }
+        url: '/marker/MarkerTree.png',
+        scaledSize: new google.maps.Size(20, 20)
       }
     })
   }

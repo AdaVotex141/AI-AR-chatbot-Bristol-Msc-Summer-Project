@@ -13,6 +13,7 @@
     "paths": {
       "@": ["src"],
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["google.maps"]
   }
 }

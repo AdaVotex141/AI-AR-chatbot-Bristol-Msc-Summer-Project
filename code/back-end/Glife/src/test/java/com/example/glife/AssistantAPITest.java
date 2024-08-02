@@ -27,9 +27,9 @@ public class AssistantAPITest {
 
     @BeforeEach
     void setUp() {
-        assistantService.initializeAssistant();
-        assistantService.createSession();
-        sessionId = assistantService.getSessionId();
+        //assistantService.initializeAssistant();
+        //assistantService.createSession();
+        //sessionId = assistantService.getSessionId();
     }
 
     @Test
