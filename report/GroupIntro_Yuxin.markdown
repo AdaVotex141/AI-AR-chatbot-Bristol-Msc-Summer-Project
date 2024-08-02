@@ -13,11 +13,12 @@ For achieving this aim, the project has several specific objectives. Firstly, th
 3.	**Augmented Reality Tree Planting**: Users are encouraged to plant augmented reality trees as part of a fantastic reward mechanism. 
 
 Plus, as a reward mechanism to increase user motivation for completing tasks, it be designed that user can plant the AR tree and get some designed badges after completing the number of tasks. Furthermore, to enhance the user experience, the web application includes an administrative system that allows for the publication of random tasks to current users, providing them with a variety of challenges and activities.
+![FunctionOverview.png](FunctionOverview.png)
 ## The Client ##
 ### Description of the Client and the Brief ###
 The client for our project is the International Business Machines Corporation (IBM). As per the initial brief provided by IBM, the project's primary objective is to create an artificial intelligence system aimed at *helping students live more sustainably and make environmentally conscious choices both at university and at home.*
 ### Refinement and Improvement of the Original Brief ###
-After thorough communication among our project team numbers, we had shown our initial project proposal objectives and video demonstration to our client. To enhance feasibility, we refined our objective from improving a single artificial intelligence system to developing a web application capable of integrating existing AI technologies. In terms of target users, we identified that this web application would also be beneficial for individuals with a strong commitment to sustainable living, as well as those aspiring to adopt sustainable practices. 
+After thorough communication among our project team members, we presented our initial project proposal objectives and video demonstration to our client. To enhance feasibility, we refined our objective from improving a single artificial intelligence system to developing a web application capable of integrating existing AI technologies. In terms of target users, we identified that this web application would also be beneficial for individuals with a strong commitment to sustainable living, as well as those aspiring to adopt sustainable practices beyond the scope of university students. 
 Consequently, the primary objective of this project has been refined to *develop a web application incorporating embedded IBM AI. This application is designed to enhance users' awareness of sustainability and support them in cultivating sustainable habits.*
 ### Interaction with the Client ###
 Our group communicates with clients through two different methods
@@ -30,7 +31,9 @@ Our group communicates with clients through two different methods
    1. **Team members**: It is crucial to carefully determine the team division of tasks, deciding which member is responsible for each part of the project. Furthermore, we need maintain frequent communication to ensure that everyone’s development work progresses stably and aligns with project objectives.
    2. **IBM Client**: We need to carefully consider the suggestions provided by the stakeholder layer in our weekly meetings with the client.
    3. **Supervisor**: We need to carefully consider the suggestions provided by the user layer in our weekly meetings with the supervisor.
-
 4. **Market challenges**: We face the challenge of ensuring that our target audience not only uses our web application but also finds it appealing. Additionally, we need to raise awareness of the application among those outside the immediate target group. Finally, encouraging continued use of the application presents another significant challenge.
+
+Our group also finished the SWOT analysis about our project based on the challenges listed above.
+![SWOT.png](SWOT.png)
 
 In a word, our group is to implement our project efficiently and provide a web application designed to help university students and other individuals live more sustainably and make environmentally friendly choices. Detailed information on all these aspects will be provided in the following sections of our report.
