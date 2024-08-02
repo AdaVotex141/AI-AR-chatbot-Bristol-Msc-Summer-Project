@@ -11,22 +11,26 @@ For achieving this aim, the project has several specific objectives. Firstly, th
 1.	**Chatting with IBM Robot**: Users can interact with an IBM robot to receive tailored suggestions on sustainability across various aspects of their daily lives.
 2.	**Routine Task management**: Users can complete routine tasks with customizable frequency settings.
 3.	**Augmented Reality Tree Planting**: Users are encouraged to plant augmented reality trees as part of a fantastic reward mechanism. 
+
 Plus, as a reward mechanism to increase user motivation for completing tasks, it be designed that user can plant the AR tree and get some designed badges after completing the number of tasks. Furthermore, to enhance the user experience, the web application includes an administrative system that allows for the publication of random tasks to current users, providing them with a variety of challenges and activities.
 ## The Client ##
 ### Description of the Client and the Brief ###
 The client for our project is the International Business Machines Corporation (IBM). As per the initial brief provided by IBM, the project's primary objective is to create an artificial intelligence system aimed at *helping students live more sustainably and make environmentally conscious choices both at university and at home.*
 ### Refinement and Improvement of the Original Brief ###
-Throughout the development phase, we held weekly online meetings with the client, which facilitated a series of constructive feedback sessions. During these interactions, we received numerous suggestions from IBM. For instance, they recommended incorporating statistical methods to analyse the number of users utilizing this web application. Additionally, they recommended developing a colourblind mode to cater specifically to users with colour vision deficiencies, ensuring that the application is accessible and user-friendly. 
-
-Consequently, the scope of our project's objectives was expanded beyond university students to include individuals interested in enhancing their sustainability practices.
+After thorough communication among our project team numbers, we had shown our initial project proposal objectives and video demonstration to our client. To enhance feasibility, we refined our objective from improving a single artificial intelligence system to developing a web application capable of integrating existing AI technologies. In terms of target users, we identified that this web application would also be beneficial for individuals with a strong commitment to sustainable living, as well as those aspiring to adopt sustainable practices. 
+Consequently, the primary objective of this project has been refined to *develop a web application incorporating embedded IBM AI. This application is designed to enhance users' awareness of sustainability and support them in cultivating sustainable habits.*
 ### Interaction with the Client ###
 Our group communicates with clients through two different methods
 1.	**Via Email**: We send an email every week so that they can track the progress of our project’s development. Additionally, every fortnight, we send another email with a video demonstration attached, allowing them to visually observe the progress at each stage of our web application’s development.
 2.	**Via Meeting**: IBM has provided us with an IT support member, and we hold online meeting every Tuesday throughout the project development period. He offers valuable methodological support and provides user-centric suggestions for improving our web application.
 ## Challenges ##
-1. **Time plan challenges**: Our project needs to be completed within three months, which includes the development, deployment, testing, evaluation, and report writing phases. Meeting this deadline poses significant time management challenges.
+1. **Time plan challenges**: Our project needs to be completed within three months, which includes the development, testing, deployment, evaluation, and report writing phases. Meeting this deadline poses significant time management challenges.
 2. **Methodology challenges**: We need to select an appropriate methodology for developing our web application and learn the required technologies for both the front-end and back-end development, as well as the communication between these two layers, from scratch. Furthermore, it also requires the knowledge about deployment after completing the development. This requires a high level of self-learning capacity within a short timeframe.
-3. **Communication challenges**: It is crucial to carefully determine the team division of tasks, deciding which member is responsible for each part of the project. Furthermore, we need maintain frequent communication to ensure that everyone’s development work progresses stably and aligns with project objectives.
+3. **Communication challenges**: 
+   1. **Team members**: It is crucial to carefully determine the team division of tasks, deciding which member is responsible for each part of the project. Furthermore, we need maintain frequent communication to ensure that everyone’s development work progresses stably and aligns with project objectives.
+   2. **IBM Client**: We need to carefully consider the suggestions provided by the stakeholder layer in our weekly meetings with the client.
+   3. **Supervisor**: We need to carefully consider the suggestions provided by the user layer in our weekly meetings with the supervisor.
+
 4. **Market challenges**: We face the challenge of ensuring that our target audience not only uses our web application but also finds it appealing. Additionally, we need to raise awareness of the application among those outside the immediate target group. Finally, encouraging continued use of the application presents another significant challenge.
 
 In a word, our group is to implement our project efficiently and provide a web application designed to help university students and other individuals live more sustainably and make environmentally friendly choices. Detailed information on all these aspects will be provided in the following sections of our report.
