@@ -20,14 +20,14 @@ As for the ‘Too Good to Go’ page, we also wanted to remove it because we fou
 ### Technology Selections and Reasons
 
 Our team decides this project to be a back-end and front-end seperation architect. By separating the back-end and front-end, we ensure that each layer of the application can be developed, maintained, and scaled independently. Also this flexibility enables us to use the most suitable technologies for each part during development.
-We have discussed about the framework and the language we used for the project and ultimately decided on Java and Springboot, MyBatisPlus for back-end and Vue.js for front-end.
+We have discussed about the framework and the language we used for the project and ultimately decided on Java and Spring boot, MyBatisPlus for back-end and Vue.js for front-end.
 In order to communicate between front-end and back-end, we followed the RESTful principle in API endpoints and implemented Ngnix to solve cross-origin resource sharing (CORS) issues.
 We also intergrated several APIs in some functions and WebSocket for bidirectional communication.
 #### Back-end
-For back-end, Java is the language that we are all familiar, and it is also an object-oriented language that is widely used in developments[reference]. Springboot is the simplify version of the framework Spring, which provides a wide range of tools like RESTful API, auto configurations and features like dependency injection, inversion of control.
+For back-end, Java is the language that we are all familiar, and it is also an object-oriented language that is widely used in developments[reference]. Spring boot is the simplify version of the framework Spring, which provides a wide range of tools like RESTful API, auto configurations and features like dependency injection, inversion of control.
 ![https://velog.io/@hj_/SpringBoot-10.-IoC%EC%99%80-DI](IOC.png)
 The main design idea of Spring(and Springboot) is the philosophy of inversion of control mentioned above. The inversion of contorl means an object's dependencies are provided by an external entity rather than the object creating them itselves. [reference]This aims at letting components less depending on each other, or to say, decoupling. This principle enhances maintainability, and flexibility in software design.
-This code template below shows how Springboot simplify development process: The @Autowired annotation is used for automatic dependency injection. Spring Boot will automatically inject an instance of UserService into the userService field, as the "inversion of control" mentioned above.
+This code template below shows how Spring boot simplify development process: The @Autowired annotation is used for automatic dependency injection. Spring Boot will automatically inject an instance of UserService into the userService field, as the "inversion of control" mentioned above.
 The @PostMapping
 ```Java
 @RestController
@@ -44,7 +44,7 @@ public class UserController {
 }
 ```
 As for MyBatisPlus, it is a simplify data-access tool provides many efficient operations for SQL, we need databases like SQL to store data permanently and operate them through Java. Unlike JDBC, MybatisPlus doesn't require developers to write SQL commands manually, which simplified basic CRUD (Create, Read, Update, Delete) operations[reference], and it has mature integration with Springboot.Also we use libraries like lombok to simplify and reduce boilerplate code.
-#### Front-end
+#### Front-end[Xinyu]
 The framework used for the front-end is actually Vite. Since we had no prior experience with front-end frameworks, we chose Vite after considering its gentle learning curve and simple configuration process. Typically, getting a project up and running with Vite requires just a few lines of code.[reference][VITE][https://medium.com/tav-technologies/vue-3-and-vite-a-modern-front-end-development-experience-bb66fd3e0959] 
 Vite is a build tool designed for modern JavaScript frameworks. It was specifically created to enhance the development experience with Vue.js projects by providing faster build times and efficient module handling.
 Vue.js is widely adopted for its simplicity and flexibility in developing modern applications, it builds on top of standard HTML, CSS and JavaScript.
@@ -96,7 +96,8 @@ There are two section of IBM Watson Assistant, actions and dialogues. Dialogues 
 
 [TODO][: Geolocation]
 #### WebSocket
-[TOOD][]
+![https://geniusee.com/single-blog/how-to-build-a-websocket-application](websocket.jpg)
+Unlike single HTTP request, which is one-way from client to server, WebSocket is a protocol that allows real-time and  bi-directional communication between a client and a server. It is used in this project in the AR tree section while users' real-time location will be sent to the server to search for any near-by stored positions. As there are multiple users using the web App at the same time, we managed to maintain the WebSocket session in a ConcurrentHashMap for thread-Safe operations, which allows multiple threads to read and write to the map without blocking.
 
 In one word, using these technologies can reduce boilerplate code and reduce complexity. The combination of Spring Boot, MyBatis Plus, and Vue.js is considered as a mature and widely adopted stack in the industry for developing modern web applications.[reference]
 ### Layout Design
@@ -110,6 +111,9 @@ As for the strategic plan for styling issues, we used styled components package 
 The styled components packages such as ‘element plus’ and ‘tailwind UI’ can provide us with some mature design patterns. These components follow design disciplines such as consistency, feedback, efficiency, controllability and so on. We believe that we can design the layout based on these components, so that the layout of our website is more in line with modern web design concepts. And, because we can directly use tags to adjust the layout, it can save us a lot of time compared to writing CSS code from scratch. However, styled components only provide limited style options. We want to make modifications to these components to make the layout more consistent with the Glife. So we want to use Bootstrap and CSS in vue.js to modify the style.
 
 Bootstrap [Reference] is one of the most popular CSS frameworks. It is convenient to use Bootstrap to adjust the responsive layout because Bootstrap provides many easy-to-understand and straightforward classes. By using Bootstrap, we can reduce the duplication of CSS code to modify the layout and achieve responsive layout in a relatively short time. In addition, we want to provide better experience for both computer users and mobile phone users. Therefore, we want to design two different layouts separately for both mobile phone and computer. We adopt ‘media queries’[reference], described by MDN docs as “to modify your site or app depending on a device’s general type (such as print vs. screen)”, to show different components according to the media size.
+
+### System Flow[Jie]
+
 
 
 ### Databases Design
@@ -167,11 +171,27 @@ We used Trello (Kanban board) for
 
 
 ## Project Structure
-[photo][front-end and back-end communicate with ngnix]
-[photo][front-end structure]
+
+As mentioned above, the project used the front-end and back-end separation architecture with Nginx serving as an interval between the two parts. So the project structure details below is divided into two parts.
+![](ngnix.drawio%20(2).png)
+
+### back-end
+![](projectStructure.drawio.png)
+The back-end project's structure can be split in four layers: "Controller" layer, the "Service" layer, the "Mapper" layer, the "Entity" layer, each of which focus on one aspect and seperating operations, making the application easier to maintain, test, and scale.
+The Controller layer focus on handling HTTP requests and responses properly, the "@RestContoller" annotation is required in Spring Boot application(this project). It acts like the interval between client and the server.
+The Service layer is for implementation, it contains codes of logic: getting data to process from the Controller layer and interact with the later data access layer(the Mapper layer). In a Spring boot application, the layer should be annotated with "@Service". This layer is where most of the business code is stored, encapsulating the operations, calculations, and functions of the whole application.
+While the Mapper layer, referred as the data access layer, handles the interaction with the database. Each "mapper" within this layer is linked to a specific table in the database. Annotated with "@Mapper" allows Spring to recognize it as a bean for dependency injection.
+Each entity represents one data model, whether defines the data structures that map to the tables in the database or acts as other non-persistent entities.
+![](exampleStructure.drawio.png)
+Another advantage of using this layered architecture is that Spring Boot and MyBatis-Plus provide encapsulated libraries and methods that simplify development.
+For example, the graph shows how the "user" is add, insert or update. As the Usercontroller recieved a message whose url looks like "/api/user/add" and an user entity with "@RequestBody" annotation, it would then passes the user entity to the UserService layer.
+The @Service annotation on UserService class ensures it is recognized as a Spring-managed bean, and it contains the business logic for processing the user data. Also, the UserService class extends IService<User>, a class provided by MyBatis-Plus. This extension allows UserService to inherit some predefined methods for basic CRUD operations, such as "save", "removeById", "getById", and "updateById".
+After the necessary business codes, it's time to insert the data into database, using the UserMapper bean to directly interacts with the "user" table in MySQL database. Additionally, the UserMapper interface extends "BaseMapper<User>", which provides built-in methods like "update", "delete", "insert". So in this case, a simple line of code as followed will do:
+`UserMapper.insert(user);`
+The lombok libraries is used in the "User" defined class, providing methods like "getter" and "setter", also reducing boilerplate code.
+(400 words)
+
 ### front-end
-
-
 Project Structure
 
 - Front-end: components
@@ -186,7 +206,7 @@ At the first, our project is divided into logical modules such as initial page a
 As for the pages folder, the file in it is more like a page template composed of many single components. So we take these components out of the components folder and put them separately in the pages folder. We also applied simple atomic design to components structure. The hierarchical structure based on component complexity makes the structure of components scalable and organized [reference of atomic design]. And we categorized all the components and place them in correspond subfolders of components folder so that retrieval and browsing are easier. In addition, rather than using redundant atoms, molecules and organisms in each subfolder of components folder, we only created some specific folders for reusable components. The rationale behind this decision is that our project is a small-scale initiative with a constrained development timeline. Given that the front-end design is relatively straightforward and does not involve extensive reuse of components, we implemented the structure previously mentioned. 
 
 The router folder is just like the routes folder mentioned in official documentation. As a single-page website, we need router to change the content in the page. So we put the routing configuration file and the file containing the routing paths to be protected in this folder. The assets folder is used to store some static resources that need to be preloaded, such as tree images, badge images, and some icons.
-[photo][back-end structure]
+
 ## Implementation
 ### Back-end
 ![](overall.drawio.png)
@@ -194,21 +214,50 @@ The router folder is just like the routes folder mentioned in official documenta
 #### login and register
 1. motivation
 
+
 2. implementation
 ![](login&register.drawio.png)
-3. discussion
+1. discussion
    1. Firstly we have dicussed about how to store user's login status. We thought about using "threadlocal" as each thread (a user using our website) accessing such a variable has its own, independently initialized copy of the variable. But as we are using postman for testing, and every request from postman will create a thread, so the way won't work.
    2. We have also thought about using JWT for login check, but in the end we use session to store user's login status.This is because, JWT is stateless and stored in client-side[TODO] while session is stored in server-side and are easier to conserve login status.
    3. In a later agile iteration, we implemented a LoginFilter to block unauthorized requests to the backend from users who have not logged in. This addition enhances the security of our system.
 
 #### Routines
 1. motivation
+This section is designed to help users adopt and maintain eco-friendly lifestyles by providing routines from three key sources. Each source is designed to engage users, provide personalized advice, and get a sense of community.
+By accomplishing and ticking on routines, we hope that the user can gradually develop an eco-friendly lifestyle.
+We have designed three sources of the routines, users can ask the IBM Watson AI chatbot for advice and add them to the routines, add random tasks broadcasted by the admin panel(which is implemented in later Agile iteration), or add their own personalized routines to ensure that users have access to a wide range of inspirations.
+
 2. implementation
 ![](routines.png)
+The core implementation for managing routines involves interacting with the database to perform operations such as inserting, updating, deleting, and ticking off routines.  These are supported by the data access layer, which interacts with the "routines" or "systemRoutines" tables in the MySQL database.
+   1. add
+   the front-end will send a request with the request body of the entity "routine", then the routine can be added to the database using `routineMapper.insert(routine)`.
+   Since the front-end usually does not provide the userID directly, the back-end must retrieve it from the HttpSession, the userID helps to match the routine with the correct user, ensuring that each user’s routines are managed independently.
+   2. update
+   The new content will be send to the server wrapped in the entity "routine", then the routine can be updated using `routineMapper.updateByID(rouinte)`
+   3. tick 
+   This function is called to switch tick status of the selected routine.
+   4. delete
+   The front-end sends a request to delete a specific routine. The back-end deletes the routine from the database using `routineMapper.deleteById(routineId)`
+As mentioned above, the actual operations are modifying or inserting the data in the database using MyBatisPlus methods.
+
+Another feature in this section is that records in the database will have their tick status reset based on their frequency(daily, weekly, monthly), this is implemented by the `@Scheduled` annotation:
+```Java
+@Scheduled(cron = "0 0 0 * * ?")
+public void updateDailyRoutines(){
+   //reset tick's status
+}
+```
+The annotation in the Spring framework is used to execute the method according to a specific schedule without manual operations.
+
+The only difference is how the service layer get the incoming routine. Unlike user-customized routines, system routines are initially stored in Redis cache. For example, system routines that comes from the IBM chatbot, are firstly parsed in the back-end(as the IBM chatbot API is implemented in the back-end)and then send to the front-end for display. If the user then typed "yes, add the advice to my routines", the front-end can directly send a request to add this routine to the user's routines. There is no need for the front-end to pre-store or manage this advice as a separate routine. This allows the system dynamically add routines based on real-time user inputs and reduce front-end's processing complexity.
+
 3. dicussion
    1. Firstly we aims at only daily routines, but later on we have dicussed making more options for different timing for user to choose. We adjusted this in a later agile iteration.
    2. The response of the Watson AI chatbot is all set but we want to make the routines' source more flexible, so we added an admin panel for random task distribution. The user can receive random task on dashboard and decide whether to add them or not. 
    3. As the routine's tick is related to badge system and AR tree planted, we don't want the user to add customize routines which is not related to eco-friendly lifestyles and get rewards, that's why in the design the user's self-customize routines are not related to further AR Tree and badges system.
+(611 words)
 
 #### AR tree section[jie]
 1. motivation
@@ -242,11 +291,11 @@ The router folder is just like the routes folder mentioned in official documenta
 Generally, we are divided into two group, some of us are focusing on the front-end development, while others work on the back-end logic, and any outside API intergrated.
 During the development part the workload is as follows:
 1. Back-end:
-- Jie: AI content support & AI chatbot logic, Websocket implementation supporting real-time positions track, intergration of AR framework and map API, deployment of the whole project.
-- Xinyue: AI content support & AI chatbot logic, badge system design and badge-related database design and its back-end logic.
+- Jie: AI chatbot logic, Websocket implementation supporting real-time positions track, intergration of AR framework and map API, deployment of the whole project.
+- Xinyue: AI chatbot logic, badge system design and its back-end logic.
 - Ada: databases design, the back-end logic of login and register with email, CRUD methods of routines, cache optimization using Redis, WebSocket of messages broadcasting, dashboard's back-end support.
 
-2. front-end:
+1. front-end:
 - Xinyu: the front-end logic of login and register with email, CRUD methods of routines, the dashboard components design and front-end logic, error handling and  unauthorized request prevention, testing.
 - Yuxin: UI design, layout design for both mobile phone and PC, CSS container optimize , image rotation of AR tree and badges, badge system’s front-end logic.
 
