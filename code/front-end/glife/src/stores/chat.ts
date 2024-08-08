@@ -2,13 +2,13 @@ import axios from 'axios'
 import {defineStore} from 'pinia'
 import { reactive, ref } from 'vue'
 
-interface chatMessage{
+interface ChatMessage{
     text?:string
     type:'text' | 'options'
     sender:'user' | 'bot'
     options?:string[]
 }
-interface item{
+interface Item{
     responseType: 'text' | 'option',
     text: string,
     labels: string[]
@@ -16,11 +16,11 @@ interface item{
 
 export const useChatStore = defineStore('chat',()=>{
 
-    const messages = reactive<chatMessage[]>([])
+    const messages = reactive<ChatMessage[]>([])
     let isInitialWindow = ref(true)
     const timePhrases = ['daily', 'weekly', 'monthly']
 
-    function addMessage(message:chatMessage){
+    function addMessage(message:ChatMessage){
         messages.push(message)
     }
 
@@ -56,7 +56,7 @@ export const useChatStore = defineStore('chat',()=>{
         }
     };
 
-    function handleResponseData(data:{responseSectionList:item[]}){
+    function handleResponseData(data:{responseSectionList:Item[]}){
       data.responseSectionList.forEach((item, index) => {
         setTimeout(() => {
           if (item.responseType === 'text') {

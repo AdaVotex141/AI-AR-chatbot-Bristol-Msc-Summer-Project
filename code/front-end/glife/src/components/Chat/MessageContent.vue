@@ -1,5 +1,8 @@
 <template>
-    <p v-if="message.type === 'text'"class="text-sm font-normal text-gray-900 dark:text-white">{{ message.text }}</p>
+    <p v-if="message.type === 'text'" 
+    class="text-sm font-normal text-gray-900 dark:text-white">
+    {{ message.text }}
+    </p>
     <div v-else="message.type === 'options'">
         <div class="options" v-for="option in message.options" >
             <button 

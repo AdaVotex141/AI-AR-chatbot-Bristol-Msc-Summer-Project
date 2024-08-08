@@ -4,7 +4,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import DayRoutine from '@/pages/User/DayRoutine.vue'
 import ChatWindow from '@/pages/User/ChatWindow.vue'
 import ArTree from '@/pages/ArTree/ArTree.vue'
-import LoginRegister from '@/pages/User/LoginRegister.vue'
+import LoginRegister from '@/pages/LoginRegister.vue'
 import MainPage from '@/pages/User/MainPage.vue'
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import InitPage from "@/pages/InitPage.vue";

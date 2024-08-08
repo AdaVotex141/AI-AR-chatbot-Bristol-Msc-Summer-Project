@@ -130,7 +130,6 @@ onMounted(()=>{
 function updateCountdown() {
   const savedData = Cookies.get('countdownForCode');
   if (savedData) {
-    console.log('yongle')
     const expireTime = parseInt(savedData);
     const now = Date.now();
     
@@ -149,22 +148,17 @@ function updateCountdown() {
 
 function startCountdown(){
   if(timer) clearInterval(timer)
-
   // Get a expired time to set cookie
   const expireTime = Date.now() + countdown.value * 1000
-
   Cookies.set('countdownForCode', expireTime.toString(), "1MIN")
-
   // Decrease the value of countdown and update the cookie
   timer = setInterval(()=>{
     // Adjust countdown.value according to the remaining time
     const now = Date.now()
     const remainingTime = Math.max(Math.floor((expireTime - now) / 1000), 0)
     countdown.value = remainingTime
-
-    if(remainingTime > 0){
-      Cookies.set('countdownForCode', expireTime.toString(), '1MIN')
-    } else {
+    // The countdown is over
+    if(remainingTime <= 0){
       clearInterval(timer)
       Cookies.remove('countdownForCode')
     }
