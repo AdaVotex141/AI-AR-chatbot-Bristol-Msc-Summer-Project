@@ -1,3 +1,19 @@
+# Introduction
+## Motivation 
+## Aims and Objectives
+## The Client
+### Description of the Client and the Brief
+### Refinement and Improvement of the Original Brief
+### Interaction with the Client
+## Challenges
+# Background
+## releated work
+## Exsiting solutions
+### Alipay Ant Forest
+### Forest
+### Apple Fitness
+### ChatGPT
+
 # Design and Implementation
 ## Design
 ### Methodology brainstorm
@@ -173,7 +189,7 @@ We used Trello (Kanban board) for
 ## Project Structure
 
 As mentioned above, the project used the front-end and back-end separation architecture with Nginx serving as an interval between the two parts. So the project structure details below is divided into two parts.
-![](ngnix.drawio%20(2).png)
+![](ngnix.png)
 
 ### back-end
 ![](projectStructure.drawio.png)
@@ -208,14 +224,32 @@ As for the pages folder, the file in it is more like a page template composed of
 The router folder is just like the routes folder mentioned in official documentation. As a single-page website, we need router to change the content in the page. So we put the routing configuration file and the file containing the routing paths to be protected in this folder. The assets folder is used to store some static resources that need to be preloaded, such as tree images, badge images, and some icons.
 
 ## Implementation
+
+### Front-end
+#### pages
+##### welcome-page
+##### Login-register page
+##### main-page
+###### UI design and implementation
+###### chatbot
+###### routine
+###### dashboard
+###### AR Tree
+###### Tutorial
+
+##### admin-page
+###### Random Task
+###### Admin list
+
+
 ### Back-end
 ![](overall.drawio.png)
-
+The back-end of the project can be divided into several parts: the Login & Register, the Routines, the AR Tree, the Badge System and the Admin Panel &  Dashboard. These systems interacted closely with each other,
 #### login and register
 1. motivation
+The design of the login and register system refers to user management and the security of user's information. User-centered 
 
-
-2. implementation
+1. implementation
 ![](login&register.drawio.png)
 1. discussion
    1. Firstly we have dicussed about how to store user's login status. We thought about using "threadlocal" as each thread (a user using our website) accessing such a variable has its own, independently initialized copy of the variable. But as we are using postman for testing, and every request from postman will create a thread, so the way won't work.
@@ -274,11 +308,15 @@ The only difference is how the service layer get the incoming routine. Unlike us
 2. implementation
 3. dicussion
 
-#### admin panel and dashboard
+#### Admin panel and dashboard
 1. motivation
-2. implementation
+The design in later agile iteration of the admin panel and the dashboard is toexpand the source of the routines, and to handover the whole project for any future use. Supports the sustainability of the project, the project can later be picked up by, for example the SU sustainble team who might not have previous any knowledge about coding.
+There are two main function set in the admin panel, one is admin management and we have set permission barriers like only root admin(pre-set in the database already) can add, modify or delete. The other is the so-called "random tasks", as the third source of routines mentioned above in the routines part. Admins can set these random tasks and broadcast them through the webSocket, then the users can then recieve the message on the newly designed dashboard.
+Dashboard are combined with random tasks, chart that implies the percentage of user's completed tasks, and the tree that users have already planted. User can recieved the distributed random tasks from the admin panel in real-time and decide whether to add it to the routines. This design constributed to the scalability of the routine system. Also the charts of routines and trees can give the user a sense of accomplishment and ensure the consistency of user experience.
+1. implementation
+
 [flow]
-3. dicussion
+1. dicussion
    1. The logic of the random task section is under discussion several times. At the beginning we divided the user as "login status" and "unlogin status". The login users will receive pop-up messages to ensure real-time messages are well-received, while the "unlogin user" 's random tasks will be added to a message queue and pop to them once they are login again.
    2. However, to enhance user experience, we developed a dashboard that allows users to choose when they want to view these messages.
 
@@ -287,7 +325,22 @@ The only difference is how the service layer get the incoming routine. Unlike us
 ## Main challenges
 
 
-# Contribution Statement
+# Testing and Deployment
+# Evaluation
+# Conclusion
+
+## Critical evaluation
+### Things we done
+### Things we are not able to do
+## Further work
+### Function Improvement
+### Testing
+### Deploying
+### Evaluation
+## Handover
+
+
+## Contribution Statement
 Generally, we are divided into two group, some of us are focusing on the front-end development, while others work on the back-end logic, and any outside API intergrated.
 During the development part the workload is as follows:
 1. Back-end:
