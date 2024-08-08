@@ -179,6 +179,12 @@ We used Trello (Kanban board) for
 #### Task distribution and time planning
 #### Fixed working hours
 #### Version Control Methodology
+- Regular offline meeting on Tuesday and Thursday
+- Regular online meeting every weekday on 2 p.m.
+- Records on week’s job done so far
+- Regular Presentation to ensure everyone understand current stage progress
+- Kanban board
+- Front-end back-end communication: before writing code, we would discuss and explain how the function works, and does it need anything
 #### Reporting and Presentation
 
 ### Team Roles and Responsibilities
@@ -243,12 +249,12 @@ The router folder is just like the routes folder mentioned in official documenta
 
 
 ### Back-end
+The back-end of the project can be divided into several parts: the Login & Register, the Routines, the AR Tree, the Badge System and the Admin Panel &  Dashboard. These systems interacted closely with each other，and the detailed relationship is shown below:
 ![](overall.drawio.png)
-The back-end of the project can be divided into several parts: the Login & Register, the Routines, the AR Tree, the Badge System and the Admin Panel &  Dashboard. These systems interacted closely with each other,
 #### login and register
 1. motivation
-The design of the login and register system refers to user management and the security of user's information. User-centered 
-
+The design of the login and register system refers to user management and the security of user's information. As a Web App,  the main data associated with each user may be different, as each user migtht their own routines and tree planting process, requiring a flexible approach to handle diverse user profiles and data securely.
+In the user's register process, we have implemented 
 1. implementation
 ![](login&register.drawio.png)
 1. discussion
@@ -313,19 +319,34 @@ The only difference is how the service layer get the incoming routine. Unlike us
 The design in later agile iteration of the admin panel and the dashboard is toexpand the source of the routines, and to handover the whole project for any future use. Supports the sustainability of the project, the project can later be picked up by, for example the SU sustainble team who might not have previous any knowledge about coding.
 There are two main function set in the admin panel, one is admin management and we have set permission barriers like only root admin(pre-set in the database already) can add, modify or delete. The other is the so-called "random tasks", as the third source of routines mentioned above in the routines part. Admins can set these random tasks and broadcast them through the webSocket, then the users can then recieve the message on the newly designed dashboard.
 Dashboard are combined with random tasks, chart that implies the percentage of user's completed tasks, and the tree that users have already planted. User can recieved the distributed random tasks from the admin panel in real-time and decide whether to add it to the routines. This design constributed to the scalability of the routine system. Also the charts of routines and trees can give the user a sense of accomplishment and ensure the consistency of user experience.
-1. implementation
+2. implementation
+The core funcition of the dashboard and admin panel is the random tasks distribution. Using the WebSocket for boardcasting to all the users in real-time, the main challenges is how to store these tasks sequentlty. To solve this problem, we used the Redis as the cache for temporary message list for every user.
+Similar to the AR Tree section, every user also have a independent and seperate 
 
 [flow]
 1. dicussion
    1. The logic of the random task section is under discussion several times. At the beginning we divided the user as "login status" and "unlogin status". The login users will receive pop-up messages to ensure real-time messages are well-received, while the "unlogin user" 's random tasks will be added to a message queue and pop to them once they are login again.
    2. However, to enhance user experience, we developed a dashboard that allows users to choose when they want to view these messages.
 
-
-
 ## Main challenges
-
+The core function of these two section is the "random task distribution", and the main challenges is how to store the 
 
 # Testing and Deployment
+White Box Testing
+
+Unit Testing
+
+Integration Testing
+
+Branch Testing
+
+Black Box Testing
+
+User Testing
+
+Functional Testing
+
+
 # Evaluation
 # Conclusion
 
