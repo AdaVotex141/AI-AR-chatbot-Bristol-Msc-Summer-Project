@@ -18,7 +18,7 @@
 ## Design
 ### Methodology brainstorm
 #### Stage I
-We need to develop something that contains IBM chatbot and AR capabilities. After consideration, we intended to develop a website because people can use any devices to access our product easily. The main function of this website is to chat with the IBM chatbot. And the users can obtain information and advice on sustainable lifestyle through the chatbot. However, if only this main function is available on our website, it will be too similar to ChatGPT. And if the users want to cultivate lifestyles and living habits, just chatting with the chatbot is far from enough. Therefore, a routine function which allows users to insist on something sustainable is necessary for our website. 
+We need to develop something that contains IBM chatbot and AR capabilities. After consideration, we intended to develop a website because people can use any devices to access our product easily. The main function of this website is to chat with the IBM chatbot. And the users can obtain information and advice on sustainable lifes4tyle through the chatbot. However, if only this main function is available on our website, it will be too similar to ChatGPT. And if the users want to cultivate lifestyles and living habits, just chatting with the chatbot is far from enough. Therefore, a routine function which allows users to insist on something sustainable is necessary for our website. 
 
 In order to obey coordination and consistency in design rules [reference], we wanted to give users the ability to add routines through the chatbot. In addition, we referred to the routine tools on the market (such as…) and wanted to allow users to customize routines according to their preferences. And we decided to subdivide this function into system routine and user routine so that some routines in the routine function would in line with the sustainable theme.
 
@@ -251,13 +251,50 @@ The router folder is just like the routes folder mentioned in official documenta
 ### Back-end
 The back-end of the project can be divided into several parts: the Login & Register, the Routines, the AR Tree, the Badge System and the Admin Panel &  Dashboard. These systems interacted closely with each other，and the detailed relationship is shown below:
 ![](overall.drawio.png)
+Once users register and login, they can add routines from different sources, like IBM Watson AI, Admin Panel and even from users themselves, completing this routines will make the AR Tree more perspective, and maybe get rewarding badges.
 #### login and register
 1. motivation
-The design of the login and register system refers to user management and the security of user's information. As a Web App,  the main data associated with each user may be different, as each user migtht their own routines and tree planting process, requiring a flexible approach to handle diverse user profiles and data securely.
-In the user's register process, we have implemented 
+The design of the login and register system refers to user management and the security of user's information. As a Web App, the main data associated with each user may be different, as each user migtht their own routines and tree planting process, requiring a flexible approach to handle diverse user profiles and data securely.
+In the user's register process, we have added a e-mail vertification code to prevent any spam and fake accounts and ensure that users have provided valid and accessible email addresses.
 1. implementation
 ![](login&register.drawio.png)
-1. discussion
+The flow of the function is shown above, displaying the classic module of back-end interacting with database, as well as interacting with the front-end within the project. 
+   1. Login:
+      The login section more emphasized on "query and comparing" function between the database and the server.
+      The front-end will send what the user have filled in the form to back-end, and the back-end side will comparing the recieved data with the User table that stored every users' username and password, using the lamdaQueryWrapper in MyBatisPlus:
+      ```Java
+      LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
+        User foundUser = getOne(lambdaQueryWrapper);
+
+        if (foundUser == null) {
+            return R.error("username not existed");
+        }
+        if(!passwordEncoder.matchPassword(inputPassword, foundUser.getPassword())){
+            return R.error("password wrong");
+        }
+      ```
+      `LambdaQueryWrapper<User>` is a MyBatisPlus wrapper to build conditions for query, it checks for a record where the "username" column matches the username provided.
+      `getOne(lambdaQueryWrapper)` executes the query and matches the user from the database and then stored in the foundUser object. If the record is not in the database, the foundUser will stay null.
+      As for the password, the `passwordEncoder` have the below method which uses the checkpw method in the BCrpyt class.
+      ```Java
+       public boolean matchPassword(String rawPassword, String encodedPassword) {
+        return BCrypt.checkpw(rawPassword, encodedPassword);
+      }
+      ```
+      If the username and password is founded in pair successfully in the database, the HttpSession will stored the current user for later uses:
+
+      ```Java
+      HttpSession session = request.getSession();
+      session.setAttribute("user", foundUser);
+      ```
+      Also, the server will check whether the user is a new user or not, querying for the user's "last_login" column, if "last_login" is null, them it will also send code to the front-end to execute "Tutorial" for new users.
+   2. Register:
+      We have added the email vertification for the register part, togethering with Redis to store time-to-live generated code, the  JavaEmailSender class to control Email sending through back-end, and the SMTP(Simple Mail Transfer Protocol) for email transmission.
+      So when server recieve the request on generating vertification code, it will generated a random code and stored it to the Redis, using key-value data structure, and the key is the user's input username.
+      Then the JavaEmailSender will set up the TCP connection with SMTP server(for example, our glife email used the "smtp.email.com") and if the authentication has passed, a new session is created. Then a new email message including the vertification code and its expired time will be sent through this session, to the email that user have input.
+      Once the user input the code recieved in email and click on "register", the server will firstly compare the code recieved from user with the code stored in the Redis(if the code has been expired, then it doesn't exist in the Redis), if yes, then the new user's infomation will be insert into the SQL database.
+3. discussion
    1. Firstly we have dicussed about how to store user's login status. We thought about using "threadlocal" as each thread (a user using our website) accessing such a variable has its own, independently initialized copy of the variable. But as we are using postman for testing, and every request from postman will create a thread, so the way won't work.
    2. We have also thought about using JWT for login check, but in the end we use session to store user's login status.This is because, JWT is stateless and stored in client-side[TODO] while session is stored in server-side and are easier to conserve login status.
    3. In a later agile iteration, we implemented a LoginFilter to block unauthorized requests to the backend from users who have not logged in. This addition enhances the security of our system.
@@ -316,18 +353,44 @@ The only difference is how the service layer get the incoming routine. Unlike us
 
 #### Admin panel and dashboard
 1. motivation
-The design in later agile iteration of the admin panel and the dashboard is toexpand the source of the routines, and to handover the whole project for any future use. Supports the sustainability of the project, the project can later be picked up by, for example the SU sustainble team who might not have previous any knowledge about coding.
+The design in later agile iteration of the admin panel and the dashboard is to expand the source of the routines, and to handover the whole project for any future use. Supports the sustainability of the project, the project can later be picked up by, for example the SU sustainble team who might not have previous any knowledge about coding.
 There are two main function set in the admin panel, one is admin management and we have set permission barriers like only root admin(pre-set in the database already) can add, modify or delete. The other is the so-called "random tasks", as the third source of routines mentioned above in the routines part. Admins can set these random tasks and broadcast them through the webSocket, then the users can then recieve the message on the newly designed dashboard.
 Dashboard are combined with random tasks, chart that implies the percentage of user's completed tasks, and the tree that users have already planted. User can recieved the distributed random tasks from the admin panel in real-time and decide whether to add it to the routines. This design constributed to the scalability of the routine system. Also the charts of routines and trees can give the user a sense of accomplishment and ensure the consistency of user experience.
 2. implementation
 The core funcition of the dashboard and admin panel is the random tasks distribution. Using the WebSocket for boardcasting to all the users in real-time, the main challenges is how to store these tasks sequentlty. To solve this problem, we used the Redis as the cache for temporary message list for every user.
-Similar to the AR Tree section, every user also have a independent and seperate 
+Similar to the AR Tree section, every user also have a independent and seperate WebSocket session connected to the back-end, using ConcurrentHashMap storing the userID-sessions pairs to ensure thread-safe in multithread environment(multiple users using the website at the same time) allowing multiple threads(users) to access and modify the data without causing concurreny problems.
+Another feature is the broadcasting, firstly we want the user to recieve the messages in popup window in real-time, forcing the user to choose from "whether add the routine to your routines" whenever they are online and recieved the random tasks. But then we moved the function to the dashboard for better user's experience. To achieve this, the messages should be stored temporarily in sequence. The list data structure in Redis is similar to the queue in Java, featuring with LIFO(last in, first out), the list can act like tiny message queues.
+Whenever a random task is broadcasted through the admin panel,  the message will be added to every users' message lists in Redis:
+`template.opsForList().rightPush(USER_MESSAGES + userID, task);`
+And as the user enter the dashboard,  the top of the list will be get from the list and passed to the front-end, similar as the "peek" in queue in Java:
+`String task = template.opsForList().index(USER_MESSAGES + userID, 0);`
+When user click on "add" or "I don't like it", the task will be pop out of the list:
+`String task = template.opsForList().leftPop(USER_MESSAGES + userID);`
+This solution demonstrates how the data structure is effectively used in our project.
+The data for the charts of tree-planted and the percentage of completed tasks are just data collecting from the SQL database, for example the code below shows hot to query for the sum of this user's daily completed schedules(with tick as 1, and schedule set to 0):
+```Java
+ // Query for each schedule and tick = 1
+int dailyCount = mapper.selectCount(
+       new LambdaQueryWrapper<SystemRoutine>()
+               .eq(SystemRoutine::getUserid, userID)
+               .eq(SystemRoutine::getSchedule, 0)
+               .eq(SystemRoutine::getTick, 1)
+);
+```
+The example shows how the system is corresponding to SQL database using the stream approach, it is the same as:
+```SQL
+SELECT COUNT(*)
+FROM SystemRoutine 
+WHERE userid = ? --? refers to the value of Userid
+AND schedule = 0
+AND tick = 1;
+```
 
-[flow]
-1. dicussion
+3. dicussion
    1. The logic of the random task section is under discussion several times. At the beginning we divided the user as "login status" and "unlogin status". The login users will receive pop-up messages to ensure real-time messages are well-received, while the "unlogin user" 's random tasks will be added to a message queue and pop to them once they are login again.
    2. However, to enhance user experience, we developed a dashboard that allows users to choose when they want to view these messages.
 
+(703 words)
 ## Main challenges
 The core function of these two section is the "random task distribution", and the main challenges is how to store the 
 
