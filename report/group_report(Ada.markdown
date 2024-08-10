@@ -170,30 +170,35 @@ We used two differenct databases, MySQL and Redis and they worked for different 
    (842 words)
 
 ## Project Management and Teamwork
-
-
 ### Agile Methodology
 #### Why Agile
-[TODO][why agile instead of waterfall]
-We used Trello (Kanban board) for
+We uses the Agile methology for our project management, and the Trello for task tracking and organization. The iterative feature of Agile methodology has enabled us to changes and feedbacks more flexibly.
+In our project, we have frequently meetings with our stakeholder and supervisor, who provide valuable suggestions and feedback. This approach allows us to continuously improve our project.
+In this case, the iterative nature of Agile helps us remain flexible and reponses to our clients' needs and expectations.
 #### Task distribution and time planning
-As our team decided on the front-end and back-end seperation architecture, our team has distributed to two small group for development, the front-end group and the back-end group.
-Also, we have decided on 
+As our team decided on the front-end and back-end seperation architecture for the project, our team has distributed to two small group for development, the front-end group and the back-end group.
+Also, we have decided on two key milestones: 
+1. MileStone 1: Finish all the deveopment part
+By the end of June, all the development and deployment tasks should be completed. This allows the team to have extra time for report writing and preparing for the upcoming recruitment period in August.
+2. MileStone 2: Finish all the writing part
+The final report must be completed and submitted by September 3rd. But we should finish the group report part by the end of August, including formats and references section. This timeline allows extra time for reviews and any necessary additions before the report is ultimately submitted.
 #### Fixed working hours
+The team has also agreed on fixed working hours, as many of us work remotely. To ensure consistent communication and collaboration, and based on the UK's hybrid working styles, we have established the following agreements:
+1. Regular online meeting on every weekday on 2 p.m.
+   These online meetings focus on sharing current progress and discussing individual working points. Specifically on Mondays, we will specifically review the plan for the week ahead and evaluate whether the goals set for the previous week have been met, and updated them on Trello.
+   These meetings are essential to let every team member remains actively engaged even we are working remotely.
+2. Regular offline programming sessions
+   These sessions are important for addressing any concerns, debugging issues, and smooth communication between the front-end and back-end groups. Meeting offline regularly also contributes to our motivation, and reduce the isolate feeling even if we are doing a group project.
 #### Version Control Methodology
-- Regular offline meeting on Tuesday and Thursday
-- Regular online meeting every weekday on 2 p.m.
-- Records on week’s job done so far
-- Regular Presentation to ensure everyone understand current stage progress
-- Kanban board
-- Front-end back-end communication: before writing code, we would discuss and explain how the function works, and does it need anything
+We use the Github for version control, and besides that we have set up series of instructions within the group to avoid any "git merge" issues.
+Firstly, the main branch is protected and can only be modified through pull requests, this ensures that all changes to the main branch are reviewed and approved.
+Also, instead of using command-line tools for merging, we have also agreed to handle all pull requests through the GitHub website. This centralizes the process, allows for easier review.
+These methods have proven effective in our team development process, helping us manage version control and avoid merge conflicts.
 #### Reporting and Presentation
+We have two regularly meeting to update our status and present our current work to both our IBM stakeholder and our supervisor. To ensure that everyone has the opportunity to present, we do the presentation in turns.
+This approach makes sure that all team members have the oppotunity for presentation and helps everyone gain a better understanding of the project’s current status.
 
-### Team Roles and Responsibilities
-
-
-
-
+(546 words)
 ## Project Structure
 
 As mentioned above, the project used the front-end and back-end separation architecture with Nginx serving as an interval between the two parts. So the project structure details below is divided into two parts.
@@ -398,19 +403,15 @@ AND tick = 1;
 The core function of these two section is the "random task distribution", and the main challenges is how to store the 
 
 # Testing and Deployment
-White Box Testing
+## Testing
+We are following a development and testing pattern that involves iterative testing, which means after developing new features, we immediately test them, allowing us to identify and fix issues early in the process. We performed both functional testing and interface testing to ensure the reliability of the system:
+Functional testing is usually performed during the interface development, as it usually involves many small function that support the inferface methods.
+As for the interface tesing, we used Postman to help us identify any issues that might occur during interactions between the front-end requests and the back-end services. During the interface tesing, we focus more on how the database and server respond to these requests.
 
-Unit Testing
+However, we did not do systematic and automated testing due to time constraints for we had limited opportunities to iterate on the versions after deployment. Also, we haven't developed test cases which coverd nearly all the codes also because of the time limits, and we don't have a person who specifically focus on testing part, instead all the testing are completed by the developers themselves.
 
-Integration Testing
-
-Branch Testing
-
-Black Box Testing
-
-User Testing
-
-Functional Testing
+(178 words)
+## Deployment
 
 
 # Evaluation
