@@ -177,6 +177,8 @@ We used two differenct databases, MySQL and Redis and they worked for different 
 [TODO][why agile instead of waterfall]
 We used Trello (Kanban board) for
 #### Task distribution and time planning
+As our team decided on the front-end and back-end seperation architecture, our team has distributed to two small group for development, the front-end group and the back-end group.
+Also, we have decided on 
 #### Fixed working hours
 #### Version Control Methodology
 - Regular offline meeting on Tuesday and Thursday
@@ -298,7 +300,7 @@ The flow of the function is shown above, displaying the classic module of back-e
    1. Firstly we have dicussed about how to store user's login status. We thought about using "threadlocal" as each thread (a user using our website) accessing such a variable has its own, independently initialized copy of the variable. But as we are using postman for testing, and every request from postman will create a thread, so the way won't work.
    2. We have also thought about using JWT for login check, but in the end we use session to store user's login status.This is because, JWT is stateless and stored in client-side[TODO] while session is stored in server-side and are easier to conserve login status.
    3. In a later agile iteration, we implemented a LoginFilter to block unauthorized requests to the backend from users who have not logged in. This addition enhances the security of our system.
-
+(672 words 4,686 characters)
 #### Routines
 1. motivation
 This section is designed to help users adopt and maintain eco-friendly lifestyles by providing routines from three key sources. Each source is designed to engage users, provide personalized advice, and get a sense of community.
@@ -330,10 +332,11 @@ The annotation in the Spring framework is used to execute the method according t
 
 The only difference is how the service layer get the incoming routine. Unlike user-customized routines, system routines are initially stored in Redis cache. For example, system routines that comes from the IBM chatbot, are firstly parsed in the back-end(as the IBM chatbot API is implemented in the back-end)and then send to the front-end for display. If the user then typed "yes, add the advice to my routines", the front-end can directly send a request to add this routine to the user's routines. There is no need for the front-end to pre-store or manage this advice as a separate routine. This allows the system dynamically add routines based on real-time user inputs and reduce front-end's processing complexity.
 
-3. dicussion
+3. discussion
    1. Firstly we aims at only daily routines, but later on we have dicussed making more options for different timing for user to choose. We adjusted this in a later agile iteration.
    2. The response of the Watson AI chatbot is all set but we want to make the routines' source more flexible, so we added an admin panel for random task distribution. The user can receive random task on dashboard and decide whether to add them or not. 
    3. As the routine's tick is related to badge system and AR tree planted, we don't want the user to add customize routines which is not related to eco-friendly lifestyles and get rewards, that's why in the design the user's self-customize routines are not related to further AR Tree and badges system.
+
 (611 words)
 
 #### AR tree section[jie]
