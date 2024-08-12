@@ -17,7 +17,6 @@ export const useWebSocketStore = defineStore('websocket',()=>{
             // When websocket receive the msg
             socket.value.onmessage = (event) => {
                 // Event info
-                console.log("WebSocket receive message: ", event)
                 userTaskStore.setTaskContent(event.data)
                 userTaskStore.getNumberOfTask()
             }
