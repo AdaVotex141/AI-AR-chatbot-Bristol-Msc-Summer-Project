@@ -36,7 +36,7 @@ As for the ‘Too Good to Go’ page, we also wanted to remove it because we fou
 ### Technology Selections and Reasons
 
 Our team decides this project to be a back-end and front-end seperation architect. By separating the back-end and front-end, we ensure that each layer of the application can be developed, maintained, and scaled independently. Also this flexibility enables us to use the most suitable technologies for each part during development.
-We have discussed about the framework and the language we used for the project and ultimately decided on Java and Spring boot, MyBatisPlus for back-end and Vue.js for front-end.
+We have discussed about the framework and the language we used for the project and ultimately decided on Java and Spring boot, MyBatisPlus for back-end and Vue.js, Pinia for front-end.
 In order to communicate between front-end and back-end, we followed the RESTful principle in API endpoints and implemented Ngnix to solve cross-origin resource sharing (CORS) issues.
 We also intergrated several APIs in some functions and WebSocket for bidirectional communication.
 #### Back-end
@@ -68,6 +68,7 @@ There are two core features of Vue.js:
    1. Declarative rendering: It means that Vue extends standard HTML with a template syntax that allows us to declaratively describe HTML output based on JavaScript state,[reference]Then Vue.js automatically updates the DOM to reflect this description.
    2. Reactivity, Vue automatically tracks JavaScript state changes and efficiently updates the DOM when changes happen.
 Vue.js also have strong community providing documentations[reference], tutorials and plugins like element-UI, Tailwind CSS, vue router which are all used in our project for quicker development.
+As for Pinia, it is a state management library recommended by the Vue official documentation. Pinia allows us to share state across different components and pages in our single page application.[https://pinia.vuejs.org/introduction.html] Because many of the features we designed are interconnected, state management makes it easier for us to implement functional logic, compared to direct component communication. Pinia's Hot Module Replacement feature also allows our website to update the state without reloading the page, which enhances the user experience.
 ####  Local server
 Ngnix is the tool we used to handle cross-origin resource sharing (CORS) issues in front-end and back-end seperation. As a reverse proxy, Nginx manages requests from the front-end and forwards them to the back-end server. This setup allows us to control CORS headers effectively. In later deployment process, it is used as a web server and SSL/TLS termination point.
 ```
