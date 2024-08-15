@@ -196,7 +196,7 @@ Firstly, the main branch is protected and can only be modified through pull requ
 Also, instead of using command-line tools for merging, we have also agreed to handle all pull requests through the GitHub website. This centralizes the process, allows for easier review.
 These methods have proven effective in our team development process, helping us manage version control and avoid merge conflicts.
 #### Reporting and Presentation
-We have two regularly meeting to update our status and present our current work to both our IBM stakeholder and our supervisor. To ensure that everyone has the opportunity to present, we do the presentation in turns.
+We have two regularly meetings to update our status and present our current work to both our IBM stakeholder and our supervisor. To ensure that everyone has the opportunity to present, we do the presentation in turns.
 This approach makes sure that all team members have the oppotunity for presentation and helps everyone gain a better understanding of the project’s current status.
 
 (546 words)
@@ -258,7 +258,7 @@ The router folder is just like the routes folder mentioned in official documenta
 
 ### Back-end
 The back-end of the project can be divided into several parts: the Login & Register, the Routines, the AR Tree, the Badge System and the Admin Panel &  Dashboard. These systems interacted closely with each other，and the detailed relationship is shown below:
-![](overall.drawio.png)
+
 Once users register and login, they can add routines from different sources, like IBM Watson AI, Admin Panel and even from users themselves, completing this routines will make the AR Tree more perspective, and maybe get rewarding badges.
 #### login and register
 1. motivation
@@ -304,7 +304,7 @@ The flow of the function is shown above, displaying the classic module of back-e
       Once the user input the code recieved in email and click on "register", the server will firstly compare the code recieved from user with the code stored in the Redis(if the code has been expired, then it doesn't exist in the Redis), if yes, then the new user's infomation will be insert into the SQL database.
 3. discussion
    1. Firstly we have dicussed about how to store user's login status. We thought about using "threadlocal" as each thread (a user using our website) accessing such a variable has its own, independently initialized copy of the variable. But as we are using postman for testing, and every request from postman will create a thread, so the way won't work.
-   2. We have also thought about using JWT for login check, but in the end we use session to store user's login status.This is because, JWT is stateless and stored in client-side[TODO] while session is stored in server-side and are easier to conserve login status.
+   2. We have also thought about using JWT for login check, but in the end we use session to store user's login status.This is because, JWT is stateless and stored in client-side while session is stored in server-side and are easier to conserve login status.
    3. In a later agile iteration, we implemented a LoginFilter to block unauthorized requests to the backend from users who have not logged in. This addition enhances the security of our system.
 (672 words 4,686 characters)
 #### Routines
@@ -368,7 +368,7 @@ Dashboard are combined with random tasks, chart that implies the percentage of u
 2. implementation
 The core funcition of the dashboard and admin panel is the random tasks distribution. Using the WebSocket for boardcasting to all the users in real-time, the main challenges is how to store these tasks sequentlty. To solve this problem, we used the Redis as the cache for temporary message list for every user.
 Similar to the AR Tree section, every user also have a independent and seperate WebSocket session connected to the back-end, using ConcurrentHashMap storing the userID-sessions pairs to ensure thread-safe in multithread environment(multiple users using the website at the same time) allowing multiple threads(users) to access and modify the data without causing concurreny problems.
-Another feature is the broadcasting, firstly we want the user to recieve the messages in popup window in real-time, forcing the user to choose from "whether add the routine to your routines" whenever they are online and recieved the random tasks. But then we moved the function to the dashboard for better user's experience. To achieve this, the messages should be stored temporarily in sequence. The list data structure in Redis is similar to the queue in Java, featuring with LIFO(last in, first out), the list can act like tiny message queues.
+Another feature is the broadcasting, firstly we want the user to recieve the messages in popup window in real-time, forcing the user to choose from "whether add the routine to your routines" whenever they are online and recieved the random tasks. But then we moved the function to the dashboard for better user's experience. To achieve this, the messages should be stored temporarily in sequence. The list data structure in Redis is similar to the queue in Java, featuring with FIFO(first in, first out), the list can act like tiny message queues.
 Whenever a random task is broadcasted through the admin panel,  the message will be added to every users' message lists in Redis:
 `template.opsForList().rightPush(USER_MESSAGES + userID, task);`
 And as the user enter the dashboard,  the top of the list will be get from the list and passed to the front-end, similar as the "peek" in queue in Java:
